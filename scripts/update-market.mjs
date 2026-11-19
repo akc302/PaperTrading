@@ -231,6 +231,7 @@ await saveJSON('reviews.json', reviews);
 
 // Private paper state is encrypted both at rest and in published assets. Its key
 // is supplied only to this process. Never log or write clear private state.
+const stateKey = process.env.PAPER_STATE_KEY?.trim();
 let envelope = null, unreadableEnvelope = false;
 try { envelope = await readJSON('portfolio.enc.json', null); }
 catch { unreadableEnvelope = true; }
