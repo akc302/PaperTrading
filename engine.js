@@ -16,9 +16,9 @@ const cfg = (c={}) => {
 export function feeForFill(notional,liquidity,config={},time=Date.now()/1000){
  const rate=liquidity==='maker'?(config.makerFeeRate??config.feeRate??DEFAULT_CONFIG.feeRate):(config.takerFeeRate??config.feeRate??DEFAULT_CONFIG.feeRate);
  if(!Number.isFinite(rate)||rate<0||rate>.05||!Number.isFinite(notional)||notional<0)throw new Error('Invalid modeled fill fee.');
- const gross=notional*rate,observedAt=config.feeObservedAt??null;
+ const gross=notional*rate,credit=config.rebateVerified===true&&gross*(config.rebateRate??0)>=.000001?gross*config.rebateRate:0,observedAt=config.feeObservedAt??null;
  const age=observedAt?Math.max(0,time-Date.parse(observedAt)/1000):null;
- return {liquidity,rate,gross,tier:config.feeTier??'Unverified estimate',observedAt,checkedAt:time,source:observedAt?'Coinbase MCP saved snapshot':'Configured estimate',liveTierChecked:false,snapshotAgeSeconds:age,stale:age==null||age>86400,rebatePending:gross*(config.rebateRate??0),rebateCredited:0,rebateStatus:config.rebateRate?'Pending eligibility/cap verification; excluded from cash and P&L':'Not modeled'};
+ return {liquidity,rate,gross,tier:config.feeTier??'Unverified estimate',observedAt,checkedAt:time,source:observedAt?'Coinbase MCP saved snapshot':'Configured estimate',liveTierChecked:false,snapshotAgeSeconds:age,stale:age==null||age>86400,rebatePending:config.rebateVerified?0:gross*(config.rebateRate??0),rebateCredited:credit,rebateStatus:config.rebateVerified?'Simulated USDC credit; Premium eligibility user-confirmed':config.rebateRate?'Pending eligibility/cap verification; excluded from cash and P&L':'Not modeled'};
 }
 function seconds(t){const n=Number(t);return Number.isFinite(n)?(n>1e12?n/1000:n):Date.parse(t)/1000;}
 function executionAt(price,stop,target,c){
@@ -182,7 +182,7 @@ function journal(account,product,time,signal,config,reason,action='WAIT'){
 export function markToMarket(account,prices={}){
   const marks={...account.marks,...prices};
   const equity=account.cash+account.positions.reduce((s,p)=>s+p.quantity*(positive(marks[p.product])?+marks[p.product]:p.entry),0);
-  const unrealized=account.positions.reduce((s,p)=>s+p.quantity*((positive(marks[p.product])?+marks[p.product]:p.entry)-p.entry)-p.entryFee,0);
+  const unrealized=account.positions.reduce((s,p)=>s+p.quantity*((positive(marks[p.product])?+marks[p.product]:p.entry)-p.entry)-p.entryFee+(p.entryFeeDetail?.rebateCredited??0),0);
   const realized=account.trades.reduce((s,t)=>s+t.pnl,0);
   let peak=account.initial,drawdown=0;
   for(const point of [...account.equityHistory,{equity}]){peak=Math.max(peak,point.equity);drawdown=Math.max(drawdown,(peak-point.equity)/peak);}
@@ -204,8 +204,9 @@ export function openPaperTrade(account,{product,price,stop,target,time=Date.now(
   const quantity=Math.min(equity*c.riskPct/lossPerUnit,remainingRisk/lossPerUnit,equity*c.maxAllocation/(entry*(1+c.feeRate)),account.cash/(entry*(1+c.feeRate)));
   if(!positive(quantity)||quantity*entry<0.01)throw new Error('Insufficient virtual cash.');
   const entryFeeDetail=feeForFill(entry*quantity,'taker',c,+time),entryFee=entryFeeDetail.gross;
-  account.cash-=entry*quantity+entryFee;
-  account.positions.push({id:`paper-${account.nextId++}`,product,entry,quantity,stop:+stop,target:+target,openedAt:+time,entryFee,entryFeeDetail,entryOrderType:'market',feeProfile:{makerFeeRate:c.makerFeeRate,takerFeeRate:c.takerFeeRate,feeTier:c.feeTier,feeObservedAt:c.feeObservedAt,rebateRate:c.rebateRate},source,riskBudget:Math.min(equity*c.riskPct,remainingRisk),estimatedRewardRisk:reward/lossPerUnit,feeRate:c.feeRate,slippage:c.slippage,maxHoldHours:c.maxHoldHours});
+  account.cash-=entry*quantity+entryFee-entryFeeDetail.rebateCredited;
+  account.rebatesUSDC=(account.rebatesUSDC??0)+entryFeeDetail.rebateCredited;
+  account.positions.push({id:`paper-${account.nextId++}`,product,entry,quantity,stop:+stop,target:+target,openedAt:+time,entryFee,entryFeeDetail,entryOrderType:'market',feeProfile:{makerFeeRate:c.makerFeeRate,takerFeeRate:c.takerFeeRate,feeTier:c.feeTier,feeObservedAt:c.feeObservedAt,rebateRate:c.rebateRate,rebateVerified:c.rebateVerified},source,riskBudget:Math.min(equity*c.riskPct,remainingRisk),estimatedRewardRisk:reward/lossPerUnit,feeRate:c.feeRate,slippage:c.slippage,maxHoldHours:c.maxHoldHours});
   account.marks[product]=+price;
   return account;
 }
@@ -218,8 +219,9 @@ export function closePaperTrade(account,id,price,time=Date.now()/1000,reason='ma
   const p=account.positions[index],restingTarget=reason==='target'&&p.feeProfile?.makerFeeRate!=null;
   const exit=restingTarget?+price:+price*(1-p.slippage);
   const exitFeeDetail=feeForFill(exit*p.quantity,restingTarget?'maker':'taker',{feeRate:p.feeRate,...p.feeProfile,...config},+time),exitFee=exitFeeDetail.gross;
-  account.cash+=exit*p.quantity-exitFee;
-  account.trades.push({...p,exit,closedAt:+time,exitFee,exitFeeDetail,exitOrderType:restingTarget?'resting-limit (simulated)':'market (simulated)',rebatePending:(p.entryFeeDetail?.rebatePending??0)+exitFeeDetail.rebatePending,rebateCredited:0,fees:p.entryFee+exitFee,pnl:(exit-p.entry)*p.quantity-p.entryFee-exitFee,reason});
+  account.cash+=exit*p.quantity-exitFee+exitFeeDetail.rebateCredited;
+  account.rebatesUSDC=(account.rebatesUSDC??0)+exitFeeDetail.rebateCredited;
+  account.trades.push({...p,exit,closedAt:+time,exitFee,exitFeeDetail,exitOrderType:restingTarget?'resting-limit (simulated)':'market (simulated)',rebatePending:(p.entryFeeDetail?.rebatePending??0)+exitFeeDetail.rebatePending,rebateCredited:(p.entryFeeDetail?.rebateCredited??0)+exitFeeDetail.rebateCredited,fees:p.entryFee+exitFee,pnl:(exit-p.entry)*p.quantity-p.entryFee-exitFee+(p.entryFeeDetail?.rebateCredited??0)+exitFeeDetail.rebateCredited,reason});
   account.positions.splice(index,1);account.marks[p.product]=+price;
   return account;
 }

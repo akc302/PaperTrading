@@ -13,7 +13,7 @@ Paper only. No real order calls. Never commit Coinbase credentials, unlock keys,
 
 ## Work requiring additional integration or evidence
 - [ ] Authenticated LIVE Coinbase fee-tier refresh before every order. Chat MCP is unavailable inside GitHub Actions; cached tier is explicitly labeled. Requires a separately provisioned read-only runtime integration, never credentials committed in source.
-- [ ] Confirm Coinbase One plan, cap, remaining allowance and billing period. Until verified, 25% is provisional and contributes ZERO spendable USDC/profit.
+- [x] User confirmed Premium/unlimited rebates. Future modeled fills credit virtual USDC at 25% of eligible gross fees; source is user confirmation, not API verification. No retroactive rewriting of historical costs.
 - [ ] Full pending limit-order book (post-only rejection, maker/taker partial fills, cancellation, time-in-force, size increments). Current strategy fills do not reproduce these exchange mechanics.
 - [ ] Shadow ML classifier trained only after sufficient completed strategy trades, chronological validation, leakage checks, reproducible feature schema; no unvalidated automatic model promotion.
 - [ ] Broad Tori video inventory with verified URLs, dates, available caption status; original source-linked summaries. No claim to have watched/transcribed the entire channel.
