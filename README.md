@@ -21,23 +21,11 @@ An authenticated ChatGPT MCP connection is **not transferable into a static GitH
 
 ## Deploy to GitHub Pages
 
-The intended repository is `akc302/level-lab`. Deployment requires a GitHub account/connection that can create this repository, push files/workflows, and enable Pages. The ChatGPT integration available during development returned HTTP 403 when creating a repository, so no repository or deployment was claimed.
+Repository: [akc302/PaperTrading](https://github.com/akc302/PaperTrading). Public source includes only public market data and simulated results.
 
-1. Create the public repository [akc302/level-lab](https://github.com/new?name=level-lab&visibility=public). Leave it empty. Public source includes only public market data and simulated results.
-2. Grant your ChatGPT GitHub connection access to the repository, then ask the agent to finish deployment. Alternatively, from a local terminal authenticated with your own GitHub CLI, run the following inside this folder:
+The application is configured for GitHub Pages using GitHub Actions. In the repository, choose **Settings → Pages → Source → GitHub Actions**. Pushes to `main` run **Publish dashboard**; **Update paper account** runs hourly and can be started manually from Actions.
 
-   ```sh
-   git init -b main
-   git add .
-   git commit -m "Build Level Lab paper trading dashboard"
-   git remote add origin https://github.com/akc302/level-lab.git
-   git push -u origin main
-   gh api --method POST repos/akc302/level-lab/pages -f build_type=workflow
-   gh workflow run pages.yml --repo akc302/level-lab
-   ```
-
-3. If using the web interface, choose **Settings → Pages → Source → GitHub Actions**. Enable Actions and workflow read/write permissions if your organization restricts them. Run **Publish dashboard**, then **Update paper account** in the Actions tab.
-4. After a successful Pages deployment, the expected address is `https://akc302.github.io/level-lab/`. This is an expected address, not evidence of an existing deployment.
+The project-page address is `https://akc302.github.io/PaperTrading/`. Deployment status is available in the repository's Actions and Pages settings.
 
 The hourly workflow is scheduled at minute 17. It commits updated public candles, paper state, and review history, then deploys Pages directly. This avoids relying on a second workflow being triggered by a `GITHUB_TOKEN` commit. GitHub can delay scheduled runs, and public-repository schedules may disable after 60 days of repository inactivity. Check the dated account freshness warning and Actions history.
 

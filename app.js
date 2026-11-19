@@ -8,7 +8,7 @@ const date=t=>t?new Date(typeof t==='number'?t*1000:t).toLocaleString('en-GB',{m
 const tone=n=>n>0?'positive':n<0?'negative':'neutral';
 const names={'BTC-USD':'Bitcoin','ETH-USD':'Ethereum','SOL-USD':'Solana'};
 const symbols={'BTC-USD':'₿','ETH-USD':'Ξ','SOL-USD':'◎'};
-const repo='https://github.com/akc302/level-lab';
+const repo='https://github.com/akc302/PaperTrading';
 let storageAvailable=true;
 function readLocal(key,fallback){try{return JSON.parse(localStorage.getItem(key))??fallback}catch{storageAvailable=false;return fallback}}
 let personal=readLocal('level-lab-account-v1',createAccount());
