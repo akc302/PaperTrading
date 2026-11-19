@@ -22,3 +22,8 @@ Paper only. No real order calls. Never commit Coinbase credentials, unlock keys,
 
 ## Acceptance before marking complete
 Every change: meaningful tests, private-data publication audit, successful deployment and private updater status, truthful UI. Do not label cached fees as live, pending rebates as cash, research candidates as validated models, or scheduled checks as guaranteed uptime.
+
+## Monitoring
+- [x] Hourly independent health workflow checks published state/freshness/automation flags and feed errors without decrypting financial data.
+- [x] An unhealthy result dispatches the existing updater once, waits, and verifies recovery; persistent failures fail the monitor and remain visible in Actions.
+- [ ] Human-level unattended debugging and arbitrary code repairs are not implemented. GitHub scheduling has no guaranteed hourly SLA. Configure repository Actions notifications to receive failures.
