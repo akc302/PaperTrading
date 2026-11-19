@@ -84,7 +84,7 @@ for (const product of PRODUCTS) {
   }
 }
 
-const productConfig = (state, product) => ({ ...DEFAULT_CONFIG, ...state.config, ...state.productConfigs?.[product] });
+const productConfig = (state, product) => ({ ...DEFAULT_CONFIG, ...state.config, ...state.productConfigs?.[product], ...(state.feeProfile??{}) });
 
 /** Preflight the whole enabled universe before any shared-ledger mutation. */
 function processAccount(state) {
