@@ -1,0 +1,34 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="theme-color" content="#101411"><meta name="description" content="A paper-only trading lab for support and resistance. Track virtual trades, test ideas, and review your strategy every day.">
+  <title>Level Lab · Paper trading, with a process</title><link rel="icon" href="./favicon.svg" type="image/svg+xml"><link rel="stylesheet" href="./styles.css">
+</head>
+<body>
+  <aside class="sidebar">
+    <a class="brand" href="#overview"><img src="./favicon.svg" alt="" width="34" height="34">level<span>lab</span></a>
+    <div class="workspace-label">YOUR TRADING WORKSPACE</div>
+    <nav aria-label="Main navigation">
+      <a href="#overview" data-nav="overview"><span class="nav-icon">◫</span>Overview</a>
+      <a href="#journal" data-nav="journal"><span class="nav-icon">≡</span>Trade journal<span id="journal-count" class="nav-count">0</span></a>
+      <a href="#strategy" data-nav="strategy"><span class="nav-icon">⌘</span>Strategy lab</a>
+      <a href="#updates" data-nav="updates"><span class="nav-icon">◷</span>Daily reviews</a>
+      <a href="#settings" data-nav="settings"><span class="nav-icon">⚙</span>Settings</a>
+    </nav>
+    <div class="sidebar-bottom"><div class="lab-symbol">⌁</div><strong>Practice with purpose.</strong><p>Real market data.<br>Virtual capital. Better questions.</p><div class="paper-badge"><span></span> PAPER TRADING ONLY</div><a class="source-link" href="https://github.com/akc302/level-lab" target="_blank" rel="noopener">View source on GitHub ↗</a></div>
+  </aside>
+  <main>
+    <header class="topbar"><span class="breadcrumb">Workspace <span>/</span> <b id="breadcrumb">Overview</b></span><div class="header-right"><span class="timezone">UTC</span><span class="mode-pill">Sandbox</span><div class="avatar" title="Your paper trading workspace">AK</div></div></header>
+    <div class="content">
+      <div id="notice" role="status" hidden></div>
+      <section class="page-heading"><div><div class="eyebrow">OBSERVE. TEST. REFINE.</div><h1 id="page-title">Your edge starts here.</h1><p id="page-subtitle">A clear view of your markets, your trades, and what comes next.</p></div><button id="refresh" class="button secondary"><span>⟳</span> Refresh data</button></section>
+      <div class="context-row"><div class="account-switch" role="group" aria-label="Paper account"><button data-account="shared" class="active">Scheduled paper account</button><button data-account="personal">My practice account</button></div><span id="account-note" class="muted">Hourly simulation · shared on GitHub</span></div>
+      <div id="view"></div>
+      <footer><span>Level Lab <span class="footer-sep">/</span> Built to learn, not to promise returns.</span><span id="footer-source">Coinbase market data · Paper execution</span></footer>
+    </div>
+  </main>
+  <dialog id="trade-dialog"><form id="trade-form"><div class="dialog-top"><div><span class="eyebrow">VIRTUAL EXECUTION</span><h2>Plan a paper trade</h2></div><button type="button" class="icon-button" id="close-dialog" aria-label="Close dialog">×</button></div><p class="muted">Practice account only. Fill uses a fresh Coinbase quote plus estimated slippage.</p><div id="trade-reference" class="reference-price"></div><label>Stop loss · USD<input id="trade-stop" name="stop" inputmode="decimal" type="number" min="0.00000001" step="any" required></label><label>Take profit · USD<input id="trade-target" name="target" inputmode="decimal" type="number" min="0.00000001" step="any" required></label><p class="small muted" id="trade-risk"></p><p id="trade-error" class="negative" role="alert"></p><button type="submit" class="button primary full">Open virtual position</button><p class="small muted">No real orders. Cash, positions, and P&amp;L stay in this browser.</p></form></dialog>
+  <div id="toast" role="status" hidden></div>
+  <script type="module" src="./app.js"></script>
+</body></html>
