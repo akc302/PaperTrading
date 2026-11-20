@@ -8,7 +8,7 @@ const cfg = (c={}) => {
   if(!Number.isInteger(x.lookback)||x.lookback<12||x.lookback>300||!Number.isInteger(x.pivotWindow)||x.pivotWindow<1||x.pivotWindow>10) throw new Error('Invalid level window.');
   if(!positive(x.proximity)||x.proximity>0.1||!positive(x.stopBuffer)||x.stopBuffer>0.1||!positive(x.rewardRisk)||x.rewardRisk>10) throw new Error('Invalid strategy parameters.');
   if(!positive(x.riskPct)||x.riskPct>0.05||!positive(x.maxAllocation)||x.maxAllocation>1||!finite(x.feeRate)||x.feeRate<0||x.feeRate>0.05||!finite(x.slippage)||x.slippage<0||x.slippage>0.05) throw new Error('Invalid paper risk or execution settings.');
-  if(!['horizontal','trendline'].includes(x.strategy)||!Number.isInteger(x.trendLookback)||x.trendLookback<60||x.trendLookback>720)throw new Error('Invalid strategy or trendline window.');
+  if(!['horizontal','trendline','aggressive'].includes(x.strategy)||!Number.isInteger(x.trendLookback)||x.trendLookback<60||x.trendLookback>720)throw new Error('Invalid strategy or trendline window.');
   if(!finite(x.maxHoldHours)||x.maxHoldHours<0||x.maxHoldHours>720||!finite(x.maxDailyLoss)||x.maxDailyLoss<0||x.maxDailyLoss>0.5||!Number.isInteger(x.maxOpenPositions)||x.maxOpenPositions<1||x.maxOpenPositions>20||!positive(x.maxTotalRisk)||x.maxTotalRisk>0.2)throw new Error('Invalid portfolio risk limits.');
   return x;
 };
@@ -42,6 +42,7 @@ export function normalizeCandles(input){
 
 export function analyze(input,config={}){
   const c=cfg(config);
+  if(c.strategy==='aggressive')return analyzeAggressive(input,c);
   return c.strategy==='trendline'?analyzeTrendline(input,c):{...analyzeHorizontal(input,c),strategy:'horizontal',setup:'support-bounce',trend:'unconfirmed',trendlines:[]};
 }
 
@@ -372,4 +373,44 @@ export function reviewStrategy(input,config={}){
   const wins=enough&&best.result.returnPct>trainBase.returnPct&&candidate.returnPct>baseline.returnPct&&candidate.drawdown<=baseline.drawdown;
   const compact=r=>({returnPct:r.returnPct,drawdown:r.drawdown,closedTrades:r.closedTrades,winRate:r.winRate,totalFees:r.totalFees});
   return {status:wins?'candidate':'retained',config:wins?best.config:c,reason:!enough?'Retained current parameters: fewer than five closed trades in a comparison sample.':wins?'A training-selected candidate also beat the baseline on the later holdout with no higher drawdown. Review before adoption; future gains are uncertain.':'Retained current parameters: the training-selected candidate did not pass the later holdout.',baseline:compact(baseline),candidate:compact(candidate),training:{candles:train.length,baseline:compact(trainBase),candidate:compact(best.result)},holdout:{candles:hold.length,start:hold[0].time,end:hold.at(-1).time}};
+}
+
+/** Explicitly experimental; this intentionally does not claim a confirmed Tori setup. */
+function analyzeAggressive(input,c){
+ const bars=normalizeCandles(input),last=bars.at(-1),base={strategy:'aggressive',setup:'aggressive-exploration',trend:'experimental',price:last?.close??null,support:null,resistance:null,atr:0,levels:[],trendlines:[],signal:'WAIT',reason:'Need 24 completed hourly bars.',stop:null,target:null};
+ if(bars.length<24)return base;
+ base.trendlines=analyzeTrendline(bars,{...c,strategy:'trendline'}).trendlines;
+ const recent=bars.slice(-24);base.support=Math.min(...recent.map(b=>b.low));base.resistance=Math.max(...recent.map(b=>b.high));base.atr=recent.slice(-14).reduce((s,b)=>s+b.high-b.low,0)/14;
+ base.stop=base.price-Math.max(base.price*.015,base.atr*1.25);
+ const fill=executionAt(base.price,base.stop,base.price,c);
+ base.target=(fill.entry*(1+c.feeRate)+fill.risk*c.rewardRisk)/((1-c.slippage)*(1-c.feeRate));
+ const bullish=last.close>last.open,nearSupport=last.close<=base.support*1.03,pullback=last.close/bars.at(-4).close-1<-.01;
+ if(bullish||nearSupport||pullback){base.signal='BUY';base.reason='Aggressive PAPER exploration: bullish candle, widened support zone or countertrend pullback. Not a confirmed trendline entry; fixed cost-aware target and time exit.';}
+ else base.reason='Aggressive experiment waits for a bullish candle, support-zone revisit, or pullback.';
+ return base;
+}
+
+/** Current-quote execution never backdates fills into already-observed hourly candles. */
+export function processQuoteBatch(account,events,{time=Date.now()/1000}={}){
+ if(!Array.isArray(events)||!events.length||new Set(events.map(e=>e.product)).size!==events.length)throw new Error('Invalid quote batch');
+ const prepared=events.map(e=>({...e,config:cfg(e.config),bars:normalizeCandles(e.bars)}));
+ for(const e of prepared){const stamp=Date.parse(e.quote.time)/1000;if(!positive(e.quote.price)||!Number.isFinite(stamp)||time-stamp>120||stamp-time>30||e.bars.length<24||e.bars.some(b=>b.time+3600>time)||e.bars.slice(-24).some((b,i,a)=>i>0&&b.time!==a[i-1].time+3600)||time-(e.bars.at(-1).time+3600)>3600)throw new Error('Fresh quotes and completed history required for all markets.');}
+ const bucket=Math.floor(time/300);if((account.lastQuoteBucket??-1)>=bucket)return account;
+ account.decisions??=[];account.lastEntries??={};
+ for(const e of prepared)dayRisk(account,time,e.config);
+ for(const e of prepared)account.marks[e.product]=+e.quote.price;
+ const exited=new Set();
+ for(const e of prepared){const p=account.positions.find(p=>p.product===e.product);if(!p)continue;const price=+e.quote.price;
+  const reason=price<=p.stop?'quote-stop':price>=p.target?'target':(p.maxHoldHours??e.config.maxHoldHours)>0&&time>=p.openedAt+(p.maxHoldHours??e.config.maxHoldHours)*3600?'time-exit':null;
+  if(reason){closePaperTrade(account,p.id,reason==='target'?p.target:price,time,reason,e.config);exited.add(e.product);}
+ }
+ const priority=['XRP-USD','SOL-USD','ETH-USD','BTC-USD','ADA-USD','DOGE-USD','LINK-USD','AVAX-USD'];
+ for(const e of prepared.sort((a,b)=>(priority.indexOf(a.product)<0?99:priority.indexOf(a.product))-(priority.indexOf(b.product)<0?99:priority.indexOf(b.product))||a.product.localeCompare(b.product))){const signal=analyze(e.bars,e.config);let action='WAIT',reason=signal.reason;
+  if(account.positions.some(p=>p.product===e.product)){action='HOLD';reason='Open virtual position monitored at fresh quote.';}
+  else if(exited.has(e.product)){action='EXIT';reason='Virtual exit executed at this check; no immediate same-check re-entry.';}
+  else if(time-(account.lastEntries[e.product]??0)<1800)reason='30-minute exploration re-entry cooldown.';
+  else if(signal.signal==='BUY')try{openPaperTrade(account,{product:e.product,price:+e.quote.price,stop:signal.stop,target:signal.target,time,source:signal.setup},e.config);action='BUY';account.lastEntries[e.product]=time;}catch(error){reason=error.message;}
+  journal(account,e.product,time,signal,e.config,reason,action);
+ }
+ account.lastQuoteBucket=bucket;account.equityHistory.push({time,equity:markToMarket(account).equity});if(account.equityHistory.length>5000)account.equityHistory.shift();return account;
 }

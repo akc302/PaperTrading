@@ -2,7 +2,8 @@
 import { readFile, writeFile, mkdir, rename, rm } from 'node:fs/promises';
 import { fileURLToPath } from 'node:url';
 import path from 'node:path';
-import { DEFAULT_CONFIG, normalizeCandles, createAccount, processBarBatch, reviewStrategy } from '../engine.js';
+import { DEFAULT_CONFIG, normalizeCandles, createAccount, processBarBatch, processQuoteBatch, reviewStrategy } from '../engine.js';
+import {trainShadow} from './learning.mjs';
 import { encryptState, decryptState } from './private-state.mjs';
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
@@ -87,7 +88,17 @@ for (const product of PRODUCTS) {
 const productConfig = (state, product) => ({ ...DEFAULT_CONFIG, ...state.config, ...state.productConfigs?.[product], ...(state.feeProfile??{}) });
 
 /** Preflight the whole enabled universe before any shared-ledger mutation. */
-function processAccount(state) {
+async function processAccount(state) {
+  if(state.executionMode==='quotes'){
+    const enabled=[...new Set(state.products)],problems=[];
+    if(enabled.some(p=>!PRODUCTS.includes(p)||!refreshed.has(p)))return {ready:false,problems:[{product:null,message:'Live paper checks paused: all enabled feeds must be current.',time:stamp}],processed:0,markets:[]};
+    const events=[];
+    try{for(const product of enabled){const response=await fetch(`https://api.exchange.coinbase.com/products/${product}/ticker`,{signal:AbortSignal.timeout(15000)});if(!response.ok)throw new Error();const quote=await response.json();events.push({product,quote,bars:market.products[product].candles,config:productConfig(state,product)});}
+      const previous=state.account.lastQuoteBucket;const working=structuredClone(state.account);processQuoteBatch(working,events,{time:Date.now()/1000});state.account=working;
+      for(const e of events){market.products[e.product].quote={price:+e.quote.price,time:e.quote.time};state.account.lastProcessed[e.product]=e.bars.at(-1).time;}
+      return {ready:true,problems,processed:state.account.lastQuoteBucket!==previous?events.length:0,markets:enabled};
+    }catch{return {ready:false,problems:[{product:null,message:'Live paper check rejected: fresh complete quotes required for the whole account.',time:stamp}],processed:0,markets:[]};}
+  }
   if (!state.account || !Array.isArray(state.products)) throw new Error('Invalid paper account.');
   const problems = [], contexts = [];
   const enabled = [...new Set(state.products)].filter(p => PRODUCTS.includes(p));
@@ -149,7 +160,7 @@ function outcomesFor(state, product) {
   const pnl = trades.reduce((sum, t) => sum + t.pnl, 0);
   const fees = trades.reduce((sum, t) => sum + t.fees, 0);
   const wins = trades.filter(t => t.pnl > 0).length;
-  const stops = trades.filter(t => t.reason === 'stop').length;
+  const stops = trades.filter(t => /stop/.test(t.reason)).length;
   const timeouts = trades.filter(t => /time|timeout|hold/.test(t.reason)).length;
   const decisions = (state.account.decisions ?? []).filter(d => d.product === product && d.time >= start && d.time < end);
   const actionCounts = {}, reasonCounts = new Map();
@@ -212,7 +223,7 @@ function dailyReviews(state, journal, blocked = new Set()) {
   return added;
 }
 
-const publicUpdate = processAccount(paper);
+const publicUpdate = await processAccount(paper);
 market.errors.push(...publicUpdate.problems);
 if (publicUpdate.ready && dailyReviews(paper, reviews.reviews)) reviews.updatedAt = stamp;
 market.updatedAt = refreshed.size ? stamp : market.updatedAt ?? null;
@@ -248,7 +259,8 @@ if (unreadableEnvelope) {
     if (!state.account || !Array.isArray(state.products) || !Array.isArray(state.reviews) || !Array.isArray(state.events)) throw new Error();
     state.config = { ...DEFAULT_CONFIG, ...state.config, strategy: state.config?.strategy ?? 'trendline' };
     const beforeTrades = state.account.trades.length;
-    const update = processAccount(state);
+    if(state.learning?.trainedOnDate!==date)state.learning={...trainShadow(market.products,{feeRate:productConfig(state,state.products[0]).feeRate}),trainedOnDate:date,updatedAt:stamp};
+    const update = await processAccount(state);
     const enabled = [...new Set(state.products)].filter(p => PRODUCTS.includes(p));
     const ready = update.ready;
     const addedReviews = ready ? dailyReviews(state, state.reviews) : 0;
@@ -272,3 +284,6 @@ if (unreadableEnvelope) {
 await saveJSON('private-status.json', privateStatus);
 if (!refreshed.size) console.error('No markets refreshed. Previous candles/account retained with visible public market errors.');
 
+
+const previousLearning=await readJSON('learning.json',{});
+if(refreshed.size===PRODUCTS.length&&previousLearning.trainedOnDate!==date)await saveJSON('learning.json',{...trainShadow(market.products),trainedOnDate:date,updatedAt:stamp});

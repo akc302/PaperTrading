@@ -25,6 +25,7 @@ test('scheduled updater preserves honest paper history across repeats, gaps, out
     mkdirSync(path.join(fixture, 'scripts'));
     copyFileSync(path.join(root, 'engine.js'), path.join(fixture, 'engine.js'));
     copyFileSync(path.join(root, 'scripts/update-market.mjs'), path.join(fixture, 'scripts/update-market.mjs'));
+    copyFileSync(path.join(root,'scripts/learning.mjs'),path.join(fixture,'scripts/learning.mjs'));
     copyFileSync(path.join(root, 'scripts/private-state.mjs'), path.join(fixture, 'scripts/private-state.mjs'));
     writeFileSync(path.join(fixture, 'package.json'), '{"type":"module"}');
     // Test fixtures are isolated from shipped data. No real network calls or waits.

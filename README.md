@@ -83,3 +83,13 @@ Pages uses GitHub Actions as its source. `pages.yml` publishes main-branch chang
 | `scripts/update-market.mjs` | Scheduled simulation |
 
 The browser-local practice account evaluates observed quotes and closed candles only while open/refreshed; it does not run unattended. The scheduled accounts are separate. Fonts use Google Fonts with local fallbacks. GitHub Pages is public and has no private login; confidentiality of the private account depends on protecting the generated encryption key.
+
+## November 20 experimental update
+
+The operational audit found no GitHub `schedule` events, although manual updates had passed. The app therefore publishes actual timer-evidence metadata instead of treating a cron configuration as evidence of continuous execution. An independent hourly ChatGPT monitor was created as fallback. Neither is a guaranteed real-time host.
+
+The active user-requested aggressive paper experiment uses fresh quotes when a job actually executes, rather than retrospective hourly opening fills. It logs weaker exploration triggers separately from the strict reference trendline strategy. Risk caps are 2% per entry, 8% aggregate planned loss, four positions, 25% allocation per slot, a two-hour holding cap and a 12% daily entry pause. Stops can still lose more during gaps/delays. This experiment is designed to collect evidence, not to maximize apparent returns by omitting costs.
+
+A regularized logistic-regression shadow model fits historical fee-hurdle labels using only contemporaneous price features. Training labels must end before the chronological holdout begins (four-hour embargo). Reports include Brier loss versus a constant baseline and probability timestamps. Accuracy on historical labels is not a strategy win rate. The model currently does not control orders; daily fitting and per-market reviews are research tools.
+
+Display prices use the Coinbase public WebSocket ticker where available, with existing REST refresh fallback. The private key is never sent through that socket. A live display tick cannot prove that the backend has traded; the separate server-update time and timer warning remain authoritative. The paper executor continues using authenticated-fee snapshots, not live per-trade tier refresh.

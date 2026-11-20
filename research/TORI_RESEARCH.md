@@ -14,3 +14,17 @@ Find and verify official URLs for the popular trendline tutorials and recent top
 
 ## Experiment protocol
 Compare rising-support bounce, descending-resistance breakout, retest, opposing safety-line exit, and fixed target variants independently. Keep fee-inclusive baseline, chronological holdout, frozen rules, sample counts and drawdown. Shadow first; never promote solely because of a recent win or loss.
+
+## 2026-11-20 source review update
+
+Exa returned 10 search results across two targeted searches. Three primary articles were additionally fetched, yielding eight unique primary URLs after deduplication. Indexed transcript excerpts are now available for the videos below; coverage is partial, not an exhaustive transcript corpus or an assertion that every video was watched.
+
+| Official video | Evidence available | Original rule summary and implementation boundary |
+| --- | --- | --- |
+| https://www.youtube.com/watch?v=Y8efWZ2M1y8 | Indexed spoken excerpts plus chapters | Higher-timeframe context, clean lines that have not already cut through price, then four-hour execution. She explicitly discusses normal losing trades. Our 1h features and fixed targets are separate modeling choices. |
+| https://www.youtube.com/watch?v=yHAC0xtBR2Q | Indexed spoken excerpts | Defines a break entry and an opposing exit boundary; a losing example is part of the explanation. This is not evidence of a 100% win rate. |
+| https://www.youtube.com/watch?v=qLtq73bTPBA | Indexed spoken excerpts | Stop placement beyond a safety line, rather than exactly on it. Tick precision, market mechanics and line selection remain discretionary. |
+| https://www.youtube.com/watch?v=zT2hSb9IEZw | Indexed spoken excerpts | Downward-line break for a long reversal and progressively protecting an advancing position. A shown successful example does not establish general profitability. |
+| https://www.youtube.com/watch?v=Bkysd0luZfo | Indexed spoken excerpts | Opposing line manages trailing exits; choose a low and recent valid higher-low anchor without slicing through price. A separate trailing-line variant still needs testing against the fixed-exit baseline. |
+
+The active aggressive experiment deliberately accepts weaker exploratory triggers and is NOT the strict three-touch Tori method. Its increased turnover generates observations and costs; it is not a research finding that more trading improves returns. The shadow logistic model predicts a fee-hurdle label on historical data with a chronological holdout. Its classification accuracy must never be advertised as the win rate of executed trades.
