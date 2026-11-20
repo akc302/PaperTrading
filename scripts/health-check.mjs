@@ -7,7 +7,7 @@ export async function checkHealth(getJSON,now=Date.now()){
  for(const path of ['data/market.json','data/paper.json','data/private-status.json']){
   try{
    const data=await getJSON(path);
-   if(!fresh(data.updatedAt,90*60000))errors.push(`${path}: last successful update is missing or older than 90 minutes.`);
+   if(!fresh(data.updatedAt,15*60000))errors.push(`${path}: last successful update is missing or older than 15 minutes.`);
    if(path.endsWith('market.json')){
     if((data.errors??[]).length)errors.push('Market update reports feed errors.');
     for(const product of ['BTC-USD','ETH-USD','SOL-USD','XRP-USD','ADA-USD','DOGE-USD','LINK-USD','AVAX-USD']){

@@ -38,3 +38,6 @@ Every change: meaningful tests, private-data publication audit, successful deplo
 - [x] WebSocket display ticks with REST fallback; display streaming does NOT advance or prove the server trader is running. Confirmed swing labels and reference trendlines are visible.
 - [x] WAIT/SYNC explicitly labeled decision records, not pending orders; executed paper positions and closed fills remain separate.
 - [ ] Regular GitHub five-minute and hourly delivery still require a sustained sequence of actual successful schedule-event runs. A continuously provisioned backend or independent external dispatcher is needed if strict timing is essential.
+
+### 2026-11-20 04:18 UTC fallback check
+One successful GitHub schedule event remains visible (03:10 UTC); no sustained five-minute sequence. Published state was about 55 minutes old, so the independent monitor dispatched update.yml once. The standalone health script still used a 90-minute freshness window, inconsistent with this monitor's 15-minute requirement; corrected it to 15 minutes and added a regression test. No trading/risk rules changed. The GitHub timer issue remains unresolved; a manual recovery is not proof of timer health.
