@@ -53,3 +53,5 @@ One successful GitHub schedule event remains visible (03:10 UTC); no sustained f
 - [ ] Reliable five-minute execution delivery remains unresolved. Learning schedules also depend on GitHub delivery; the independent hourly task supplies bounded recovery/collection/daily-review dispatch fallback.
 
 Collection/review validation compared pre/post account, configuration and trading-heartbeat hashes and confirmed they were unchanged. Private financial evidence is never written to this public memory file.
+
+Deployment validation: all 63 tests and the publication build passed. Daily review workflow 44675291550 and collect-only workflow 44675385076 both completed successfully via workflow_dispatch; published evidence freshness and encrypted private reports were verified. These manual checks validate execution, not scheduled timer delivery. The initial pending collection dispatch was superseded by the daily dispatch in the shared Pages concurrency queue; collection was subsequently dispatched and verified separately.
