@@ -39,15 +39,7 @@ jobs:
           GH_TOKEN: ${{ github.token }}
           GH_REPO: ${{ github.repository }}
           RUN_ID: ${{ github.run_id }}
-        run: |
-          set -euo pipefail
-          for attempt in $(seq 1 12); do
-            count=$(gh api "repos/$GH_REPO/actions/runs/$RUN_ID/artifacts" --jq '[.artifacts[] | select(.name == "github-pages" and .expired == false)] | length')
-            if [ "$count" -gt 0 ]; then exit 0; fi
-            sleep 5
-          done
-          echo 'Uploaded Pages artifact did not become visible; refusing to publish stale output.'
-          exit 1
+        run: node scripts/wait-pages-artifact.mjs
       - name: Deploy dashboard
         id: deployment
         uses: actions/deploy-pages@v4
