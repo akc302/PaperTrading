@@ -1,7 +1,7 @@
 {
   "version": 1,
   "cadence": "hourly collection; daily review",
-  "lastCollectedAt": "2026-11-20T05:20:50.436Z",
+  "lastCollectedAt": "2026-11-20T06:18:49.350Z",
   "hourly": [
     {
       "periodStart": "2026-11-20T03:00:00.000Z",
@@ -50,26 +50,172 @@
       "observedChecks": 2,
       "largestCheckGapSeconds": 1432.3069999217987,
       "evidenceComplete": false
+    },
+    {
+      "periodStart": "2026-11-20T05:00:00.000Z",
+      "periodEnd": "2026-11-20T06:00:00.000Z",
+      "closedTrades": 4,
+      "wins": 0,
+      "losses": 4,
+      "flats": 0,
+      "winRate": 0,
+      "netPnl": -144.42499351071416,
+      "grossFees": 118.84209772075627,
+      "rebatesCredited": 0,
+      "pendingRebates": 0,
+      "expectancy": -36.10624837767854,
+      "profitFactor": 0,
+      "maxDrawdown": 0.005632609141350966,
+      "byMarket": {
+        "BTC-USD": {
+          "trades": 1,
+          "wins": 0,
+          "losses": 1,
+          "netPnl": -44.81129217715741,
+          "grossFees": 29.585446656914225,
+          "rebatesCredited": 0
+        },
+        "ETH-USD": {
+          "trades": 1,
+          "wins": 0,
+          "losses": 1,
+          "netPnl": -49.45471011011351,
+          "grossFees": 29.605720683020184,
+          "rebatesCredited": 0
+        },
+        "SOL-USD": {
+          "trades": 1,
+          "wins": 0,
+          "losses": 1,
+          "netPnl": -42.031966784205615,
+          "grossFees": 29.698906827489175,
+          "rebatesCredited": 0
+        },
+        "XRP-USD": {
+          "trades": 1,
+          "wins": 0,
+          "losses": 1,
+          "netPnl": -8.127024439237637,
+          "grossFees": 29.95202355333268,
+          "rebatesCredited": 0
+        }
+      },
+      "bySetup": {
+        "aggressive-exploration": {
+          "trades": 4,
+          "wins": 0,
+          "losses": 4,
+          "netPnl": -144.42499351071416,
+          "grossFees": 118.84209772075627,
+          "rebatesCredited": 0
+        }
+      },
+      "byExit": {
+        "time-exit": {
+          "trades": 4,
+          "wins": 0,
+          "losses": 4,
+          "netPnl": -144.42499351071416,
+          "grossFees": 118.84209772075627,
+          "rebatesCredited": 0
+        }
+      },
+      "byPattern": {
+        "not-recorded": {
+          "trades": 4,
+          "wins": 0,
+          "losses": 4,
+          "netPnl": -144.42499351071416,
+          "grossFees": 118.84209772075627,
+          "rebatesCredited": 0
+        }
+      },
+      "note": "Completed simulated trade outcomes after modeled costs. Virtual snapshot rebalances excluded. Null ratios mean insufficient denominator, not an infinite edge.",
+      "tradeHeartbeat": "2026-11-20T06:17:46.148Z",
+      "observedChecks": 2,
+      "largestCheckGapSeconds": 1727.0540001392365,
+      "evidenceComplete": false
     }
   ],
   "allTime": {
     "periodStart": "1970-01-01T00:00:00.000Z",
-    "periodEnd": "2026-11-20T05:20:50.436Z",
-    "closedTrades": 0,
+    "periodEnd": "2026-11-20T06:18:49.350Z",
+    "closedTrades": 4,
     "wins": 0,
-    "losses": 0,
+    "losses": 4,
     "flats": 0,
-    "winRate": null,
-    "netPnl": 0,
-    "grossFees": 0,
+    "winRate": 0,
+    "netPnl": -144.42499351071416,
+    "grossFees": 118.84209772075627,
     "rebatesCredited": 0,
     "pendingRebates": 0,
-    "expectancy": null,
-    "profitFactor": null,
-    "maxDrawdown": 0.018766483762535063,
-    "byMarket": {},
-    "bySetup": {},
-    "byExit": {},
+    "expectancy": -36.10624837767854,
+    "profitFactor": 0,
+    "maxDrawdown": 0.02079475938265932,
+    "byMarket": {
+      "BTC-USD": {
+        "trades": 1,
+        "wins": 0,
+        "losses": 1,
+        "netPnl": -44.81129217715741,
+        "grossFees": 29.585446656914225,
+        "rebatesCredited": 0
+      },
+      "ETH-USD": {
+        "trades": 1,
+        "wins": 0,
+        "losses": 1,
+        "netPnl": -49.45471011011351,
+        "grossFees": 29.605720683020184,
+        "rebatesCredited": 0
+      },
+      "SOL-USD": {
+        "trades": 1,
+        "wins": 0,
+        "losses": 1,
+        "netPnl": -42.031966784205615,
+        "grossFees": 29.698906827489175,
+        "rebatesCredited": 0
+      },
+      "XRP-USD": {
+        "trades": 1,
+        "wins": 0,
+        "losses": 1,
+        "netPnl": -8.127024439237637,
+        "grossFees": 29.95202355333268,
+        "rebatesCredited": 0
+      }
+    },
+    "bySetup": {
+      "aggressive-exploration": {
+        "trades": 4,
+        "wins": 0,
+        "losses": 4,
+        "netPnl": -144.42499351071416,
+        "grossFees": 118.84209772075627,
+        "rebatesCredited": 0
+      }
+    },
+    "byExit": {
+      "time-exit": {
+        "trades": 4,
+        "wins": 0,
+        "losses": 4,
+        "netPnl": -144.42499351071416,
+        "grossFees": 118.84209772075627,
+        "rebatesCredited": 0
+      }
+    },
+    "byPattern": {
+      "not-recorded": {
+        "trades": 4,
+        "wins": 0,
+        "losses": 4,
+        "netPnl": -144.42499351071416,
+        "grossFees": 118.84209772075627,
+        "rebatesCredited": 0
+      }
+    },
     "note": "Completed simulated trade outcomes after modeled costs. Virtual snapshot rebalances excluded. Null ratios mean insufficient denominator, not an infinite edge."
   },
   "warning": "Collection is not trading or strategy tuning. Missing execution heartbeat means a period may be incomplete."
