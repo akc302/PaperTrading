@@ -43,8 +43,10 @@ export function normalizeCandles(input){
 
 export function analyze(input,config={}){
   const c=cfg(config);
-  if(c.strategy==='aggressive')return analyzeAggressive(input,c);
-  return c.strategy==='trendline'?analyzeTrendline(input,c):{...analyzeHorizontal(input,c),strategy:'horizontal',setup:'support-bounce',trend:'unconfirmed',trendlines:[]};
+  const result=c.strategy==='aggressive'?analyzeAggressive(input,c):c.strategy==='trendline'?analyzeTrendline(input,c):{...analyzeHorizontal(input,c),strategy:'horizontal',setup:'support-bounce',trend:'unconfirmed',trendlines:[]};
+  const completed=normalizeCandles(input);result.pattern=patternConfirmation(completed,{asOf:(completed.at(-1)?.time??0)+3600});
+  if(c.patternRequired===true&&result.signal==='BUY'&&!result.pattern.confirmed){result.signal='WAIT';result.reason='Research pattern filter: no completed-candle confirmation.';}
+  return result;
 }
 
 /** Aggregate already-completed, hourly bars. Incomplete or noncontiguous UTC groups are omitted. */
@@ -177,7 +179,7 @@ function reservedRisk(account){
 
 function journal(account,product,time,signal,config,reason,action='WAIT'){
   account.decisions??=[];
-  account.decisions.push({time,product,signal:action.startsWith('BUY')?'BUY':'WAIT',observedSignal:signal.signal??'WAIT',action,reason:reason??signal.reason,setup:signal.setup??'support-bounce',strategy:config.strategy,support:signal.support??null,resistance:signal.resistance??null,stop:signal.stop??null,target:signal.target??null,price:signal.price??null,trend:signal.trend??'unconfirmed',config:{...config}});
+  account.decisions.push({time,product,signal:action.startsWith('BUY')?'BUY':'WAIT',observedSignal:signal.signal??'WAIT',action,reason:reason??signal.reason,setup:signal.setup??'support-bounce',strategy:config.strategy,pattern:signal.pattern??null,support:signal.support??null,resistance:signal.resistance??null,stop:signal.stop??null,target:signal.target??null,price:signal.price??null,trend:signal.trend??'unconfirmed',config:{...config}});
   if(account.decisions.length>5000)account.decisions.splice(0,account.decisions.length-5000);
 }
 
@@ -192,7 +194,7 @@ export function markToMarket(account,prices={}){
 }
 
 /** Mutates account, returns it. Fills are modeled with adverse slippage and fees. */
-export function openPaperTrade(account,{product,price,stop,target,time=Date.now()/1000,source='manual'},config={}){
+export function openPaperTrade(account,{product,price,stop,target,time=Date.now()/1000,source='manual',pattern=null},config={}){
   const c=cfg(config);
   if(typeof product!=='string'||!product||![price,stop,target].every(positive)||!finite(time))throw new Error('Invalid paper trade.');
   if(account.positions.some(p=>p.product===product))throw new Error('A paper position is already open for this market.');
@@ -208,7 +210,7 @@ export function openPaperTrade(account,{product,price,stop,target,time=Date.now(
   const entryFeeDetail=feeForFill(entry*quantity,'taker',c,+time),entryFee=entryFeeDetail.gross;
   account.cash-=entry*quantity+entryFee-entryFeeDetail.rebateCredited;
   account.rebatesUSDC=(account.rebatesUSDC??0)+entryFeeDetail.rebateCredited;
-  account.positions.push({id:`paper-${account.nextId++}`,product,entry,quantity,stop:+stop,target:+target,openedAt:+time,entryFee,entryFeeDetail,entryOrderType:'market',feeProfile:{makerFeeRate:c.makerFeeRate,takerFeeRate:c.takerFeeRate,feeTier:c.feeTier,feeObservedAt:c.feeObservedAt,rebateRate:c.rebateRate,rebateVerified:c.rebateVerified},source,riskBudget:Math.min(equity*c.riskPct,remainingRisk),estimatedRewardRisk:reward/lossPerUnit,feeRate:c.feeRate,slippage:c.slippage,maxHoldHours:c.maxHoldHours});
+  account.positions.push({id:`paper-${account.nextId++}`,product,entry,quantity,stop:+stop,target:+target,openedAt:+time,entryFee,entryFeeDetail,entryOrderType:'market',feeProfile:{makerFeeRate:c.makerFeeRate,takerFeeRate:c.takerFeeRate,feeTier:c.feeTier,feeObservedAt:c.feeObservedAt,rebateRate:c.rebateRate,rebateVerified:c.rebateVerified},source,pattern,riskBudget:Math.min(equity*c.riskPct,remainingRisk),estimatedRewardRisk:reward/lossPerUnit,feeRate:c.feeRate,slippage:c.slippage,maxHoldHours:c.maxHoldHours});
   account.marks[product]=+price;
   return account;
 }
@@ -257,7 +259,7 @@ export function processCandles(account,product,input,config={},options={}){
       const requiredReward=fill.risk*(c.strategy==='trendline'?Math.max(2,c.rewardRisk):c.rewardRisk);
       const meetsRewardRisk=fill.risk>0&&fill.reward+Math.max(1,Math.abs(requiredReward))*1e-10>=requiredReward;
       if(signal.signal==='BUY'&&signal.stop<bar.open&&signal.target>fill.entry&&meetsRewardRisk){
-        try{openPaperTrade(account,{product,price:bar.open,stop:signal.stop,target:signal.target,time:bar.time,source:signal.setup??'support-bounce'},c);action='BUY';reason=signal.reason;}
+        try{openPaperTrade(account,{product,price:bar.open,stop:signal.stop,target:signal.target,time:bar.time,source:signal.setup??'support-bounce',pattern:signal.pattern},c);action='BUY';reason=signal.reason;}
         catch(error){reason=error.message;}
       }else if(signal.signal==='BUY')reason='Next-open gap fails the stop/target bracket or minimum net reward/risk; entry skipped.';
     }else if(!existing){reason=daily.blocked?'UTC daily loss circuit is active; new entries paused while exits remain active.':'Automatic paper entries are paused.';}
@@ -325,7 +327,7 @@ export function processBarBatch(account,events,options={}){
     const fill=executionAt(bar.open,signal.stop,signal.target,c),requiredReward=fill.risk*(c.strategy==='trendline'?Math.max(2,c.rewardRisk):c.rewardRisk);
     const eligible=signal.stop<bar.open&&signal.target>fill.entry&&fill.risk>0&&fill.reward+Math.max(1,Math.abs(requiredReward))*1e-10>=requiredReward;
     if(!eligible){event.reason='Next-open gap fails the stop/target bracket or minimum net reward/risk; entry skipped.';continue;}
-    try{openPaperTrade(account,{product:event.product,price:bar.open,stop:signal.stop,target:signal.target,time,source:signal.setup??'support-bounce'},c);event.action='BUY';event.reason=signal.reason;}
+    try{openPaperTrade(account,{product:event.product,price:bar.open,stop:signal.stop,target:signal.target,time,source:signal.setup??'support-bounce',pattern:signal.pattern},c);event.action='BUY';event.reason=signal.reason;}
     catch(error){event.reason=error.message;}
   }
   // Intrabar information becomes available only after every opening entry has
@@ -410,8 +412,48 @@ export function processQuoteBatch(account,events,{time=Date.now()/1000}={}){
   if(account.positions.some(p=>p.product===e.product)){action='HOLD';reason='Open virtual position monitored at fresh quote.';}
   else if(exited.has(e.product)){action='EXIT';reason='Virtual exit executed at this check; no immediate same-check re-entry.';}
   else if(time-(account.lastEntries[e.product]??0)<1800)reason='30-minute exploration re-entry cooldown.';
-  else if(signal.signal==='BUY')try{openPaperTrade(account,{product:e.product,price:+e.quote.price,stop:signal.stop,target:signal.target,time,source:signal.setup},e.config);action='BUY';account.lastEntries[e.product]=time;}catch(error){reason=error.message;}
+  else if(signal.signal==='BUY')try{openPaperTrade(account,{product:e.product,price:+e.quote.price,stop:signal.stop,target:signal.target,time,source:signal.setup,pattern:signal.pattern},e.config);action='BUY';account.lastEntries[e.product]=time;}catch(error){reason=error.message;}
   journal(account,e.product,time,signal,e.config,reason,action);
  }
  account.lastQuoteBucket=bucket;account.equityHistory.push({time,equity:markToMarket(account).equity});if(account.equityHistory.length>5000)account.equityHistory.shift();return account;
+}
+
+/** Adapted research rules from day-trader-skill (see THIRD_PARTY.md); hourly crypto, not NYSE sessions. */
+export function patternConfirmation(input,{asOf=Date.now()/1000}={}){
+ const bars=normalizeCandles(input).filter(b=>b.time+3600<=asOf),last=bars.at(-1);
+ const result={version:1,timeframe:'1h',asOf:last?last.time+3600:null,mode:'observe',confirmed:false,matches:[],context:[],status:'insufficient-data',volumeRatio:null,reason:'Need 31 contiguous completed hourly candles.'};
+ const recent=bars.slice(-31);
+ if(recent.length<31||recent.some((b,i)=>i&&b.time!==recent[i-1].time+3600))return result;
+ if(asOf-last.time-3600>7200)return {...result,status:'stale-data',reason:'Completed hourly candle is over two hours old.'};
+ const c=recent.map(b=>b.close),prior=c.slice(-21,-1),mean=a=>a.reduce((s,v)=>s+v,0)/a.length;
+ const high20=Math.max(...prior),ma=mean(c.slice(-20)),prevMa=mean(prior);
+ const wilder=values=>{let gain=0,loss=0;for(let i=1;i<=14;i++){const d=values[i]-values[i-1];gain+=Math.max(0,d)/14;loss+=Math.max(0,-d)/14;}for(let i=15;i<values.length;i++){const d=values[i]-values[i-1];gain=(gain*13+Math.max(0,d))/14;loss=(loss*13+Math.max(0,-d))/14;}return loss===0?(gain===0?50:100):100-100/(1+gain/loss);};
+ const rsi=wilder(recent.map(b=>b.close)),previousRsi=wilder(recent.slice(0,-1).map(b=>b.close));
+ if(last.close>high20)result.matches.push('closing-high-breakout-20h');
+ if(c.at(-2)<prevMa&&last.close>ma)result.matches.push('ma20-reclaim');
+ if(previousRsi<30&&last.close>c.at(-2))result.matches.push('oversold-bounce');
+ const run=c.at(-6)/c.at(-16)-1,range=(Math.max(...c.slice(-5))-Math.min(...c.slice(-5)))/last.close;
+ if(run>.10&&range<.05)result.context.push('bull-flag-consolidation');
+ if(rsi<30)result.context.push('oversold-alone-is-not-entry');
+ // A consolidation is context only; a close above a frozen prior range is the entry confirmation.
+ const flagPrior=c.slice(-6,-1),flagRun=c.at(-7)/c.at(-17)-1;
+ if(flagRun>.10&&(Math.max(...flagPrior)-Math.min(...flagPrior))/c.at(-2)<.05&&last.close>Math.max(...recent.slice(-6,-1).map(b=>b.high)))result.matches.push('bull-flag-breakout');
+ const volume=mean(recent.slice(-21,-1).map(b=>b.volume));result.volumeRatio=volume>0?last.volume/volume:null;
+ return {...result,status:'evaluated',confirmed:result.matches.length>0,levels:{closingHigh20:high20,ma20:ma},rsi,previousRsi,reason:result.matches.length?'Completed hourly candle matches an explicit entry rule.':'No completed-candle entry confirmation; context alone is insufficient.'};
+}
+
+/** Fixed comparison, not a parameter search or permission to alter live paper entries. */
+export function researchPatterns(input,config={},asOf=Date.now()/1000){
+ const bars=normalizeCandles(input).filter(b=>b.time+3600<=asOf),base={version:1,mode:'shadow',timeframe:'1h',asOf:bars.at(-1)?.time+3600??null,candles:bars.length,confirmation:patternConfirmation(bars,{asOf}),status:'insufficient-data',recommendation:'Observe only; keep the current entry rules.',warning:'Hourly candle replay is an approximation of five-minute quote execution, not a forecast. No NYSE opening-range rule is applied to 24/7 crypto.'};
+ if(bars.length<480)return {...base,reason:'Need 480 completed hourly candles for separated training and holdout.'};
+ if(bars.some((b,i)=>i&&b.time!==bars[i-1].time+3600))return {...base,status:'data-gaps',reason:'Contiguous candles required; no results across missing intervals.'};
+ const cut=Math.floor(bars.length*.7),train=bars.slice(0,cut),split=bars[cut].time;
+ const compact=r=>({returnPct:r.returnPct,netPnl:r.equity-r.account.initial,drawdown:r.drawdown,closedTrades:r.closedTrades,winRate:r.winRate,totalFees:r.totalFees});
+ const baseline={...config,patternRequired:false},filtered={...config,patternRequired:true};
+ const training={baseline:compact(backtest(train,baseline)),filtered:compact(backtest(train,filtered))};
+ const holdout={start:split,end:bars.at(-1).time+3600,baseline:compact(backtest(bars,baseline,{startTime:split})),filtered:compact(backtest(bars,filtered,{startTime:split}))};
+ const enough=[training.baseline,training.filtered,holdout.baseline,holdout.filtered].every(r=>r.closedTrades>=5);
+ const beats=(a,b)=>b.returnPct>a.returnPct&&b.drawdown<=a.drawdown;
+ const passed=enough&&beats(training.baseline,training.filtered)&&beats(holdout.baseline,holdout.filtered)&&holdout.filtered.netPnl>0;
+ return {...base,training,holdout,status:!enough?'insufficient-trades':passed?'promising-shadow':'no-demonstrated-edge',reason:!enough?'Fewer than five closes in at least one comparison sample.':passed?'Fixed filter improved training and later holdout net returns with no higher drawdown; still requires forward paper evidence.':'The fixed pattern filter did not improve both training and holdout with positive holdout profit and no higher drawdown.',assumptions:{execution:'next hourly open, adverse slippage; stop first if ambiguous',costs:'existing account fee, rebate and slippage configuration',risk:'identical risk caps and targets in both arms'},splitTime:split};
 }

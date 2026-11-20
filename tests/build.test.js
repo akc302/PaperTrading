@@ -19,6 +19,9 @@ async function withFixture(run){
   try{
     await mkdir(path.join(root,'scripts'));await mkdir(path.join(root,'data'));
     await copyFile(buildSource,path.join(root,'scripts/build.mjs'));
+    await mkdir(path.join(root,'third-party/day-trader-skill'),{recursive:true});
+    await writeFile(path.join(root,'third-party/day-trader-skill/LICENSE'),'Synthetic MIT attribution');
+    await writeFile(path.join(root,'THIRD_PARTY.md'),'Synthetic research attribution');
     await writeFile(path.join(root,'package.json'),JSON.stringify({type:'module'}));
     for(const file of ['index.html','styles.css','app.js','engine.js','private-ui.js','favicon.svg'])await writeFile(path.join(root,file),`synthetic ${file}`);
     await writeFile(path.join(root,'scripts/private-state.mjs'),'export const syntheticFixtureOnly = true;');
@@ -38,6 +41,7 @@ test('publication uses an explicit data whitelist and excludes unknown secret-li
     for(const name of await readdir(path.join(root,'dist/data'))){
       assert.ok(!(await readFile(path.join(root,'dist/data',name),'utf8')).includes(canary));
     }
+    assert.equal(await readFile(path.join(root,'dist/third-party/day-trader-skill/LICENSE'),'utf8'),'Synthetic MIT attribution');
     assert.equal(await readFile(path.join(root,'dist/scripts/private-state.mjs'),'utf8'),'export const syntheticFixtureOnly = true;');
   });
 });

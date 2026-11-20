@@ -73,6 +73,8 @@ test('frontend routes render real empty accounts and keep manual practice isolat
     await h.route('overview');
     await h.click('[data-market]',{market:'DOGE-USD'});
     assert.match(h.element('#view').innerHTML,/Dogecoin/);
+    assert.match(h.element('#view').innerHTML,/Day-trade patterns/);
+    assert.match(h.element('#view').innerHTML,/OBSERVE ONLY/);
     await h.click('[data-hours]',{hours:'4'});
     assert.match(h.element('#view').innerHTML,/4H CANDLES/);
     await h.click('[data-hours]',{hours:'1'});
@@ -142,6 +144,8 @@ test('private portfolio unlock rejects wrong keys, keeps plaintext out of storag
     assert.ok(!persisted.includes('SYNTHETIC-ONLY'));
     assert.ok(!persisted.includes(String(total)));
     assert.ok(h.calls.every(url=>!url.includes(key)),'Unlock key is never sent in a request.');
+    await h.route('updates');
+    assert.match(h.element('#view').innerHTML,/Day-trade patterns/);
     await h.click('[data-action]',{action:'lock-private'});
     assert.match(h.element('#view').innerHTML,/LOCKED/);
     assert.doesNotMatch(h.element('#view').innerHTML,/43,210\.87|SYNTHETIC-ONLY|123\.456789/);

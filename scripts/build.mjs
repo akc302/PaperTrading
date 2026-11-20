@@ -2,6 +2,9 @@ import {cp,mkdir,rm,readFile,writeFile} from 'node:fs/promises';
 await rm('dist',{recursive:true,force:true});
 await mkdir('dist/data',{recursive:true});
 for(const file of ['index.html','styles.css','app.js','engine.js','private-ui.js','favicon.svg'])await cp(file,`dist/${file}`);
+await cp('THIRD_PARTY.md','dist/THIRD_PARTY.md');
+await mkdir('dist/third-party/day-trader-skill',{recursive:true});
+await cp('third-party/day-trader-skill/LICENSE','dist/third-party/day-trader-skill/LICENSE');
 const allowed=['market.json','mcp-seed.json','paper.json','reviews.json','portfolio.enc.json','private-status.json','learning.json','operations.json','evidence.json','research.json'];
 for(const name of allowed){
  try{
