@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-11-20T15:16:10.047Z",
+  "updatedAt": "2026-11-20T16:22:24.137Z",
   "autoTrade": true,
   "products": [
     "BTC-USD",
@@ -32,7 +32,7 @@
   },
   "account": {
     "initial": 10000,
-    "cash": 21.844651854609765,
+    "cash": 4370.247028283728,
     "positions": [
       {
         "id": "paper-21",
@@ -94,136 +94,6 @@
             0.7029379134755189,
             0,
             0.12314078173642162
-          ],
-          "mode": "shadow",
-          "usedForExecution": false
-        }
-      },
-      {
-        "id": "paper-22",
-        "product": "DOGE-USD",
-        "entry": 0.054927449999999996,
-        "quantity": 40769.316923443606,
-        "stop": 0.053967857142857144,
-        "target": 0.058094132365478494,
-        "openedAt": 1795187785.943,
-        "entryFee": 13.436127701079615,
-        "entryFeeDetail": {
-          "liquidity": "taker",
-          "rate": 0.006,
-          "gross": 13.436127701079615,
-          "tier": "Unverified estimate",
-          "observedAt": null,
-          "checkedAt": 1795187785.943,
-          "source": "Configured estimate",
-          "liveTierChecked": false,
-          "snapshotAgeSeconds": null,
-          "stale": true,
-          "rebatePending": 0,
-          "rebateCredited": 0,
-          "rebateStatus": "Not modeled"
-        },
-        "entryOrderType": "market",
-        "feeProfile": {},
-        "source": "aggressive-exploration",
-        "pattern": {
-          "version": 1,
-          "timeframe": "1h",
-          "asOf": 1795186800,
-          "mode": "observe",
-          "confirmed": false,
-          "matches": [],
-          "context": [],
-          "status": "evaluated",
-          "volumeRatio": 1.3615120070803663,
-          "reason": "No completed-candle entry confirmation; context alone is insufficient.",
-          "levels": {
-            "closingHigh20": 0.05882,
-            "ma20": 0.057418500000000004
-          },
-          "rsi": 30.770032886382467,
-          "previousRsi": 31.348089025642622
-        },
-        "riskBudget": 180.22325956381457,
-        "estimatedRewardRisk": 1.5000000000000022,
-        "feeRate": 0.006,
-        "slippage": 0.0005,
-        "maxHoldHours": 2,
-        "learningContext": {
-          "featureTime": 1795183200,
-          "features": [
-            1,
-            -0.06193594054149654,
-            -0.3450987244452225,
-            -0.22006584647374816,
-            0.6465185642996425,
-            -0.07619047619047953,
-            0.1092602543435417
-          ],
-          "mode": "shadow",
-          "usedForExecution": false
-        }
-      },
-      {
-        "id": "paper-23",
-        "product": "LINK-USD",
-        "entry": 8.558277,
-        "quantity": 261.23687140953814,
-        "stop": 8.40525,
-        "target": 9.056948010096596,
-        "openedAt": 1795187785.943,
-        "entryFee": 13.414425048817249,
-        "entryFeeDetail": {
-          "liquidity": "taker",
-          "rate": 0.006,
-          "gross": 13.414425048817249,
-          "tier": "Unverified estimate",
-          "observedAt": null,
-          "checkedAt": 1795187785.943,
-          "source": "Configured estimate",
-          "liveTierChecked": false,
-          "snapshotAgeSeconds": null,
-          "stale": true,
-          "rebatePending": 0,
-          "rebateCredited": 0,
-          "rebateStatus": "Not modeled"
-        },
-        "entryOrderType": "market",
-        "feeProfile": {},
-        "source": "aggressive-exploration",
-        "pattern": {
-          "version": 1,
-          "timeframe": "1h",
-          "asOf": 1795186800,
-          "mode": "observe",
-          "confirmed": false,
-          "matches": [],
-          "context": [],
-          "status": "evaluated",
-          "volumeRatio": 1.4169364740026327,
-          "reason": "No completed-candle entry confirmation; context alone is insufficient.",
-          "levels": {
-            "closingHigh20": 9.053,
-            "ma20": 8.8758
-          },
-          "rsi": 36.0355707618983,
-          "previousRsi": 37.34834199817156
-        },
-        "riskBudget": 179.932154654802,
-        "estimatedRewardRisk": 1.5000000000000033,
-        "feeRate": 0.006,
-        "slippage": 0.0005,
-        "maxHoldHours": 2,
-        "learningContext": {
-          "featureTime": 1795183200,
-          "features": [
-            1,
-            -0.13665869490946947,
-            -0.31570639305446013,
-            -0.1739228007181337,
-            0.6774477776573254,
-            -0.1437499999999979,
-            0.10734072022160701
           ],
           "mode": "shadow",
           "usedForExecution": false
@@ -2003,6 +1873,184 @@
         "fees": 27.46711281052418,
         "pnl": -86.16941437664308,
         "reason": "quote-stop"
+      },
+      {
+        "id": "paper-22",
+        "product": "DOGE-USD",
+        "entry": 0.054927449999999996,
+        "quantity": 40769.316923443606,
+        "stop": 0.053967857142857144,
+        "target": 0.058094132365478494,
+        "openedAt": 1795187785.943,
+        "entryFee": 13.436127701079615,
+        "entryFeeDetail": {
+          "liquidity": "taker",
+          "rate": 0.006,
+          "gross": 13.436127701079615,
+          "tier": "Unverified estimate",
+          "observedAt": null,
+          "checkedAt": 1795187785.943,
+          "source": "Configured estimate",
+          "liveTierChecked": false,
+          "snapshotAgeSeconds": null,
+          "stale": true,
+          "rebatePending": 0,
+          "rebateCredited": 0,
+          "rebateStatus": "Not modeled"
+        },
+        "entryOrderType": "market",
+        "feeProfile": {},
+        "source": "aggressive-exploration",
+        "pattern": {
+          "version": 1,
+          "timeframe": "1h",
+          "asOf": 1795186800,
+          "mode": "observe",
+          "confirmed": false,
+          "matches": [],
+          "context": [],
+          "status": "evaluated",
+          "volumeRatio": 1.3615120070803663,
+          "reason": "No completed-candle entry confirmation; context alone is insufficient.",
+          "levels": {
+            "closingHigh20": 0.05882,
+            "ma20": 0.057418500000000004
+          },
+          "rsi": 30.770032886382467,
+          "previousRsi": 31.348089025642622
+        },
+        "riskBudget": 180.22325956381457,
+        "estimatedRewardRisk": 1.5000000000000022,
+        "feeRate": 0.006,
+        "slippage": 0.0005,
+        "maxHoldHours": 2,
+        "learningContext": {
+          "featureTime": 1795183200,
+          "features": [
+            1,
+            -0.06193594054149654,
+            -0.3450987244452225,
+            -0.22006584647374816,
+            0.6465185642996425,
+            -0.07619047619047953,
+            0.1092602543435417
+          ],
+          "mode": "shadow",
+          "usedForExecution": false
+        },
+        "exit": 0.05379309,
+        "closedAt": 1795191760.058,
+        "exitFee": 13.15864520700795,
+        "exitFeeDetail": {
+          "liquidity": "taker",
+          "rate": 0.006,
+          "gross": 13.15864520700795,
+          "tier": "Unverified estimate",
+          "observedAt": null,
+          "checkedAt": 1795191760.058,
+          "source": "Configured estimate",
+          "liveTierChecked": false,
+          "snapshotAgeSeconds": null,
+          "stale": true,
+          "rebatePending": 0,
+          "rebateCredited": 0,
+          "rebateStatus": "Not modeled"
+        },
+        "exitOrderType": "market (simulated)",
+        "rebatePending": 0,
+        "rebateCredited": 0,
+        "fees": 26.594772908087563,
+        "pnl": -72.8418552533648,
+        "reason": "quote-stop"
+      },
+      {
+        "id": "paper-23",
+        "product": "LINK-USD",
+        "entry": 8.558277,
+        "quantity": 261.23687140953814,
+        "stop": 8.40525,
+        "target": 9.056948010096596,
+        "openedAt": 1795187785.943,
+        "entryFee": 13.414425048817249,
+        "entryFeeDetail": {
+          "liquidity": "taker",
+          "rate": 0.006,
+          "gross": 13.414425048817249,
+          "tier": "Unverified estimate",
+          "observedAt": null,
+          "checkedAt": 1795187785.943,
+          "source": "Configured estimate",
+          "liveTierChecked": false,
+          "snapshotAgeSeconds": null,
+          "stale": true,
+          "rebatePending": 0,
+          "rebateCredited": 0,
+          "rebateStatus": "Not modeled"
+        },
+        "entryOrderType": "market",
+        "feeProfile": {},
+        "source": "aggressive-exploration",
+        "pattern": {
+          "version": 1,
+          "timeframe": "1h",
+          "asOf": 1795186800,
+          "mode": "observe",
+          "confirmed": false,
+          "matches": [],
+          "context": [],
+          "status": "evaluated",
+          "volumeRatio": 1.4169364740026327,
+          "reason": "No completed-candle entry confirmation; context alone is insufficient.",
+          "levels": {
+            "closingHigh20": 9.053,
+            "ma20": 8.8758
+          },
+          "rsi": 36.0355707618983,
+          "previousRsi": 37.34834199817156
+        },
+        "riskBudget": 179.932154654802,
+        "estimatedRewardRisk": 1.5000000000000033,
+        "feeRate": 0.006,
+        "slippage": 0.0005,
+        "maxHoldHours": 2,
+        "learningContext": {
+          "featureTime": 1795183200,
+          "features": [
+            1,
+            -0.13665869490946947,
+            -0.31570639305446013,
+            -0.1739228007181337,
+            0.6774477776573254,
+            -0.1437499999999979,
+            0.10734072022160701
+          ],
+          "mode": "shadow",
+          "usedForExecution": false
+        },
+        "exit": 8.350822500000001,
+        "closedAt": 1795191760.058,
+        "exitFee": 13.089256461578271,
+        "exitFeeDetail": {
+          "liquidity": "taker",
+          "rate": 0.006,
+          "gross": 13.089256461578271,
+          "tier": "Unverified estimate",
+          "observedAt": null,
+          "checkedAt": 1795191760.058,
+          "source": "Configured estimate",
+          "liveTierChecked": false,
+          "snapshotAgeSeconds": null,
+          "stale": true,
+          "rebatePending": 0,
+          "rebateCredited": 0,
+          "rebateStatus": "Not modeled"
+        },
+        "exitOrderType": "market (simulated)",
+        "rebatePending": 0,
+        "rebateCredited": 0,
+        "fees": 26.50368151039552,
+        "pnl": -80.69844605022529,
+        "reason": "quote-stop"
       }
     ],
     "equityHistory": [
@@ -2093,27 +2141,31 @@
       {
         "time": 1795187785.943,
         "equity": 8967.567734772298
+      },
+      {
+        "time": 1795191760.058,
+        "equity": 8775.820497662085
       }
     ],
     "lastProcessed": {
-      "BTC-USD": 1795183200,
-      "ETH-USD": 1795183200,
-      "SOL-USD": 1795183200,
-      "XRP-USD": 1795183200,
-      "ADA-USD": 1795183200,
-      "DOGE-USD": 1795183200,
-      "LINK-USD": 1795183200,
-      "AVAX-USD": 1795183200
+      "BTC-USD": 1795186800,
+      "ETH-USD": 1795186800,
+      "SOL-USD": 1795186800,
+      "XRP-USD": 1795186800,
+      "ADA-USD": 1795186800,
+      "DOGE-USD": 1795186800,
+      "LINK-USD": 1795186800,
+      "AVAX-USD": 1795186800
     },
     "marks": {
-      "BTC-USD": 60637.78,
-      "ETH-USD": 1703.49,
-      "SOL-USD": 69.43,
-      "XRP-USD": 0.9217,
-      "ADA-USD": 0.1421,
-      "DOGE-USD": 0.0549,
-      "LINK-USD": 8.554,
-      "AVAX-USD": 6.608
+      "BTC-USD": 59283.28,
+      "ETH-USD": 1639.52,
+      "SOL-USD": 68.71,
+      "XRP-USD": 0.9117,
+      "ADA-USD": 0.14021,
+      "DOGE-USD": 0.05382,
+      "LINK-USD": 8.355,
+      "AVAX-USD": 6.497
     },
     "nextId": 25,
     "decisions": [
@@ -9764,6 +9816,438 @@
           "maxTotalRisk": 0.08,
           "stopAtrMultiplier": 1.25
         }
+      },
+      {
+        "time": 1795191760.058,
+        "product": "XRP-USD",
+        "signal": "WAIT",
+        "observedSignal": "BUY",
+        "action": "WAIT",
+        "reason": "UTC daily loss circuit is active; new paper entries are paused for this day.",
+        "setup": "aggressive-exploration",
+        "strategy": "aggressive",
+        "pattern": {
+          "version": 1,
+          "timeframe": "1h",
+          "asOf": 1795190400,
+          "mode": "observe",
+          "confirmed": false,
+          "matches": [],
+          "context": [
+            "oversold-alone-is-not-entry"
+          ],
+          "status": "evaluated",
+          "volumeRatio": 4.936755487218575,
+          "reason": "No completed-candle entry confirmation; context alone is insufficient.",
+          "levels": {
+            "closingHigh20": 0.9714,
+            "ma20": 0.9552950000000001
+          },
+          "rsi": 23.378972926141458,
+          "previousRsi": 34.60742123524007
+        },
+        "support": 0.9028,
+        "resistance": 0.9799,
+        "stop": 0.893655357142857,
+        "target": 0.9685909809217987,
+        "price": 0.9117,
+        "trend": "experimental",
+        "config": {
+          "strategy": "aggressive",
+          "lookback": 48,
+          "pivotWindow": 3,
+          "proximity": 0.006,
+          "stopBuffer": 0.004,
+          "rewardRisk": 1.5,
+          "riskPct": 0.02,
+          "feeRate": 0.006,
+          "slippage": 0.0005,
+          "maxAllocation": 0.25,
+          "trendLookback": 180,
+          "maxHoldHours": 2,
+          "maxDailyLoss": 0.12,
+          "maxOpenPositions": 4,
+          "maxTotalRisk": 0.08,
+          "stopAtrMultiplier": 1.25
+        }
+      },
+      {
+        "time": 1795191760.058,
+        "product": "SOL-USD",
+        "signal": "WAIT",
+        "observedSignal": "BUY",
+        "action": "WAIT",
+        "reason": "UTC daily loss circuit is active; new paper entries are paused for this day.",
+        "setup": "aggressive-exploration",
+        "strategy": "aggressive",
+        "pattern": {
+          "version": 1,
+          "timeframe": "1h",
+          "asOf": 1795190400,
+          "mode": "observe",
+          "confirmed": false,
+          "matches": [],
+          "context": [
+            "oversold-alone-is-not-entry"
+          ],
+          "status": "evaluated",
+          "volumeRatio": 6.0721626977450684,
+          "reason": "No completed-candle entry confirmation; context alone is insufficient.",
+          "levels": {
+            "closingHigh20": 73.5,
+            "ma20": 72.1115
+          },
+          "rsi": 23.60496853910449,
+          "previousRsi": 34.59512484203246
+        },
+        "support": 67.84,
+        "resistance": 74.61,
+        "stop": 67.38946428571428,
+        "target": 72.93848173646677,
+        "price": 68.71,
+        "trend": "experimental",
+        "config": {
+          "strategy": "aggressive",
+          "lookback": 48,
+          "pivotWindow": 3,
+          "proximity": 0.006,
+          "stopBuffer": 0.004,
+          "rewardRisk": 1.5,
+          "riskPct": 0.02,
+          "feeRate": 0.006,
+          "slippage": 0.0005,
+          "maxAllocation": 0.25,
+          "trendLookback": 180,
+          "maxHoldHours": 2,
+          "maxDailyLoss": 0.12,
+          "maxOpenPositions": 4,
+          "maxTotalRisk": 0.08,
+          "stopAtrMultiplier": 1.25
+        }
+      },
+      {
+        "time": 1795191760.058,
+        "product": "ETH-USD",
+        "signal": "WAIT",
+        "observedSignal": "BUY",
+        "action": "WAIT",
+        "reason": "UTC daily loss circuit is active; new paper entries are paused for this day.",
+        "setup": "aggressive-exploration",
+        "strategy": "aggressive",
+        "pattern": {
+          "version": 1,
+          "timeframe": "1h",
+          "asOf": 1795190400,
+          "mode": "observe",
+          "confirmed": false,
+          "matches": [],
+          "context": [
+            "oversold-alone-is-not-entry"
+          ],
+          "status": "evaluated",
+          "volumeRatio": 8.266735857203683,
+          "reason": "No completed-candle entry confirmation; context alone is insufficient.",
+          "levels": {
+            "closingHigh20": 1768.74,
+            "ma20": 1741.953
+          },
+          "rsi": 23.82116960400647,
+          "previousRsi": 40.90877219602221
+        },
+        "support": 1647.03,
+        "resistance": 1789.71,
+        "stop": 1606.5548214285714,
+        "target": 1742.6006205007682,
+        "price": 1639.52,
+        "trend": "experimental",
+        "config": {
+          "strategy": "aggressive",
+          "lookback": 48,
+          "pivotWindow": 3,
+          "proximity": 0.006,
+          "stopBuffer": 0.004,
+          "rewardRisk": 1.5,
+          "riskPct": 0.02,
+          "feeRate": 0.006,
+          "slippage": 0.0005,
+          "maxAllocation": 0.25,
+          "trendLookback": 180,
+          "maxHoldHours": 2,
+          "maxDailyLoss": 0.12,
+          "maxOpenPositions": 4,
+          "maxTotalRisk": 0.08,
+          "stopAtrMultiplier": 1.25
+        }
+      },
+      {
+        "time": 1795191760.058,
+        "product": "BTC-USD",
+        "signal": "WAIT",
+        "observedSignal": "BUY",
+        "action": "WAIT",
+        "reason": "UTC daily loss circuit is active; new paper entries are paused for this day.",
+        "setup": "aggressive-exploration",
+        "strategy": "aggressive",
+        "pattern": {
+          "version": 1,
+          "timeframe": "1h",
+          "asOf": 1795190400,
+          "mode": "observe",
+          "confirmed": false,
+          "matches": [],
+          "context": [
+            "oversold-alone-is-not-entry"
+          ],
+          "status": "evaluated",
+          "volumeRatio": 9.968262882151912,
+          "reason": "No completed-candle entry confirmation; context alone is insufficient.",
+          "levels": {
+            "closingHigh20": 62291.7,
+            "ma20": 61696.77949999999
+          },
+          "rsi": 24.71517838013051,
+          "previousRsi": 40.43500751537121
+        },
+        "support": 59314.1,
+        "resistance": 63340.28,
+        "stop": 58353.20946428571,
+        "target": 62617.692076426145,
+        "price": 59283.28,
+        "trend": "experimental",
+        "config": {
+          "strategy": "aggressive",
+          "lookback": 48,
+          "pivotWindow": 3,
+          "proximity": 0.006,
+          "stopBuffer": 0.004,
+          "rewardRisk": 1.5,
+          "riskPct": 0.02,
+          "feeRate": 0.006,
+          "slippage": 0.0005,
+          "maxAllocation": 0.25,
+          "trendLookback": 180,
+          "maxHoldHours": 2,
+          "maxDailyLoss": 0.12,
+          "maxOpenPositions": 4,
+          "maxTotalRisk": 0.08,
+          "stopAtrMultiplier": 1.25
+        }
+      },
+      {
+        "time": 1795191760.058,
+        "product": "ADA-USD",
+        "signal": "WAIT",
+        "observedSignal": "BUY",
+        "action": "HOLD",
+        "reason": "Open virtual position monitored at fresh quote.",
+        "setup": "aggressive-exploration",
+        "strategy": "aggressive",
+        "pattern": {
+          "version": 1,
+          "timeframe": "1h",
+          "asOf": 1795190400,
+          "mode": "observe",
+          "confirmed": false,
+          "matches": [],
+          "context": [
+            "oversold-alone-is-not-entry"
+          ],
+          "status": "evaluated",
+          "volumeRatio": 5.687209232327553,
+          "reason": "No completed-candle entry confirmation; context alone is insufficient.",
+          "levels": {
+            "closingHigh20": 0.15268,
+            "ma20": 0.148762
+          },
+          "rsi": 20.783465709025705,
+          "previousRsi": 32.907454313525065
+        },
+        "support": 0.13892,
+        "resistance": 0.15454,
+        "stop": 0.1372314285714286,
+        "target": 0.1492644814409216,
+        "price": 0.14021,
+        "trend": "experimental",
+        "config": {
+          "strategy": "aggressive",
+          "lookback": 48,
+          "pivotWindow": 3,
+          "proximity": 0.006,
+          "stopBuffer": 0.004,
+          "rewardRisk": 1.5,
+          "riskPct": 0.02,
+          "feeRate": 0.006,
+          "slippage": 0.0005,
+          "maxAllocation": 0.25,
+          "trendLookback": 180,
+          "maxHoldHours": 2,
+          "maxDailyLoss": 0.12,
+          "maxOpenPositions": 4,
+          "maxTotalRisk": 0.08,
+          "stopAtrMultiplier": 1.25
+        }
+      },
+      {
+        "time": 1795191760.058,
+        "product": "DOGE-USD",
+        "signal": "WAIT",
+        "observedSignal": "BUY",
+        "action": "EXIT",
+        "reason": "Virtual exit executed at this check; no immediate same-check re-entry.",
+        "setup": "aggressive-exploration",
+        "strategy": "aggressive",
+        "pattern": {
+          "version": 1,
+          "timeframe": "1h",
+          "asOf": 1795190400,
+          "mode": "observe",
+          "confirmed": false,
+          "matches": [],
+          "context": [
+            "oversold-alone-is-not-entry"
+          ],
+          "status": "evaluated",
+          "volumeRatio": 4.0721095220349195,
+          "reason": "No completed-candle entry confirmation; context alone is insufficient.",
+          "levels": {
+            "closingHigh20": 0.05854,
+            "ma20": 0.05717800000000001
+          },
+          "rsi": 17.756387892860133,
+          "previousRsi": 31.16433011782516
+        },
+        "support": 0.05346,
+        "resistance": 0.05907,
+        "stop": 0.05274857142857143,
+        "target": 0.057187731400911705,
+        "price": 0.05382,
+        "trend": "experimental",
+        "config": {
+          "strategy": "aggressive",
+          "lookback": 48,
+          "pivotWindow": 3,
+          "proximity": 0.006,
+          "stopBuffer": 0.004,
+          "rewardRisk": 1.5,
+          "riskPct": 0.02,
+          "feeRate": 0.006,
+          "slippage": 0.0005,
+          "maxAllocation": 0.25,
+          "trendLookback": 180,
+          "maxHoldHours": 2,
+          "maxDailyLoss": 0.12,
+          "maxOpenPositions": 4,
+          "maxTotalRisk": 0.08,
+          "stopAtrMultiplier": 1.25
+        }
+      },
+      {
+        "time": 1795191760.058,
+        "product": "LINK-USD",
+        "signal": "WAIT",
+        "observedSignal": "BUY",
+        "action": "EXIT",
+        "reason": "Virtual exit executed at this check; no immediate same-check re-entry.",
+        "setup": "aggressive-exploration",
+        "strategy": "aggressive",
+        "pattern": {
+          "version": 1,
+          "timeframe": "1h",
+          "asOf": 1795190400,
+          "mode": "observe",
+          "confirmed": false,
+          "matches": [],
+          "context": [
+            "oversold-alone-is-not-entry"
+          ],
+          "status": "evaluated",
+          "volumeRatio": 8.86344896645804,
+          "reason": "No completed-candle entry confirmation; context alone is insufficient.",
+          "levels": {
+            "closingHigh20": 9.024,
+            "ma20": 8.8411
+          },
+          "rsi": 21.16168687691743,
+          "previousRsi": 35.24909772737357
+        },
+        "support": 8.3,
+        "resistance": 9.126,
+        "stop": 8.187767857142857,
+        "target": 8.87916143024983,
+        "price": 8.355,
+        "trend": "experimental",
+        "config": {
+          "strategy": "aggressive",
+          "lookback": 48,
+          "pivotWindow": 3,
+          "proximity": 0.006,
+          "stopBuffer": 0.004,
+          "rewardRisk": 1.5,
+          "riskPct": 0.02,
+          "feeRate": 0.006,
+          "slippage": 0.0005,
+          "maxAllocation": 0.25,
+          "trendLookback": 180,
+          "maxHoldHours": 2,
+          "maxDailyLoss": 0.12,
+          "maxOpenPositions": 4,
+          "maxTotalRisk": 0.08,
+          "stopAtrMultiplier": 1.25
+        }
+      },
+      {
+        "time": 1795191760.058,
+        "product": "AVAX-USD",
+        "signal": "WAIT",
+        "observedSignal": "BUY",
+        "action": "HOLD",
+        "reason": "Open virtual position monitored at fresh quote.",
+        "setup": "aggressive-exploration",
+        "strategy": "aggressive",
+        "pattern": {
+          "version": 1,
+          "timeframe": "1h",
+          "asOf": 1795190400,
+          "mode": "observe",
+          "confirmed": false,
+          "matches": [],
+          "context": [
+            "oversold-alone-is-not-entry"
+          ],
+          "status": "evaluated",
+          "volumeRatio": 6.8343016001805745,
+          "reason": "No completed-candle entry confirmation; context alone is insufficient.",
+          "levels": {
+            "closingHigh20": 7.007,
+            "ma20": 6.87445
+          },
+          "rsi": 21.644789827455668,
+          "previousRsi": 34.748668499527426
+        },
+        "support": 6.429,
+        "resistance": 7.09,
+        "stop": 6.360303571428571,
+        "target": 6.914577971895906,
+        "price": 6.497,
+        "trend": "experimental",
+        "config": {
+          "strategy": "aggressive",
+          "lookback": 48,
+          "pivotWindow": 3,
+          "proximity": 0.006,
+          "stopBuffer": 0.004,
+          "rewardRisk": 1.5,
+          "riskPct": 0.02,
+          "feeRate": 0.006,
+          "slippage": 0.0005,
+          "maxAllocation": 0.25,
+          "trendLookback": 180,
+          "maxHoldHours": 2,
+          "maxDailyLoss": 0.12,
+          "maxOpenPositions": 4,
+          "maxTotalRisk": 0.08,
+          "stopAtrMultiplier": 1.25
+        }
       }
     ],
     "dailyRisk": {
@@ -9773,7 +10257,7 @@
       },
       "2026-11-20": {
         "openingEquity": 10000,
-        "blocked": false
+        "blocked": true
       }
     },
     "archivedExperiments": [
@@ -11306,12 +11790,12 @@
       "AVAX-USD": 1795187785.943
     },
     "rebatesUSDC": 0,
-    "lastQuoteBucket": 5983959
+    "lastQuoteBucket": 5983972
   },
-  "lastMarketAt": "2026-11-20T15:16:10.047Z",
+  "lastMarketAt": "2026-11-20T16:22:24.137Z",
   "errors": [],
   "productConfigs": {},
-  "lastRunAt": "2026-11-20T15:16:10.047Z",
+  "lastRunAt": "2026-11-20T16:22:24.137Z",
   "executionMode": "quotes",
   "evidence": {
     "version": 1,
