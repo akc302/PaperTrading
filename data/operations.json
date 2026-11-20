@@ -1,14 +1,14 @@
 {
-  "updatedAt": "2026-11-20T03:22:10.952Z",
-  "triggerEvent": "manual-audit",
+  "updatedAt": "2026-11-20T03:23:59.125Z",
+  "triggerEvent": "workflow_dispatch",
   "scheduleEventCount": 1,
   "fiveMinuteCadenceVerified": false,
   "recentScheduledRuns": [
     {
+      "conclusion": "success",
       "createdAt": "2026-11-20T03:10:57Z",
-      "status": "completed",
-      "conclusion": "success"
+      "status": "completed"
     }
   ],
-  "note": "A successful scheduled run is observed, but regular five-minute cadence remains unverified. Independent hourly fallback configured."
+  "note": "A configured cron is not proof of a running timer. Independent hourly fallback is configured separately."
 }
