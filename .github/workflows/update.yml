@@ -41,7 +41,8 @@ jobs:
         run: |
           set -euo pipefail
           count=$(gh api "repos/$GH_REPO/actions/workflows/update.yml/runs?event=schedule&per_page=1" --jq '.total_count')
-          SCHEDULE_COUNT="$count" node --input-type=module -e "import{writeFileSync}from'node:fs';writeFileSync('data/operations.json',JSON.stringify({updatedAt:new Date().toISOString(),triggerEvent:process.env.TRIGGER_EVENT,scheduleEventCount:Number(process.env.SCHEDULE_COUNT),note:'A configured cron is not proof of a running timer. Independent hourly fallback is configured separately.'},null,2)+'\n');"
+          runs=$(gh api "repos/$GH_REPO/actions/workflows/update.yml/runs?event=schedule&per_page=6" --jq '[.workflow_runs[] | {createdAt:.created_at,status,conclusion}]')
+          SCHEDULE_RUNS="$runs" SCHEDULE_COUNT="$count" node --input-type=module -e "import{writeFileSync}from'node:fs';const runs=JSON.parse(process.env.SCHEDULE_RUNS),times=runs.filter(r=>r.conclusion==='success').map(r=>Date.parse(r.createdAt)).slice(0,3),verified=times.length===3&&Date.now()-times[0]<900000&&times.slice(1).every((t,i)=>times[i]-t<=600000);writeFileSync('data/operations.json',JSON.stringify({updatedAt:new Date().toISOString(),triggerEvent:process.env.TRIGGER_EVENT,scheduleEventCount:Number(process.env.SCHEDULE_COUNT),fiveMinuteCadenceVerified:verified,recentScheduledRuns:runs,note:'A configured cron is not proof of a running timer. Independent hourly fallback is configured separately.'},null,2)+'\n');"
       - name: Save paper account and transparent research history
         run: |
           git config user.name 'github-actions[bot]'

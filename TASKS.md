@@ -29,7 +29,7 @@ Every change: meaningful tests, private-data publication audit, successful deplo
 - [ ] Human-level unattended debugging and arbitrary code repairs are not implemented. GitHub scheduling has no guaranteed hourly SLA. Configure repository Actions notifications to receive failures.
 
 ## 2026-11-20 operational audit and active experiment
-- [x] Actual run-history audit found ZERO schedule-event runs despite configured cron. Earlier manual successes did not prove unattended timers. Simplified/re-enabled GitHub schedules; actual timer evidence is recorded in public operations.json. Timer remains unverified until schedule-event history proves otherwise.
+- [x] Actual run-history audit found ZERO schedule-event runs despite configured cron. Earlier manual successes did not prove unattended timers. Simplified/re-enabled GitHub schedules; actual timer evidence is recorded in public operations.json. At 03:10 UTC one successful scheduled run appeared. That proves a timer can fire, but does not establish a five-minute cadence.
 - [x] Found Pages artifact visibility race; deployment now waits for the uploaded artifact to appear through the API with actions:read permission before deploying.
 - [x] Independent hourly ChatGPT health/recovery task created as fallback, enabled. It is not a five-minute timer and has no guaranteed uptime.
 - [x] Current-quote execution mode introduced: entries/exits timestamp when fresh quotes are actually observed, no backdated fills. Atomic complete-universe quote validation and five-minute idempotency buckets; 30-minute re-entry cooldown.
@@ -37,4 +37,4 @@ Every change: meaningful tests, private-data publication audit, successful deplo
 - [x] Fitted regularized logistic regression introduced in SHADOW mode. Public and encrypted private models use their own fee hurdle, earlier training and later holdout, four-hour embargo, Brier loss vs constant baseline, and explicit as-of times. Daily model fitting does not autonomously rewrite code or promise improvement.
 - [x] WebSocket display ticks with REST fallback; display streaming does NOT advance or prove the server trader is running. Confirmed swing labels and reference trendlines are visible.
 - [x] WAIT/SYNC explicitly labeled decision records, not pending orders; executed paper positions and closed fills remain separate.
-- [ ] GitHub five-minute and hourly timer delivery still require observed schedule-event runs. A continuously provisioned backend or independent external dispatcher is needed if strict timing is essential.
+- [ ] Regular GitHub five-minute and hourly delivery still require a sustained sequence of actual successful schedule-event runs. A continuously provisioned backend or independent external dispatcher is needed if strict timing is essential.

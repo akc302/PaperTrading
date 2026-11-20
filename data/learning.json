@@ -1,0 +1,74 @@
+{
+  "status": "trained-shadow",
+  "mode": "shadow",
+  "model": "regularized logistic regression",
+  "features": [
+    "bias",
+    "1h return",
+    "4h return",
+    "12h return",
+    "24h relative range",
+    "candle body fraction",
+    "distance from 24h low"
+  ],
+  "horizonHours": 4,
+  "label": "Future four-hour close exceeds modeled round-trip taker costs plus 0.1% slippage buffer",
+  "feeRate": 0.006,
+  "splitTime": 1794358800,
+  "trainSamples": 3835,
+  "holdoutSamples": 1712,
+  "latestTrainingLabel": 1794355200,
+  "earliestHoldoutFeature": 1794358800,
+  "weights": [
+    -1.7611796129599213,
+    -0.004915081783637011,
+    -0.03259232788148225,
+    -0.019294457094135426,
+    -0.5384382982468684,
+    0.020502929980638566,
+    -0.26984983764665343
+  ],
+  "holdout": {
+    "brier": 0.09199497694159989,
+    "baselineBrier": 0.09226491348909892,
+    "accuracy": 0.8983644859813084,
+    "beatsConstantBaseline": true
+  },
+  "predictions": {
+    "BTC-USD": {
+      "time": 1795140000,
+      "probability": 0.1133128702758643
+    },
+    "ETH-USD": {
+      "time": 1795140000,
+      "probability": 0.10988010945236645
+    },
+    "SOL-USD": {
+      "time": 1795140000,
+      "probability": 0.10624139566223209
+    },
+    "XRP-USD": {
+      "time": 1795140000,
+      "probability": 0.10977091757575912
+    },
+    "ADA-USD": {
+      "time": 1795140000,
+      "probability": 0.10934148537886851
+    },
+    "DOGE-USD": {
+      "time": 1795140000,
+      "probability": 0.11207205297502974
+    },
+    "LINK-USD": {
+      "time": 1795140000,
+      "probability": 0.10979498566960821
+    },
+    "AVAX-USD": {
+      "time": 1795140000,
+      "probability": 0.10721702535600781
+    }
+  },
+  "warning": "Historical candle labels, not real wins. Overlapping samples and market changes limit validity. Shadow-only; does not control trades or promise profits.",
+  "trainedOnDate": "2026-11-20",
+  "updatedAt": "2026-11-20T03:20:09.394Z"
+}
