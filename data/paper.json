@@ -3926,5 +3926,323 @@
   "errors": [],
   "productConfigs": {},
   "lastRunAt": "2026-11-20T04:18:32.341Z",
-  "executionMode": "quotes"
+  "executionMode": "quotes",
+  "evidence": {
+    "version": 1,
+    "cadence": "hourly collection; daily review",
+    "lastCollectedAt": "2026-11-20T04:29:45.350Z",
+    "hourly": [
+      {
+        "periodStart": "2026-11-20T03:00:00.000Z",
+        "periodEnd": "2026-11-20T04:00:00.000Z",
+        "closedTrades": 0,
+        "wins": 0,
+        "losses": 0,
+        "flats": 0,
+        "winRate": null,
+        "netPnl": 0,
+        "grossFees": 0,
+        "rebatesCredited": 0,
+        "pendingRebates": 0,
+        "expectancy": null,
+        "profitFactor": null,
+        "maxDrawdown": 0.006445346950741259,
+        "byMarket": {},
+        "bySetup": {},
+        "byExit": {},
+        "note": "Completed simulated trade outcomes after modeled costs. Virtual snapshot rebalances excluded. Null ratios mean insufficient denominator, not an infinite edge.",
+        "tradeHeartbeat": "2026-11-20T04:18:32.341Z",
+        "observedChecks": 1,
+        "largestCheckGapSeconds": 2376.108999967575,
+        "evidenceComplete": false
+      }
+    ],
+    "allTime": {
+      "periodStart": "1970-01-01T00:00:00.000Z",
+      "periodEnd": "2026-11-20T04:29:45.350Z",
+      "closedTrades": 0,
+      "wins": 0,
+      "losses": 0,
+      "flats": 0,
+      "winRate": null,
+      "netPnl": 0,
+      "grossFees": 0,
+      "rebatesCredited": 0,
+      "pendingRebates": 0,
+      "expectancy": null,
+      "profitFactor": null,
+      "maxDrawdown": 0.011208696893979686,
+      "byMarket": {},
+      "bySetup": {},
+      "byExit": {},
+      "note": "Completed simulated trade outcomes after modeled costs. Virtual snapshot rebalances excluded. Null ratios mean insufficient denominator, not an infinite edge."
+    },
+    "warning": "Collection is not trading or strategy tuning. Missing execution heartbeat means a period may be incomplete."
+  },
+  "journalResearch": {
+    "version": 1,
+    "reviewDate": "2026-11-20",
+    "reviewedAt": "2026-11-20T04:29:45.350Z",
+    "cadence": "once daily",
+    "executionCoverage": {
+      "hoursObserved": 0,
+      "complete": false,
+      "note": "Missing or sparse execution checks must not be mistaken for a profitable or losing strategy."
+    },
+    "outcomes": {
+      "periodStart": "2026-11-19T00:00:00.000Z",
+      "periodEnd": "2026-11-20T00:00:00.000Z",
+      "closedTrades": 0,
+      "wins": 0,
+      "losses": 0,
+      "flats": 0,
+      "winRate": null,
+      "netPnl": 0,
+      "grossFees": 0,
+      "rebatesCredited": 0,
+      "pendingRebates": 0,
+      "expectancy": null,
+      "profitFactor": null,
+      "maxDrawdown": 0,
+      "byMarket": {},
+      "bySetup": {},
+      "byExit": {},
+      "note": "Completed simulated trade outcomes after modeled costs. Virtual snapshot rebalances excluded. Null ratios mean insufficient denominator, not an infinite edge."
+    },
+    "tradeModel": {
+      "status": "collecting-data",
+      "mode": "shadow",
+      "label": "Positive realized paper P&L after gross fees and credited rebates",
+      "eligibleClosedTrades": 0,
+      "minimumRequired": 100,
+      "reason": "Need more closed trades with frozen entry-time features."
+    },
+    "proposals": [
+      {
+        "product": "BTC-USD",
+        "status": "insufficient-executed-evidence",
+        "eligibleClosedTrades": 0,
+        "reason": "Need complete daily execution sampling coverage, a fresh heartbeat, 100 eligible completed trades overall and 30 for this market, including at least five wins and five losses. Parameters retained."
+      },
+      {
+        "product": "ETH-USD",
+        "status": "insufficient-executed-evidence",
+        "eligibleClosedTrades": 0,
+        "reason": "Need complete daily execution sampling coverage, a fresh heartbeat, 100 eligible completed trades overall and 30 for this market, including at least five wins and five losses. Parameters retained."
+      },
+      {
+        "product": "SOL-USD",
+        "status": "insufficient-executed-evidence",
+        "eligibleClosedTrades": 0,
+        "reason": "Need complete daily execution sampling coverage, a fresh heartbeat, 100 eligible completed trades overall and 30 for this market, including at least five wins and five losses. Parameters retained."
+      },
+      {
+        "product": "XRP-USD",
+        "status": "insufficient-executed-evidence",
+        "eligibleClosedTrades": 0,
+        "reason": "Need complete daily execution sampling coverage, a fresh heartbeat, 100 eligible completed trades overall and 30 for this market, including at least five wins and five losses. Parameters retained."
+      },
+      {
+        "product": "ADA-USD",
+        "status": "insufficient-executed-evidence",
+        "eligibleClosedTrades": 0,
+        "reason": "Need complete daily execution sampling coverage, a fresh heartbeat, 100 eligible completed trades overall and 30 for this market, including at least five wins and five losses. Parameters retained."
+      },
+      {
+        "product": "DOGE-USD",
+        "status": "insufficient-executed-evidence",
+        "eligibleClosedTrades": 0,
+        "reason": "Need complete daily execution sampling coverage, a fresh heartbeat, 100 eligible completed trades overall and 30 for this market, including at least five wins and five losses. Parameters retained."
+      },
+      {
+        "product": "LINK-USD",
+        "status": "insufficient-executed-evidence",
+        "eligibleClosedTrades": 0,
+        "reason": "Need complete daily execution sampling coverage, a fresh heartbeat, 100 eligible completed trades overall and 30 for this market, including at least five wins and five losses. Parameters retained."
+      },
+      {
+        "product": "AVAX-USD",
+        "status": "insufficient-executed-evidence",
+        "eligibleClosedTrades": 0,
+        "reason": "Need complete daily execution sampling coverage, a fresh heartbeat, 100 eligible completed trades overall and 30 for this market, including at least five wins and five losses. Parameters retained."
+      }
+    ],
+    "notes": [
+      "Reviewing evidence does not place/close trades or alter existing positions.",
+      "Risk caps stay fixed. Insufficient evidence retains parameters.",
+      "Market-label shadow ML and executed-trade-outcome ML are distinct models.",
+      "Historical validation does not guarantee future profit."
+    ]
+  },
+  "journalResearchHistory": [
+    {
+      "version": 1,
+      "reviewDate": "2026-11-20",
+      "reviewedAt": "2026-11-20T04:29:45.350Z",
+      "cadence": "once daily",
+      "executionCoverage": {
+        "hoursObserved": 0,
+        "complete": false,
+        "note": "Missing or sparse execution checks must not be mistaken for a profitable or losing strategy."
+      },
+      "outcomes": {
+        "periodStart": "2026-11-19T00:00:00.000Z",
+        "periodEnd": "2026-11-20T00:00:00.000Z",
+        "closedTrades": 0,
+        "wins": 0,
+        "losses": 0,
+        "flats": 0,
+        "winRate": null,
+        "netPnl": 0,
+        "grossFees": 0,
+        "rebatesCredited": 0,
+        "pendingRebates": 0,
+        "expectancy": null,
+        "profitFactor": null,
+        "maxDrawdown": 0,
+        "byMarket": {},
+        "bySetup": {},
+        "byExit": {},
+        "note": "Completed simulated trade outcomes after modeled costs. Virtual snapshot rebalances excluded. Null ratios mean insufficient denominator, not an infinite edge."
+      },
+      "tradeModel": {
+        "status": "collecting-data",
+        "mode": "shadow",
+        "label": "Positive realized paper P&L after gross fees and credited rebates",
+        "eligibleClosedTrades": 0,
+        "minimumRequired": 100,
+        "reason": "Need more closed trades with frozen entry-time features."
+      },
+      "proposals": [
+        {
+          "product": "BTC-USD",
+          "status": "insufficient-executed-evidence",
+          "eligibleClosedTrades": 0,
+          "reason": "Need complete daily execution sampling coverage, a fresh heartbeat, 100 eligible completed trades overall and 30 for this market, including at least five wins and five losses. Parameters retained."
+        },
+        {
+          "product": "ETH-USD",
+          "status": "insufficient-executed-evidence",
+          "eligibleClosedTrades": 0,
+          "reason": "Need complete daily execution sampling coverage, a fresh heartbeat, 100 eligible completed trades overall and 30 for this market, including at least five wins and five losses. Parameters retained."
+        },
+        {
+          "product": "SOL-USD",
+          "status": "insufficient-executed-evidence",
+          "eligibleClosedTrades": 0,
+          "reason": "Need complete daily execution sampling coverage, a fresh heartbeat, 100 eligible completed trades overall and 30 for this market, including at least five wins and five losses. Parameters retained."
+        },
+        {
+          "product": "XRP-USD",
+          "status": "insufficient-executed-evidence",
+          "eligibleClosedTrades": 0,
+          "reason": "Need complete daily execution sampling coverage, a fresh heartbeat, 100 eligible completed trades overall and 30 for this market, including at least five wins and five losses. Parameters retained."
+        },
+        {
+          "product": "ADA-USD",
+          "status": "insufficient-executed-evidence",
+          "eligibleClosedTrades": 0,
+          "reason": "Need complete daily execution sampling coverage, a fresh heartbeat, 100 eligible completed trades overall and 30 for this market, including at least five wins and five losses. Parameters retained."
+        },
+        {
+          "product": "DOGE-USD",
+          "status": "insufficient-executed-evidence",
+          "eligibleClosedTrades": 0,
+          "reason": "Need complete daily execution sampling coverage, a fresh heartbeat, 100 eligible completed trades overall and 30 for this market, including at least five wins and five losses. Parameters retained."
+        },
+        {
+          "product": "LINK-USD",
+          "status": "insufficient-executed-evidence",
+          "eligibleClosedTrades": 0,
+          "reason": "Need complete daily execution sampling coverage, a fresh heartbeat, 100 eligible completed trades overall and 30 for this market, including at least five wins and five losses. Parameters retained."
+        },
+        {
+          "product": "AVAX-USD",
+          "status": "insufficient-executed-evidence",
+          "eligibleClosedTrades": 0,
+          "reason": "Need complete daily execution sampling coverage, a fresh heartbeat, 100 eligible completed trades overall and 30 for this market, including at least five wins and five losses. Parameters retained."
+        }
+      ],
+      "notes": [
+        "Reviewing evidence does not place/close trades or alter existing positions.",
+        "Risk caps stay fixed. Insufficient evidence retains parameters.",
+        "Market-label shadow ML and executed-trade-outcome ML are distinct models.",
+        "Historical validation does not guarantee future profit."
+      ]
+    }
+  ],
+  "learning": {
+    "status": "trained-shadow",
+    "mode": "shadow",
+    "model": "regularized logistic regression",
+    "features": [
+      "bias",
+      "1h return",
+      "4h return",
+      "12h return",
+      "24h relative range",
+      "candle body fraction",
+      "distance from 24h low"
+    ],
+    "horizonHours": 4,
+    "label": "Future four-hour close exceeds modeled round-trip taker costs plus 0.1% slippage buffer",
+    "feeRate": 0.006,
+    "splitTime": 1794358800,
+    "trainSamples": 3835,
+    "holdoutSamples": 1720,
+    "latestTrainingLabel": 1794355200,
+    "earliestHoldoutFeature": 1794358800,
+    "weights": [
+      -1.7611796129599213,
+      -0.004915081783637011,
+      -0.03259232788148225,
+      -0.019294457094135426,
+      -0.5384382982468684,
+      0.020502929980638566,
+      -0.26984983764665343
+    ],
+    "holdout": {
+      "brier": 0.09162483173012922,
+      "baselineBrier": 0.09185900008724504,
+      "accuracy": 0.8988372093023256,
+      "beatsConstantBaseline": true
+    },
+    "predictions": {
+      "BTC-USD": {
+        "time": 1795143600,
+        "probability": 0.11265655577537668
+      },
+      "ETH-USD": {
+        "time": 1795143600,
+        "probability": 0.10959523325529237
+      },
+      "SOL-USD": {
+        "time": 1795143600,
+        "probability": 0.10559192811695496
+      },
+      "XRP-USD": {
+        "time": 1795143600,
+        "probability": 0.1071191768561651
+      },
+      "ADA-USD": {
+        "time": 1795143600,
+        "probability": 0.110094518584912
+      },
+      "DOGE-USD": {
+        "time": 1795143600,
+        "probability": 0.11231361527071833
+      },
+      "LINK-USD": {
+        "time": 1795143600,
+        "probability": 0.11016160085837949
+      },
+      "AVAX-USD": {
+        "time": 1795143600,
+        "probability": 0.10779657841576071
+      }
+    },
+    "warning": "Historical candle labels, not real wins. Overlapping samples and market changes limit validity. Shadow-only; does not control trades or promise profits.",
+    "trainedOnDate": "2026-11-20",
+    "updatedAt": "2026-11-20T04:29:45.350Z"
+  }
 }

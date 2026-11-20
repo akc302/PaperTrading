@@ -41,3 +41,15 @@ Every change: meaningful tests, private-data publication audit, successful deplo
 
 ### 2026-11-20 04:18 UTC fallback check
 One successful GitHub schedule event remains visible (03:10 UTC); no sustained five-minute sequence. Published state was about 55 minutes old, so the independent monitor dispatched update.yml once. The standalone health script still used a 90-minute freshness window, inconsistent with this monitor's 15-minute requirement; corrected it to 15 minutes and added a regression test. No trading/risk rules changed. The GitHub timer issue remains unresolved; a manual recovery is not proof of timer health.
+
+## Execution / evidence / review separation — 2026-11-20
+- [x] update.yml and the normal updater now run trade-only. They do not retrain or retune at each five-minute check. Explicit PAPER_JOB_MODE=all remains only for legacy integration fixtures.
+- [x] learning.yml collect phase: hourly at :23 UTC, summarizes completed hourly windows; deduplicated, catch-up capable, no trade execution. Public dummy evidence is public; private evidence remains encrypted.
+- [x] learning.yml review phase: daily at 00:37 UTC, evaluates the previous UTC day; one review per day, no repeated tuning on every collection. Does not advance the trading heartbeat.
+- [x] Counts wins, losses, flat results, realized net P&L, gross fees, credited/pending rebates, expectancy, profit factor, drawdown, market/setup/exit groups and sampling coverage. Snapshot rebalance records excluded from strategy evidence.
+- [x] A distinct executed-trade-outcome logistic model uses frozen entry features and completed net outcomes, with at least 100 eligible closed trades, chronological holdout and exclusion of trades whose outcomes cross the split. It remains shadow-only.
+- [x] Daily parameter adoption requires complete execution sampling for the prior day, a fresh execution heartbeat, at least 100 completed trades overall, 30 in the market including five wins/five losses, and existing train/holdout guards. Only target ratio, stop-ATR multiplier or future holding duration can change; risk caps and existing positions cannot.
+- [x] Insufficient evidence retains the current strategy. Up to 90 daily reviews retained in state; Git history preserves prior versions.
+- [ ] Reliable five-minute execution delivery remains unresolved. Learning schedules also depend on GitHub delivery; the independent hourly task supplies bounded recovery/collection/daily-review dispatch fallback.
+
+Collection/review validation compared pre/post account, configuration and trading-heartbeat hashes and confirmed they were unchanged. Private financial evidence is never written to this public memory file.

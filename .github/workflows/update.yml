@@ -32,6 +32,7 @@ jobs:
       - name: Refresh public candles, simulate fills, and review daily
         env:
           PAPER_STATE_KEY: ${{ secrets.PAPER_STATE_KEY }}
+          PAPER_JOB_MODE: trade
         run: node scripts/update-market.mjs
       - name: Record actual timer evidence
         env:

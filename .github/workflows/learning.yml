@@ -1,0 +1,80 @@
+name: Journal evidence and daily learning
+on:
+  schedule:
+    - cron: '23 * * * *'
+    - cron: '37 0 * * *'
+  workflow_dispatch:
+    inputs:
+      phase:
+        type: choice
+        options: [collect, review]
+        default: collect
+        description: Collect outcomes or run one daily review
+permissions:
+  contents: write
+  pages: write
+  actions: read
+  id-token: write
+concurrency:
+  group: github-pages
+  cancel-in-progress: false
+jobs:
+  research:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - run: npm test
+      - name: Choose collection or daily review
+        id: phase
+        env:
+          REQUESTED_PHASE: ${{ inputs.phase }}
+          SCHEDULE: ${{ github.event.schedule }}
+        run: |
+          phase=collect
+          if [ "$REQUESTED_PHASE" = review ] || [ "$SCHEDULE" = '37 0 * * *' ]; then phase=review; fi
+          echo "value=$phase" >> "$GITHUB_OUTPUT"
+      - name: Collect evidence without executing trades
+        env:
+          PAPER_STATE_KEY: ${{ secrets.PAPER_STATE_KEY }}
+          LEARNING_PHASE: ${{ steps.phase.outputs.value }}
+        run: node scripts/journal-learning.mjs "$LEARNING_PHASE"
+      - name: Save research and encrypted journal
+        run: |
+          set -euo pipefail
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          for file in evidence.json research.json learning.json paper.json portfolio.enc.json; do
+            if [ -f "data/$file" ]; then git add "data/$file"; fi
+          done
+          if ! git diff --cached --quiet; then git commit -m 'Collect journal evidence and daily research'; git push; fi
+      - run: npm run build
+      - uses: actions/configure-pages@v5
+        with:
+          enablement: true
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: dist
+      - name: Wait for Pages artifact
+        env:
+          GH_TOKEN: ${{ github.token }}
+          GH_REPO: ${{ github.repository }}
+          RUN_ID: ${{ github.run_id }}
+        run: |
+          set -euo pipefail
+          for attempt in $(seq 1 12); do
+            count=$(gh api "repos/$GH_REPO/actions/runs/$RUN_ID/artifacts" --jq '[.artifacts[] | select(.name == "github-pages" and .expired == false)] | length')
+            if [ "$count" -gt 0 ]; then exit 0; fi
+            sleep 5
+          done
+          exit 1
+      - uses: actions/deploy-pages@v4
+        id: deployment

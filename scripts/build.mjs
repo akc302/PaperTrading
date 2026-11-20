@@ -2,7 +2,7 @@ import {cp,mkdir,rm,readFile,writeFile} from 'node:fs/promises';
 await rm('dist',{recursive:true,force:true});
 await mkdir('dist/data',{recursive:true});
 for(const file of ['index.html','styles.css','app.js','engine.js','private-ui.js','favicon.svg'])await cp(file,`dist/${file}`);
-const allowed=['market.json','mcp-seed.json','paper.json','reviews.json','portfolio.enc.json','private-status.json','learning.json','operations.json'];
+const allowed=['market.json','mcp-seed.json','paper.json','reviews.json','portfolio.enc.json','private-status.json','learning.json','operations.json','evidence.json','research.json'];
 for(const name of allowed){
  try{
   const raw=await readFile(`data/${name}`);

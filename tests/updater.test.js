@@ -16,7 +16,7 @@ test('scheduled updater preserves honest paper history across repeats, gaps, out
   const run = (offset = 0, extra = {}) => {
     const result = spawnSync(process.execPath, ['--import', path.join(fixture, 'mock.mjs'), path.join(fixture, 'scripts/update-market.mjs')], {
       encoding: 'utf8', timeout: 10000,
-      env: { ...process.env, PAPER_STATE_KEY: '', TEST_OFFSET: String(offset), TEST_FAIL: '', TEST_FAIL_PRODUCT: '', TEST_MISSING: '', TEST_MISSING_PRODUCT: '', ...extra },
+      env: { ...process.env, PAPER_STATE_KEY: '', PAPER_JOB_MODE: 'all', TEST_OFFSET: String(offset), TEST_FAIL: '', TEST_FAIL_PRODUCT: '', TEST_MISSING: '', TEST_MISSING_PRODUCT: '', ...extra },
     });
     assert.equal(result.status, 0, result.error?.message ?? result.stdout + result.stderr);
     return result;

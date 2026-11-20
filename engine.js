@@ -1,5 +1,5 @@
 /** Pure market analysis plus a virtual, long-only ledger. No account or order APIs. */
-export const DEFAULT_CONFIG = Object.freeze({strategy:'horizontal',lookback:48,pivotWindow:3,proximity:0.006,stopBuffer:0.004,rewardRisk:2,riskPct:0.01,feeRate:0.006,slippage:0.0005,maxAllocation:0.25,trendLookback:180,maxHoldHours:48,maxDailyLoss:0.04,maxOpenPositions:4,maxTotalRisk:0.03});
+export const DEFAULT_CONFIG = Object.freeze({strategy:'horizontal',lookback:48,pivotWindow:3,proximity:0.006,stopBuffer:0.004,rewardRisk:2,riskPct:0.01,feeRate:0.006,slippage:0.0005,maxAllocation:0.25,trendLookback:180,maxHoldHours:48,maxDailyLoss:0.04,maxOpenPositions:4,maxTotalRisk:0.03,stopAtrMultiplier:1.25});
 
 const finite = (n) => Number.isFinite(Number(n));
 const positive = (n) => finite(n) && Number(n)>0;
@@ -10,6 +10,7 @@ const cfg = (c={}) => {
   if(!positive(x.riskPct)||x.riskPct>0.05||!positive(x.maxAllocation)||x.maxAllocation>1||!finite(x.feeRate)||x.feeRate<0||x.feeRate>0.05||!finite(x.slippage)||x.slippage<0||x.slippage>0.05) throw new Error('Invalid paper risk or execution settings.');
   if(!['horizontal','trendline','aggressive'].includes(x.strategy)||!Number.isInteger(x.trendLookback)||x.trendLookback<60||x.trendLookback>720)throw new Error('Invalid strategy or trendline window.');
   if(!finite(x.maxHoldHours)||x.maxHoldHours<0||x.maxHoldHours>720||!finite(x.maxDailyLoss)||x.maxDailyLoss<0||x.maxDailyLoss>0.5||!Number.isInteger(x.maxOpenPositions)||x.maxOpenPositions<1||x.maxOpenPositions>20||!positive(x.maxTotalRisk)||x.maxTotalRisk>0.2)throw new Error('Invalid portfolio risk limits.');
+  if(!positive(x.stopAtrMultiplier)||x.stopAtrMultiplier<.5||x.stopAtrMultiplier>4)throw new Error('Invalid stop ATR multiplier.');
   return x;
 };
 /** Per-fill costs use a saved fee observation; this never claims an authenticated live check. */
@@ -365,7 +366,7 @@ export function reviewStrategy(input,config={}){
   // Training candles may warm up indicators, but holdout account/fills start only
   // at the split. The training-selected candidate never sees future holdout data.
   const baseline=backtest(bars,c,{startTime:hold[0].time}),trainBase=backtest(train,c);
-  const variants=c.strategy==='trendline'?[{...c,trendLookback:120},{...c,trendLookback:240},{...c,proximity:0.004},{...c,proximity:0.008}]:[{...c,lookback:24},{...c,lookback:72},{...c,proximity:0.004},{...c,proximity:0.008}];
+  const variants=c.strategy==='aggressive'?[{...c,rewardRisk:1.2},{...c,rewardRisk:2},{...c,maxHoldHours:1},{...c,stopAtrMultiplier:1.5}]:c.strategy==='trendline'?[{...c,trendLookback:120},{...c,trendLookback:240},{...c,proximity:0.004},{...c,proximity:0.008}]:[{...c,lookback:24},{...c,lookback:72},{...c,proximity:0.004},{...c,proximity:0.008}];
   const candidates=variants.map(config=>({config,result:backtest(train,config)}));
   candidates.sort((a,b)=>(b.result.returnPct-b.result.drawdown)-(a.result.returnPct-a.result.drawdown));
   const best=candidates[0],candidate=backtest(bars,best.config,{startTime:hold[0].time});
@@ -381,7 +382,7 @@ function analyzeAggressive(input,c){
  if(bars.length<24)return base;
  base.trendlines=analyzeTrendline(bars,{...c,strategy:'trendline'}).trendlines;
  const recent=bars.slice(-24);base.support=Math.min(...recent.map(b=>b.low));base.resistance=Math.max(...recent.map(b=>b.high));base.atr=recent.slice(-14).reduce((s,b)=>s+b.high-b.low,0)/14;
- base.stop=base.price-Math.max(base.price*.015,base.atr*1.25);
+ base.stop=base.price-Math.max(base.price*.015,base.atr*c.stopAtrMultiplier);
  const fill=executionAt(base.price,base.stop,base.price,c);
  base.target=(fill.entry*(1+c.feeRate)+fill.risk*c.rewardRisk)/((1-c.slippage)*(1-c.feeRate));
  const bullish=last.close>last.open,nearSupport=last.close<=base.support*1.03,pullback=last.close/bars.at(-4).close-1<-.01;
@@ -405,7 +406,7 @@ export function processQuoteBatch(account,events,{time=Date.now()/1000}={}){
   if(reason){closePaperTrade(account,p.id,reason==='target'?p.target:price,time,reason,e.config);exited.add(e.product);}
  }
  const priority=['XRP-USD','SOL-USD','ETH-USD','BTC-USD','ADA-USD','DOGE-USD','LINK-USD','AVAX-USD'];
- for(const e of prepared.sort((a,b)=>(priority.indexOf(a.product)<0?99:priority.indexOf(a.product))-(priority.indexOf(b.product)<0?99:priority.indexOf(b.product))||a.product.localeCompare(b.product))){const signal=analyze(e.bars,e.config);if(e.config.strategy==='aggressive'&&signal.signal==='BUY'){const price=+e.quote.price;signal.price=price;signal.stop=price-Math.max(price*.015,signal.atr*1.25);const fill=executionAt(price,signal.stop,price,e.config);signal.target=(fill.entry*(1+e.config.feeRate)+fill.risk*e.config.rewardRisk)/((1-e.config.slippage)*(1-e.config.feeRate));}let action='WAIT',reason=signal.reason;
+ for(const e of prepared.sort((a,b)=>(priority.indexOf(a.product)<0?99:priority.indexOf(a.product))-(priority.indexOf(b.product)<0?99:priority.indexOf(b.product))||a.product.localeCompare(b.product))){const signal=analyze(e.bars,e.config);if(e.config.strategy==='aggressive'&&signal.signal==='BUY'){const price=+e.quote.price;signal.price=price;signal.stop=price-Math.max(price*.015,signal.atr*e.config.stopAtrMultiplier);const fill=executionAt(price,signal.stop,price,e.config);signal.target=(fill.entry*(1+e.config.feeRate)+fill.risk*e.config.rewardRisk)/((1-e.config.slippage)*(1-e.config.feeRate));}let action='WAIT',reason=signal.reason;
   if(account.positions.some(p=>p.product===e.product)){action='HOLD';reason='Open virtual position monitored at fresh quote.';}
   else if(exited.has(e.product)){action='EXIT';reason='Virtual exit executed at this check; no immediate same-check re-entry.';}
   else if(time-(account.lastEntries[e.product]??0)<1800)reason='30-minute exploration re-entry cooldown.';

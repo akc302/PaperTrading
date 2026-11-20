@@ -10,6 +10,8 @@ const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const DATA = path.join(ROOT, 'data');
 const PRODUCTS = ['BTC-USD', 'ETH-USD', 'SOL-USD', 'XRP-USD', 'ADA-USD', 'DOGE-USD', 'LINK-USD', 'AVAX-USD'];
 const HOUR = 3600;
+// Normal updates execute only trades. Explicit 'all' preserves legacy integration fixtures.
+const TRADE_ONLY=process.env.PAPER_JOB_MODE!=='all';
 const MAX_BARS = 2160;
 const stamp = new Date().toISOString();
 const cutoff = Math.floor(Date.parse(stamp) / 1000 / HOUR) * HOUR;
@@ -225,7 +227,7 @@ function dailyReviews(state, journal, blocked = new Set()) {
 
 const publicUpdate = await processAccount(paper);
 market.errors.push(...publicUpdate.problems);
-if (publicUpdate.ready && dailyReviews(paper, reviews.reviews)) reviews.updatedAt = stamp;
+if (!TRADE_ONLY && publicUpdate.ready && dailyReviews(paper, reviews.reviews)) reviews.updatedAt = stamp;
 market.updatedAt = refreshed.size ? stamp : market.updatedAt ?? null;
 market.source = 'Coinbase public Exchange API';
 market.granularity = HOUR;
@@ -259,11 +261,11 @@ if (unreadableEnvelope) {
     if (!state.account || !Array.isArray(state.products) || !Array.isArray(state.reviews) || !Array.isArray(state.events)) throw new Error();
     state.config = { ...DEFAULT_CONFIG, ...state.config, strategy: state.config?.strategy ?? 'trendline' };
     const beforeTrades = state.account.trades.length;
-    if(state.learning?.trainedOnDate!==date)state.learning={...trainShadow(market.products,{feeRate:productConfig(state,state.products[0]).feeRate}),trainedOnDate:date,updatedAt:stamp};
+    if(!TRADE_ONLY&&state.learning?.trainedOnDate!==date)state.learning={...trainShadow(market.products,{feeRate:productConfig(state,state.products[0]).feeRate}),trainedOnDate:date,updatedAt:stamp};
     const update = await processAccount(state);
     const enabled = [...new Set(state.products)].filter(p => PRODUCTS.includes(p));
     const ready = update.ready;
-    const addedReviews = ready ? dailyReviews(state, state.reviews) : 0;
+    const addedReviews = ready && !TRADE_ONLY ? dailyReviews(state, state.reviews) : 0;
     if (ready) {
       state.updatedAt = stamp;
       state.lastMarketAt = market.updatedAt;
@@ -287,4 +289,4 @@ if (!refreshed.size) console.error('No markets refreshed. Previous candles/accou
 
 
 const previousLearning=await readJSON('learning.json',{});
-if(refreshed.size===PRODUCTS.length&&previousLearning.trainedOnDate!==date)await saveJSON('learning.json',{...trainShadow(market.products),trainedOnDate:date,updatedAt:stamp});
+if(!TRADE_ONLY&&refreshed.size===PRODUCTS.length&&previousLearning.trainedOnDate!==date)await saveJSON('learning.json',{...trainShadow(market.products),trainedOnDate:date,updatedAt:stamp});

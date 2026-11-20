@@ -93,3 +93,21 @@ The active user-requested aggressive paper experiment uses fresh quotes when a j
 A regularized logistic-regression shadow model fits historical fee-hurdle labels using only contemporaneous price features. Training labels must end before the chronological holdout begins (four-hour embargo). Reports include Brier loss versus a constant baseline and probability timestamps. Accuracy on historical labels is not a strategy win rate. The model currently does not control orders; daily fitting and per-market reviews are research tools.
 
 Display prices use the Coinbase public WebSocket ticker where available, with existing REST refresh fallback. The private key is never sent through that socket. A live display tick cannot prove that the backend has traded; the separate server-update time and timer warning remain authoritative. The paper executor continues using authenticated-fee snapshots, not live per-trade tier refresh.
+
+## Evidence gathering versus strategy review
+
+The jobs have distinct responsibilities:
+
+| Job | Configured cadence | Changes trades? | Fits/tunes? |
+| --- | --- | --- | --- |
+| update.yml | Every five minutes | Yes, simulated execution and management only | No |
+| learning.yml collect | Hourly at :23 UTC | No | No; collects completed outcomes |
+| learning.yml review | Daily at 00:37 UTC | No existing positions changed | Evaluates once per UTC day; gated future-entry changes only |
+
+The normal updater defaults to trade-only, including manual invocations. The collector records wins/losses/flats, realized net outcomes, fees/rebates, expectancy, profit factor, drawdown and market/setup/exit categories. Sparse execution checks mark a window incomplete; a recent HTTP response alone does not prove the trader ran at its intended cadence. Daily tuning is refused when execution coverage is incomplete or sample counts are insufficient.
+
+A separate ML report uses actual completed paper trades with frozen entry-time features. It requires at least 100 eligible closed outcomes and a chronological holdout with both winners and losers; trades crossing the training boundary are excluded. This is different from the existing historical-market-label model. Both remain shadow research, not a promised profitable filter.
+
+Daily future-entry adjustments require at least 100 completed trades overall, 30 in a market with five wins and five losses, complete sampling coverage, a fresh execution heartbeat and the existing training/holdout checks. Risk/allocation/position/daily-loss caps remain fixed. The configured daily UTC review interval is not a guarantee of delivery: GitHub timer irregularity remains visible, and a separate hourly fallback can dispatch missing jobs.
+
+Public evidence is in data/evidence.json and data/research.json. The corresponding private evidence/review/model is inside data/portfolio.enc.json. Collecting or reviewing it never refreshes the trading heartbeat or calls real Coinbase order endpoints.
