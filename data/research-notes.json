@@ -21,6 +21,24 @@
       "adopted": true,
       "nextIdea": "Add strategy-lab CANDIDATES: (a) 'aggressive+regime-block' that skips entries when EMA20<EMA50 and 24h change < -3% (or requires a 4h close above EMA50); (b) cap same-run entries to 1-2 coins when they are highly correlated; (c) maker-limit entry modeling (0.4% maker vs 0.6% taker, before the 25% rebate) so entries are rejected unless expected move > 2.5x round-trip cost. Judge on the unseen newest-25% test with fees; FROZEN risk caps unchanged.",
       "status": "Regime filter merged (PR #11). learning.yml research run at 17:58Z adopted: ADA-USD regime-block (regimeFilter:true, 4h hold); SOL/LINK 4h hold; DOGE 1.5x ATR stop. BTC/ETH/XRP/AVAX kept current rules (no candidate beat them on unseen data). Judge at next run whether downtrend losses stop on ADA."
+    },
+    {
+      "at": "2026-11-21T20:32:14.169Z",
+      "tradesReviewed": 0,
+      "losses": 0,
+      "findings": [
+        "No paper trades closed since the 16:30Z note (the account restarted at $30,000 at 16:38Z). XRP and ADA are open under the old aggressive hourly rules, 2.5h in.",
+        "PR #10 (merged 18:28Z) made trend-follow the main strategy: main productConfigs are now {} and the hourly rules moved into the hourly-legacy and lab-hourly challengers. The lab now runs hourly research in shadow and feeds lab-hourly.",
+        "Bug: challengers RULE_KEYS lacked regimeFilter (PRs #10 and #11 were merged in parallel), so lab-hourly silently dropped ADA regimeFilter:true and could not carry any future regime-block adoption.",
+        "GitHub skipped the scheduled learning runs at 19:23, 20:17 (research) and 20:23Z. Research was dispatched by hand at 20:29Z: every market chose keep. XRP's leading candidate was aggressive-day-hold+regime-block, but it did not clear adoption on unseen data."
+      ],
+      "changes": [
+        "scripts/challengers.mjs: add regimeFilter to RULE_KEYS",
+        "tests/challengers.test.js: every strategy-lab TUNABLE key must survive into challengers"
+      ],
+      "adopted": false,
+      "nextIdea": "Once the first trend-follow trades close, compare them with the hourly challengers on net after fees. If lab-hourly keeps losing in downtrends, make regime-block its default rather than waiting for per-market adoption. Also check whether the trend-follow entry needs a 1d EMA50 regime gate.",
+      "status": "RULE_KEYS fix merged. ADA regimeFilter returns to lab-hourly when the lab next adopts it for ADA."
     }
   ]
 }
