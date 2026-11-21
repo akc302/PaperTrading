@@ -17,7 +17,7 @@ permissions:
   actions: write
   id-token: write
 concurrency:
-  group: github-pages
+  group: paper-learning
   cancel-in-progress: false
 jobs:
   research:
@@ -44,30 +44,17 @@ jobs:
           if [ "$REQUESTED_PHASE" = review ] || [ "$SCHEDULE" = '37 0 * * *' ]; then phase=review; fi
           if [ "$REQUESTED_PHASE" = research ] || [ "$SCHEDULE" = '17 */5 * * *' ]; then phase=research; fi
           echo "value=$phase" >> "$GITHUB_OUTPUT"
-      - name: Collect evidence without executing trades
+      - name: Collect or research, manager report, and save (replays on newest main if another job pushed first)
+        id: team
         env:
           PAPER_STATE_KEY: ${{ secrets.PAPER_STATE_KEY }}
           LEARNING_PHASE: ${{ steps.phase.outputs.value }}
         run: |
-          if [ "$LEARNING_PHASE" = research ]; then
-            node scripts/strategy-lab.mjs
-          else
-            node scripts/journal-learning.mjs "$LEARNING_PHASE"
-          fi
-      - name: Manager report against the paper goal
-        id: team
-        env:
-          PAPER_STATE_KEY: ${{ secrets.PAPER_STATE_KEY }}
-        run: node scripts/team-report.mjs
-      - name: Save research and encrypted journal
-        run: |
-          set -euo pipefail
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
-          for file in evidence.json research.json learning.json paper.json portfolio.enc.json team-report.json; do
-            if [ -f "data/$file" ]; then git add "data/$file"; fi
-          done
-          if ! git diff --cached --quiet; then git commit -m 'Collect journal evidence and daily research'; git push; fi
+          if [ "$LEARNING_PHASE" = research ]; then work='node scripts/strategy-lab.mjs'; else work="node scripts/journal-learning.mjs $LEARNING_PHASE"; fi
+          scripts/commit-retry.sh 'Collect journal evidence and daily research' "$work && node scripts/team-report.mjs" \
+            data/evidence.json data/research.json data/learning.json data/paper.json data/portfolio.enc.json data/team-report.json
       - run: npm run build
       - uses: actions/configure-pages@v5
         with:
@@ -83,6 +70,7 @@ jobs:
         run: node scripts/wait-pages-artifact.mjs
       - uses: actions/deploy-pages@v4
         id: deployment
+        continue-on-error: true
       - name: Restart stalled agents
         if: steps.team.outputs.dispatch != ''
         env:
