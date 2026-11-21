@@ -1,0 +1,23 @@
+{
+  "version": 1,
+  "entries": [
+    {
+      "at": "2026-11-21T16:30:00Z",
+      "tradesReviewed": 42,
+      "losses": 40,
+      "findings": [
+        "42/42 closed trades were 'aggressive-exploration' entries taken while EMA20<EMA50 with negative 24h change (-0.2% to -10%): every entry was counter-trend in a downtrend regime.",
+        "Entries cluster: 4 coins entered in the same 5-min run each time (03:20, 05:49, 08:23, 11:16, 13:18, 15:16, 00:21, 02:50, 04:16, 07:00 UTC), so each bad signal cost 4x; correlated losses, not diversification.",
+        "Net -2068.75 = gross -945.70 minus fees 1123.03. Taker 0.6% each side (1.2% round trip) is 54% of the loss; 8 of 40 losers were gross-positive and fee-killed.",
+        "Targets were ~5.5-7% away with a 2h max hold: only 4/40 losers ever reached half the target (median MFE ~0.6%). Target was unreachable in the hold window; 30/42 exits were time-exits.",
+        "Stops were 1.25-1.6x ATR; all 12 quote-stops hit within 1-2h in -2% to -6% hourly flushes (e.g. 02:50 batch, MAE ~-6%). Too tight for downtrend volatility.",
+        "Untagged entries (no pattern match): 35 trades, 0 wins, -1980.81. Pattern-tagged: oversold-bounce 1/5, ma20-reclaim 1/2 (the only 2 winners, both with 2-4h holds and MFE >3.6%).",
+        "productConfigs adopted ~13:32 UTC (patternRequired, 24h hold, 2.5x ATR stop) address the hold/stop/pattern findings; only 1 trade (paper-44, win) closed since, so too early to judge. No regime filter or fee reduction adopted yet."
+      ],
+      "changes": [],
+      "adopted": false,
+      "nextIdea": "Add strategy-lab CANDIDATES: (a) 'aggressive+regime-block' that skips entries when EMA20<EMA50 and 24h change < -3% (or requires a 4h close above EMA50); (b) cap same-run entries to 1-2 coins when they are highly correlated; (c) maker-limit entry modeling (0.4% maker vs 0.6% taker, before the 25% rebate) so entries are rejected unless expected move > 2.5x round-trip cost. Judge on the unseen newest-25% test with fees; FROZEN risk caps unchanged.",
+      "status": "Analysis only. Code changes, PR/merge and learning.yml dispatch were not done this run (outward actions held for owner confirmation)."
+    }
+  ]
+}
