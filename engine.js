@@ -512,6 +512,8 @@ export function backtestTrendPortfolio(histories,config={},{startTime=-Infinity,
  for(const t of times){
   for(const p of products){const x=ptr[p],q=P[p];while(x.s+1<q.six.length&&q.six[x.s+1].time+SIX_HOURS<=t)x.s++;while(x.d+1<q.daily.length&&q.daily[x.d+1].time+ONE_DAY<=t)x.d++;}
   const live=products.filter(p=>ptr[p].bar.has(t));
+  // Register the UTC day's opening equity from the previous closes before any exit, as the live executor does.
+  dayRisk(account,t,c);
   for(const p of live){const bar=P[p].six[ptr[p].bar.get(t)];account.marks[p]=bar.open;}
   // Trail from completed bars, then exits determined at the open.
   for(const p of live){const pos=account.positions.find(v=>v.product===p);if(!pos)continue;const x=ptr[p],q=P[p];
@@ -524,6 +526,7 @@ export function backtestTrendPortfolio(histories,config={},{startTime=-Infinity,
    try{openPaperTrade(account,{product:p,price:bar.open,stop,target:bar.open*TREND_SAFETY_TARGET,time:t,source:'trend-breakout',trail:{type:'chandelier',atrMultiplier:c.trailAtrMultiplier??3,highestClose:signal.price,atr:signal.atr,initialStop:stop}},c);}catch{}
   }
   for(const p of live){const pos=account.positions.find(v=>v.product===p);const bar=P[p].six[ptr[p].bar.get(t)];if(pos&&pos.openedAt<=t&&bar.low<=pos.stop){closePaperTrade(account,pos.id,Math.min(bar.open,pos.stop),t,'trail-stop',c);lastExit[p]=t;}account.marks[p]=bar.close;}
+  dayRisk(account,t,c);
   const equity=markToMarket(account).equity;peak=Math.max(peak,equity);maxDd=Math.max(maxDd,(peak-equity)/peak);account.equityHistory.push({time:t,equity});
  }
  for(const pos of [...account.positions])closePaperTrade(account,pos.id,account.marks[pos.product],times.at(-1)??0,'end-of-test',c);
