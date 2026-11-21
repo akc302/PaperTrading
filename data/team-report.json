@@ -1,30 +1,30 @@
 {
   "version": 1,
-  "generatedAt": "2026-11-21T08:51:30.818Z",
+  "generatedAt": "2026-11-21T10:01:39.802Z",
   "goal": 85000,
-  "equity": 7969.921186986719,
+  "equity": 7894.2062633190335,
   "startingEquity": 10000,
-  "progressToGoal": -0.027067717506843753,
-  "returnPct": -0.20300788130132813,
-  "drawdown": 0.2089205444603659,
-  "openPositions": 3,
+  "progressToGoal": -0.028077249822412886,
+  "returnPct": -0.21057937366809665,
+  "drawdown": 0.21057937366809665,
+  "openPositions": 1,
   "last24h": {
-    "closedTrades": 29,
+    "closedTrades": 32,
     "wins": 1,
-    "winRate": 0.034482758620689655,
-    "netPnl": -1702.9474521335171,
-    "grossFees": 768.3162550441938,
+    "winRate": 0.03125,
+    "netPnl": -1834.479583587443,
+    "grossFees": 839.4095149211357,
     "rebatesCredited": 0
   },
   "allTime": {
-    "closedTrades": 37,
+    "closedTrades": 40,
     "wins": 1,
-    "winRate": 0.02702702702702703,
-    "netPnl": -1961.4898902413654,
-    "grossFees": 1004.4544258262841,
+    "winRate": 0.025,
+    "netPnl": -2093.022021695291,
+    "grossFees": 1075.547685703226,
     "rebatesCredited": 0
   },
-  "losingStreak": 0,
+  "losingStreak": 3,
   "rulesInUse": {
     "BTC-USD": {
       "strategy": "aggressive",
@@ -75,7 +75,7 @@
     },
     "researcher": {
       "role": "5-hour backtest and rule adoption",
-      "lastRunHoursAgo": 4.2,
+      "lastRunHoursAgo": 5.4,
       "healthy": true
     },
     "verifier": {
@@ -92,7 +92,7 @@
   },
   "integrity": {
     "ok": true,
-    "cashDifference": 2.7284841053187847e-12,
+    "cashDifference": 1.8189894035458565e-12,
     "problems": []
   },
   "readiness": {
@@ -110,31 +110,31 @@
         "id": "sample",
         "label": "150+ closed trades in the last 28 days",
         "pass": false,
-        "value": "37 trades"
+        "value": "40 trades"
       },
       {
         "id": "winrate",
         "label": "Win rate 60%+ after fees",
         "pass": false,
-        "value": "2.7%"
+        "value": "2.5%"
       },
       {
         "id": "profit",
         "label": "Net profit after fees and rebates, profit factor 1.3+",
         "pass": false,
-        "value": "$-1961.49, PF 0.03"
+        "value": "$-2093.02, PF 0.02"
       },
       {
         "id": "weekly",
         "label": "Profitable in each of the last 4 weeks",
         "pass": false,
-        "value": "$-1961 / $0 / $0 / $0"
+        "value": "$-2093 / $0 / $0 / $0"
       },
       {
         "id": "drawdown",
         "label": "Max drawdown 10% or less over 28 days",
         "pass": false,
-        "value": "20.9%"
+        "value": "21.1%"
       },
       {
         "id": "validated",
