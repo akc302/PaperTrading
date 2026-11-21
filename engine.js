@@ -674,3 +674,15 @@ function analyzeRsiReversion(input,c){
  if(last.close<=last.open||last.close<e100*.97){base.reason='RSI reclaim lacks a bullish close or is in a deep downtrend regime.';return atrBracket(base,bars,c);}
  atrBracket(base,bars,c);base.signal='BUY';base.reason='RSI oversold reclaim inside regime filter; ATR stop and cost-aware target.';return base;
 }
+/** Days to reach `goal` if equity kept compounding at its trailing growth rate (default 30 days). An estimate, not a promise. */
+export function goalEstimate(account,{goal=85000,now=Date.now()/1000,prices={},days=30,minDays=7}={}){
+ const equity=markToMarket(account,prices).equity,points=[...Object.entries(account.dailyRisk??{}).map(([d,s])=>({time:Date.parse(d+'T00:00:00Z')/1000,equity:s.openingEquity})),...(account.equityHistory??[])].filter(p=>Number.isFinite(p.time)&&p.equity>0&&p.time>=now-days*86400&&p.time<now).sort((a,b)=>a.time-b.time);
+ const base={goal,equity,windowDays:days,label:`Estimated time to $${goal.toLocaleString('en-US')} at the trailing ${days}-day growth rate (not a promise)`};
+ if(equity>=goal)return {...base,status:'reached',days:0};
+ const first=points[0],span=first?(now-first.time)/86400:0;
+ if(!first||span<minDays)return {...base,status:'insufficient-history',spanDays:span,message:`Needs at least ${minDays} days of equity history.`};
+ const daily=(equity/first.equity)**(1/span)-1;
+ if(!(daily>0))return {...base,status:'not-growing',spanDays:span,dailyGrowth:daily,message:'Trailing growth is zero or negative, so no date can be estimated.'};
+ const d=Math.log(goal/equity)/Math.log(1+daily);
+ return {...base,status:'estimated',spanDays:span,dailyGrowth:daily,days:d,date:new Date((now+d*86400)*1000).toISOString().slice(0,10)};
+}

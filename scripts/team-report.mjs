@@ -1,7 +1,7 @@
 /** Manager agent: scores the trading team against the paper goal and lists the jobs to re-run. No trades, no config changes. */
 import {readFile,writeFile,rename,rm} from 'node:fs/promises';
 import {pathToFileURL} from 'node:url';
-import {markToMarket} from '../engine.js';
+import {markToMarket,performanceStats,goalEstimate} from '../engine.js';
 import {decryptState,encryptState} from './private-state.mjs';
 export const GOAL=85000;
 const HOUR=3600;
@@ -39,6 +39,9 @@ export function readiness(state,now=Date.now()/1000){
  const passed=checks.filter(c=>c.pass).length;
  return {ready:passed===checks.length,passed,total:checks.length,checks,message:passed===checks.length?'All evidence checks passed. Review the journal before deciding anything about a real account.':`Not ready: ${passed}/${checks.length} evidence checks passed. Keep paper trading.`};
 }
+const card=(id,label,account,pause,prices)=>{const s=performanceStats(account),m=markToMarket(account,prices);return {id,label,equity:m.equity,initial:account.initial,netPnl:s.netPnl,profitFactor:Number.isFinite(s.profitFactor)?s.profitFactor:s.profitFactor===Infinity?'no losses':null,maxDrawdown:s.maxDrawdown,winRate:s.winRate,avgWin:s.avgWin,avgLoss:s.avgLoss,closedTrades:s.closedTrades,fees:s.totalFees,makerFills:s.makerFills,takerFills:s.takerFills,openPositions:(account.positions??[]).length,pause:pause?.state??'normal',drawdown:pause?.drawdown??null};};
+/** Net-after-fee scorecard for the main account and every challenger. */
+export function scorecard(state,prices={}){return [card('main',`Main: ${state.config?.strategy??'rules'}`,state.account,state.pause,prices),...(state.challengers??[]).filter(c=>c.account).map(c=>card(c.id,c.label,c.account,c.pause,prices))];}
 export function teamReport(state,market,now=Date.now()/1000,{operations={}}={}){
  const a=state.account,prices=Object.fromEntries(Object.entries(market.products??{}).map(([p,v])=>[p,v.quote?.price??v.candles?.at(-1)?.close])),m=markToMarket(a,prices);
  const trades=(a.trades??[]).filter(t=>!String(t.reason).includes('rebalance')),day=trades.filter(t=>t.closedAt>=now-24*HOUR);
@@ -59,7 +62,7 @@ export function teamReport(state,market,now=Date.now()/1000,{operations={}}={}){
  const rules=Object.fromEntries((state.products??[]).map(p=>[p,{strategy:{...state.config,...state.productConfigs?.[p]}.strategy,approach:state.strategyLab?.products?.[p]?.selected??'current',decision:state.strategyLab?.products?.[p]?.decision??'none'}]));
  return {version:1,generatedAt:new Date(now*1000).toISOString(),goal:GOAL,equity:m.equity,startingEquity:a.initial,progressToGoal:(m.equity-a.initial)/(GOAL-a.initial),returnPct:(m.equity-a.initial)/a.initial,drawdown:m.drawdown,openPositions:(a.positions??[]).length,last24h:stat(day),allTime:stat(trades),losingStreak:streak,rulesInUse:rules,
   agents:{trader:{role:'5-minute paper trader',lastRunMinutesAgo:Math.round(trader/60),healthy:trader<=20*60},researcher:{role:'5-hour backtest and rule adoption',lastRunHoursAgo:Number.isFinite(research)?+(research/HOUR).toFixed(1):null,healthy:research<=6*HOUR},verifier:{role:'hourly health check and one retry',workflow:'health.yml'},manager:{role:'this hourly goal report',workflow:'learning.yml collect'},supervisor:{role:'Claude session every 3 hours: verifies, researches, repairs'}},
-  integrity:ledger,readiness:readiness(state,now),drawdownPause:pause&&{state:pause.state,drawdown:pause.drawdown,peak:pause.peak,sizeMultiplier:pause.sizeMultiplier,triggeredAt:pause.triggeredAt??null,clearedAt:pause.clearedAt??null},
+  integrity:ledger,readiness:readiness(state,now),goalEstimate:goalEstimate(a,{goal:GOAL,now,prices}),scorecard:scorecard(state,prices),drawdownPause:pause&&{state:pause.state,drawdown:pause.drawdown,peak:pause.peak,sizeMultiplier:pause.sizeMultiplier,triggeredAt:pause.triggeredAt??null,clearedAt:pause.clearedAt??null},
   verdict:issues.length?'needs-attention':'on-track',issues,dispatch:[...new Set(dispatch)]};
 }
 
