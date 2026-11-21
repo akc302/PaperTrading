@@ -1,29 +1,45 @@
 {
-  "updatedAt": "2026-11-21T04:51:56.548Z",
+  "updatedAt": "2026-11-21T04:58:52.765Z",
   "triggerEvent": "workflow_dispatch",
   "scheduleEventCount": 4,
   "fiveMinuteCadenceVerified": false,
-  "recentScheduledRuns": [
+  "recentRuns": [
     {
-      "conclusion": "success",
-      "createdAt": "2026-11-21T01:00:58Z",
-      "status": "completed"
+      "createdAt": "2026-11-21T04:58:14Z",
+      "event": "workflow_dispatch",
+      "status": "in_progress",
+      "conclusion": null
     },
     {
-      "conclusion": "success",
-      "createdAt": "2026-11-20T19:53:47Z",
-      "status": "completed"
+      "createdAt": "2026-11-21T04:51:16Z",
+      "event": "workflow_dispatch",
+      "status": "completed",
+      "conclusion": "success"
     },
     {
-      "conclusion": "success",
-      "createdAt": "2026-11-20T11:58:34Z",
-      "status": "completed"
+      "createdAt": "2026-11-21T04:15:57Z",
+      "event": "workflow_dispatch",
+      "status": "completed",
+      "conclusion": "success"
     },
     {
-      "conclusion": "success",
-      "createdAt": "2026-11-20T03:10:57Z",
-      "status": "completed"
+      "createdAt": "2026-11-21T03:22:39Z",
+      "event": "workflow_dispatch",
+      "status": "completed",
+      "conclusion": "success"
+    },
+    {
+      "createdAt": "2026-11-21T02:50:24Z",
+      "event": "workflow_dispatch",
+      "status": "completed",
+      "conclusion": "success"
+    },
+    {
+      "createdAt": "2026-11-21T02:20:01Z",
+      "event": "workflow_dispatch",
+      "status": "completed",
+      "conclusion": "success"
     }
   ],
-  "note": "A configured cron is not proof of a running timer. Independent hourly fallback is configured separately."
+  "note": "The trader re-dispatches itself every ~5 minutes because GitHub cron delivery is throttled; cadence is verified from actual successful runs."
 }
