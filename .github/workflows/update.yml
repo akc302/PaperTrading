@@ -8,11 +8,11 @@ on:
 permissions:
   contents: write
   pages: write
-  actions: read
+  actions: write
   id-token: write
 
 concurrency:
-  group: github-pages
+  group: paper-trader
   cancel-in-progress: false
 
 jobs:
@@ -29,34 +29,18 @@ jobs:
         with:
           node-version: '22'
       - run: npm test
-      - name: Refresh public candles and execute simulated trades
+      - name: Trade, record timer evidence, and save (replays on newest main if another job pushed first)
         env:
           PAPER_STATE_KEY: ${{ secrets.PAPER_STATE_KEY }}
           PAPER_JOB_MODE: trade
-        run: node scripts/update-market.mjs
-      - name: Record actual timer evidence
-        env:
           GH_TOKEN: ${{ github.token }}
           GH_REPO: ${{ github.repository }}
           TRIGGER_EVENT: ${{ github.event_name }}
         run: |
-          set -euo pipefail
-          count=$(gh api "repos/$GH_REPO/actions/workflows/update.yml/runs?event=schedule&per_page=1" --jq '.total_count')
-          runs=$(gh api "repos/$GH_REPO/actions/workflows/update.yml/runs?event=schedule&per_page=6" --jq '[.workflow_runs[] | {createdAt:.created_at,status,conclusion}]')
-          SCHEDULE_RUNS="$runs" SCHEDULE_COUNT="$count" node --input-type=module -e "import{writeFileSync}from'node:fs';const runs=JSON.parse(process.env.SCHEDULE_RUNS),times=runs.filter(r=>r.conclusion==='success').map(r=>Date.parse(r.createdAt)).slice(0,3),verified=times.length===3&&Date.now()-times[0]<900000&&times.slice(1).every((t,i)=>times[i]-t<=600000);writeFileSync('data/operations.json',JSON.stringify({updatedAt:new Date().toISOString(),triggerEvent:process.env.TRIGGER_EVENT,scheduleEventCount:Number(process.env.SCHEDULE_COUNT),fiveMinuteCadenceVerified:verified,recentScheduledRuns:runs,note:'A configured cron is not proof of a running timer. Independent hourly fallback is configured separately.'},null,2)+'\n');"
-      - name: Save paper account and transparent research history
-        run: |
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
-          git add data/market.json data/paper.json data/reviews.json data/operations.json
-          if [ -f data/learning.json ]; then git add data/learning.json; fi
-          for paper_state_file in data/portfolio.enc.json data/private-status.json; do
-            if [ -f "$paper_state_file" ]; then git add "$paper_state_file"; fi
-          done
-          if ! git diff --cached --quiet; then
-            git commit -m 'Update paper account and market research'
-            git push
-          fi
+          scripts/commit-retry.sh 'Update paper account and market research' 'node scripts/update-market.mjs && node scripts/timer-evidence.mjs' \
+            data/market.json data/paper.json data/reviews.json data/operations.json data/learning.json data/portfolio.enc.json data/private-status.json
       - run: npm run build
       - uses: actions/configure-pages@v5
         with:
@@ -72,4 +56,18 @@ jobs:
         run: node scripts/wait-pages-artifact.mjs
       - name: Deploy updated dashboard
         id: deployment
+        continue-on-error: true
         uses: actions/deploy-pages@v4
+      - name: Keep the team running (GitHub's own timer is unreliable)
+        if: always()
+        env:
+          GH_TOKEN: ${{ github.token }}
+          GH_REPO: ${{ github.repository }}
+        run: |
+          last() { gh api "repos/$GH_REPO/actions/workflows/$1/runs?per_page=1" --jq '.workflow_runs[0].created_at // "1970-01-01T00:00:00Z"'; }
+          age() { echo $(( $(date +%s) - $(date -d "$(last "$1")" +%s) )); }
+          [ "$(age learning.yml)" -gt 4200 ] && gh workflow run learning.yml -f phase=collect || true
+          [ "$(age health.yml)" -gt 4200 ] && gh workflow run health.yml || true
+          wait=$(( 300 - $(date +%s) % 300 ))
+          sleep "$wait"
+          gh workflow run update.yml
