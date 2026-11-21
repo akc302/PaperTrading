@@ -4,6 +4,14 @@ import {readFile,writeFile,rename,rm} from 'node:fs/promises';
 import {pathToFileURL} from 'node:url';
 import {TREND_DEFAULTS} from '../engine.js';
 import {decryptState,encryptState} from './private-state.mjs';
+import {ensureChallengers} from './challengers.mjs';
+import {reviewChallengers} from './promotion.mjs';
+import {loadHistory} from './history.mjs';
+/** Daily review for one account: migrate once, seed challengers, then evaluate promotion. */
+export function dailyRules(state,{market,history,now}){
+ const migrated=migrateToTrend(state,now),seeded=ensureChallengers(state,now),review=reviewChallengers(state,{market,history,now});
+ return {migrated,seeded,promoted:review?.promoted??null,reviewed:!!review};
+}
 export const RULES_VERSION='trend-v1';
 export const MAIN_TREND=Object.freeze({strategy:'trend-follow',...TREND_DEFAULTS,maxHoldHours:0,patternRequired:false,entryOrder:'limit',limitOffset:0.0005,limitChecks:3});
 const CAPS=['riskPct','maxTotalRisk','maxAllocation','maxOpenPositions','maxDailyLoss'];
@@ -17,12 +25,12 @@ export function migrateToTrend(state,now=Date.now()/1000){
  return true;
 }
 export async function run(){
- const now=Date.now()/1000,paper=JSON.parse(await readFile('data/paper.json','utf8'));
- if(migrateToTrend(paper,now))console.log('Public demo: trend-follow is now the main rule set.');
+ const now=Date.now()/1000,paper=JSON.parse(await readFile('data/paper.json','utf8')),market=JSON.parse(await readFile('data/market.json','utf8')),history=await loadHistory();
+ const r=dailyRules(paper,{market,history,now});console.log(`Public demo rules: ${JSON.stringify(r)}.`);
  await writeFile('data/paper.json',JSON.stringify(paper,null,2)+'\n');
  const key=process.env.PAPER_STATE_KEY?.trim();if(!key)return;
  try{const state=await decryptState(JSON.parse(await readFile('data/portfolio.enc.json','utf8')),key);
-  if(migrateToTrend(state,now))console.log('Private account: rules migrated (details encrypted).');
+  dailyRules(state,{market,history,now});console.log('Private account: daily rule review done (details encrypted).');
   const tmp='data/.rules.enc.tmp';try{await writeFile(tmp,JSON.stringify(await encryptState(state,key),null,2)+'\n',{mode:0o600});await rename(tmp,'data/portfolio.enc.json');}finally{await rm(tmp,{force:true});}
  }catch{console.error('Private rule update failed; ciphertext unchanged.');process.exitCode=1;}
 }

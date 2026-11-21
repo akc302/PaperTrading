@@ -198,8 +198,9 @@ function reservedRisk(account){
 
 function journal(account,product,time,signal,config,reason,action='WAIT'){
   account.decisions??=[];
-  account.decisions.push({time,product,signal:action.startsWith('BUY')?'BUY':'WAIT',observedSignal:signal.signal??'WAIT',action,reason:reason??signal.reason,setup:signal.setup??'support-bounce',strategy:config.strategy,pattern:signal.pattern??null,support:signal.support??null,resistance:signal.resistance??null,stop:signal.stop??null,target:signal.target??null,price:signal.price??null,trend:signal.trend??'unconfirmed',config:{...config}});
-  if(account.decisions.length>5000)account.decisions.splice(0,account.decisions.length-5000);
+  account.decisions.push({time,product,signal:action.startsWith('BUY')?'BUY':'WAIT',observedSignal:signal.signal??'WAIT',action,reason:reason??signal.reason,setup:signal.setup??'support-bounce',strategy:config.strategy,pattern:signal.pattern??null,support:signal.support??null,resistance:signal.resistance??null,stop:signal.stop??null,target:signal.target??null,price:signal.price??null,trend:signal.trend??'unconfirmed',...(account.compactJournal?{pattern:null}:{config:{...config}})});
+  // Challenger accounts keep a compact, shorter journal so paper.json stays small.
+  const limit=account.decisionLimit??5000;if(account.decisions.length>limit)account.decisions.splice(0,account.decisions.length-limit);
 }
 
 export function markToMarket(account,prices={}){
@@ -480,7 +481,7 @@ export function processQuoteBatch(account,events,{time=Date.now()/1000,pause=nul
   else if(signal.signal==='BUY')try{openPaperTrade(account,{product:e.product,price,stop:signal.stop,target:signal.target,time,source:signal.setup,pattern:signal.pattern,trail:trailFor(signal,e.config),riskScale:gate.sizeMultiplier},e.config);action='BUY';account.lastEntries[e.product]=time;}catch(error){reason=error.message;}
   journal(account,e.product,time,signal,e.config,reason,action);
  }
- account.lastQuoteBucket=bucket;account.equityHistory.push({time,equity:markToMarket(account).equity});if(account.equityHistory.length>5000)account.equityHistory.shift();return account;
+ account.orderLog.splice(account.orderLogLimit??300);account.lastQuoteBucket=bucket;account.equityHistory.push({time,equity:markToMarket(account).equity});const cap=account.equityLimit??5000;if(account.equityHistory.length>cap)account.equityHistory.splice(0,account.equityHistory.length-cap);return account;
 }
 
 /** Equity-peak drawdown gate. `cleared:true` (set by the supervisor or manager in paper.json) lifts a block and restarts the peak. */
@@ -490,7 +491,7 @@ export function updateDrawdownPause(pause={},equity,time=Date.now()/1000){
  p.peak=Math.max(Number.isFinite(p.peak)?p.peak:equity,equity);p.drawdown=p.peak>0?Math.max(0,1-equity/p.peak):0;
  const next=p.state==='blocked'||p.drawdown>=DRAWDOWN_RULES.blockAt?'blocked':p.drawdown>=DRAWDOWN_RULES.halveAt?'halved':'normal';
  if(next!==p.state){p.history.unshift({event:next,at:time,equity,drawdown:p.drawdown});if(next==='blocked')p.triggeredAt=time;}
- p.state=next;p.sizeMultiplier=next==='blocked'?0:next==='halved'?.5:1;p.equity=equity;p.updatedAt=time;p.cleared=false;
+ p.maxDrawdown=Math.max(p.maxDrawdown??0,p.drawdown);p.state=next;p.sizeMultiplier=next==='blocked'?0:next==='halved'?.5:1;p.equity=equity;p.updatedAt=time;p.cleared=false;
  p.rules={halveNewSizesAt:DRAWDOWN_RULES.halveAt,blockNewEntriesAt:DRAWDOWN_RULES.blockAt,resume:'set pause.cleared = true in data/paper.json'};
  return p;
 }

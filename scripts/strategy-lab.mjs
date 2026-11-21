@@ -4,6 +4,7 @@ import {readFile,writeFile,rename,rm} from 'node:fs/promises';
 import {pathToFileURL} from 'node:url';
 import {backtest,normalizeCandles,DEFAULT_CONFIG,featuresAt,mlProbability,backtestTrendPortfolio,TREND_DEFAULTS} from '../engine.js';
 import {loadHistory} from './history.mjs';
+import {challengerConfig,setChallengerRules} from './challengers.mjs';
 import {eligibleTrades,summarize} from './evidence.mjs';
 import {decryptState,encryptState} from './private-state.mjs';
 export const EXPERIMENT='rolling-v2';
@@ -131,7 +132,8 @@ export function runLab(state,market,now=Date.now()/1000,history={}){
  const outcomes=summarize(state.account,0,now),models=compareModels(trades);
  const trendMain=state.config?.strategy==='trend-follow';
  // With trend-follow as the main rules, hourly research is recorded as shadow evidence instead of overriding the main rules per market.
- const products=Object.fromEntries(state.products.map(p=>{const r=researchProduct(market.products[p]?.candles??[],{...DEFAULT_CONFIG,...state.config,...(trendMain?state.legacyRules?.config:{}),...(trendMain?state.legacyRules?.productConfigs?.[p]:state.productConfigs?.[p]),...state.feeProfile,...(trendMain?{strategy:state.legacyRules?.productConfigs?.[p]?.strategy??state.legacyRules?.config?.strategy??'aggressive'}:{})},now);return [p,trendMain&&r.decision?.startsWith('adopt')?{...r,decision:'shadow',shadowOf:r.decision}:r];}));
+ const labHourly=state.challengers?.find(c=>c.id==='lab-hourly');
+ const products=Object.fromEntries(state.products.map(p=>{const r=researchProduct(market.products[p]?.candles??[],trendMain&&labHourly?challengerConfig(state,labHourly,p):{...DEFAULT_CONFIG,...state.config,...(trendMain?state.legacyRules?.config:{}),...(trendMain?state.legacyRules?.productConfigs?.[p]:state.productConfigs?.[p]),...state.feeProfile,...(trendMain?{strategy:state.legacyRules?.productConfigs?.[p]?.strategy??state.legacyRules?.config?.strategy??'aggressive'}:{})},now);return [p,trendMain&&r.decision?.startsWith('adopt')?{...r,decision:'shadow',shadowOf:r.decision}:r];}));
  const trend=researchTrend(history,{...DEFAULT_CONFIG,...state.config,...state.feeProfile},now);
  return {version:2,experiment:EXPERIMENT,inputHash,updatedAt:new Date(now*1000).toISOString(),mode:trendMain?'trend-main-hourly-shadow':'rolling-adoption',trend,outcomes,diagnosis:diagnoseLosses(state.account,market),costDiagnosis:{netFees:outcomes.grossFees-outcomes.rebatesCredited,costFlippedLosses:trades.filter(t=>t.pnl<0&&t.pnl+(t.fees??0)-(t.rebateCredited??0)>0).length},models,products,limitations:['Hourly replay cannot reproduce missed five-minute checks, order-book liquidity or exact historical fills.','Fees use the saved tier, modeled rebates and adverse slippage; this is not a live tier verification.','Re-ranking every five hours on overlapping windows can overfit; every run and its result is kept in history.','An improvement adoption means losing less on unseen data, not a proven profitable edge.','No strategy can guarantee winning trades; risk caps stay fixed.']};
 }
@@ -145,8 +147,13 @@ export function applyLab(state,report){
   if(Object.keys(r.changes).some(k=>!TUNABLE.includes(k))||JSON.stringify(FROZEN.map(k=>({...state.config,...next})[k]))!==JSON.stringify(before))throw Error('Risk cap mutation refused');
   state.productConfigs[product]=next;adopted.push({product,approach:r.selected,decision:r.decision});
  }
- if(adopted.length||report.inputHash!==state.strategyLabHistory?.[0]?.inputHash)state.strategyLabHistory=[{at:report.updatedAt,inputHash:report.inputHash,adopted,decisions:Object.fromEntries(Object.entries(report.products??{}).map(([p,r])=>[p,{selected:r.selected,decision:r.decision,finalTest:r.finalTest&&{candidate:r.finalTest.candidate.returnPct,current:r.finalTest.baseline.returnPct}}]))},...(state.strategyLabHistory??[])].slice(0,300);
- state.strategyLab={...report,adopted};return adopted;
+ // With trend-follow as the main rules, research feeds the challenger accounts; only the daily promotion gate can change the main rules.
+ const fed=[],now=Date.parse(report.updatedAt)/1000,labHourly=state.challengers?.find(c=>c.id==='lab-hourly'),labTrend=state.challengers?.find(c=>c.id==='lab-trend');
+ if(labHourly){const pcs=structuredClone(labHourly.productConfigs??{});for(const [product,r] of Object.entries(report.products??{})){if(r.decision!=='shadow'||!r.shadowOf?.startsWith('adopt'))continue;if(Object.keys(r.changes).some(k=>!TUNABLE.includes(k)))throw Error('Risk cap mutation refused');const next={...pcs[product]};for(const [k,v] of Object.entries(r.changes)){if(v===undefined)delete next[k];else next[k]=v;}pcs[product]=next;fed.push({challenger:'lab-hourly',product,approach:r.selected,decision:r.shadowOf});}
+  if(fed.length)setChallengerRules(labHourly,{productConfigs:pcs},now,'strategy-lab hourly adoption');}
+ if(labTrend&&report.trend?.status==='validated-on-2y'&&setChallengerRules(labTrend,{rules:{...labTrend.rules,...report.trend.changes}},now,`strategy-lab 2-year leader ${report.trend.selected}`))fed.push({challenger:'lab-trend',approach:report.trend.selected,decision:report.trend.status});
+ if(fed.length||adopted.length||report.inputHash!==state.strategyLabHistory?.[0]?.inputHash)state.strategyLabHistory=[{at:report.updatedAt,inputHash:report.inputHash,adopted,fedChallengers:fed,trend:report.trend&&{status:report.trend.status,selected:report.trend.selected},decisions:Object.fromEntries(Object.entries(report.products??{}).map(([p,r])=>[p,{selected:r.selected,decision:r.decision,finalTest:r.finalTest&&{candidate:r.finalTest.candidate.returnPct,current:r.finalTest.baseline.returnPct}}]))},...(state.strategyLabHistory??[])].slice(0,300);
+ state.strategyLab={...report,adopted,fedChallengers:fed};return adopted;
 }
 export async function run(){
  const key=process.env.PAPER_STATE_KEY?.trim();if(!key)throw Error('Private research key required; nothing changed.');
