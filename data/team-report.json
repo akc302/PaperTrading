@@ -1,12 +1,12 @@
 {
   "version": 1,
-  "generatedAt": "2026-11-21T18:02:24.806Z",
+  "generatedAt": "2026-11-21T18:30:19.973Z",
   "goal": 85000,
-  "equity": 29958.891209204983,
+  "equity": 29975.046647868254,
   "startingEquity": 30000,
-  "progressToGoal": -0.0007474325599093969,
-  "returnPct": -0.001370293026500561,
-  "drawdown": 0.001370293026500561,
+  "progressToGoal": -0.0004536973114862948,
+  "returnPct": -0.0008317784043915405,
+  "drawdown": 0.0023535220276899053,
   "openPositions": 2,
   "last24h": {
     "closedTrades": 0,
@@ -27,42 +27,42 @@
   "losingStreak": 0,
   "rulesInUse": {
     "BTC-USD": {
-      "strategy": "aggressive",
+      "strategy": "trend-follow",
       "approach": "aggressive-day-hold",
       "decision": "keep"
     },
     "ETH-USD": {
-      "strategy": "aggressive",
+      "strategy": "trend-follow",
       "approach": "aggressive-day-hold",
       "decision": "keep"
     },
     "SOL-USD": {
-      "strategy": "aggressive",
+      "strategy": "trend-follow",
       "approach": "longer-hold",
       "decision": "adopt-improvement"
     },
     "XRP-USD": {
-      "strategy": "aggressive",
+      "strategy": "trend-follow",
       "approach": "aggressive-day-hold+regime-block",
       "decision": "keep"
     },
     "ADA-USD": {
-      "strategy": "aggressive",
+      "strategy": "trend-follow",
       "approach": "regime-block",
       "decision": "adopt-improvement"
     },
     "DOGE-USD": {
-      "strategy": "aggressive",
+      "strategy": "trend-follow",
       "approach": "wider-stop",
       "decision": "adopt-improvement"
     },
     "LINK-USD": {
-      "strategy": "aggressive",
+      "strategy": "trend-follow",
       "approach": "longer-hold",
       "decision": "adopt-improvement"
     },
     "AVAX-USD": {
-      "strategy": "aggressive",
+      "strategy": "trend-follow",
       "approach": "aggressive-day-hold",
       "decision": "keep"
     }
@@ -70,12 +70,12 @@
   "agents": {
     "trader": {
       "role": "5-minute paper trader",
-      "lastRunMinutesAgo": 1,
+      "lastRunMinutesAgo": 5,
       "healthy": true
     },
     "researcher": {
       "role": "Claude every 5h: loss analysis, backtest, rule adoption",
-      "lastRunHoursAgo": 0.1,
+      "lastRunHoursAgo": 0.5,
       "healthy": true,
       "latestNote": {
         "at": "2026-11-21T16:30:00Z",
@@ -142,7 +142,7 @@
         "id": "drawdown",
         "label": "Max drawdown 10% or less over 28 days",
         "pass": true,
-        "value": "0.1%"
+        "value": "0.2%"
       },
       {
         "id": "validated",
@@ -165,6 +165,132 @@
     ],
     "message": "Not ready: 2/9 evidence checks passed. Keep paper trading."
   },
+  "goalEstimate": {
+    "goal": 85000,
+    "equity": 29975.046647868254,
+    "windowDays": 30,
+    "label": "Estimated time to $85,000 at the trailing 30-day growth rate (not a promise)",
+    "status": "insufficient-history",
+    "spanDays": 0.7710645023153888,
+    "message": "Needs at least 7 days of equity history."
+  },
+  "scorecard": [
+    {
+      "id": "main",
+      "label": "Main: trend-follow",
+      "equity": 29975.046647868254,
+      "initial": 30000,
+      "netPnl": 0,
+      "profitFactor": null,
+      "maxDrawdown": 0.0023535220276899053,
+      "winRate": null,
+      "avgWin": null,
+      "avgLoss": null,
+      "closedTrades": 0,
+      "fees": 0,
+      "makerFills": 0,
+      "takerFills": 0,
+      "openPositions": 2,
+      "pause": "normal",
+      "drawdown": null
+    },
+    {
+      "id": "trend-k2",
+      "label": "Trend follow, 2×ATR trail",
+      "equity": 29975.046647868254,
+      "initial": 29975.046647868254,
+      "netPnl": 0,
+      "profitFactor": null,
+      "maxDrawdown": 0,
+      "winRate": null,
+      "avgWin": null,
+      "avgLoss": null,
+      "closedTrades": 0,
+      "fees": 0,
+      "makerFills": 0,
+      "takerFills": 0,
+      "openPositions": 0,
+      "pause": "normal",
+      "drawdown": null
+    },
+    {
+      "id": "trend-k4",
+      "label": "Trend follow, 4×ATR trail",
+      "equity": 29975.046647868254,
+      "initial": 29975.046647868254,
+      "netPnl": 0,
+      "profitFactor": null,
+      "maxDrawdown": 0,
+      "winRate": null,
+      "avgWin": null,
+      "avgLoss": null,
+      "closedTrades": 0,
+      "fees": 0,
+      "makerFills": 0,
+      "takerFills": 0,
+      "openPositions": 0,
+      "pause": "normal",
+      "drawdown": null
+    },
+    {
+      "id": "lab-trend",
+      "label": "Lab trend leader (2-year walk-forward)",
+      "equity": 29975.046647868254,
+      "initial": 29975.046647868254,
+      "netPnl": 0,
+      "profitFactor": null,
+      "maxDrawdown": 0,
+      "winRate": null,
+      "avgWin": null,
+      "avgLoss": null,
+      "closedTrades": 0,
+      "fees": 0,
+      "makerFills": 0,
+      "takerFills": 0,
+      "openPositions": 0,
+      "pause": "normal",
+      "drawdown": null
+    },
+    {
+      "id": "hourly-legacy",
+      "label": "Previous hourly rules",
+      "equity": 29975.046647868254,
+      "initial": 29975.046647868254,
+      "netPnl": 0,
+      "profitFactor": null,
+      "maxDrawdown": 0,
+      "winRate": null,
+      "avgWin": null,
+      "avgLoss": null,
+      "closedTrades": 0,
+      "fees": 0,
+      "makerFills": 0,
+      "takerFills": 0,
+      "openPositions": 0,
+      "pause": "normal",
+      "drawdown": null
+    },
+    {
+      "id": "lab-hourly",
+      "label": "Lab hourly per-market rules",
+      "equity": 29975.046647868254,
+      "initial": 29975.046647868254,
+      "netPnl": 0,
+      "profitFactor": null,
+      "maxDrawdown": 0,
+      "winRate": null,
+      "avgWin": null,
+      "avgLoss": null,
+      "closedTrades": 0,
+      "fees": 0,
+      "makerFills": 0,
+      "takerFills": 0,
+      "openPositions": 0,
+      "pause": "normal",
+      "drawdown": null
+    }
+  ],
+  "drawdownPause": null,
   "verdict": "on-track",
   "issues": [],
   "dispatch": []

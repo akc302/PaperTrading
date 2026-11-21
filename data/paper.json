@@ -13,7 +13,7 @@
     "AVAX-USD"
   ],
   "config": {
-    "strategy": "aggressive",
+    "strategy": "trend-follow",
     "lookback": 48,
     "pivotWindow": 3,
     "proximity": 0.006,
@@ -24,11 +24,19 @@
     "slippage": 0.0005,
     "maxAllocation": 0.25,
     "trendLookback": 180,
-    "maxHoldHours": 2,
+    "maxHoldHours": 0,
     "maxDailyLoss": 0.12,
     "maxOpenPositions": 4,
     "maxTotalRisk": 0.08,
-    "stopAtrMultiplier": 1.25
+    "stopAtrMultiplier": 1.25,
+    "trailAtrMultiplier": 3,
+    "trendTopN": 2,
+    "trendBreakout": 20,
+    "trendRankDays": 30,
+    "patternRequired": false,
+    "entryOrder": "limit",
+    "limitOffset": 0.0005,
+    "limitChecks": 3
   },
   "account": {
     "initial": 30000,
@@ -10908,62 +10916,7 @@
   },
   "lastMarketAt": "2026-11-21T18:25:21.044Z",
   "errors": [],
-  "productConfigs": {
-    "BTC-USD": {
-      "patternRequired": true,
-      "strategy": "aggressive",
-      "maxHoldHours": 24,
-      "stopAtrMultiplier": 2.5,
-      "rewardRisk": 1.5
-    },
-    "ETH-USD": {
-      "patternRequired": true,
-      "strategy": "aggressive",
-      "maxHoldHours": 24,
-      "stopAtrMultiplier": 2.5,
-      "rewardRisk": 1.5
-    },
-    "SOL-USD": {
-      "patternRequired": true,
-      "strategy": "aggressive",
-      "maxHoldHours": 4,
-      "stopAtrMultiplier": 2.5,
-      "rewardRisk": 1.5
-    },
-    "XRP-USD": {
-      "patternRequired": true,
-      "strategy": "aggressive",
-      "maxHoldHours": 24,
-      "stopAtrMultiplier": 2.5,
-      "rewardRisk": 1.5
-    },
-    "ADA-USD": {
-      "patternRequired": true,
-      "maxHoldHours": 4,
-      "regimeFilter": true
-    },
-    "DOGE-USD": {
-      "patternRequired": true,
-      "strategy": "aggressive",
-      "maxHoldHours": 24,
-      "stopAtrMultiplier": 1.5,
-      "rewardRisk": 1.5
-    },
-    "LINK-USD": {
-      "patternRequired": true,
-      "strategy": "aggressive",
-      "maxHoldHours": 4,
-      "stopAtrMultiplier": 2.5,
-      "rewardRisk": 1.5
-    },
-    "AVAX-USD": {
-      "patternRequired": true,
-      "strategy": "aggressive",
-      "maxHoldHours": 24,
-      "stopAtrMultiplier": 2.5,
-      "rewardRisk": 1.5
-    }
-  },
+  "productConfigs": {},
   "lastRunAt": "2026-11-21T18:25:21.044Z",
   "executionMode": "quotes",
   "evidence": {
@@ -18301,5 +18254,828 @@
     "rebateVerified": true,
     "feeObservedAt": "2026-11-21T16:30:00Z",
     "source": "Owner-provided Coinbase Advanced spot fee schedule; 25% Coinbase One rebate on fees, owner-confirmed. Edit this file when the tier changes."
-  }
+  },
+  "rulesHistory": [
+    {
+      "at": "2026-11-21T18:29:47.177Z",
+      "event": "archived-main-rules",
+      "reason": "Trend following became the main strategy; previous hourly rules kept as challengers.",
+      "config": {
+        "strategy": "aggressive",
+        "lookback": 48,
+        "pivotWindow": 3,
+        "proximity": 0.006,
+        "stopBuffer": 0.004,
+        "rewardRisk": 1.5,
+        "riskPct": 0.02,
+        "feeRate": 0.006,
+        "slippage": 0.0005,
+        "maxAllocation": 0.25,
+        "trendLookback": 180,
+        "maxHoldHours": 2,
+        "maxDailyLoss": 0.12,
+        "maxOpenPositions": 4,
+        "maxTotalRisk": 0.08,
+        "stopAtrMultiplier": 1.25
+      },
+      "productConfigs": {
+        "BTC-USD": {
+          "patternRequired": true,
+          "strategy": "aggressive",
+          "maxHoldHours": 24,
+          "stopAtrMultiplier": 2.5,
+          "rewardRisk": 1.5
+        },
+        "ETH-USD": {
+          "patternRequired": true,
+          "strategy": "aggressive",
+          "maxHoldHours": 24,
+          "stopAtrMultiplier": 2.5,
+          "rewardRisk": 1.5
+        },
+        "SOL-USD": {
+          "patternRequired": true,
+          "strategy": "aggressive",
+          "maxHoldHours": 4,
+          "stopAtrMultiplier": 2.5,
+          "rewardRisk": 1.5
+        },
+        "XRP-USD": {
+          "patternRequired": true,
+          "strategy": "aggressive",
+          "maxHoldHours": 24,
+          "stopAtrMultiplier": 2.5,
+          "rewardRisk": 1.5
+        },
+        "ADA-USD": {
+          "patternRequired": true,
+          "maxHoldHours": 4,
+          "regimeFilter": true
+        },
+        "DOGE-USD": {
+          "patternRequired": true,
+          "strategy": "aggressive",
+          "maxHoldHours": 24,
+          "stopAtrMultiplier": 1.5,
+          "rewardRisk": 1.5
+        },
+        "LINK-USD": {
+          "patternRequired": true,
+          "strategy": "aggressive",
+          "maxHoldHours": 4,
+          "stopAtrMultiplier": 2.5,
+          "rewardRisk": 1.5
+        },
+        "AVAX-USD": {
+          "patternRequired": true,
+          "strategy": "aggressive",
+          "maxHoldHours": 24,
+          "stopAtrMultiplier": 2.5,
+          "rewardRisk": 1.5
+        }
+      }
+    }
+  ],
+  "legacyRules": {
+    "config": {
+      "strategy": "aggressive",
+      "lookback": 48,
+      "pivotWindow": 3,
+      "proximity": 0.006,
+      "stopBuffer": 0.004,
+      "rewardRisk": 1.5,
+      "riskPct": 0.02,
+      "feeRate": 0.006,
+      "slippage": 0.0005,
+      "maxAllocation": 0.25,
+      "trendLookback": 180,
+      "maxHoldHours": 2,
+      "maxDailyLoss": 0.12,
+      "maxOpenPositions": 4,
+      "maxTotalRisk": 0.08,
+      "stopAtrMultiplier": 1.25
+    },
+    "productConfigs": {
+      "BTC-USD": {
+        "patternRequired": true,
+        "strategy": "aggressive",
+        "maxHoldHours": 24,
+        "stopAtrMultiplier": 2.5,
+        "rewardRisk": 1.5
+      },
+      "ETH-USD": {
+        "patternRequired": true,
+        "strategy": "aggressive",
+        "maxHoldHours": 24,
+        "stopAtrMultiplier": 2.5,
+        "rewardRisk": 1.5
+      },
+      "SOL-USD": {
+        "patternRequired": true,
+        "strategy": "aggressive",
+        "maxHoldHours": 4,
+        "stopAtrMultiplier": 2.5,
+        "rewardRisk": 1.5
+      },
+      "XRP-USD": {
+        "patternRequired": true,
+        "strategy": "aggressive",
+        "maxHoldHours": 24,
+        "stopAtrMultiplier": 2.5,
+        "rewardRisk": 1.5
+      },
+      "ADA-USD": {
+        "patternRequired": true,
+        "maxHoldHours": 4,
+        "regimeFilter": true
+      },
+      "DOGE-USD": {
+        "patternRequired": true,
+        "strategy": "aggressive",
+        "maxHoldHours": 24,
+        "stopAtrMultiplier": 1.5,
+        "rewardRisk": 1.5
+      },
+      "LINK-USD": {
+        "patternRequired": true,
+        "strategy": "aggressive",
+        "maxHoldHours": 4,
+        "stopAtrMultiplier": 2.5,
+        "rewardRisk": 1.5
+      },
+      "AVAX-USD": {
+        "patternRequired": true,
+        "strategy": "aggressive",
+        "maxHoldHours": 24,
+        "stopAtrMultiplier": 2.5,
+        "rewardRisk": 1.5
+      }
+    },
+    "archivedAt": "2026-11-21T18:29:47.177Z"
+  },
+  "rulesVersion": "trend-v1",
+  "challengers": [
+    {
+      "id": "trend-k2",
+      "label": "Trend follow, 2×ATR trail",
+      "source": "seed",
+      "rules": {
+        "strategy": "trend-follow",
+        "trailAtrMultiplier": 2,
+        "trendTopN": 2,
+        "trendBreakout": 20,
+        "trendRankDays": 30,
+        "maxHoldHours": 0,
+        "patternRequired": false,
+        "entryOrder": "limit"
+      },
+      "productConfigs": {},
+      "account": {
+        "initial": 29975.046647868254,
+        "cash": 29975.046647868254,
+        "positions": [],
+        "trades": [],
+        "equityHistory": [],
+        "lastProcessed": {},
+        "marks": {},
+        "nextId": 1,
+        "decisions": [],
+        "dailyRisk": {},
+        "compactJournal": true,
+        "decisionLimit": 300,
+        "equityLimit": 2600,
+        "orderLogLimit": 50
+      },
+      "pause": {},
+      "startedAt": "2026-11-21T18:29:47.177Z",
+      "rulesSince": "2026-11-21T18:29:47.177Z",
+      "rulesVersion": 1
+    },
+    {
+      "id": "trend-k4",
+      "label": "Trend follow, 4×ATR trail",
+      "source": "seed",
+      "rules": {
+        "strategy": "trend-follow",
+        "trailAtrMultiplier": 4,
+        "trendTopN": 2,
+        "trendBreakout": 20,
+        "trendRankDays": 30,
+        "maxHoldHours": 0,
+        "patternRequired": false,
+        "entryOrder": "limit"
+      },
+      "productConfigs": {},
+      "account": {
+        "initial": 29975.046647868254,
+        "cash": 29975.046647868254,
+        "positions": [],
+        "trades": [],
+        "equityHistory": [],
+        "lastProcessed": {},
+        "marks": {},
+        "nextId": 1,
+        "decisions": [],
+        "dailyRisk": {},
+        "compactJournal": true,
+        "decisionLimit": 300,
+        "equityLimit": 2600,
+        "orderLogLimit": 50
+      },
+      "pause": {},
+      "startedAt": "2026-11-21T18:29:47.177Z",
+      "rulesSince": "2026-11-21T18:29:47.177Z",
+      "rulesVersion": 1
+    },
+    {
+      "id": "lab-trend",
+      "label": "Lab trend leader (2-year walk-forward)",
+      "source": "strategy-lab",
+      "rules": {
+        "strategy": "trend-follow",
+        "trailAtrMultiplier": 3,
+        "trendTopN": 3,
+        "trendBreakout": 20,
+        "trendRankDays": 30,
+        "maxHoldHours": 0,
+        "patternRequired": false,
+        "entryOrder": "limit"
+      },
+      "productConfigs": {},
+      "account": {
+        "initial": 29975.046647868254,
+        "cash": 29975.046647868254,
+        "positions": [],
+        "trades": [],
+        "equityHistory": [],
+        "lastProcessed": {},
+        "marks": {},
+        "nextId": 1,
+        "decisions": [],
+        "dailyRisk": {},
+        "compactJournal": true,
+        "decisionLimit": 300,
+        "equityLimit": 2600,
+        "orderLogLimit": 50
+      },
+      "pause": {},
+      "startedAt": "2026-11-21T18:29:47.177Z",
+      "rulesSince": "2026-11-21T18:29:47.177Z",
+      "rulesVersion": 1
+    },
+    {
+      "id": "hourly-legacy",
+      "label": "Previous hourly rules",
+      "source": "archived main rules",
+      "rules": {
+        "strategy": "aggressive",
+        "lookback": 48,
+        "pivotWindow": 3,
+        "proximity": 0.006,
+        "stopBuffer": 0.004,
+        "rewardRisk": 1.5,
+        "trendLookback": 180,
+        "maxHoldHours": 2,
+        "stopAtrMultiplier": 1.25
+      },
+      "productConfigs": {
+        "BTC-USD": {
+          "patternRequired": true,
+          "strategy": "aggressive",
+          "maxHoldHours": 24,
+          "stopAtrMultiplier": 2.5,
+          "rewardRisk": 1.5
+        },
+        "ETH-USD": {
+          "patternRequired": true,
+          "strategy": "aggressive",
+          "maxHoldHours": 24,
+          "stopAtrMultiplier": 2.5,
+          "rewardRisk": 1.5
+        },
+        "SOL-USD": {
+          "patternRequired": true,
+          "strategy": "aggressive",
+          "maxHoldHours": 4,
+          "stopAtrMultiplier": 2.5,
+          "rewardRisk": 1.5
+        },
+        "XRP-USD": {
+          "patternRequired": true,
+          "strategy": "aggressive",
+          "maxHoldHours": 24,
+          "stopAtrMultiplier": 2.5,
+          "rewardRisk": 1.5
+        },
+        "ADA-USD": {
+          "patternRequired": true,
+          "maxHoldHours": 4
+        },
+        "DOGE-USD": {
+          "patternRequired": true,
+          "strategy": "aggressive",
+          "maxHoldHours": 24,
+          "stopAtrMultiplier": 1.5,
+          "rewardRisk": 1.5
+        },
+        "LINK-USD": {
+          "patternRequired": true,
+          "strategy": "aggressive",
+          "maxHoldHours": 4,
+          "stopAtrMultiplier": 2.5,
+          "rewardRisk": 1.5
+        },
+        "AVAX-USD": {
+          "patternRequired": true,
+          "strategy": "aggressive",
+          "maxHoldHours": 24,
+          "stopAtrMultiplier": 2.5,
+          "rewardRisk": 1.5
+        }
+      },
+      "account": {
+        "initial": 29975.046647868254,
+        "cash": 29975.046647868254,
+        "positions": [],
+        "trades": [],
+        "equityHistory": [],
+        "lastProcessed": {},
+        "marks": {},
+        "nextId": 1,
+        "decisions": [],
+        "dailyRisk": {},
+        "compactJournal": true,
+        "decisionLimit": 300,
+        "equityLimit": 2600,
+        "orderLogLimit": 50
+      },
+      "pause": {},
+      "startedAt": "2026-11-21T18:29:47.177Z",
+      "rulesSince": "2026-11-21T18:29:47.177Z",
+      "rulesVersion": 1
+    },
+    {
+      "id": "lab-hourly",
+      "label": "Lab hourly per-market rules",
+      "source": "strategy-lab",
+      "rules": {
+        "strategy": "aggressive",
+        "lookback": 48,
+        "pivotWindow": 3,
+        "proximity": 0.006,
+        "stopBuffer": 0.004,
+        "rewardRisk": 1.5,
+        "trendLookback": 180,
+        "maxHoldHours": 2,
+        "stopAtrMultiplier": 1.25
+      },
+      "productConfigs": {
+        "BTC-USD": {
+          "patternRequired": true,
+          "strategy": "aggressive",
+          "maxHoldHours": 24,
+          "stopAtrMultiplier": 2.5,
+          "rewardRisk": 1.5
+        },
+        "ETH-USD": {
+          "patternRequired": true,
+          "strategy": "aggressive",
+          "maxHoldHours": 24,
+          "stopAtrMultiplier": 2.5,
+          "rewardRisk": 1.5
+        },
+        "SOL-USD": {
+          "patternRequired": true,
+          "strategy": "aggressive",
+          "maxHoldHours": 4,
+          "stopAtrMultiplier": 2.5,
+          "rewardRisk": 1.5
+        },
+        "XRP-USD": {
+          "patternRequired": true,
+          "strategy": "aggressive",
+          "maxHoldHours": 24,
+          "stopAtrMultiplier": 2.5,
+          "rewardRisk": 1.5
+        },
+        "ADA-USD": {
+          "patternRequired": true,
+          "maxHoldHours": 4
+        },
+        "DOGE-USD": {
+          "patternRequired": true,
+          "strategy": "aggressive",
+          "maxHoldHours": 24,
+          "stopAtrMultiplier": 1.5,
+          "rewardRisk": 1.5
+        },
+        "LINK-USD": {
+          "patternRequired": true,
+          "strategy": "aggressive",
+          "maxHoldHours": 4,
+          "stopAtrMultiplier": 2.5,
+          "rewardRisk": 1.5
+        },
+        "AVAX-USD": {
+          "patternRequired": true,
+          "strategy": "aggressive",
+          "maxHoldHours": 24,
+          "stopAtrMultiplier": 2.5,
+          "rewardRisk": 1.5
+        }
+      },
+      "account": {
+        "initial": 29975.046647868254,
+        "cash": 29975.046647868254,
+        "positions": [],
+        "trades": [],
+        "equityHistory": [],
+        "lastProcessed": {},
+        "marks": {},
+        "nextId": 1,
+        "decisions": [],
+        "dailyRisk": {},
+        "compactJournal": true,
+        "decisionLimit": 300,
+        "equityLimit": 2600,
+        "orderLogLimit": 50
+      },
+      "pause": {},
+      "startedAt": "2026-11-21T18:29:47.177Z",
+      "rulesSince": "2026-11-21T18:29:47.177Z",
+      "rulesVersion": 1
+    }
+  ],
+  "promotion": {
+    "tried": [
+      "0dcedbbd7ca2607644136fa355b3678a",
+      "7c615891a3e8779244136fa355b3678a",
+      "1b2b3f52e9a7e46744136fa355b3678a",
+      "b990d192b1e44d85fb18e9e28712700f"
+    ],
+    "reviewDate": "2026-11-21",
+    "reviewedAt": "2026-11-21T18:29:47.177Z",
+    "promoted": null,
+    "trials": 18,
+    "gates": {
+      "minDays": 7,
+      "minTrades": 20,
+      "minProfitFactor": 1.2,
+      "minPsr": 0.95,
+      "backtest": "beat main return with no worse drawdown",
+      "multipleTesting": "PSR above the expected max Sharpe of N trials >= 95%"
+    }
+  },
+  "promotionHistory": [
+    {
+      "at": "2026-11-21T18:29:47.177Z",
+      "challenger": "trend-k2",
+      "rulesVersion": 1,
+      "rulesHash": "0dcedbbd7ca2607644136fa355b3678a",
+      "decision": "rejected",
+      "gates": {
+        "backtestBeatsMain": false,
+        "deflatedSharpe": false,
+        "liveDays": false,
+        "liveTrades": false,
+        "liveNetBeatsMain": false,
+        "liveProfitFactor": false,
+        "liveDrawdownNoWorse": true
+      },
+      "failed": [
+        "backtestBeatsMain",
+        "deflatedSharpe",
+        "liveDays",
+        "liveTrades",
+        "liveNetBeatsMain",
+        "liveProfitFactor"
+      ],
+      "liveDays": 0,
+      "backtest": {
+        "window": "2-year 6h portfolio replay",
+        "challenger": {
+          "window": "2-year 6h portfolio replay",
+          "returnPct": 0.10600222297781389,
+          "drawdown": 0.12674463652999193,
+          "closedTrades": 68,
+          "netPnl": 3180.066689334417,
+          "profitFactor": 1.260754624206807
+        },
+        "main": {
+          "window": "2-year 6h portfolio replay",
+          "returnPct": 0.15097312655525577,
+          "drawdown": 0.11410564235297654,
+          "closedTrades": 49,
+          "netPnl": 4529.193796657673,
+          "profitFactor": 1.5034840130819578
+        }
+      },
+      "deflatedSharpe": {
+        "sharpe": 0.024631310776540415,
+        "annualizedSharpe": 0.4705805316396316,
+        "threshold": 0.07386007629026936,
+        "annualizedThreshold": 1.4110947761952808,
+        "psr": 0.10126107091595027,
+        "trials": 18,
+        "observations": 630,
+        "pass": false
+      },
+      "live": {
+        "challenger": {
+          "netPnl": 0,
+          "closedTrades": 0,
+          "profitFactor": null,
+          "maxDrawdown": 0,
+          "winRate": null
+        },
+        "main": {
+          "netPnl": 0,
+          "closedTrades": 0,
+          "profitFactor": null,
+          "maxDrawdown": 0,
+          "winRate": null
+        }
+      }
+    },
+    {
+      "at": "2026-11-21T18:29:47.177Z",
+      "challenger": "trend-k4",
+      "rulesVersion": 1,
+      "rulesHash": "7c615891a3e8779244136fa355b3678a",
+      "decision": "rejected",
+      "gates": {
+        "backtestBeatsMain": false,
+        "deflatedSharpe": false,
+        "liveDays": false,
+        "liveTrades": false,
+        "liveNetBeatsMain": false,
+        "liveProfitFactor": false,
+        "liveDrawdownNoWorse": true
+      },
+      "failed": [
+        "backtestBeatsMain",
+        "deflatedSharpe",
+        "liveDays",
+        "liveTrades",
+        "liveNetBeatsMain",
+        "liveProfitFactor"
+      ],
+      "liveDays": 0,
+      "backtest": {
+        "window": "2-year 6h portfolio replay",
+        "challenger": {
+          "window": "2-year 6h portfolio replay",
+          "returnPct": 0.09825287785563948,
+          "drawdown": 0.13591904213687242,
+          "closedTrades": 42,
+          "netPnl": 2947.5863356691843,
+          "profitFactor": 1.3241320016775529
+        },
+        "main": {
+          "window": "2-year 6h portfolio replay",
+          "returnPct": 0.15097312655525577,
+          "drawdown": 0.11410564235297654,
+          "closedTrades": 49,
+          "netPnl": 4529.193796657673,
+          "profitFactor": 1.5034840130819578
+        }
+      },
+      "deflatedSharpe": {
+        "sharpe": 0.024441779788608235,
+        "annualizedSharpe": 0.4669595471994427,
+        "threshold": 0.07386007629026936,
+        "annualizedThreshold": 1.4110947761952808,
+        "psr": 0.10066523952325263,
+        "trials": 18,
+        "observations": 630,
+        "pass": false
+      },
+      "live": {
+        "challenger": {
+          "netPnl": 0,
+          "closedTrades": 0,
+          "profitFactor": null,
+          "maxDrawdown": 0,
+          "winRate": null
+        },
+        "main": {
+          "netPnl": 0,
+          "closedTrades": 0,
+          "profitFactor": null,
+          "maxDrawdown": 0,
+          "winRate": null
+        }
+      }
+    },
+    {
+      "at": "2026-11-21T18:29:47.177Z",
+      "challenger": "lab-trend",
+      "rulesVersion": 1,
+      "rulesHash": "1b2b3f52e9a7e46744136fa355b3678a",
+      "decision": "rejected",
+      "gates": {
+        "backtestBeatsMain": false,
+        "deflatedSharpe": false,
+        "liveDays": false,
+        "liveTrades": false,
+        "liveNetBeatsMain": false,
+        "liveProfitFactor": false,
+        "liveDrawdownNoWorse": true
+      },
+      "failed": [
+        "backtestBeatsMain",
+        "deflatedSharpe",
+        "liveDays",
+        "liveTrades",
+        "liveNetBeatsMain",
+        "liveProfitFactor"
+      ],
+      "liveDays": 0,
+      "backtest": {
+        "window": "2-year 6h portfolio replay",
+        "challenger": {
+          "window": "2-year 6h portfolio replay",
+          "returnPct": 0.22531656565129912,
+          "drawdown": 0.12720366134172253,
+          "closedTrades": 65,
+          "netPnl": 6759.496969538974,
+          "profitFactor": 1.6253561485381258
+        },
+        "main": {
+          "window": "2-year 6h portfolio replay",
+          "returnPct": 0.15097312655525577,
+          "drawdown": 0.11410564235297654,
+          "closedTrades": 49,
+          "netPnl": 4529.193796657673,
+          "profitFactor": 1.5034840130819578
+        }
+      },
+      "deflatedSharpe": {
+        "sharpe": 0.04372017729432061,
+        "annualizedSharpe": 0.8352728143942504,
+        "threshold": 0.07386007629026936,
+        "annualizedThreshold": 1.4110947761952808,
+        "psr": 0.21424629687009755,
+        "trials": 18,
+        "observations": 630,
+        "pass": false
+      },
+      "live": {
+        "challenger": {
+          "netPnl": 0,
+          "closedTrades": 0,
+          "profitFactor": null,
+          "maxDrawdown": 0,
+          "winRate": null
+        },
+        "main": {
+          "netPnl": 0,
+          "closedTrades": 0,
+          "profitFactor": null,
+          "maxDrawdown": 0,
+          "winRate": null
+        }
+      }
+    },
+    {
+      "at": "2026-11-21T18:29:47.177Z",
+      "challenger": "hourly-legacy",
+      "rulesVersion": 1,
+      "rulesHash": "b990d192b1e44d85fb18e9e28712700f",
+      "decision": "rejected",
+      "gates": {
+        "backtestBeatsMain": false,
+        "deflatedSharpe": false,
+        "liveDays": false,
+        "liveTrades": false,
+        "liveNetBeatsMain": false,
+        "liveProfitFactor": false,
+        "liveDrawdownNoWorse": true
+      },
+      "failed": [
+        "backtestBeatsMain",
+        "deflatedSharpe",
+        "liveDays",
+        "liveTrades",
+        "liveNetBeatsMain",
+        "liveProfitFactor"
+      ],
+      "liveDays": 0,
+      "backtest": {
+        "window": "hourly replay on stored hourly history (~90 days)",
+        "challenger": {
+          "window": "hourly replay on stored hourly history (~90 days)",
+          "returnPct": -0.07437898464702031,
+          "drawdown": 0.08269135316106245,
+          "closedTrades": 300,
+          "netPnl": -5982.822730894232,
+          "profitFactor": 0.3393861214606282
+        },
+        "main": {
+          "window": "hourly replay on stored hourly history (~90 days)",
+          "returnPct": -0.0018682551331512531,
+          "drawdown": 0.002548175004965963,
+          "closedTrades": 2,
+          "netPnl": -149.46041065210045,
+          "profitFactor": 0
+        }
+      },
+      "deflatedSharpe": {
+        "sharpe": -0.7211853808723706,
+        "annualizedSharpe": -13.778227355439071,
+        "threshold": 0.32772157808929336,
+        "annualizedThreshold": 6.261111958114783,
+        "psr": 3.96299626448382e-9,
+        "trials": 18,
+        "observations": 32,
+        "pass": false
+      },
+      "live": {
+        "challenger": {
+          "netPnl": 0,
+          "closedTrades": 0,
+          "profitFactor": null,
+          "maxDrawdown": 0,
+          "winRate": null
+        },
+        "main": {
+          "netPnl": 0,
+          "closedTrades": 0,
+          "profitFactor": null,
+          "maxDrawdown": 0,
+          "winRate": null
+        }
+      }
+    },
+    {
+      "at": "2026-11-21T18:29:47.177Z",
+      "challenger": "lab-hourly",
+      "rulesVersion": 1,
+      "rulesHash": "b990d192b1e44d85fb18e9e28712700f",
+      "decision": "rejected",
+      "gates": {
+        "backtestBeatsMain": false,
+        "deflatedSharpe": false,
+        "liveDays": false,
+        "liveTrades": false,
+        "liveNetBeatsMain": false,
+        "liveProfitFactor": false,
+        "liveDrawdownNoWorse": true
+      },
+      "failed": [
+        "backtestBeatsMain",
+        "deflatedSharpe",
+        "liveDays",
+        "liveTrades",
+        "liveNetBeatsMain",
+        "liveProfitFactor"
+      ],
+      "liveDays": 0,
+      "backtest": {
+        "window": "hourly replay on stored hourly history (~90 days)",
+        "challenger": {
+          "window": "hourly replay on stored hourly history (~90 days)",
+          "returnPct": -0.07437898464702031,
+          "drawdown": 0.08269135316106245,
+          "closedTrades": 300,
+          "netPnl": -5982.822730894232,
+          "profitFactor": 0.3393861214606282
+        },
+        "main": {
+          "window": "hourly replay on stored hourly history (~90 days)",
+          "returnPct": -0.0018682551331512531,
+          "drawdown": 0.002548175004965963,
+          "closedTrades": 2,
+          "netPnl": -149.46041065210045,
+          "profitFactor": 0
+        }
+      },
+      "deflatedSharpe": {
+        "sharpe": -0.7211853808723706,
+        "annualizedSharpe": -13.778227355439071,
+        "threshold": 0.32772157808929336,
+        "annualizedThreshold": 6.261111958114783,
+        "psr": 3.96299626448382e-9,
+        "trials": 18,
+        "observations": 32,
+        "pass": false
+      },
+      "live": {
+        "challenger": {
+          "netPnl": 0,
+          "closedTrades": 0,
+          "profitFactor": null,
+          "maxDrawdown": 0,
+          "winRate": null
+        },
+        "main": {
+          "netPnl": 0,
+          "closedTrades": 0,
+          "profitFactor": null,
+          "maxDrawdown": 0,
+          "winRate": null
+        }
+      }
+    }
+  ]
 }
