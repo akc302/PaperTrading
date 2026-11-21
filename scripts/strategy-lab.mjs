@@ -9,7 +9,7 @@ import {eligibleTrades,summarize} from './evidence.mjs';
 import {decryptState,encryptState} from './private-state.mjs';
 export const EXPERIMENT='rolling-v2';
 // Only these keys may be adopted. Sizing, loss limits and costs are never touched.
-export const TUNABLE=Object.freeze(['strategy','patternRequired','maxHoldHours','stopAtrMultiplier','rewardRisk','mlWeights','mlThreshold','trailAtrMultiplier','trendTopN','trendBreakout','trendRankDays']);
+export const TUNABLE=Object.freeze(['strategy','patternRequired','regimeFilter','maxHoldHours','stopAtrMultiplier','rewardRisk','mlWeights','mlThreshold','trailAtrMultiplier','trendTopN','trendBreakout','trendRankDays']);
 /** Two-year trend-follow candidates: chandelier k in {2,3,4} and top 2 or 3 coins. */
 export const TREND_CANDIDATES=Object.freeze([2,3,4].flatMap(k=>[2,3].map(n=>({id:`trend-k${k}-top${n}`,changes:{strategy:'trend-follow',trailAtrMultiplier:k,trendTopN:n,trendBreakout:20,trendRankDays:30,maxHoldHours:0}}))));
 export const FROZEN=Object.freeze(['riskPct','maxTotalRisk','maxAllocation','maxOpenPositions','maxDailyLoss','maxExposure','feeRate','slippage','makerFeeRate','takerFeeRate','rebateRate','rebateVerified']);
@@ -25,6 +25,8 @@ export const CANDIDATES=Object.freeze([
  {id:'aggressive-day-hold',changes:{...fresh,strategy:'aggressive',maxHoldHours:24,stopAtrMultiplier:2.5,rewardRisk:1.5}},
  {id:'ema-trend-pullback',changes:{...fresh,strategy:'ema-trend',maxHoldHours:24,stopAtrMultiplier:2.5,rewardRisk:1.5}},
  {id:'donchian-breakout',changes:{...fresh,strategy:'donchian',maxHoldHours:24,stopAtrMultiplier:2.5,rewardRisk:1.5}},
+ {id:'regime-block',changes:{regimeFilter:true}},
+ {id:'aggressive-day-hold+regime-block',changes:{...fresh,strategy:'aggressive',maxHoldHours:24,stopAtrMultiplier:2.5,rewardRisk:1.5,patternRequired:true,regimeFilter:true}},
  {id:'rsi-reversion',changes:{...fresh,strategy:'rsi-reversion',maxHoldHours:24,stopAtrMultiplier:2.5,rewardRisk:1.5}},
 ]);
 

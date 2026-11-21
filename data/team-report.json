@@ -1,27 +1,27 @@
 {
   "version": 1,
-  "generatedAt": "2026-11-21T16:01:47.788Z",
+  "generatedAt": "2026-11-21T18:02:24.806Z",
   "goal": 85000,
-  "equity": 8030.215644369231,
-  "startingEquity": 10000,
-  "progressToGoal": -0.02626379140841025,
-  "returnPct": -0.1969784355630769,
-  "drawdown": 0.21601216136015083,
-  "openPositions": 3,
+  "equity": 29958.891209204983,
+  "startingEquity": 30000,
+  "progressToGoal": -0.0007474325599093969,
+  "returnPct": -0.001370293026500561,
+  "drawdown": 0.001370293026500561,
+  "openPositions": 2,
   "last24h": {
-    "closedTrades": 22,
-    "wins": 2,
-    "winRate": 0.09090909090909091,
-    "netPnl": -1094.4742856681958,
-    "grossFees": 548.3727324286917,
+    "closedTrades": 0,
+    "wins": 0,
+    "winRate": null,
+    "netPnl": 0,
+    "grossFees": 0,
     "rebatesCredited": 0
   },
   "allTime": {
-    "closedTrades": 42,
-    "wins": 2,
-    "winRate": 0.047619047619047616,
-    "netPnl": -2068.732513687684,
-    "grossFees": 1123.0411759578785,
+    "closedTrades": 0,
+    "wins": 0,
+    "winRate": null,
+    "netPnl": 0,
+    "grossFees": 0,
     "rebatesCredited": 0
   },
   "losingStreak": 0,
@@ -38,28 +38,28 @@
     },
     "SOL-USD": {
       "strategy": "aggressive",
-      "approach": "aggressive-day-hold",
-      "decision": "keep"
+      "approach": "longer-hold",
+      "decision": "adopt-improvement"
     },
     "XRP-USD": {
       "strategy": "aggressive",
-      "approach": "wider-stop",
+      "approach": "aggressive-day-hold+regime-block",
       "decision": "keep"
     },
     "ADA-USD": {
       "strategy": "aggressive",
-      "approach": "current",
-      "decision": "keep"
+      "approach": "regime-block",
+      "decision": "adopt-improvement"
     },
     "DOGE-USD": {
       "strategy": "aggressive",
-      "approach": "aggressive-day-hold",
-      "decision": "keep"
+      "approach": "wider-stop",
+      "decision": "adopt-improvement"
     },
     "LINK-USD": {
       "strategy": "aggressive",
-      "approach": "aggressive-day-hold",
-      "decision": "keep"
+      "approach": "longer-hold",
+      "decision": "adopt-improvement"
     },
     "AVAX-USD": {
       "strategy": "aggressive",
@@ -74,67 +74,75 @@
       "healthy": true
     },
     "researcher": {
-      "role": "5-hour backtest and rule adoption",
-      "lastRunHoursAgo": 2.5,
-      "healthy": true
+      "role": "Claude every 5h: loss analysis, backtest, rule adoption",
+      "lastRunHoursAgo": 0.1,
+      "healthy": true,
+      "latestNote": {
+        "at": "2026-11-21T16:30:00Z",
+        "tradesReviewed": 42,
+        "losses": 40,
+        "findings": 7,
+        "changes": 2,
+        "adopted": true,
+        "nextIdea": "Add strategy-lab CANDIDATES: (a) 'aggressive+regime-block' that skips entries when EMA20<EMA50 and 24h change < -3% (or requires a 4h close above EMA50); (b) cap same-run entries to 1-2 coins when they are highly correlated; (c) maker-limit entry modeling (0.4% maker vs 0.6% taker, before the 25% rebate) so entries are rejected unless expected move > 2.5x round-trip cost. Judge on the unseen newest-25% test with fees; FROZEN risk caps unchanged."
+      }
     },
     "verifier": {
       "role": "hourly health check and one retry",
       "workflow": "health.yml"
     },
     "manager": {
-      "role": "this hourly goal report",
-      "workflow": "learning.yml collect"
+      "role": "Claude every 6h: reads this report and the researcher notes, restarts and fixes jobs"
     },
     "supervisor": {
-      "role": "Claude session every 3 hours: verifies, researches, repairs"
+      "role": "Claude every 8h: audits the manager and researcher for the owner"
     }
   },
   "integrity": {
     "ok": true,
-    "cashDifference": 1.3642420526593924e-12,
+    "cashDifference": 0,
     "problems": []
   },
   "readiness": {
     "ready": false,
-    "passed": 1,
+    "passed": 2,
     "total": 9,
     "checks": [
       {
         "id": "history",
         "label": "28+ days of forward paper trading with the research team",
         "pass": false,
-        "value": "0.5 days"
+        "value": "0.6 days"
       },
       {
         "id": "sample",
         "label": "150+ closed trades in the last 28 days",
         "pass": false,
-        "value": "42 trades"
+        "value": "0 trades"
       },
       {
         "id": "winrate",
         "label": "Win rate 60%+ after fees",
         "pass": false,
-        "value": "4.8%"
+        "value": "—"
       },
       {
         "id": "profit",
         "label": "Net profit after fees and rebates, profit factor 1.3+",
         "pass": false,
-        "value": "$-2068.73, PF 0.04"
+        "value": "$0.00, PF —"
       },
       {
         "id": "weekly",
         "label": "Profitable in each of the last 4 weeks",
         "pass": false,
-        "value": "$-2069 / $0 / $0 / $0"
+        "value": "$0 / $0 / $0 / $0"
       },
       {
         "id": "drawdown",
         "label": "Max drawdown 10% or less over 28 days",
-        "pass": false,
-        "value": "21.6%"
+        "pass": true,
+        "value": "0.1%"
       },
       {
         "id": "validated",
@@ -155,7 +163,7 @@
         "value": "balanced"
       }
     ],
-    "message": "Not ready: 1/9 evidence checks passed. Keep paper trading."
+    "message": "Not ready: 2/9 evidence checks passed. Keep paper trading."
   },
   "verdict": "on-track",
   "issues": [],
