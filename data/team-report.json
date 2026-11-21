@@ -1,12 +1,12 @@
 {
   "version": 1,
-  "generatedAt": "2026-11-21T10:01:39.802Z",
+  "generatedAt": "2026-11-21T11:16:02.097Z",
   "goal": 85000,
-  "equity": 7894.2062633190335,
+  "equity": 7898.6275689133345,
   "startingEquity": 10000,
-  "progressToGoal": -0.028077249822412886,
-  "returnPct": -0.21057937366809665,
-  "drawdown": 0.21057937366809665,
+  "progressToGoal": -0.02801829908115554,
+  "returnPct": -0.21013724310866655,
+  "drawdown": 0.2108052447147621,
   "openPositions": 1,
   "last24h": {
     "closedTrades": 32,
@@ -75,8 +75,8 @@
     },
     "researcher": {
       "role": "5-hour backtest and rule adoption",
-      "lastRunHoursAgo": 5.4,
-      "healthy": true
+      "lastRunHoursAgo": 6.6,
+      "healthy": false
     },
     "verifier": {
       "role": "hourly health check and one retry",
@@ -104,7 +104,7 @@
         "id": "history",
         "label": "28+ days of forward paper trading with the research team",
         "pass": false,
-        "value": "0.2 days"
+        "value": "0.3 days"
       },
       {
         "id": "sample",
@@ -157,7 +157,11 @@
     ],
     "message": "Not ready: 1/9 evidence checks passed. Keep paper trading."
   },
-  "verdict": "on-track",
-  "issues": [],
-  "dispatch": []
+  "verdict": "needs-attention",
+  "issues": [
+    "Researcher (agent 2) last ran 7h ago; expected every 5h."
+  ],
+  "dispatch": [
+    "learning.yml:research"
+  ]
 }
