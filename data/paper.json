@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-11-21T19:10:23.349Z",
+  "updatedAt": "2026-11-21T19:15:24.392Z",
   "autoTrade": true,
   "products": [
     "BTC-USD",
@@ -316,6 +316,10 @@
       {
         "time": 1795288237.003,
         "equity": 30002.9967745741
+      },
+      {
+        "time": 1795288539.038,
+        "equity": 29977.334924119918
       }
     ],
     "lastProcessed": {
@@ -329,14 +333,14 @@
       "AVAX-USD": 1795284000
     },
     "marks": {
-      "BTC-USD": 60193.47,
-      "ETH-USD": 1682.85,
-      "SOL-USD": 70.65,
-      "XRP-USD": 0.9349,
-      "ADA-USD": 0.14528,
-      "DOGE-USD": 0.05526,
-      "LINK-USD": 8.621,
-      "AVAX-USD": 6.636
+      "BTC-USD": 60162.28,
+      "ETH-USD": 1681.34,
+      "SOL-USD": 70.57,
+      "XRP-USD": 0.9335,
+      "ADA-USD": 0.145,
+      "DOGE-USD": 0.05515,
+      "LINK-USD": 8.603,
+      "AVAX-USD": 6.62
     },
     "nextId": 3,
     "decisions": [
@@ -15789,6 +15793,546 @@
           "feeObservedAt": "2026-11-21T16:30:00Z",
           "source": "Owner-provided Coinbase Advanced spot fee schedule; 25% Coinbase One rebate on fees, owner-confirmed. Edit this file when the tier changes."
         }
+      },
+      {
+        "time": 1795288539.038,
+        "product": "XRP-USD",
+        "signal": "WAIT",
+        "observedSignal": "WAIT",
+        "action": "HOLD",
+        "reason": "Open virtual position monitored at fresh quote.",
+        "setup": "trend-breakout",
+        "strategy": "trend-follow",
+        "pattern": {
+          "version": 1,
+          "timeframe": "1h",
+          "asOf": 1795287600,
+          "mode": "observe",
+          "confirmed": true,
+          "matches": [
+            "closing-high-breakout-20h"
+          ],
+          "context": [],
+          "status": "evaluated",
+          "volumeRatio": 0.6330916250989922,
+          "reason": "Completed hourly candle matches an explicit entry rule.",
+          "levels": {
+            "closingHigh20": 0.9326,
+            "ma20": 0.9049150000000002
+          },
+          "rsi": 56.95239131002241,
+          "previousRsi": 56.41516935157344
+        },
+        "support": 1.186292196974777,
+        "resistance": 0.9882,
+        "stop": 0.8332785714285713,
+        "target": 18.652,
+        "price": 0.9326,
+        "trend": "bearish",
+        "config": {
+          "strategy": "trend-follow",
+          "lookback": 48,
+          "pivotWindow": 3,
+          "proximity": 0.006,
+          "stopBuffer": 0.004,
+          "rewardRisk": 1.5,
+          "riskPct": 0.02,
+          "feeRate": 0.003,
+          "slippage": 0.0005,
+          "maxAllocation": 0.25,
+          "trendLookback": 180,
+          "maxHoldHours": 0,
+          "maxDailyLoss": 0.12,
+          "maxOpenPositions": 4,
+          "maxTotalRisk": 0.08,
+          "stopAtrMultiplier": 1.25,
+          "trailAtrMultiplier": 3,
+          "trendTopN": 2,
+          "trendBreakout": 20,
+          "trendRankDays": 30,
+          "patternRequired": false,
+          "entryOrder": "limit",
+          "limitOffset": 0.0005,
+          "limitChecks": 3,
+          "feeTier": "Advanced 2",
+          "makerFeeRate": 0.0015,
+          "takerFeeRate": 0.003,
+          "rebateRate": 0.25,
+          "rebateVerified": true,
+          "feeObservedAt": "2026-11-21T16:30:00Z",
+          "source": "Owner-provided Coinbase Advanced spot fee schedule; 25% Coinbase One rebate on fees, owner-confirmed. Edit this file when the tier changes."
+        }
+      },
+      {
+        "time": 1795288539.038,
+        "product": "SOL-USD",
+        "signal": "WAIT",
+        "observedSignal": "WAIT",
+        "action": "WAIT",
+        "reason": "Daily trend test failed: needs close above EMA50 and EMA20 above EMA50.",
+        "setup": "trend-breakout",
+        "strategy": "trend-follow",
+        "pattern": {
+          "version": 1,
+          "timeframe": "1h",
+          "asOf": 1795287600,
+          "mode": "observe",
+          "confirmed": false,
+          "matches": [],
+          "context": [],
+          "status": "evaluated",
+          "volumeRatio": 0.753751085561407,
+          "reason": "No completed-candle entry confirmation; context alone is insufficient.",
+          "levels": {
+            "closingHigh20": 70.64,
+            "ma20": 68.59049999999999
+          },
+          "rsi": 56.484355018076165,
+          "previousRsi": 55.73791452043189
+        },
+        "support": 91.25488759405009,
+        "resistance": 75.11,
+        "stop": 62.980714285714285,
+        "target": 1410,
+        "price": 70.5,
+        "trend": "bearish",
+        "config": {
+          "strategy": "trend-follow",
+          "lookback": 48,
+          "pivotWindow": 3,
+          "proximity": 0.006,
+          "stopBuffer": 0.004,
+          "rewardRisk": 1.5,
+          "riskPct": 0.02,
+          "feeRate": 0.003,
+          "slippage": 0.0005,
+          "maxAllocation": 0.25,
+          "trendLookback": 180,
+          "maxHoldHours": 0,
+          "maxDailyLoss": 0.12,
+          "maxOpenPositions": 4,
+          "maxTotalRisk": 0.08,
+          "stopAtrMultiplier": 1.25,
+          "trailAtrMultiplier": 3,
+          "trendTopN": 2,
+          "trendBreakout": 20,
+          "trendRankDays": 30,
+          "patternRequired": false,
+          "entryOrder": "limit",
+          "limitOffset": 0.0005,
+          "limitChecks": 3,
+          "feeTier": "Advanced 2",
+          "makerFeeRate": 0.0015,
+          "takerFeeRate": 0.003,
+          "rebateRate": 0.25,
+          "rebateVerified": true,
+          "feeObservedAt": "2026-11-21T16:30:00Z",
+          "source": "Owner-provided Coinbase Advanced spot fee schedule; 25% Coinbase One rebate on fees, owner-confirmed. Edit this file when the tier changes."
+        }
+      },
+      {
+        "time": 1795288539.038,
+        "product": "ETH-USD",
+        "signal": "WAIT",
+        "observedSignal": "WAIT",
+        "action": "WAIT",
+        "reason": "Daily trend test failed: needs close above EMA50 and EMA20 above EMA50.",
+        "setup": "trend-breakout",
+        "strategy": "trend-follow",
+        "pattern": {
+          "version": 1,
+          "timeframe": "1h",
+          "asOf": 1795287600,
+          "mode": "observe",
+          "confirmed": false,
+          "matches": [],
+          "context": [],
+          "status": "evaluated",
+          "volumeRatio": 0.2585473662613486,
+          "reason": "No completed-candle entry confirmation; context alone is insufficient.",
+          "levels": {
+            "closingHigh20": 1699.07,
+            "ma20": 1637.545
+          },
+          "rsi": 50.638405730535005,
+          "previousRsi": 50.583737335581034
+        },
+        "support": 2181.7462623337974,
+        "resistance": 1832.34,
+        "stop": 1490.1357142857141,
+        "target": 33584,
+        "price": 1679.2,
+        "trend": "bearish",
+        "config": {
+          "strategy": "trend-follow",
+          "lookback": 48,
+          "pivotWindow": 3,
+          "proximity": 0.006,
+          "stopBuffer": 0.004,
+          "rewardRisk": 1.5,
+          "riskPct": 0.02,
+          "feeRate": 0.003,
+          "slippage": 0.0005,
+          "maxAllocation": 0.25,
+          "trendLookback": 180,
+          "maxHoldHours": 0,
+          "maxDailyLoss": 0.12,
+          "maxOpenPositions": 4,
+          "maxTotalRisk": 0.08,
+          "stopAtrMultiplier": 1.25,
+          "trailAtrMultiplier": 3,
+          "trendTopN": 2,
+          "trendBreakout": 20,
+          "trendRankDays": 30,
+          "patternRequired": false,
+          "entryOrder": "limit",
+          "limitOffset": 0.0005,
+          "limitChecks": 3,
+          "feeTier": "Advanced 2",
+          "makerFeeRate": 0.0015,
+          "takerFeeRate": 0.003,
+          "rebateRate": 0.25,
+          "rebateVerified": true,
+          "feeObservedAt": "2026-11-21T16:30:00Z",
+          "source": "Owner-provided Coinbase Advanced spot fee schedule; 25% Coinbase One rebate on fees, owner-confirmed. Edit this file when the tier changes."
+        }
+      },
+      {
+        "time": 1795288539.038,
+        "product": "BTC-USD",
+        "signal": "WAIT",
+        "observedSignal": "WAIT",
+        "action": "WAIT",
+        "reason": "Daily trend test failed: needs close above EMA50 and EMA20 above EMA50.",
+        "setup": "trend-breakout",
+        "strategy": "trend-follow",
+        "pattern": {
+          "version": 1,
+          "timeframe": "1h",
+          "asOf": 1795287600,
+          "mode": "observe",
+          "confirmed": false,
+          "matches": [],
+          "context": [],
+          "status": "evaluated",
+          "volumeRatio": 0.28859033988028254,
+          "reason": "No completed-candle entry confirmation; context alone is insufficient.",
+          "levels": {
+            "closingHigh20": 60452.7,
+            "ma20": 58515.062
+          },
+          "rsi": 53.60142647793911,
+          "previousRsi": 53.05868929181644
+        },
+        "support": 74454.07545696871,
+        "resistance": 64927.85,
+        "stop": 54124.26142857143,
+        "target": 1199346.7999999998,
+        "price": 59967.34,
+        "trend": "bearish",
+        "config": {
+          "strategy": "trend-follow",
+          "lookback": 48,
+          "pivotWindow": 3,
+          "proximity": 0.006,
+          "stopBuffer": 0.004,
+          "rewardRisk": 1.5,
+          "riskPct": 0.02,
+          "feeRate": 0.003,
+          "slippage": 0.0005,
+          "maxAllocation": 0.25,
+          "trendLookback": 180,
+          "maxHoldHours": 0,
+          "maxDailyLoss": 0.12,
+          "maxOpenPositions": 4,
+          "maxTotalRisk": 0.08,
+          "stopAtrMultiplier": 1.25,
+          "trailAtrMultiplier": 3,
+          "trendTopN": 2,
+          "trendBreakout": 20,
+          "trendRankDays": 30,
+          "patternRequired": false,
+          "entryOrder": "limit",
+          "limitOffset": 0.0005,
+          "limitChecks": 3,
+          "feeTier": "Advanced 2",
+          "makerFeeRate": 0.0015,
+          "takerFeeRate": 0.003,
+          "rebateRate": 0.25,
+          "rebateVerified": true,
+          "feeObservedAt": "2026-11-21T16:30:00Z",
+          "source": "Owner-provided Coinbase Advanced spot fee schedule; 25% Coinbase One rebate on fees, owner-confirmed. Edit this file when the tier changes."
+        }
+      },
+      {
+        "time": 1795288539.038,
+        "product": "ADA-USD",
+        "signal": "WAIT",
+        "observedSignal": "WAIT",
+        "action": "HOLD",
+        "reason": "Open virtual position monitored at fresh quote.",
+        "setup": "trend-breakout",
+        "strategy": "trend-follow",
+        "pattern": {
+          "version": 1,
+          "timeframe": "1h",
+          "asOf": 1795287600,
+          "mode": "observe",
+          "confirmed": true,
+          "matches": [
+            "closing-high-breakout-20h"
+          ],
+          "context": [],
+          "status": "evaluated",
+          "volumeRatio": 0.5650518611221145,
+          "reason": "Completed hourly candle matches an explicit entry rule.",
+          "levels": {
+            "closingHigh20": 0.14481,
+            "ma20": 0.1409685
+          },
+          "rsi": 57.122070626420694,
+          "previousRsi": 55.72652396212374
+        },
+        "support": 0.1907979529156135,
+        "resistance": 0.15515,
+        "stop": 0.12836571428571428,
+        "target": 2.8962,
+        "price": 0.14481,
+        "trend": "bearish",
+        "config": {
+          "strategy": "trend-follow",
+          "lookback": 48,
+          "pivotWindow": 3,
+          "proximity": 0.006,
+          "stopBuffer": 0.004,
+          "rewardRisk": 1.5,
+          "riskPct": 0.02,
+          "feeRate": 0.003,
+          "slippage": 0.0005,
+          "maxAllocation": 0.25,
+          "trendLookback": 180,
+          "maxHoldHours": 0,
+          "maxDailyLoss": 0.12,
+          "maxOpenPositions": 4,
+          "maxTotalRisk": 0.08,
+          "stopAtrMultiplier": 1.25,
+          "trailAtrMultiplier": 3,
+          "trendTopN": 2,
+          "trendBreakout": 20,
+          "trendRankDays": 30,
+          "patternRequired": false,
+          "entryOrder": "limit",
+          "limitOffset": 0.0005,
+          "limitChecks": 3,
+          "feeTier": "Advanced 2",
+          "makerFeeRate": 0.0015,
+          "takerFeeRate": 0.003,
+          "rebateRate": 0.25,
+          "rebateVerified": true,
+          "feeObservedAt": "2026-11-21T16:30:00Z",
+          "source": "Owner-provided Coinbase Advanced spot fee schedule; 25% Coinbase One rebate on fees, owner-confirmed. Edit this file when the tier changes."
+        }
+      },
+      {
+        "time": 1795288539.038,
+        "product": "DOGE-USD",
+        "signal": "WAIT",
+        "observedSignal": "WAIT",
+        "action": "WAIT",
+        "reason": "Daily trend test failed: needs close above EMA50 and EMA20 above EMA50.",
+        "setup": "trend-breakout",
+        "strategy": "trend-follow",
+        "pattern": {
+          "version": 1,
+          "timeframe": "1h",
+          "asOf": 1795287600,
+          "mode": "observe",
+          "confirmed": false,
+          "matches": [],
+          "context": [],
+          "status": "evaluated",
+          "volumeRatio": 0.3612552302323651,
+          "reason": "No completed-candle entry confirmation; context alone is insufficient.",
+          "levels": {
+            "closingHigh20": 0.05526,
+            "ma20": 0.05380299999999999
+          },
+          "rsi": 53.320663284646216,
+          "previousRsi": 52.45488855360611
+        },
+        "support": 0.07302918484142623,
+        "resistance": 0.06006,
+        "stop": 0.04910785714285714,
+        "target": 1.101,
+        "price": 0.05505,
+        "trend": "bearish",
+        "config": {
+          "strategy": "trend-follow",
+          "lookback": 48,
+          "pivotWindow": 3,
+          "proximity": 0.006,
+          "stopBuffer": 0.004,
+          "rewardRisk": 1.5,
+          "riskPct": 0.02,
+          "feeRate": 0.003,
+          "slippage": 0.0005,
+          "maxAllocation": 0.25,
+          "trendLookback": 180,
+          "maxHoldHours": 0,
+          "maxDailyLoss": 0.12,
+          "maxOpenPositions": 4,
+          "maxTotalRisk": 0.08,
+          "stopAtrMultiplier": 1.25,
+          "trailAtrMultiplier": 3,
+          "trendTopN": 2,
+          "trendBreakout": 20,
+          "trendRankDays": 30,
+          "patternRequired": false,
+          "entryOrder": "limit",
+          "limitOffset": 0.0005,
+          "limitChecks": 3,
+          "feeTier": "Advanced 2",
+          "makerFeeRate": 0.0015,
+          "takerFeeRate": 0.003,
+          "rebateRate": 0.25,
+          "rebateVerified": true,
+          "feeObservedAt": "2026-11-21T16:30:00Z",
+          "source": "Owner-provided Coinbase Advanced spot fee schedule; 25% Coinbase One rebate on fees, owner-confirmed. Edit this file when the tier changes."
+        }
+      },
+      {
+        "time": 1795288539.038,
+        "product": "LINK-USD",
+        "signal": "WAIT",
+        "observedSignal": "WAIT",
+        "action": "WAIT",
+        "reason": "Daily trend test failed: needs close above EMA50 and EMA20 above EMA50.",
+        "setup": "trend-breakout",
+        "strategy": "trend-follow",
+        "pattern": {
+          "version": 1,
+          "timeframe": "1h",
+          "asOf": 1795287600,
+          "mode": "observe",
+          "confirmed": false,
+          "matches": [],
+          "context": [],
+          "status": "evaluated",
+          "volumeRatio": 0.3916067035679435,
+          "reason": "No completed-candle entry confirmation; context alone is insufficient.",
+          "levels": {
+            "closingHigh20": 8.662,
+            "ma20": 8.4391
+          },
+          "rsi": 52.845309508084064,
+          "previousRsi": 51.43412171888432
+        },
+        "support": 10.89601154449948,
+        "resistance": 9.311,
+        "stop": 7.611714285714286,
+        "target": 171.46,
+        "price": 8.573,
+        "trend": "bearish",
+        "config": {
+          "strategy": "trend-follow",
+          "lookback": 48,
+          "pivotWindow": 3,
+          "proximity": 0.006,
+          "stopBuffer": 0.004,
+          "rewardRisk": 1.5,
+          "riskPct": 0.02,
+          "feeRate": 0.003,
+          "slippage": 0.0005,
+          "maxAllocation": 0.25,
+          "trendLookback": 180,
+          "maxHoldHours": 0,
+          "maxDailyLoss": 0.12,
+          "maxOpenPositions": 4,
+          "maxTotalRisk": 0.08,
+          "stopAtrMultiplier": 1.25,
+          "trailAtrMultiplier": 3,
+          "trendTopN": 2,
+          "trendBreakout": 20,
+          "trendRankDays": 30,
+          "patternRequired": false,
+          "entryOrder": "limit",
+          "limitOffset": 0.0005,
+          "limitChecks": 3,
+          "feeTier": "Advanced 2",
+          "makerFeeRate": 0.0015,
+          "takerFeeRate": 0.003,
+          "rebateRate": 0.25,
+          "rebateVerified": true,
+          "feeObservedAt": "2026-11-21T16:30:00Z",
+          "source": "Owner-provided Coinbase Advanced spot fee schedule; 25% Coinbase One rebate on fees, owner-confirmed. Edit this file when the tier changes."
+        }
+      },
+      {
+        "time": 1795288539.038,
+        "product": "AVAX-USD",
+        "signal": "WAIT",
+        "observedSignal": "WAIT",
+        "action": "WAIT",
+        "reason": "Daily trend test failed: needs close above EMA50 and EMA20 above EMA50.",
+        "setup": "trend-breakout",
+        "strategy": "trend-follow",
+        "pattern": {
+          "version": 1,
+          "timeframe": "1h",
+          "asOf": 1795287600,
+          "mode": "observe",
+          "confirmed": false,
+          "matches": [],
+          "context": [],
+          "status": "evaluated",
+          "volumeRatio": 1.1499250012093472,
+          "reason": "No completed-candle entry confirmation; context alone is insufficient.",
+          "levels": {
+            "closingHigh20": 6.66,
+            "ma20": 6.4336
+          },
+          "rsi": 53.18570988439844,
+          "previousRsi": 52.84042346165648
+        },
+        "support": 8.468827810235224,
+        "resistance": 7.291,
+        "stop": 5.817,
+        "target": 132.18,
+        "price": 6.609,
+        "trend": "bearish",
+        "config": {
+          "strategy": "trend-follow",
+          "lookback": 48,
+          "pivotWindow": 3,
+          "proximity": 0.006,
+          "stopBuffer": 0.004,
+          "rewardRisk": 1.5,
+          "riskPct": 0.02,
+          "feeRate": 0.003,
+          "slippage": 0.0005,
+          "maxAllocation": 0.25,
+          "trendLookback": 180,
+          "maxHoldHours": 0,
+          "maxDailyLoss": 0.12,
+          "maxOpenPositions": 4,
+          "maxTotalRisk": 0.08,
+          "stopAtrMultiplier": 1.25,
+          "trailAtrMultiplier": 3,
+          "trendTopN": 2,
+          "trendBreakout": 20,
+          "trendRankDays": 30,
+          "patternRequired": false,
+          "entryOrder": "limit",
+          "limitOffset": 0.0005,
+          "limitChecks": 3,
+          "feeTier": "Advanced 2",
+          "makerFeeRate": 0.0015,
+          "takerFeeRate": 0.003,
+          "rebateRate": 0.25,
+          "rebateVerified": true,
+          "feeObservedAt": "2026-11-21T16:30:00Z",
+          "source": "Owner-provided Coinbase Advanced spot fee schedule; 25% Coinbase One rebate on fees, owner-confirmed. Edit this file when the tier changes."
+        }
       }
     ],
     "dailyRisk": {
@@ -15807,16 +16351,16 @@
       "XRP-USD": 1795284098.479,
       "ADA-USD": 1795284098.479
     },
-    "lastQuoteBucket": 5984294,
+    "lastQuoteBucket": 5984295,
     "rebatesUSDC": 11.212507208073495,
     "lastExits": {},
     "pendingOrders": [],
     "orderLog": []
   },
-  "lastMarketAt": "2026-11-21T19:10:23.349Z",
+  "lastMarketAt": "2026-11-21T19:15:24.392Z",
   "errors": [],
   "productConfigs": {},
-  "lastRunAt": "2026-11-21T19:10:23.349Z",
+  "lastRunAt": "2026-11-21T19:15:24.392Z",
   "executionMode": "quotes",
   "evidence": {
     "version": 1,
@@ -23370,6 +23914,10 @@
           {
             "time": 1795288237.033,
             "equity": 29975.046647868254
+          },
+          {
+            "time": 1795288539.076,
+            "equity": 29975.046647868254
           }
         ],
         "lastProcessed": {
@@ -23383,14 +23931,14 @@
           "AVAX-USD": 1795284000
         },
         "marks": {
-          "BTC-USD": 60193.47,
-          "ETH-USD": 1682.85,
-          "SOL-USD": 70.65,
-          "XRP-USD": 0.9349,
-          "ADA-USD": 0.14528,
-          "DOGE-USD": 0.05526,
-          "LINK-USD": 8.621,
-          "AVAX-USD": 6.636
+          "BTC-USD": 60162.28,
+          "ETH-USD": 1681.34,
+          "SOL-USD": 70.57,
+          "XRP-USD": 0.9335,
+          "ADA-USD": 0.145,
+          "DOGE-USD": 0.05515,
+          "LINK-USD": 8.603,
+          "AVAX-USD": 6.62
         },
         "nextId": 1,
         "decisions": [
@@ -24617,6 +25165,142 @@
             "target": 132.18,
             "price": 6.609,
             "trend": "bearish"
+          },
+          {
+            "time": 1795288539.076,
+            "product": "XRP-USD",
+            "signal": "WAIT",
+            "observedSignal": "WAIT",
+            "action": "WAIT",
+            "reason": "Daily trend test failed: needs close above EMA50 and EMA20 above EMA50.",
+            "setup": "trend-breakout",
+            "strategy": "trend-follow",
+            "pattern": null,
+            "support": 1.186292196974777,
+            "resistance": 0.9882,
+            "stop": 0.8663857142857142,
+            "target": 18.652,
+            "price": 0.9326,
+            "trend": "bearish"
+          },
+          {
+            "time": 1795288539.076,
+            "product": "SOL-USD",
+            "signal": "WAIT",
+            "observedSignal": "WAIT",
+            "action": "WAIT",
+            "reason": "Daily trend test failed: needs close above EMA50 and EMA20 above EMA50.",
+            "setup": "trend-breakout",
+            "strategy": "trend-follow",
+            "pattern": null,
+            "support": 91.25488759405009,
+            "resistance": 75.11,
+            "stop": 65.48714285714286,
+            "target": 1410,
+            "price": 70.5,
+            "trend": "bearish"
+          },
+          {
+            "time": 1795288539.076,
+            "product": "ETH-USD",
+            "signal": "WAIT",
+            "observedSignal": "WAIT",
+            "action": "WAIT",
+            "reason": "Daily trend test failed: needs close above EMA50 and EMA20 above EMA50.",
+            "setup": "trend-breakout",
+            "strategy": "trend-follow",
+            "pattern": null,
+            "support": 2181.7462623337974,
+            "resistance": 1832.34,
+            "stop": 1553.1571428571428,
+            "target": 33584,
+            "price": 1679.2,
+            "trend": "bearish"
+          },
+          {
+            "time": 1795288539.076,
+            "product": "BTC-USD",
+            "signal": "WAIT",
+            "observedSignal": "WAIT",
+            "action": "WAIT",
+            "reason": "Daily trend test failed: needs close above EMA50 and EMA20 above EMA50.",
+            "setup": "trend-breakout",
+            "strategy": "trend-follow",
+            "pattern": null,
+            "support": 74454.07545696871,
+            "resistance": 64927.85,
+            "stop": 56071.95428571429,
+            "target": 1199346.7999999998,
+            "price": 59967.34,
+            "trend": "bearish"
+          },
+          {
+            "time": 1795288539.076,
+            "product": "ADA-USD",
+            "signal": "WAIT",
+            "observedSignal": "WAIT",
+            "action": "WAIT",
+            "reason": "Daily trend test failed: needs close above EMA50 and EMA20 above EMA50.",
+            "setup": "trend-breakout",
+            "strategy": "trend-follow",
+            "pattern": null,
+            "support": 0.1907979529156135,
+            "resistance": 0.15515,
+            "stop": 0.13384714285714286,
+            "target": 2.8962,
+            "price": 0.14481,
+            "trend": "bearish"
+          },
+          {
+            "time": 1795288539.076,
+            "product": "DOGE-USD",
+            "signal": "WAIT",
+            "observedSignal": "WAIT",
+            "action": "WAIT",
+            "reason": "Daily trend test failed: needs close above EMA50 and EMA20 above EMA50.",
+            "setup": "trend-breakout",
+            "strategy": "trend-follow",
+            "pattern": null,
+            "support": 0.07302918484142623,
+            "resistance": 0.06006,
+            "stop": 0.05108857142857143,
+            "target": 1.101,
+            "price": 0.05505,
+            "trend": "bearish"
+          },
+          {
+            "time": 1795288539.076,
+            "product": "LINK-USD",
+            "signal": "WAIT",
+            "observedSignal": "WAIT",
+            "action": "WAIT",
+            "reason": "Daily trend test failed: needs close above EMA50 and EMA20 above EMA50.",
+            "setup": "trend-breakout",
+            "strategy": "trend-follow",
+            "pattern": null,
+            "support": 10.89601154449948,
+            "resistance": 9.311,
+            "stop": 7.932142857142858,
+            "target": 171.46,
+            "price": 8.573,
+            "trend": "bearish"
+          },
+          {
+            "time": 1795288539.076,
+            "product": "AVAX-USD",
+            "signal": "WAIT",
+            "observedSignal": "WAIT",
+            "action": "WAIT",
+            "reason": "Daily trend test failed: needs close above EMA50 and EMA20 above EMA50.",
+            "setup": "trend-breakout",
+            "strategy": "trend-follow",
+            "pattern": null,
+            "support": 8.468827810235224,
+            "resistance": 7.291,
+            "stop": 6.081,
+            "target": 132.18,
+            "price": 6.609,
+            "trend": "bearish"
           }
         ],
         "dailyRisk": {
@@ -24633,7 +25317,7 @@
         "lastExits": {},
         "pendingOrders": [],
         "orderLog": [],
-        "lastQuoteBucket": 5984294
+        "lastQuoteBucket": 5984295
       },
       "pause": {
         "state": "normal",
@@ -24643,7 +25327,7 @@
         "maxDrawdown": 0,
         "sizeMultiplier": 1,
         "equity": 29975.046647868254,
-        "updatedAt": 1795288237.033,
+        "updatedAt": 1795288539.076,
         "cleared": false,
         "rules": {
           "halveNewSizesAt": 0.1,
@@ -24655,7 +25339,7 @@
       "rulesSince": "2026-11-21T18:29:47.177Z",
       "rulesVersion": 1,
       "lastError": null,
-      "updatedAt": "2026-11-21T19:10:37.033Z"
+      "updatedAt": "2026-11-21T19:15:39.076Z"
     },
     {
       "id": "trend-k4",
@@ -24713,6 +25397,10 @@
           {
             "time": 1795288237.033,
             "equity": 29975.046647868254
+          },
+          {
+            "time": 1795288539.076,
+            "equity": 29975.046647868254
           }
         ],
         "lastProcessed": {
@@ -24726,14 +25414,14 @@
           "AVAX-USD": 1795284000
         },
         "marks": {
-          "BTC-USD": 60193.47,
-          "ETH-USD": 1682.85,
-          "SOL-USD": 70.65,
-          "XRP-USD": 0.9349,
-          "ADA-USD": 0.14528,
-          "DOGE-USD": 0.05526,
-          "LINK-USD": 8.621,
-          "AVAX-USD": 6.636
+          "BTC-USD": 60162.28,
+          "ETH-USD": 1681.34,
+          "SOL-USD": 70.57,
+          "XRP-USD": 0.9335,
+          "ADA-USD": 0.145,
+          "DOGE-USD": 0.05515,
+          "LINK-USD": 8.603,
+          "AVAX-USD": 6.62
         },
         "nextId": 1,
         "decisions": [
@@ -25960,6 +26648,142 @@
             "target": 132.18,
             "price": 6.609,
             "trend": "bearish"
+          },
+          {
+            "time": 1795288539.076,
+            "product": "XRP-USD",
+            "signal": "WAIT",
+            "observedSignal": "WAIT",
+            "action": "WAIT",
+            "reason": "Daily trend test failed: needs close above EMA50 and EMA20 above EMA50.",
+            "setup": "trend-breakout",
+            "strategy": "trend-follow",
+            "pattern": null,
+            "support": 1.186292196974777,
+            "resistance": 0.9882,
+            "stop": 0.8001714285714285,
+            "target": 18.652,
+            "price": 0.9326,
+            "trend": "bearish"
+          },
+          {
+            "time": 1795288539.076,
+            "product": "SOL-USD",
+            "signal": "WAIT",
+            "observedSignal": "WAIT",
+            "action": "WAIT",
+            "reason": "Daily trend test failed: needs close above EMA50 and EMA20 above EMA50.",
+            "setup": "trend-breakout",
+            "strategy": "trend-follow",
+            "pattern": null,
+            "support": 91.25488759405009,
+            "resistance": 75.11,
+            "stop": 60.47428571428571,
+            "target": 1410,
+            "price": 70.5,
+            "trend": "bearish"
+          },
+          {
+            "time": 1795288539.076,
+            "product": "ETH-USD",
+            "signal": "WAIT",
+            "observedSignal": "WAIT",
+            "action": "WAIT",
+            "reason": "Daily trend test failed: needs close above EMA50 and EMA20 above EMA50.",
+            "setup": "trend-breakout",
+            "strategy": "trend-follow",
+            "pattern": null,
+            "support": 2181.7462623337974,
+            "resistance": 1832.34,
+            "stop": 1427.1142857142856,
+            "target": 33584,
+            "price": 1679.2,
+            "trend": "bearish"
+          },
+          {
+            "time": 1795288539.076,
+            "product": "BTC-USD",
+            "signal": "WAIT",
+            "observedSignal": "WAIT",
+            "action": "WAIT",
+            "reason": "Daily trend test failed: needs close above EMA50 and EMA20 above EMA50.",
+            "setup": "trend-breakout",
+            "strategy": "trend-follow",
+            "pattern": null,
+            "support": 74454.07545696871,
+            "resistance": 64927.85,
+            "stop": 52176.56857142857,
+            "target": 1199346.7999999998,
+            "price": 59967.34,
+            "trend": "bearish"
+          },
+          {
+            "time": 1795288539.076,
+            "product": "ADA-USD",
+            "signal": "WAIT",
+            "observedSignal": "WAIT",
+            "action": "WAIT",
+            "reason": "Daily trend test failed: needs close above EMA50 and EMA20 above EMA50.",
+            "setup": "trend-breakout",
+            "strategy": "trend-follow",
+            "pattern": null,
+            "support": 0.1907979529156135,
+            "resistance": 0.15515,
+            "stop": 0.12288428571428572,
+            "target": 2.8962,
+            "price": 0.14481,
+            "trend": "bearish"
+          },
+          {
+            "time": 1795288539.076,
+            "product": "DOGE-USD",
+            "signal": "WAIT",
+            "observedSignal": "WAIT",
+            "action": "WAIT",
+            "reason": "Daily trend test failed: needs close above EMA50 and EMA20 above EMA50.",
+            "setup": "trend-breakout",
+            "strategy": "trend-follow",
+            "pattern": null,
+            "support": 0.07302918484142623,
+            "resistance": 0.06006,
+            "stop": 0.047127142857142854,
+            "target": 1.101,
+            "price": 0.05505,
+            "trend": "bearish"
+          },
+          {
+            "time": 1795288539.076,
+            "product": "LINK-USD",
+            "signal": "WAIT",
+            "observedSignal": "WAIT",
+            "action": "WAIT",
+            "reason": "Daily trend test failed: needs close above EMA50 and EMA20 above EMA50.",
+            "setup": "trend-breakout",
+            "strategy": "trend-follow",
+            "pattern": null,
+            "support": 10.89601154449948,
+            "resistance": 9.311,
+            "stop": 7.291285714285714,
+            "target": 171.46,
+            "price": 8.573,
+            "trend": "bearish"
+          },
+          {
+            "time": 1795288539.076,
+            "product": "AVAX-USD",
+            "signal": "WAIT",
+            "observedSignal": "WAIT",
+            "action": "WAIT",
+            "reason": "Daily trend test failed: needs close above EMA50 and EMA20 above EMA50.",
+            "setup": "trend-breakout",
+            "strategy": "trend-follow",
+            "pattern": null,
+            "support": 8.468827810235224,
+            "resistance": 7.291,
+            "stop": 5.553000000000001,
+            "target": 132.18,
+            "price": 6.609,
+            "trend": "bearish"
           }
         ],
         "dailyRisk": {
@@ -25976,7 +26800,7 @@
         "lastExits": {},
         "pendingOrders": [],
         "orderLog": [],
-        "lastQuoteBucket": 5984294
+        "lastQuoteBucket": 5984295
       },
       "pause": {
         "state": "normal",
@@ -25986,7 +26810,7 @@
         "maxDrawdown": 0,
         "sizeMultiplier": 1,
         "equity": 29975.046647868254,
-        "updatedAt": 1795288237.033,
+        "updatedAt": 1795288539.076,
         "cleared": false,
         "rules": {
           "halveNewSizesAt": 0.1,
@@ -25998,7 +26822,7 @@
       "rulesSince": "2026-11-21T18:29:47.177Z",
       "rulesVersion": 1,
       "lastError": null,
-      "updatedAt": "2026-11-21T19:10:37.033Z"
+      "updatedAt": "2026-11-21T19:15:39.076Z"
     },
     {
       "id": "lab-trend",
@@ -26056,6 +26880,10 @@
           {
             "time": 1795288237.033,
             "equity": 29975.046647868254
+          },
+          {
+            "time": 1795288539.076,
+            "equity": 29975.046647868254
           }
         ],
         "lastProcessed": {
@@ -26069,14 +26897,14 @@
           "AVAX-USD": 1795284000
         },
         "marks": {
-          "BTC-USD": 60193.47,
-          "ETH-USD": 1682.85,
-          "SOL-USD": 70.65,
-          "XRP-USD": 0.9349,
-          "ADA-USD": 0.14528,
-          "DOGE-USD": 0.05526,
-          "LINK-USD": 8.621,
-          "AVAX-USD": 6.636
+          "BTC-USD": 60162.28,
+          "ETH-USD": 1681.34,
+          "SOL-USD": 70.57,
+          "XRP-USD": 0.9335,
+          "ADA-USD": 0.145,
+          "DOGE-USD": 0.05515,
+          "LINK-USD": 8.603,
+          "AVAX-USD": 6.62
         },
         "nextId": 1,
         "decisions": [
@@ -27303,6 +28131,142 @@
             "target": 132.18,
             "price": 6.609,
             "trend": "bearish"
+          },
+          {
+            "time": 1795288539.076,
+            "product": "XRP-USD",
+            "signal": "WAIT",
+            "observedSignal": "WAIT",
+            "action": "WAIT",
+            "reason": "Daily trend test failed: needs close above EMA50 and EMA20 above EMA50.",
+            "setup": "trend-breakout",
+            "strategy": "trend-follow",
+            "pattern": null,
+            "support": 1.186292196974777,
+            "resistance": 0.9882,
+            "stop": 0.8332785714285713,
+            "target": 18.652,
+            "price": 0.9326,
+            "trend": "bearish"
+          },
+          {
+            "time": 1795288539.076,
+            "product": "SOL-USD",
+            "signal": "WAIT",
+            "observedSignal": "WAIT",
+            "action": "WAIT",
+            "reason": "Daily trend test failed: needs close above EMA50 and EMA20 above EMA50.",
+            "setup": "trend-breakout",
+            "strategy": "trend-follow",
+            "pattern": null,
+            "support": 91.25488759405009,
+            "resistance": 75.11,
+            "stop": 62.980714285714285,
+            "target": 1410,
+            "price": 70.5,
+            "trend": "bearish"
+          },
+          {
+            "time": 1795288539.076,
+            "product": "ETH-USD",
+            "signal": "WAIT",
+            "observedSignal": "WAIT",
+            "action": "WAIT",
+            "reason": "Daily trend test failed: needs close above EMA50 and EMA20 above EMA50.",
+            "setup": "trend-breakout",
+            "strategy": "trend-follow",
+            "pattern": null,
+            "support": 2181.7462623337974,
+            "resistance": 1832.34,
+            "stop": 1490.1357142857141,
+            "target": 33584,
+            "price": 1679.2,
+            "trend": "bearish"
+          },
+          {
+            "time": 1795288539.076,
+            "product": "BTC-USD",
+            "signal": "WAIT",
+            "observedSignal": "WAIT",
+            "action": "WAIT",
+            "reason": "Daily trend test failed: needs close above EMA50 and EMA20 above EMA50.",
+            "setup": "trend-breakout",
+            "strategy": "trend-follow",
+            "pattern": null,
+            "support": 74454.07545696871,
+            "resistance": 64927.85,
+            "stop": 54124.26142857143,
+            "target": 1199346.7999999998,
+            "price": 59967.34,
+            "trend": "bearish"
+          },
+          {
+            "time": 1795288539.076,
+            "product": "ADA-USD",
+            "signal": "WAIT",
+            "observedSignal": "WAIT",
+            "action": "WAIT",
+            "reason": "Daily trend test failed: needs close above EMA50 and EMA20 above EMA50.",
+            "setup": "trend-breakout",
+            "strategy": "trend-follow",
+            "pattern": null,
+            "support": 0.1907979529156135,
+            "resistance": 0.15515,
+            "stop": 0.12836571428571428,
+            "target": 2.8962,
+            "price": 0.14481,
+            "trend": "bearish"
+          },
+          {
+            "time": 1795288539.076,
+            "product": "DOGE-USD",
+            "signal": "WAIT",
+            "observedSignal": "WAIT",
+            "action": "WAIT",
+            "reason": "Daily trend test failed: needs close above EMA50 and EMA20 above EMA50.",
+            "setup": "trend-breakout",
+            "strategy": "trend-follow",
+            "pattern": null,
+            "support": 0.07302918484142623,
+            "resistance": 0.06006,
+            "stop": 0.04910785714285714,
+            "target": 1.101,
+            "price": 0.05505,
+            "trend": "bearish"
+          },
+          {
+            "time": 1795288539.076,
+            "product": "LINK-USD",
+            "signal": "WAIT",
+            "observedSignal": "WAIT",
+            "action": "WAIT",
+            "reason": "Daily trend test failed: needs close above EMA50 and EMA20 above EMA50.",
+            "setup": "trend-breakout",
+            "strategy": "trend-follow",
+            "pattern": null,
+            "support": 10.89601154449948,
+            "resistance": 9.311,
+            "stop": 7.611714285714286,
+            "target": 171.46,
+            "price": 8.573,
+            "trend": "bearish"
+          },
+          {
+            "time": 1795288539.076,
+            "product": "AVAX-USD",
+            "signal": "WAIT",
+            "observedSignal": "WAIT",
+            "action": "WAIT",
+            "reason": "Daily trend test failed: needs close above EMA50 and EMA20 above EMA50.",
+            "setup": "trend-breakout",
+            "strategy": "trend-follow",
+            "pattern": null,
+            "support": 8.468827810235224,
+            "resistance": 7.291,
+            "stop": 5.817,
+            "target": 132.18,
+            "price": 6.609,
+            "trend": "bearish"
           }
         ],
         "dailyRisk": {
@@ -27319,7 +28283,7 @@
         "lastExits": {},
         "pendingOrders": [],
         "orderLog": [],
-        "lastQuoteBucket": 5984294
+        "lastQuoteBucket": 5984295
       },
       "pause": {
         "state": "normal",
@@ -27329,7 +28293,7 @@
         "maxDrawdown": 0,
         "sizeMultiplier": 1,
         "equity": 29975.046647868254,
-        "updatedAt": 1795288237.033,
+        "updatedAt": 1795288539.076,
         "cleared": false,
         "rules": {
           "halveNewSizesAt": 0.1,
@@ -27341,7 +28305,7 @@
       "rulesSince": "2026-11-21T18:29:47.177Z",
       "rulesVersion": 1,
       "lastError": null,
-      "updatedAt": "2026-11-21T19:10:37.033Z"
+      "updatedAt": "2026-11-21T19:15:39.076Z"
     },
     {
       "id": "hourly-legacy",
@@ -27415,7 +28379,7 @@
       },
       "account": {
         "initial": 29975.046647868254,
-        "cash": 22495.29376268702,
+        "cash": 15025.667153881812,
         "positions": [
           {
             "id": "paper-5",
@@ -27482,6 +28446,72 @@
             "feeRate": 0.003,
             "slippage": 0.0005,
             "maxHoldHours": 4
+          },
+          {
+            "id": "paper-7",
+            "product": "XRP-USD",
+            "entry": 0.9335330000000001,
+            "quantity": 7992.4680991383975,
+            "stop": 0.8970687142857143,
+            "target": 1.0045904103108063,
+            "openedAt": 1795288539.076,
+            "entryFee": 11.19184908298945,
+            "entryFeeDetail": {
+              "liquidity": "maker",
+              "rate": 0.0015,
+              "gross": 11.19184908298945,
+              "tier": "Advanced 2",
+              "observedAt": "2026-11-21T16:30:00Z",
+              "checkedAt": 1795288539.076,
+              "source": "Coinbase MCP saved snapshot",
+              "liveTierChecked": false,
+              "snapshotAgeSeconds": 9939.075999975204,
+              "stale": false,
+              "rebatePending": 0,
+              "rebateCredited": 2.7979622707473624,
+              "rebateStatus": "Simulated USDC credit; Premium eligibility user-confirmed"
+            },
+            "entryOrderType": "limit (simulated maker)",
+            "entryLiquidity": "maker",
+            "sizing": {
+              "method": "equal-risk-stop-distance",
+              "riskScale": 1,
+              "stopDistance": 0.03646428571428573
+            },
+            "feeProfile": {
+              "makerFeeRate": 0.0015,
+              "takerFeeRate": 0.003,
+              "feeTier": "Advanced 2",
+              "feeObservedAt": "2026-11-21T16:30:00Z",
+              "rebateRate": 0.25,
+              "rebateVerified": true
+            },
+            "source": "aggressive-exploration",
+            "pattern": {
+              "version": 1,
+              "timeframe": "1h",
+              "asOf": 1795287600,
+              "mode": "observe",
+              "confirmed": true,
+              "matches": [
+                "closing-high-breakout-20h"
+              ],
+              "context": [],
+              "status": "evaluated",
+              "volumeRatio": 0.6330916250989922,
+              "reason": "Completed hourly candle matches an explicit entry rule.",
+              "levels": {
+                "closingHigh20": 0.9326,
+                "ma20": 0.9049150000000002
+              },
+              "rsi": 56.95239131002241,
+              "previousRsi": 56.41516935157344
+            },
+            "riskBudget": 598.6893136127155,
+            "estimatedRewardRisk": 1.7380744182799464,
+            "feeRate": 0.003,
+            "slippage": 0.0005,
+            "maxHoldHours": 24
           }
         ],
         "trades": [],
@@ -27521,6 +28551,10 @@
           {
             "time": 1795288237.033,
             "equity": 29948.830978132504
+          },
+          {
+            "time": 1795288539.076,
+            "equity": 29926.071793823536
           }
         ],
         "lastProcessed": {
@@ -27534,16 +28568,16 @@
           "AVAX-USD": 1795284000
         },
         "marks": {
-          "BTC-USD": 60193.47,
-          "ETH-USD": 1682.85,
-          "SOL-USD": 70.65,
-          "XRP-USD": 0.9349,
-          "ADA-USD": 0.14528,
-          "DOGE-USD": 0.05526,
-          "LINK-USD": 8.621,
-          "AVAX-USD": 6.636
+          "BTC-USD": 60162.28,
+          "ETH-USD": 1681.34,
+          "SOL-USD": 70.57,
+          "XRP-USD": 0.9335330000000001,
+          "ADA-USD": 0.145,
+          "DOGE-USD": 0.05515,
+          "LINK-USD": 8.603,
+          "AVAX-USD": 6.62
         },
-        "nextId": 7,
+        "nextId": 8,
         "decisions": [
           {
             "time": 1795285868.781,
@@ -28819,6 +29853,142 @@
             "target": 7.168311774098824,
             "price": 6.615,
             "trend": "experimental"
+          },
+          {
+            "time": 1795288539.076,
+            "product": "XRP-USD",
+            "signal": "BUY",
+            "observedSignal": "BUY",
+            "action": "BUY",
+            "reason": "Paper limit buy filled at 0.933533 (maker).",
+            "setup": "aggressive-exploration",
+            "strategy": "aggressive",
+            "pattern": null,
+            "support": null,
+            "resistance": null,
+            "stop": 0.8970687142857143,
+            "target": null,
+            "price": 0.9335,
+            "trend": "unconfirmed"
+          },
+          {
+            "time": 1795288539.076,
+            "product": "SOL-USD",
+            "signal": "WAIT",
+            "observedSignal": "WAIT",
+            "action": "WAIT",
+            "reason": "Research pattern filter: no completed-candle confirmation.",
+            "setup": "aggressive-exploration",
+            "strategy": "aggressive",
+            "pattern": null,
+            "support": 64.81,
+            "resistance": 71.01,
+            "stop": 67.78285714285714,
+            "target": 76.16625431500674,
+            "price": 70.64,
+            "trend": "experimental"
+          },
+          {
+            "time": 1795288539.076,
+            "product": "ETH-USD",
+            "signal": "WAIT",
+            "observedSignal": "WAIT",
+            "action": "WAIT",
+            "reason": "Aggressive experiment waits for a bullish candle, support-zone revisit, or pullback.",
+            "setup": "aggressive-exploration",
+            "strategy": "aggressive",
+            "pattern": null,
+            "support": 1535.37,
+            "resistance": 1713.7,
+            "stop": 1608.5178571428573,
+            "target": 1815.215894427188,
+            "price": 1679.4,
+            "trend": "experimental"
+          },
+          {
+            "time": 1795288539.076,
+            "product": "BTC-USD",
+            "signal": "WAIT",
+            "observedSignal": "WAIT",
+            "action": "WAIT",
+            "reason": "Research pattern filter: no completed-candle confirmation.",
+            "setup": "aggressive-exploration",
+            "strategy": "aggressive",
+            "pattern": null,
+            "support": 55106,
+            "resistance": 60883.03,
+            "stop": 57765.01535714286,
+            "target": 64507.52030940357,
+            "price": 60040.26,
+            "trend": "experimental"
+          },
+          {
+            "time": 1795288539.076,
+            "product": "ADA-USD",
+            "signal": "WAIT",
+            "observedSignal": "BUY",
+            "action": "HOLD",
+            "reason": "Open virtual position monitored at fresh quote.",
+            "setup": "aggressive-exploration",
+            "strategy": "aggressive",
+            "pattern": null,
+            "support": 0.13319,
+            "resistance": 0.1459,
+            "stop": 0.14192857142857143,
+            "target": 0.15215355146766665,
+            "price": 0.145,
+            "trend": "experimental"
+          },
+          {
+            "time": 1795288539.076,
+            "product": "DOGE-USD",
+            "signal": "WAIT",
+            "observedSignal": "WAIT",
+            "action": "WAIT",
+            "reason": "Research pattern filter: no completed-candle confirmation.",
+            "setup": "aggressive-exploration",
+            "strategy": "aggressive",
+            "pattern": null,
+            "support": 0.05073,
+            "resistance": 0.05561,
+            "stop": 0.053837142857142854,
+            "target": 0.0581381502869933,
+            "price": 0.05517,
+            "trend": "experimental"
+          },
+          {
+            "time": 1795288539.076,
+            "product": "LINK-USD",
+            "signal": "WAIT",
+            "observedSignal": "WAIT",
+            "action": "WAIT",
+            "reason": "Research pattern filter: no completed-candle confirmation.",
+            "setup": "aggressive-exploration",
+            "strategy": "aggressive",
+            "pattern": null,
+            "support": 7.962,
+            "resistance": 8.7,
+            "stop": 8.254678571428572,
+            "target": 9.274045638496636,
+            "price": 8.602,
+            "trend": "experimental"
+          },
+          {
+            "time": 1795288539.076,
+            "product": "AVAX-USD",
+            "signal": "WAIT",
+            "observedSignal": "WAIT",
+            "action": "WAIT",
+            "reason": "Research pattern filter: no completed-candle confirmation.",
+            "setup": "aggressive-exploration",
+            "strategy": "aggressive",
+            "pattern": null,
+            "support": 6.006,
+            "resistance": 6.704,
+            "stop": 6.323571428571429,
+            "target": 7.168311774098824,
+            "price": 6.615,
+            "trend": "experimental"
           }
         ],
         "dailyRisk": {
@@ -28832,10 +30002,12 @@
         "equityLimit": 2600,
         "orderLogLimit": 50,
         "lastEntries": {
-          "ADA-USD": 1795287040.353
+          "ADA-USD": 1795287040.353,
+          "XRP-USD": 1795288539.076
         },
         "lastExits": {},
-        "pendingOrders": [
+        "pendingOrders": [],
+        "orderLog": [
           {
             "id": "order-6",
             "product": "XRP-USD",
@@ -28868,10 +30040,12 @@
             },
             "trail": null,
             "liquidity": "maker",
-            "riskScale": 1
-          }
-        ],
-        "orderLog": [
+            "riskScale": 1,
+            "outcome": "filled",
+            "detail": "",
+            "resolvedAt": 1795288539.076,
+            "quote": 0.9335
+          },
           {
             "id": "order-3",
             "product": "XRP-USD",
@@ -29025,18 +30199,18 @@
             "quote": 0.9333
           }
         ],
-        "lastQuoteBucket": 5984294,
-        "rebatesUSDC": 2.801755357166151
+        "lastQuoteBucket": 5984295,
+        "rebatesUSDC": 5.599717627913513
       },
       "pause": {
         "state": "normal",
         "history": [],
         "peak": 29975.046647868254,
-        "drawdown": 0.0008745831172080054,
-        "maxDrawdown": 0.0008745831172080054,
+        "drawdown": 0.0013538249901394739,
+        "maxDrawdown": 0.0013538249901394739,
         "sizeMultiplier": 1,
-        "equity": 29948.830978132504,
-        "updatedAt": 1795288237.033,
+        "equity": 29934.465680635774,
+        "updatedAt": 1795288539.076,
         "cleared": false,
         "rules": {
           "halveNewSizesAt": 0.1,
@@ -29048,7 +30222,7 @@
       "rulesSince": "2026-11-21T18:29:47.177Z",
       "rulesVersion": 1,
       "lastError": null,
-      "updatedAt": "2026-11-21T19:10:37.033Z"
+      "updatedAt": "2026-11-21T19:15:39.076Z"
     },
     {
       "id": "lab-hourly",
@@ -29122,7 +30296,7 @@
       },
       "account": {
         "initial": 29975.046647868254,
-        "cash": 22495.29376268702,
+        "cash": 15025.667153881812,
         "positions": [
           {
             "id": "paper-5",
@@ -29189,6 +30363,72 @@
             "feeRate": 0.003,
             "slippage": 0.0005,
             "maxHoldHours": 4
+          },
+          {
+            "id": "paper-7",
+            "product": "XRP-USD",
+            "entry": 0.9335330000000001,
+            "quantity": 7992.4680991383975,
+            "stop": 0.8970687142857143,
+            "target": 1.0045904103108063,
+            "openedAt": 1795288539.076,
+            "entryFee": 11.19184908298945,
+            "entryFeeDetail": {
+              "liquidity": "maker",
+              "rate": 0.0015,
+              "gross": 11.19184908298945,
+              "tier": "Advanced 2",
+              "observedAt": "2026-11-21T16:30:00Z",
+              "checkedAt": 1795288539.076,
+              "source": "Coinbase MCP saved snapshot",
+              "liveTierChecked": false,
+              "snapshotAgeSeconds": 9939.075999975204,
+              "stale": false,
+              "rebatePending": 0,
+              "rebateCredited": 2.7979622707473624,
+              "rebateStatus": "Simulated USDC credit; Premium eligibility user-confirmed"
+            },
+            "entryOrderType": "limit (simulated maker)",
+            "entryLiquidity": "maker",
+            "sizing": {
+              "method": "equal-risk-stop-distance",
+              "riskScale": 1,
+              "stopDistance": 0.03646428571428573
+            },
+            "feeProfile": {
+              "makerFeeRate": 0.0015,
+              "takerFeeRate": 0.003,
+              "feeTier": "Advanced 2",
+              "feeObservedAt": "2026-11-21T16:30:00Z",
+              "rebateRate": 0.25,
+              "rebateVerified": true
+            },
+            "source": "aggressive-exploration",
+            "pattern": {
+              "version": 1,
+              "timeframe": "1h",
+              "asOf": 1795287600,
+              "mode": "observe",
+              "confirmed": true,
+              "matches": [
+                "closing-high-breakout-20h"
+              ],
+              "context": [],
+              "status": "evaluated",
+              "volumeRatio": 0.6330916250989922,
+              "reason": "Completed hourly candle matches an explicit entry rule.",
+              "levels": {
+                "closingHigh20": 0.9326,
+                "ma20": 0.9049150000000002
+              },
+              "rsi": 56.95239131002241,
+              "previousRsi": 56.41516935157344
+            },
+            "riskBudget": 598.6893136127155,
+            "estimatedRewardRisk": 1.7380744182799464,
+            "feeRate": 0.003,
+            "slippage": 0.0005,
+            "maxHoldHours": 24
           }
         ],
         "trades": [],
@@ -29228,6 +30468,10 @@
           {
             "time": 1795288237.033,
             "equity": 29948.830978132504
+          },
+          {
+            "time": 1795288539.076,
+            "equity": 29926.071793823536
           }
         ],
         "lastProcessed": {
@@ -29241,16 +30485,16 @@
           "AVAX-USD": 1795284000
         },
         "marks": {
-          "BTC-USD": 60193.47,
-          "ETH-USD": 1682.85,
-          "SOL-USD": 70.65,
-          "XRP-USD": 0.9349,
-          "ADA-USD": 0.14528,
-          "DOGE-USD": 0.05526,
-          "LINK-USD": 8.621,
-          "AVAX-USD": 6.636
+          "BTC-USD": 60162.28,
+          "ETH-USD": 1681.34,
+          "SOL-USD": 70.57,
+          "XRP-USD": 0.9335330000000001,
+          "ADA-USD": 0.145,
+          "DOGE-USD": 0.05515,
+          "LINK-USD": 8.603,
+          "AVAX-USD": 6.62
         },
-        "nextId": 7,
+        "nextId": 8,
         "decisions": [
           {
             "time": 1795285868.781,
@@ -30526,6 +31770,142 @@
             "target": 7.168311774098824,
             "price": 6.615,
             "trend": "experimental"
+          },
+          {
+            "time": 1795288539.076,
+            "product": "XRP-USD",
+            "signal": "BUY",
+            "observedSignal": "BUY",
+            "action": "BUY",
+            "reason": "Paper limit buy filled at 0.933533 (maker).",
+            "setup": "aggressive-exploration",
+            "strategy": "aggressive",
+            "pattern": null,
+            "support": null,
+            "resistance": null,
+            "stop": 0.8970687142857143,
+            "target": null,
+            "price": 0.9335,
+            "trend": "unconfirmed"
+          },
+          {
+            "time": 1795288539.076,
+            "product": "SOL-USD",
+            "signal": "WAIT",
+            "observedSignal": "WAIT",
+            "action": "WAIT",
+            "reason": "Research pattern filter: no completed-candle confirmation.",
+            "setup": "aggressive-exploration",
+            "strategy": "aggressive",
+            "pattern": null,
+            "support": 64.81,
+            "resistance": 71.01,
+            "stop": 67.78285714285714,
+            "target": 76.16625431500674,
+            "price": 70.64,
+            "trend": "experimental"
+          },
+          {
+            "time": 1795288539.076,
+            "product": "ETH-USD",
+            "signal": "WAIT",
+            "observedSignal": "WAIT",
+            "action": "WAIT",
+            "reason": "Aggressive experiment waits for a bullish candle, support-zone revisit, or pullback.",
+            "setup": "aggressive-exploration",
+            "strategy": "aggressive",
+            "pattern": null,
+            "support": 1535.37,
+            "resistance": 1713.7,
+            "stop": 1608.5178571428573,
+            "target": 1815.215894427188,
+            "price": 1679.4,
+            "trend": "experimental"
+          },
+          {
+            "time": 1795288539.076,
+            "product": "BTC-USD",
+            "signal": "WAIT",
+            "observedSignal": "WAIT",
+            "action": "WAIT",
+            "reason": "Research pattern filter: no completed-candle confirmation.",
+            "setup": "aggressive-exploration",
+            "strategy": "aggressive",
+            "pattern": null,
+            "support": 55106,
+            "resistance": 60883.03,
+            "stop": 57765.01535714286,
+            "target": 64507.52030940357,
+            "price": 60040.26,
+            "trend": "experimental"
+          },
+          {
+            "time": 1795288539.076,
+            "product": "ADA-USD",
+            "signal": "WAIT",
+            "observedSignal": "BUY",
+            "action": "HOLD",
+            "reason": "Open virtual position monitored at fresh quote.",
+            "setup": "aggressive-exploration",
+            "strategy": "aggressive",
+            "pattern": null,
+            "support": 0.13319,
+            "resistance": 0.1459,
+            "stop": 0.14192857142857143,
+            "target": 0.15215355146766665,
+            "price": 0.145,
+            "trend": "experimental"
+          },
+          {
+            "time": 1795288539.076,
+            "product": "DOGE-USD",
+            "signal": "WAIT",
+            "observedSignal": "WAIT",
+            "action": "WAIT",
+            "reason": "Research pattern filter: no completed-candle confirmation.",
+            "setup": "aggressive-exploration",
+            "strategy": "aggressive",
+            "pattern": null,
+            "support": 0.05073,
+            "resistance": 0.05561,
+            "stop": 0.053837142857142854,
+            "target": 0.0581381502869933,
+            "price": 0.05517,
+            "trend": "experimental"
+          },
+          {
+            "time": 1795288539.076,
+            "product": "LINK-USD",
+            "signal": "WAIT",
+            "observedSignal": "WAIT",
+            "action": "WAIT",
+            "reason": "Research pattern filter: no completed-candle confirmation.",
+            "setup": "aggressive-exploration",
+            "strategy": "aggressive",
+            "pattern": null,
+            "support": 7.962,
+            "resistance": 8.7,
+            "stop": 8.254678571428572,
+            "target": 9.274045638496636,
+            "price": 8.602,
+            "trend": "experimental"
+          },
+          {
+            "time": 1795288539.076,
+            "product": "AVAX-USD",
+            "signal": "WAIT",
+            "observedSignal": "WAIT",
+            "action": "WAIT",
+            "reason": "Research pattern filter: no completed-candle confirmation.",
+            "setup": "aggressive-exploration",
+            "strategy": "aggressive",
+            "pattern": null,
+            "support": 6.006,
+            "resistance": 6.704,
+            "stop": 6.323571428571429,
+            "target": 7.168311774098824,
+            "price": 6.615,
+            "trend": "experimental"
           }
         ],
         "dailyRisk": {
@@ -30539,10 +31919,12 @@
         "equityLimit": 2600,
         "orderLogLimit": 50,
         "lastEntries": {
-          "ADA-USD": 1795287040.353
+          "ADA-USD": 1795287040.353,
+          "XRP-USD": 1795288539.076
         },
         "lastExits": {},
-        "pendingOrders": [
+        "pendingOrders": [],
+        "orderLog": [
           {
             "id": "order-6",
             "product": "XRP-USD",
@@ -30575,10 +31957,12 @@
             },
             "trail": null,
             "liquidity": "maker",
-            "riskScale": 1
-          }
-        ],
-        "orderLog": [
+            "riskScale": 1,
+            "outcome": "filled",
+            "detail": "",
+            "resolvedAt": 1795288539.076,
+            "quote": 0.9335
+          },
           {
             "id": "order-3",
             "product": "XRP-USD",
@@ -30732,18 +32116,18 @@
             "quote": 0.9333
           }
         ],
-        "lastQuoteBucket": 5984294,
-        "rebatesUSDC": 2.801755357166151
+        "lastQuoteBucket": 5984295,
+        "rebatesUSDC": 5.599717627913513
       },
       "pause": {
         "state": "normal",
         "history": [],
         "peak": 29975.046647868254,
-        "drawdown": 0.0008745831172080054,
-        "maxDrawdown": 0.0008745831172080054,
+        "drawdown": 0.0013538249901394739,
+        "maxDrawdown": 0.0013538249901394739,
         "sizeMultiplier": 1,
-        "equity": 29948.830978132504,
-        "updatedAt": 1795288237.033,
+        "equity": 29934.465680635774,
+        "updatedAt": 1795288539.076,
         "cleared": false,
         "rules": {
           "halveNewSizesAt": 0.1,
@@ -30755,7 +32139,7 @@
       "rulesSince": "2026-11-21T18:29:47.177Z",
       "rulesVersion": 1,
       "lastError": null,
-      "updatedAt": "2026-11-21T19:10:37.033Z"
+      "updatedAt": "2026-11-21T19:15:39.076Z"
     }
   ],
   "promotion": {
@@ -31134,11 +32518,11 @@
     "state": "normal",
     "history": [],
     "peak": 30012.337528729568,
-    "drawdown": 0.000311230478016733,
-    "maxDrawdown": 0.0005249631397918897,
+    "drawdown": 0.001166273855748301,
+    "maxDrawdown": 0.001166273855748301,
     "sizeMultiplier": 1,
-    "equity": 30002.9967745741,
-    "updatedAt": 1795288237.003,
+    "equity": 29977.334924119918,
+    "updatedAt": 1795288539.038,
     "cleared": false,
     "rules": {
       "halveNewSizesAt": 0.1,
