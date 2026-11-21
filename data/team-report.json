@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "generatedAt": "2026-11-21T17:58:10.444Z",
+  "generatedAt": "2026-11-21T18:01:08.131Z",
   "goal": 85000,
   "equity": 30000,
   "startingEquity": 30000,
@@ -70,24 +70,32 @@
   "agents": {
     "trader": {
       "role": "5-minute paper trader",
-      "lastRunMinutesAgo": 3,
+      "lastRunMinutesAgo": 6,
       "healthy": true
     },
     "researcher": {
-      "role": "5-hour backtest and rule adoption",
-      "lastRunHoursAgo": 0,
-      "healthy": true
+      "role": "Claude every 5h: loss analysis, backtest, rule adoption",
+      "lastRunHoursAgo": 0.1,
+      "healthy": true,
+      "latestNote": {
+        "at": "2026-11-21T16:30:00Z",
+        "tradesReviewed": 42,
+        "losses": 40,
+        "findings": 7,
+        "changes": 2,
+        "adopted": true,
+        "nextIdea": "Add strategy-lab CANDIDATES: (a) 'aggressive+regime-block' that skips entries when EMA20<EMA50 and 24h change < -3% (or requires a 4h close above EMA50); (b) cap same-run entries to 1-2 coins when they are highly correlated; (c) maker-limit entry modeling (0.4% maker vs 0.6% taker, before the 25% rebate) so entries are rejected unless expected move > 2.5x round-trip cost. Judge on the unseen newest-25% test with fees; FROZEN risk caps unchanged."
+      }
     },
     "verifier": {
       "role": "hourly health check and one retry",
       "workflow": "health.yml"
     },
     "manager": {
-      "role": "this hourly goal report",
-      "workflow": "learning.yml collect"
+      "role": "Claude every 6h: reads this report and the researcher notes, restarts and fixes jobs"
     },
     "supervisor": {
-      "role": "Claude session every 3 hours: verifies, researches, repairs"
+      "role": "Claude every 8h: audits the manager and researcher for the owner"
     }
   },
   "integrity": {
