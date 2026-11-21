@@ -1,7 +1,7 @@
 /** Challenger paper accounts: alternative rule sets traded on the same quotes, fees and code path as the main account.
  * Each holds its own virtual ledger and drawdown pause. Rules may only change entry/exit keys, never risk caps. */
 import {DEFAULT_CONFIG,TREND_DEFAULTS,createAccount,markToMarket,processQuoteBatch} from '../engine.js';
-export const RULE_KEYS=Object.freeze(['strategy','patternRequired','maxHoldHours','stopAtrMultiplier','rewardRisk','mlWeights','mlThreshold','trailAtrMultiplier','trendTopN','trendBreakout','trendRankDays','entryOrder','limitOffset','limitChecks','lookback','pivotWindow','proximity','stopBuffer','trendLookback']);
+export const RULE_KEYS=Object.freeze(['strategy','patternRequired','regimeFilter','maxHoldHours','stopAtrMultiplier','rewardRisk','mlWeights','mlThreshold','trailAtrMultiplier','trendTopN','trendBreakout','trendRankDays','entryOrder','limitOffset','limitChecks','lookback','pivotWindow','proximity','stopBuffer','trendLookback']);
 export const CAP_KEYS=Object.freeze(['riskPct','maxTotalRisk','maxAllocation','maxOpenPositions','maxDailyLoss','maxExposure']);
 export const pickRules=(c={})=>Object.fromEntries(Object.entries(c).filter(([k,v])=>RULE_KEYS.includes(k)&&v!==undefined));
 const trend=(k,n)=>({strategy:'trend-follow',...TREND_DEFAULTS,trailAtrMultiplier:k,trendTopN:n,maxHoldHours:0,patternRequired:false,entryOrder:'limit'});

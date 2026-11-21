@@ -44,3 +44,11 @@ test('lab research feeds challengers instead of replacing the trend-follow main 
  assert.equal(s.challengers.find(c=>c.id==='lab-trend').rules.trailAtrMultiplier,2);assert.equal(s.strategyLab.fedChallengers.length,2);
  assert.equal(setChallengerRules(lab,{productConfigs:lab.productConfigs},T),false);
 });
+
+test('every lab-tunable rule key survives into challenger accounts (regimeFilter included)',async()=>{
+ const {TUNABLE}=await import('../scripts/strategy-lab.mjs'),{RULE_KEYS,pickRules}=await import('../scripts/challengers.mjs');
+ for(const k of TUNABLE)assert.ok(RULE_KEYS.includes(k),`${k} would be dropped by challengers`);
+ assert.deepEqual(pickRules({regimeFilter:true,maxHoldHours:4,riskPct:0.5}),{regimeFilter:true,maxHoldHours:4});
+ const c=challengerConfig({config:{...DEFAULT_CONFIG}},{rules:{strategy:'aggressive'},productConfigs:{'ADA-USD':{regimeFilter:true}}},'ADA-USD');
+ assert.equal(c.regimeFilter,true);
+});
