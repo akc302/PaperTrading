@@ -10,7 +10,7 @@ const HOUR=3600;
 export function integrity(a){
  const problems=[],num=v=>Number.isFinite(v);
  if(!num(a.cash)||a.cash<-0.01)problems.push('Cash is negative or not a number.');
- for(const p of a.positions??[])if(!(p.quantity>0)||!(p.entry>0)||!(p.stop<p.entry)||!(p.target>p.entry))problems.push(`${p.product} position has invalid quantity, entry, stop or target.`);
+ for(const p of a.positions??[])if(!(p.quantity>0)||!(p.entry>0)||!(p.stop>0)||!(p.trail||p.stop<p.entry)||!(p.target>p.entry))problems.push(`${p.product} position has invalid quantity, entry, stop or target.`);
  for(const t of a.trades??[])if(![t.pnl,t.fees,t.entry,t.exit,t.quantity].every(num))problems.push(`${t.product} trade ${t.id} has a non-numeric value.`);
  const expected=a.initial+(a.trades??[]).reduce((s,t)=>s+t.pnl,0)-(a.positions??[]).reduce((s,p)=>s+p.entry*p.quantity+(p.entryFee??0)-(p.entryFeeDetail?.rebateCredited??0),0);
  const diff=a.cash-expected;if(!(Math.abs(diff)<=0.01))problems.push(`Cash reconciliation off by $${num(diff)?diff.toFixed(2):'NaN'}: P&L, fees or rebates are miscounted.`);

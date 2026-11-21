@@ -2,12 +2,15 @@
 import {createHash} from 'node:crypto';
 import {readFile,writeFile,rename,rm} from 'node:fs/promises';
 import {pathToFileURL} from 'node:url';
-import {backtest,normalizeCandles,DEFAULT_CONFIG,featuresAt,mlProbability} from '../engine.js';
+import {backtest,normalizeCandles,DEFAULT_CONFIG,featuresAt,mlProbability,backtestTrendPortfolio,TREND_DEFAULTS} from '../engine.js';
+import {loadHistory} from './history.mjs';
 import {eligibleTrades,summarize} from './evidence.mjs';
 import {decryptState,encryptState} from './private-state.mjs';
 export const EXPERIMENT='rolling-v2';
 // Only these keys may be adopted. Sizing, loss limits and costs are never touched.
-export const TUNABLE=Object.freeze(['strategy','patternRequired','maxHoldHours','stopAtrMultiplier','rewardRisk','mlWeights','mlThreshold']);
+export const TUNABLE=Object.freeze(['strategy','patternRequired','maxHoldHours','stopAtrMultiplier','rewardRisk','mlWeights','mlThreshold','trailAtrMultiplier','trendTopN','trendBreakout','trendRankDays']);
+/** Two-year trend-follow candidates: chandelier k in {2,3,4} and top 2 or 3 coins. */
+export const TREND_CANDIDATES=Object.freeze([2,3,4].flatMap(k=>[2,3].map(n=>({id:`trend-k${k}-top${n}`,changes:{strategy:'trend-follow',trailAtrMultiplier:k,trendTopN:n,trendBreakout:20,trendRankDays:30,maxHoldHours:0}}))));
 export const FROZEN=Object.freeze(['riskPct','maxTotalRisk','maxAllocation','maxOpenPositions','maxDailyLoss','feeRate','slippage','makerFeeRate','takerFeeRate','rebateRate','rebateVerified']);
 const fresh={mlWeights:undefined,mlThreshold:undefined};
 export const CANDIDATES=Object.freeze([
@@ -105,13 +108,32 @@ export function diagnoseLosses(account,market){
  if(clustered/trades.length>.5)findings.push(`${clustered}/${trades.length} entries opened alongside 2+ other markets in the same check; correlated losses.`);
  return {closedTrades:trades.length,wins:trades.filter(t=>t.pnl>0).length,netPnl:net,netCosts:costs,timeExits:times,targetReached:measured?reached/measured:null,findings};
 }
-export function runLab(state,market,now=Date.now()/1000){
+const trendMetrics=r=>({returnPct:r.returnPct,drawdown:r.drawdown,closedTrades:r.closedTrades,winRate:r.winRate,profitFactor:Number.isFinite(r.profitFactor)?r.profitFactor:null,netPnl:r.netPnl,fees:r.totalFees,avgWin:r.avgWin,avgLoss:r.avgLoss});
+/** Walk-forward on ~2 years of 6h/daily history: rank candidates on the first 70% (after a 100-day warm-up), test the leader once on the newest 30%. */
+export function researchTrend(history,config,now=Date.now()/1000){
+ const usable=Object.fromEntries(Object.entries(history??{}).filter(([,h])=>h?.sixHour?.length>=1000&&h?.daily?.length>=250));
+ const base={experiment:'trend-2y-v1',timeframe:'6h + 1d',markets:Object.keys(usable)};
+ if(Object.keys(usable).length<3)return {...base,status:'collecting-data',reason:'Need at least 3 markets with ~1 year of stored 6h and daily history (run fetch-history).'};
+ const first=Math.min(...Object.values(usable).map(h=>h.daily[0].time))+100*86400,last=Math.min(now,Math.max(...Object.values(usable).map(h=>h.sixHour.at(-1).time+21600))),cut=first+(last-first)*.7;
+ const current={...DEFAULT_CONFIG,...config,...(config.strategy==='trend-follow'?{}:{strategy:'trend-follow',...TREND_DEFAULTS,maxHoldHours:0})};
+ const run=(c,start,end)=>backtestTrendPortfolio(usable,c,{startTime:start,endTime:end});
+ const development=TREND_CANDIDATES.map(({id,changes})=>{const r=run({...current,...changes},first,cut);return {id,changes,result:trendMetrics(r),score:r.returnPct-r.drawdown,eligible:r.closedTrades>=10};}).sort((a,b)=>Number(b.eligible)-Number(a.eligible)||b.score-a.score||a.id.localeCompare(b.id));
+ const leader=development[0],test={candidate:trendMetrics(run({...current,...leader.changes},cut,last)),current:trendMetrics(run(current,cut,last))},full=trendMetrics(run({...current,...leader.changes},first,last));
+ const stress=trendMetrics(run({...current,...leader.changes,rebateVerified:false,rebateRate:0,slippage:(current.slippage??.0005)*2},cut,last));
+ const passed=leader.eligible&&test.candidate.closedTrades>=5&&test.candidate.returnPct>0&&test.candidate.returnPct>=test.current.returnPct&&test.candidate.drawdown<=test.current.drawdown*1.1&&stress.returnPct>0;
+ return {...base,status:passed?'validated-on-2y':'not-validated',selected:leader.id,changes:leader.changes,development:development.map(({changes,...r})=>r),finalTest:test,stress,fullPeriod:full,window:{start:new Date(first*1000).toISOString(),selectionEnd:new Date(cut*1000).toISOString(),end:new Date(last*1000).toISOString()},candidatesTried:TREND_CANDIDATES.length,
+  reason:passed?`${leader.id} ranked first on the earlier 70% and was profitable on the unseen newest 30% after fees, slippage and the no-rebate stress.`:`${leader.id} ranked first on the earlier 70% but did not clear the unseen-window checks; recorded, not adopted.`};
+}
+export function runLab(state,market,now=Date.now()/1000,history={}){
  const trades=eligibleTrades(state.account,now),old=state.strategyLab;
- const inputHash=hash({experiment:EXPERIMENT,trades,products:state.products.map(p=>[p,normalizeCandles(market.products[p]?.candles??[]).filter(b=>b.time+3600<=now)]),config:state.config,productConfigs:state.productConfigs,fees:state.feeProfile});
+ const inputHash=hash({experiment:EXPERIMENT,history:Object.entries(history).map(([p,h])=>[p,h.sixHour?.length,h.sixHour?.at(-1)?.time,h.daily?.at(-1)?.time]),trades,products:state.products.map(p=>[p,normalizeCandles(market.products[p]?.candles??[]).filter(b=>b.time+3600<=now)]),config:state.config,productConfigs:state.productConfigs,fees:state.feeProfile});
  if(old?.inputHash===inputHash)return old;
  const outcomes=summarize(state.account,0,now),models=compareModels(trades);
- const products=Object.fromEntries(state.products.map(p=>[p,researchProduct(market.products[p]?.candles??[],{...DEFAULT_CONFIG,...state.config,...state.productConfigs?.[p],...state.feeProfile},now)]));
- return {version:2,experiment:EXPERIMENT,inputHash,updatedAt:new Date(now*1000).toISOString(),mode:'rolling-adoption',outcomes,diagnosis:diagnoseLosses(state.account,market),costDiagnosis:{netFees:outcomes.grossFees-outcomes.rebatesCredited,costFlippedLosses:trades.filter(t=>t.pnl<0&&t.pnl+(t.fees??0)-(t.rebateCredited??0)>0).length},models,products,limitations:['Hourly replay cannot reproduce missed five-minute checks, order-book liquidity or exact historical fills.','Fees use the saved tier, modeled rebates and adverse slippage; this is not a live tier verification.','Re-ranking every five hours on overlapping windows can overfit; every run and its result is kept in history.','An improvement adoption means losing less on unseen data, not a proven profitable edge.','No strategy can guarantee winning trades; risk caps stay fixed.']};
+ const trendMain=state.config?.strategy==='trend-follow';
+ // With trend-follow as the main rules, hourly research is recorded as shadow evidence instead of overriding the main rules per market.
+ const products=Object.fromEntries(state.products.map(p=>{const r=researchProduct(market.products[p]?.candles??[],{...DEFAULT_CONFIG,...state.config,...(trendMain?state.legacyRules?.config:{}),...(trendMain?state.legacyRules?.productConfigs?.[p]:state.productConfigs?.[p]),...state.feeProfile,...(trendMain?{strategy:state.legacyRules?.productConfigs?.[p]?.strategy??state.legacyRules?.config?.strategy??'aggressive'}:{})},now);return [p,trendMain&&r.decision?.startsWith('adopt')?{...r,decision:'shadow',shadowOf:r.decision}:r];}));
+ const trend=researchTrend(history,{...DEFAULT_CONFIG,...state.config,...state.feeProfile},now);
+ return {version:2,experiment:EXPERIMENT,inputHash,updatedAt:new Date(now*1000).toISOString(),mode:trendMain?'trend-main-hourly-shadow':'rolling-adoption',trend,outcomes,diagnosis:diagnoseLosses(state.account,market),costDiagnosis:{netFees:outcomes.grossFees-outcomes.rebatesCredited,costFlippedLosses:trades.filter(t=>t.pnl<0&&t.pnl+(t.fees??0)-(t.rebateCredited??0)>0).length},models,products,limitations:['Hourly replay cannot reproduce missed five-minute checks, order-book liquidity or exact historical fills.','Fees use the saved tier, modeled rebates and adverse slippage; this is not a live tier verification.','Re-ranking every five hours on overlapping windows can overfit; every run and its result is kept in history.','An improvement adoption means losing less on unseen data, not a proven profitable edge.','No strategy can guarantee winning trades; risk caps stay fixed.']};
 }
 /** Writes each market's adopted entry/exit rules where the 5-minute trader reads them. Refuses any risk-cap change. */
 export function applyLab(state,report){
@@ -130,7 +152,7 @@ export async function run(){
  const key=process.env.PAPER_STATE_KEY?.trim();if(!key)throw Error('Private research key required; nothing changed.');
  const market=JSON.parse(await readFile('data/market.json','utf8')),paper=JSON.parse(await readFile('data/paper.json','utf8'));let state;
  try{state=await decryptState(JSON.parse(await readFile('data/portfolio.enc.json','utf8')),key);}catch{throw Error('Private research unlock failed; nothing changed.');}
- const now=Date.now()/1000;applyLab(paper,runLab(paper,market,now));applyLab(state,runLab(state,market,now));
+ const now=Date.now()/1000,history=await loadHistory();applyLab(paper,runLab(paper,market,now,history));applyLab(state,runLab(state,market,now,history));
  const cipher=await encryptState(state,key),tmp='data/.strategy-lab.enc.tmp';
  try{await writeFile(tmp,JSON.stringify(cipher,null,2)+'\n',{mode:0o600});await rename(tmp,'data/portfolio.enc.json');}finally{await rm(tmp,{force:true});}
  await writeFile('data/paper.json',JSON.stringify(paper,null,2)+'\n');console.log('Research completed; adopted rules: public '+JSON.stringify(paper.strategyLab.adopted)+'; private results encrypted.');
