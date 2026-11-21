@@ -1,30 +1,30 @@
 {
   "version": 1,
-  "generatedAt": "2026-11-21T07:38:14.975Z",
+  "generatedAt": "2026-11-21T08:51:30.818Z",
   "goal": 85000,
-  "equity": 8026.466709458087,
+  "equity": 7969.921186986719,
   "startingEquity": 10000,
-  "progressToGoal": -0.026313777207225504,
-  "returnPct": -0.19735332905419128,
-  "drawdown": 0.20296176197898713,
-  "openPositions": 4,
+  "progressToGoal": -0.027067717506843753,
+  "returnPct": -0.20300788130132813,
+  "drawdown": 0.2089205444603659,
+  "openPositions": 3,
   "last24h": {
-    "closedTrades": 32,
-    "wins": 0,
-    "winRate": 0,
-    "netPnl": -1868.394065929041,
-    "grossFees": 861.340088617944,
+    "closedTrades": 29,
+    "wins": 1,
+    "winRate": 0.034482758620689655,
+    "netPnl": -1702.9474521335171,
+    "grossFees": 768.3162550441938,
     "rebatesCredited": 0
   },
   "allTime": {
-    "closedTrades": 36,
-    "wins": 0,
-    "winRate": 0,
-    "netPnl": -2012.8190594397552,
-    "grossFees": 980.1821863387004,
+    "closedTrades": 37,
+    "wins": 1,
+    "winRate": 0.02702702702702703,
+    "netPnl": -1961.4898902413654,
+    "grossFees": 1004.4544258262841,
     "rebatesCredited": 0
   },
-  "losingStreak": 36,
+  "losingStreak": 0,
   "rulesInUse": {
     "BTC-USD": {
       "strategy": "aggressive",
@@ -70,12 +70,12 @@
   "agents": {
     "trader": {
       "role": "5-minute paper trader",
-      "lastRunMinutesAgo": 3,
+      "lastRunMinutesAgo": 1,
       "healthy": true
     },
     "researcher": {
       "role": "5-hour backtest and rule adoption",
-      "lastRunHoursAgo": 3,
+      "lastRunHoursAgo": 4.2,
       "healthy": true
     },
     "verifier": {
@@ -104,37 +104,37 @@
         "id": "history",
         "label": "28+ days of forward paper trading with the research team",
         "pass": false,
-        "value": "0.1 days"
+        "value": "0.2 days"
       },
       {
         "id": "sample",
         "label": "150+ closed trades in the last 28 days",
         "pass": false,
-        "value": "36 trades"
+        "value": "37 trades"
       },
       {
         "id": "winrate",
         "label": "Win rate 60%+ after fees",
         "pass": false,
-        "value": "0.0%"
+        "value": "2.7%"
       },
       {
         "id": "profit",
         "label": "Net profit after fees and rebates, profit factor 1.3+",
         "pass": false,
-        "value": "$-2012.82, PF 0.00"
+        "value": "$-1961.49, PF 0.03"
       },
       {
         "id": "weekly",
         "label": "Profitable in each of the last 4 weeks",
         "pass": false,
-        "value": "$-2013 / $0 / $0 / $0"
+        "value": "$-1961 / $0 / $0 / $0"
       },
       {
         "id": "drawdown",
         "label": "Max drawdown 10% or less over 28 days",
         "pass": false,
-        "value": "20.3%"
+        "value": "20.9%"
       },
       {
         "id": "validated",
@@ -157,9 +157,7 @@
     ],
     "message": "Not ready: 1/9 evidence checks passed. Keep paper trading."
   },
-  "verdict": "needs-attention",
-  "issues": [
-    "36 losing trades in a row; researcher must replace the rules at its next run."
-  ],
+  "verdict": "on-track",
+  "issues": [],
   "dispatch": []
 }
