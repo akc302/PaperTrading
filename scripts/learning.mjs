@@ -1,9 +1,6 @@
 /** Reproducible public-market logistic regression. Shadow research, never a win guarantee. */
-import {normalizeCandles} from '../engine.js';
-export function featuresAt(bars,i){
- if(i<24)return null;const p=bars[i].close,prev=bars[i-1],recent=bars.slice(i-23,i+1),range=recent.reduce((s,b)=>s+(b.high-b.low)/b.close,0)/24;
- return [1,(p/prev.close-1)*50,(p/bars[i-4].close-1)*25,(p/bars[i-12].close-1)*10,range*50,(bars[i].close-bars[i].open)/(bars[i].high-bars[i].low||1),((p/Math.min(...recent.map(b=>b.low)))-1)*10].map(v=>Math.max(-5,Math.min(5,v)));
-}
+import {normalizeCandles,featuresAt} from '../engine.js';
+export {featuresAt};
 const sigmoid=x=>1/(1+Math.exp(-Math.max(-30,Math.min(30,x))));
 const predict=(w,x)=>sigmoid(w.reduce((s,v,i)=>s+v*x[i],0));
 export function trainShadow(products,{feeRate=.006,horizon=4}={}){

@@ -1,6 +1,7 @@
 /** Pure market analysis plus a virtual, long-only ledger. No account or order APIs. */
 export const DEFAULT_CONFIG = Object.freeze({strategy:'horizontal',lookback:48,pivotWindow:3,proximity:0.006,stopBuffer:0.004,rewardRisk:2,riskPct:0.01,feeRate:0.006,slippage:0.0005,maxAllocation:0.25,trendLookback:180,maxHoldHours:48,maxDailyLoss:0.04,maxOpenPositions:4,maxTotalRisk:0.03,stopAtrMultiplier:1.25});
 
+export const STRATEGIES = Object.freeze(['horizontal','trendline','aggressive','ema-trend','donchian','rsi-reversion']);
 const finite = (n) => Number.isFinite(Number(n));
 const positive = (n) => finite(n) && Number(n)>0;
 const cfg = (c={}) => {
@@ -8,7 +9,8 @@ const cfg = (c={}) => {
   if(!Number.isInteger(x.lookback)||x.lookback<12||x.lookback>300||!Number.isInteger(x.pivotWindow)||x.pivotWindow<1||x.pivotWindow>10) throw new Error('Invalid level window.');
   if(!positive(x.proximity)||x.proximity>0.1||!positive(x.stopBuffer)||x.stopBuffer>0.1||!positive(x.rewardRisk)||x.rewardRisk>10) throw new Error('Invalid strategy parameters.');
   if(!positive(x.riskPct)||x.riskPct>0.05||!positive(x.maxAllocation)||x.maxAllocation>1||!finite(x.feeRate)||x.feeRate<0||x.feeRate>0.05||!finite(x.slippage)||x.slippage<0||x.slippage>0.05) throw new Error('Invalid paper risk or execution settings.');
-  if(!['horizontal','trendline','aggressive'].includes(x.strategy)||!Number.isInteger(x.trendLookback)||x.trendLookback<60||x.trendLookback>720)throw new Error('Invalid strategy or trendline window.');
+  if(x.mlWeights!=null&&(!Array.isArray(x.mlWeights)||x.mlWeights.length!==7||!x.mlWeights.every(Number.isFinite)||!Number.isFinite(x.mlThreshold)||x.mlThreshold<0||x.mlThreshold>1))throw new Error('Invalid ML entry filter.');
+  if(!STRATEGIES.includes(x.strategy)||!Number.isInteger(x.trendLookback)||x.trendLookback<60||x.trendLookback>720)throw new Error('Invalid strategy or trendline window.');
   if(!finite(x.maxHoldHours)||x.maxHoldHours<0||x.maxHoldHours>720||!finite(x.maxDailyLoss)||x.maxDailyLoss<0||x.maxDailyLoss>0.5||!Number.isInteger(x.maxOpenPositions)||x.maxOpenPositions<1||x.maxOpenPositions>20||!positive(x.maxTotalRisk)||x.maxTotalRisk>0.2)throw new Error('Invalid portfolio risk limits.');
   if(!positive(x.stopAtrMultiplier)||x.stopAtrMultiplier<.5||x.stopAtrMultiplier>4)throw new Error('Invalid stop ATR multiplier.');
   return x;
@@ -43,9 +45,11 @@ export function normalizeCandles(input){
 
 export function analyze(input,config={}){
   const c=cfg(config);
-  const result=c.strategy==='aggressive'?analyzeAggressive(input,c):c.strategy==='trendline'?analyzeTrendline(input,c):{...analyzeHorizontal(input,c),strategy:'horizontal',setup:'support-bounce',trend:'unconfirmed',trendlines:[]};
+  const indicator={'ema-trend':analyzeEmaTrend,donchian:analyzeDonchian,'rsi-reversion':analyzeRsiReversion}[c.strategy];
+  const result=indicator?indicator(input,c):c.strategy==='aggressive'?analyzeAggressive(input,c):c.strategy==='trendline'?analyzeTrendline(input,c):{...analyzeHorizontal(input,c),strategy:'horizontal',setup:'support-bounce',trend:'unconfirmed',trendlines:[]};
   const completed=normalizeCandles(input);result.pattern=patternConfirmation(completed,{asOf:(completed.at(-1)?.time??0)+3600});
   if(c.patternRequired===true&&result.signal==='BUY'&&!result.pattern.confirmed){result.signal='WAIT';result.reason='Research pattern filter: no completed-candle confirmation.';}
+  if(c.mlWeights&&result.signal==='BUY'){const x=featuresAt(completed,completed.length-1),p=x?mlProbability(c.mlWeights,x):null;result.mlProbability=p;if(p==null||p<c.mlThreshold){result.signal='WAIT';result.reason=`ML entry filter: ${p==null?'features unavailable':`probability ${(p*100).toFixed(1)}% below ${(c.mlThreshold*100).toFixed(1)}% threshold`}.`;}}
   return result;
 }
 
@@ -230,6 +234,8 @@ export function closePaperTrade(account,id,price,time=Date.now()/1000,reason='ma
   return account;
 }
 
+// Bounded history keeps replay linear; covers every strategy's deepest lookback.
+const historyWindow=c=>Math.max(320,c.lookback+10,c.trendLookback*4+8);
 /** Pass completed candles only. Initial sync starts now; replay=true is for backtests. */
 export function processCandles(account,product,input,config={},options={}){
   const c=cfg(config),bars=normalizeCandles(input),{autoTrade=true,replay=false}=options;
@@ -251,7 +257,7 @@ export function processCandles(account,product,input,config={},options={}){
       else if((existing.maxHoldHours??c.maxHoldHours)>0&&bar.time>=existing.openedAt+(existing.maxHoldHours??c.maxHoldHours)*3600){closePaperTrade(account,existing.id,bar.open,bar.time,'time-exit',c);reason='Maximum paper holding period reached; exited at the next eligible open.';action='EXIT';}
     }
     // A signal can use only bars that ended before this bar began. Never its future high/low.
-    const signal=analyze(bars.slice(0,i),c),daily=dayRisk(account,bar.time,c);
+    const signal=analyze(bars.slice(Math.max(0,i-historyWindow(c)),i),c),daily=dayRisk(account,bar.time,c);
     if(!existing&&autoTrade&&!daily.blocked){
       const fill=executionAt(bar.open,signal.stop,signal.target,c);
       // Recheck at the executable next open: an upward gap can erase the signal's
@@ -456,4 +462,53 @@ export function researchPatterns(input,config={},asOf=Date.now()/1000){
  const beats=(a,b)=>b.returnPct>a.returnPct&&b.drawdown<=a.drawdown;
  const passed=enough&&beats(training.baseline,training.filtered)&&beats(holdout.baseline,holdout.filtered)&&holdout.filtered.netPnl>0;
  return {...base,training,holdout,status:!enough?'insufficient-trades':passed?'promising-shadow':'no-demonstrated-edge',reason:!enough?'Fewer than five closes in at least one comparison sample.':passed?'Fixed filter improved training and later holdout net returns with no higher drawdown; still requires forward paper evidence.':'The fixed pattern filter did not improve both training and holdout with positive holdout profit and no higher drawdown.',assumptions:{execution:'next hourly open, adverse slippage; stop first if ambiguous',costs:'existing account fee, rebate and slippage configuration',risk:'identical risk caps and targets in both arms'},splitTime:split};
+}
+
+/** Shared entry-time features; also used by the shadow logistic-regression models. */
+export function featuresAt(bars,i){
+ if(i<24)return null;const p=bars[i].close,prev=bars[i-1],recent=bars.slice(i-23,i+1),range=recent.reduce((s,b)=>s+(b.high-b.low)/b.close,0)/24;
+ return [1,(p/prev.close-1)*50,(p/bars[i-4].close-1)*25,(p/bars[i-12].close-1)*10,range*50,(bars[i].close-bars[i].open)/(bars[i].high-bars[i].low||1),((p/Math.min(...recent.map(b=>b.low)))-1)*10].map(v=>Math.max(-5,Math.min(5,v)));
+}
+export function mlProbability(weights,x){const z=weights.reduce((s,v,i)=>s+v*x[i],0);return 1/(1+Math.exp(-Math.max(-30,Math.min(30,z))));}
+
+const emaSeries=(values,n)=>{const k=2/(n+1),out=[];let e=values[0];for(const v of values){e=v*k+e*(1-k);out.push(e);}return out;};
+const atrOf=(bars,n=14)=>{const r=bars.slice(-n-1).slice(1).map((b,i,a)=>{const pc=bars.at(-n-1+i)?.close??b.open;return Math.max(b.high-b.low,Math.abs(b.high-pc),Math.abs(b.low-pc));});return r.reduce((s,v)=>s+v,0)/(r.length||1);};
+function rsiSeries(closes,n=14){const out=Array(closes.length).fill(50);let g=0,l=0;for(let i=1;i<closes.length;i++){const d=closes[i]-closes[i-1];if(i<=n){g+=Math.max(0,d)/n;l+=Math.max(0,-d)/n;}else{g=(g*(n-1)+Math.max(0,d))/n;l=(l*(n-1)+Math.max(0,-d))/n;}if(i>=n)out[i]=l===0?100:100-100/(1+g/l);}return out;}
+/** Cost-aware ATR bracket: stop = ATR multiple, target = net reward/risk after fees and slippage. */
+function atrBracket(base,bars,c){
+ base.atr=atrOf(bars);base.stop=base.price-Math.max(base.price*.004,base.atr*c.stopAtrMultiplier);
+ const fill=executionAt(base.price,base.stop,base.price,c);
+ base.target=(fill.entry*(1+c.feeRate)+fill.risk*c.rewardRisk)/((1-c.slippage)*(1-c.feeRate));
+ base.estimatedRewardRisk=c.rewardRisk;return base;
+}
+function indicatorBase(bars,strategy,setup){const recent=bars.slice(-24),last=bars.at(-1);return {strategy,setup,trend:'unconfirmed',price:last?.close??null,support:recent.length?Math.min(...recent.map(b=>b.low)):null,resistance:recent.length?Math.max(...recent.map(b=>b.high)):null,atr:0,levels:[],trendlines:[],signal:'WAIT',reason:'Need 120 completed hourly bars.',stop:null,target:null};}
+
+/** Trend-following pullback: EMA20 above a rising EMA50, price dips to EMA20 and closes back above it bullish. */
+function analyzeEmaTrend(input,c){
+ const bars=normalizeCandles(input).slice(-300),base=indicatorBase(bars,'ema-trend','ema-pullback');if(bars.length<120)return base;
+ const closes=bars.map(b=>b.close),e20=emaSeries(closes,20),e50=emaSeries(closes,50),last=bars.at(-1),f=e20.at(-1),s=e50.at(-1);
+ base.trend=f>s&&s>e50.at(-6)?'bullish':f<s?'bearish':'mixed';base.support=f;
+ if(base.trend!=='bullish'){base.reason='EMA20/EMA50 uptrend not confirmed.';return atrBracket(base,bars,c);}
+ if(last.low>f*(1+c.proximity)){base.reason='Uptrend confirmed; waiting for a pullback to EMA20.';return atrBracket(base,bars,c);}
+ if(!(last.close>f&&last.close>last.open)){base.reason='Pullback to EMA20; waiting for a bullish close back above it.';return atrBracket(base,bars,c);}
+ atrBracket(base,bars,c);base.signal='BUY';base.reason='EMA trend pullback: rising EMA50, EMA20 retest and bullish close; ATR stop and cost-aware target.';return base;
+}
+/** Breakout: close above the prior 20-hour high while above EMA50 with above-average volume. */
+function analyzeDonchian(input,c){
+ const bars=normalizeCandles(input).slice(-300),base=indicatorBase(bars,'donchian','channel-breakout');if(bars.length<120)return base;
+ const last=bars.at(-1),prior=bars.slice(-21,-1),high=Math.max(...prior.map(b=>b.high)),e50=emaSeries(bars.map(b=>b.close),50).at(-1),vol=prior.reduce((s,b)=>s+b.volume,0)/20;
+ base.resistance=high;base.trend=last.close>e50?'bullish':'bearish';
+ if(!(last.close>high)){base.reason='Waiting for a close above the prior 20-hour high.';return atrBracket(base,bars,c);}
+ if(last.close<=e50){base.reason='Breakout below EMA50 trend filter; skipped.';return atrBracket(base,bars,c);}
+ if(vol>0&&last.volume<vol){base.reason='Breakout volume below 20-hour average; skipped.';return atrBracket(base,bars,c);}
+ atrBracket(base,bars,c);base.signal='BUY';base.reason='Donchian 20-hour breakout above EMA50 with volume; ATR stop and cost-aware target.';return base;
+}
+/** Mean reversion: RSI(14) crosses back above 30 with a bullish close, only while above the EMA100 regime filter less 3%. */
+function analyzeRsiReversion(input,c){
+ const bars=normalizeCandles(input).slice(-300),base=indicatorBase(bars,'rsi-reversion','rsi-oversold-reclaim');if(bars.length<120)return base;
+ const closes=bars.map(b=>b.close),r=rsiSeries(closes),e100=emaSeries(closes,100).at(-1),last=bars.at(-1);
+ base.trend=last.close>e100?'bullish':'bearish';
+ if(!(r.at(-2)<30&&r.at(-1)>=30)){base.reason=`RSI ${r.at(-1).toFixed(1)}; waiting for a cross back above 30.`;return atrBracket(base,bars,c);}
+ if(last.close<=last.open||last.close<e100*.97){base.reason='RSI reclaim lacks a bullish close or is in a deep downtrend regime.';return atrBracket(base,bars,c);}
+ atrBracket(base,bars,c);base.signal='BUY';base.reason='RSI oversold reclaim inside regime filter; ATR stop and cost-aware target.';return base;
 }
