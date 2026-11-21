@@ -68,3 +68,8 @@ test('trend context merges stored history with completed hourly aggregates only'
  const hourly=Array.from({length:48},(_,i)=>({time:T0+i*3600,open:1,high:2,low:.5,close:1.5,volume:1}));
  const c=trendContext(hourly,{},T0+47*3600);assert.equal(c.daily.length,1);assert.equal(c.sixHour.length,7);
 });
+test('portfolio replay counts losses before the first entry attempt toward the daily loss circuit',()=>{
+ const h={A:series(up(.003),400),B:series(up(.002,.08),400)},r=backtestTrendPortfolio(h,{...cfg,maxDailyLoss:.001},{initial:10000});
+ const days=Object.keys(r.account.dailyRisk);assert.ok(days.length>=80,'every replay day registers its opening equity');
+ assert.ok(r.closedTrades<days.length,'days are registered without entry attempts');
+});
