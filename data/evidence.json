@@ -1,7 +1,7 @@
 {
   "version": 1,
   "cadence": "hourly collection; daily review",
-  "lastCollectedAt": "2026-11-21T03:16:20.133Z",
+  "lastCollectedAt": "2026-11-21T04:17:57.317Z",
   "hourly": [
     {
       "periodStart": "2026-11-20T03:00:00.000Z",
@@ -1072,23 +1072,48 @@
       "observedChecks": 2,
       "largestCheckGapSeconds": 1813.4719998836517,
       "evidenceComplete": false
+    },
+    {
+      "periodStart": "2026-11-21T03:00:00.000Z",
+      "periodEnd": "2026-11-21T04:00:00.000Z",
+      "closedTrades": 0,
+      "wins": 0,
+      "losses": 0,
+      "flats": 0,
+      "winRate": null,
+      "netPnl": 0,
+      "grossFees": 0,
+      "rebatesCredited": 0,
+      "pendingRebates": 0,
+      "expectancy": null,
+      "profitFactor": null,
+      "maxDrawdown": 0.013815275580869016,
+      "byMarket": {},
+      "bySetup": {},
+      "byExit": {},
+      "byPattern": {},
+      "note": "Completed simulated trade outcomes after modeled costs. Virtual snapshot rebalances excluded. Null ratios mean insufficient denominator, not an infinite edge.",
+      "tradeHeartbeat": "2026-11-21T04:16:22.739Z",
+      "observedChecks": 1,
+      "largestCheckGapSeconds": 2206.984999895096,
+      "evidenceComplete": false
     }
   ],
   "allTime": {
     "periodStart": "1970-01-01T00:00:00.000Z",
-    "periodEnd": "2026-11-21T03:16:20.133Z",
-    "closedTrades": 28,
+    "periodEnd": "2026-11-21T04:17:57.317Z",
+    "closedTrades": 32,
     "wins": 0,
-    "losses": 28,
+    "losses": 32,
     "flats": 0,
     "winRate": 0,
-    "netPnl": -1418.839338162043,
-    "grossFees": 784.5548812839614,
+    "netPnl": -1940.4253982204882,
+    "grossFees": 884.1348768535753,
     "rebatesCredited": 0,
     "pendingRebates": 0,
-    "expectancy": -50.67283350578725,
+    "expectancy": -60.638293694390256,
     "profitFactor": 0,
-    "maxDrawdown": 0.14741478958676416,
+    "maxDrawdown": 0.19923721528043378,
     "byMarket": {
       "BTC-USD": {
         "trades": 4,
@@ -1123,45 +1148,45 @@
         "rebatesCredited": 0
       },
       "ADA-USD": {
-        "trades": 3,
+        "trades": 4,
         "wins": 0,
-        "losses": 3,
-        "netPnl": -162.40765349753195,
-        "grossFees": 84.37355919729183,
+        "losses": 4,
+        "netPnl": -297.83274523528917,
+        "grossFees": 109.30051269940267,
         "rebatesCredited": 0
       },
       "DOGE-USD": {
-        "trades": 3,
+        "trades": 4,
         "wins": 0,
-        "losses": 3,
-        "netPnl": -155.70417562939366,
-        "grossFees": 84.27615531700945,
+        "losses": 4,
+        "netPnl": -287.49658257130443,
+        "grossFees": 109.18345293921973,
         "rebatesCredited": 0
       },
       "LINK-USD": {
-        "trades": 3,
+        "trades": 4,
         "wins": 0,
-        "losses": 3,
-        "netPnl": -164.18822601383786,
-        "grossFees": 84.08729890586947,
+        "losses": 4,
+        "netPnl": -290.2591389654531,
+        "grossFees": 108.98761632205583,
         "rebatesCredited": 0
       },
       "AVAX-USD": {
-        "trades": 3,
+        "trades": 4,
         "wins": 0,
-        "losses": 3,
-        "netPnl": -167.00157606330478,
-        "grossFees": 83.9328944045001,
+        "losses": 4,
+        "netPnl": -295.299224490467,
+        "grossFees": 108.77832143360646,
         "rebatesCredited": 0
       }
     },
     "bySetup": {
       "aggressive-exploration": {
-        "trades": 28,
+        "trades": 32,
         "wins": 0,
-        "losses": 28,
-        "netPnl": -1418.839338162043,
-        "grossFees": 784.5548812839614,
+        "losses": 32,
+        "netPnl": -1940.4253982204882,
+        "grossFees": 884.1348768535753,
         "rebatesCredited": 0
       }
     },
@@ -1175,11 +1200,11 @@
         "rebatesCredited": 0
       },
       "quote-stop": {
-        "trades": 8,
+        "trades": 12,
         "wins": 0,
-        "losses": 8,
-        "netPnl": -599.6200514070513,
-        "grossFees": 217.731086030389,
+        "losses": 12,
+        "netPnl": -1121.2061114654969,
+        "grossFees": 317.31108160000286,
         "rebatesCredited": 0
       }
     },
@@ -1193,11 +1218,11 @@
         "rebatesCredited": 0
       },
       "not-confirmed": {
-        "trades": 23,
+        "trades": 27,
         "wins": 0,
-        "losses": 23,
-        "netPnl": -1242.4019252023627,
-        "grossFees": 639.7973290473873,
+        "losses": 27,
+        "netPnl": -1763.9879852608078,
+        "grossFees": 739.3773246170011,
         "rebatesCredited": 0
       },
       "confirmed": {
