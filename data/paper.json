@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-11-21T13:50:26.891Z",
+  "updatedAt": "2026-11-21T13:55:24.561Z",
   "autoTrade": true,
   "products": [
     "BTC-USD",
@@ -4498,6 +4498,10 @@
       {
         "time": 1795269040.384,
         "equity": 8079.243596263582
+      },
+      {
+        "time": 1795269340.523,
+        "equity": 8064.436427769751
       }
     ],
     "lastProcessed": {
@@ -4511,14 +4515,14 @@
       "AVAX-USD": 1795262400
     },
     "marks": {
-      "BTC-USD": 60603.28,
-      "ETH-USD": 1703.57,
-      "SOL-USD": 70.71,
-      "XRP-USD": 0.9301,
-      "ADA-USD": 0.14411,
-      "DOGE-USD": 0.05529,
-      "LINK-USD": 8.655,
-      "AVAX-USD": 6.659
+      "BTC-USD": 60477.68,
+      "ETH-USD": 1699.03,
+      "SOL-USD": 70.65,
+      "XRP-USD": 0.9295,
+      "ADA-USD": 0.14363,
+      "DOGE-USD": 0.05515,
+      "LINK-USD": 8.647,
+      "AVAX-USD": 6.645
     },
     "nextId": 46,
     "decisions": [
@@ -66509,6 +66513,434 @@
           "stopAtrMultiplier": 2.5,
           "patternRequired": true
         }
+      },
+      {
+        "time": 1795269340.523,
+        "product": "XRP-USD",
+        "signal": "WAIT",
+        "observedSignal": "WAIT",
+        "action": "HOLD",
+        "reason": "Open virtual position monitored at fresh quote.",
+        "setup": "aggressive-exploration",
+        "strategy": "aggressive",
+        "pattern": {
+          "version": 1,
+          "timeframe": "1h",
+          "asOf": 1795266000,
+          "mode": "observe",
+          "confirmed": false,
+          "matches": [],
+          "context": [],
+          "status": "evaluated",
+          "volumeRatio": 0.3313982839262009,
+          "reason": "No completed-candle entry confirmation; context alone is insufficient.",
+          "levels": {
+            "closingHigh20": 0.9129,
+            "ma20": 0.8966049999999999
+          },
+          "rsi": 43.496590441795625,
+          "previousRsi": 42.69686468559074
+        },
+        "support": 0.859,
+        "resistance": 0.9523,
+        "stop": 0.8665571428571428,
+        "target": 0.9889766020837376,
+        "price": 0.9037,
+        "trend": "experimental",
+        "config": {
+          "strategy": "aggressive",
+          "lookback": 48,
+          "pivotWindow": 3,
+          "proximity": 0.006,
+          "stopBuffer": 0.004,
+          "rewardRisk": 1.5,
+          "riskPct": 0.02,
+          "feeRate": 0.006,
+          "slippage": 0.0005,
+          "maxAllocation": 0.25,
+          "trendLookback": 180,
+          "maxHoldHours": 24,
+          "maxDailyLoss": 0.12,
+          "maxOpenPositions": 4,
+          "maxTotalRisk": 0.08,
+          "stopAtrMultiplier": 2.5,
+          "patternRequired": true
+        }
+      },
+      {
+        "time": 1795269340.523,
+        "product": "SOL-USD",
+        "signal": "WAIT",
+        "observedSignal": "WAIT",
+        "action": "HOLD",
+        "reason": "Open virtual position monitored at fresh quote.",
+        "setup": "aggressive-exploration",
+        "strategy": "aggressive",
+        "pattern": {
+          "version": 1,
+          "timeframe": "1h",
+          "asOf": 1795266000,
+          "mode": "observe",
+          "confirmed": false,
+          "matches": [],
+          "context": [],
+          "status": "evaluated",
+          "volumeRatio": 0.686252106171809,
+          "reason": "No completed-candle entry confirmation; context alone is insufficient.",
+          "levels": {
+            "closingHigh20": 69.42,
+            "ma20": 68.01500000000001
+          },
+          "rsi": 49.039987068391255,
+          "previousRsi": 47.00480666177346
+        },
+        "support": 64.81,
+        "resistance": 71.66,
+        "stop": 66.04321428571428,
+        "target": 75.99626887513175,
+        "price": 69.12,
+        "trend": "experimental",
+        "config": {
+          "strategy": "aggressive",
+          "lookback": 48,
+          "pivotWindow": 3,
+          "proximity": 0.006,
+          "stopBuffer": 0.004,
+          "rewardRisk": 1.5,
+          "riskPct": 0.02,
+          "feeRate": 0.006,
+          "slippage": 0.0005,
+          "maxAllocation": 0.25,
+          "trendLookback": 180,
+          "maxHoldHours": 24,
+          "maxDailyLoss": 0.12,
+          "maxOpenPositions": 4,
+          "maxTotalRisk": 0.08,
+          "stopAtrMultiplier": 2.5,
+          "patternRequired": true
+        }
+      },
+      {
+        "time": 1795269340.523,
+        "product": "ETH-USD",
+        "signal": "WAIT",
+        "observedSignal": "BUY",
+        "action": "WAIT",
+        "reason": "Maximum shared paper positions reached.",
+        "setup": "aggressive-exploration",
+        "strategy": "aggressive",
+        "pattern": {
+          "version": 1,
+          "timeframe": "1h",
+          "asOf": 1795266000,
+          "mode": "observe",
+          "confirmed": true,
+          "matches": [
+            "closing-high-breakout-20h"
+          ],
+          "context": [],
+          "status": "evaluated",
+          "volumeRatio": 0.4958910221263036,
+          "reason": "Completed hourly candle matches an explicit entry rule.",
+          "levels": {
+            "closingHigh20": 1649.83,
+            "ma20": 1616.2715
+          },
+          "rsi": 51.00154392089738,
+          "previousRsi": 48.048219961477166
+        },
+        "support": 1535.37,
+        "resistance": 1757.7,
+        "stop": 1626.9407142857142,
+        "target": 1862.7435040734645,
+        "price": 1699.03,
+        "trend": "experimental",
+        "config": {
+          "strategy": "aggressive",
+          "lookback": 48,
+          "pivotWindow": 3,
+          "proximity": 0.006,
+          "stopBuffer": 0.004,
+          "rewardRisk": 1.5,
+          "riskPct": 0.02,
+          "feeRate": 0.006,
+          "slippage": 0.0005,
+          "maxAllocation": 0.25,
+          "trendLookback": 180,
+          "maxHoldHours": 24,
+          "maxDailyLoss": 0.12,
+          "maxOpenPositions": 4,
+          "maxTotalRisk": 0.08,
+          "stopAtrMultiplier": 2.5,
+          "patternRequired": true
+        }
+      },
+      {
+        "time": 1795269340.523,
+        "product": "BTC-USD",
+        "signal": "WAIT",
+        "observedSignal": "BUY",
+        "action": "WAIT",
+        "reason": "Maximum shared paper positions reached.",
+        "setup": "aggressive-exploration",
+        "strategy": "aggressive",
+        "pattern": {
+          "version": 1,
+          "timeframe": "1h",
+          "asOf": 1795266000,
+          "mode": "observe",
+          "confirmed": true,
+          "matches": [
+            "ma20-reclaim"
+          ],
+          "context": [],
+          "status": "evaluated",
+          "volumeRatio": 0.6053848699724604,
+          "reason": "Completed hourly candle matches an explicit entry rule.",
+          "levels": {
+            "closingHigh20": 59467.19,
+            "ma20": 58100.256499999996
+          },
+          "rsi": 47.32773023061249,
+          "previousRsi": 41.44730225982574
+        },
+        "support": 55106,
+        "resistance": 62113.81,
+        "stop": 58159.76214285715,
+        "target": 65932.93490837721,
+        "price": 60477.68,
+        "trend": "experimental",
+        "config": {
+          "strategy": "aggressive",
+          "lookback": 48,
+          "pivotWindow": 3,
+          "proximity": 0.006,
+          "stopBuffer": 0.004,
+          "rewardRisk": 1.5,
+          "riskPct": 0.02,
+          "feeRate": 0.006,
+          "slippage": 0.0005,
+          "maxAllocation": 0.25,
+          "trendLookback": 180,
+          "maxHoldHours": 24,
+          "maxDailyLoss": 0.12,
+          "maxOpenPositions": 4,
+          "maxTotalRisk": 0.08,
+          "stopAtrMultiplier": 2.5,
+          "patternRequired": true
+        }
+      },
+      {
+        "time": 1795269340.523,
+        "product": "ADA-USD",
+        "signal": "WAIT",
+        "observedSignal": "WAIT",
+        "action": "HOLD",
+        "reason": "Open virtual position monitored at fresh quote.",
+        "setup": "aggressive-exploration",
+        "strategy": "aggressive",
+        "pattern": {
+          "version": 1,
+          "timeframe": "1h",
+          "asOf": 1795266000,
+          "mode": "observe",
+          "confirmed": false,
+          "matches": [],
+          "context": [],
+          "status": "evaluated",
+          "volumeRatio": 0.6500178761513027,
+          "reason": "No completed-candle entry confirmation; context alone is insufficient.",
+          "levels": {
+            "closingHigh20": 0.14336,
+            "ma20": 0.13986300000000002
+          },
+          "rsi": 44.95857913117529,
+          "previousRsi": 43.06372587992641
+        },
+        "support": 0.13319,
+        "resistance": 0.14719,
+        "stop": 0.13734017857142855,
+        "target": 0.15046902120891928,
+        "price": 0.14075,
+        "trend": "experimental",
+        "config": {
+          "strategy": "aggressive",
+          "lookback": 48,
+          "pivotWindow": 3,
+          "proximity": 0.006,
+          "stopBuffer": 0.004,
+          "rewardRisk": 1.5,
+          "riskPct": 0.02,
+          "feeRate": 0.006,
+          "slippage": 0.0005,
+          "maxAllocation": 0.25,
+          "trendLookback": 180,
+          "maxHoldHours": 4,
+          "maxDailyLoss": 0.12,
+          "maxOpenPositions": 4,
+          "maxTotalRisk": 0.08,
+          "stopAtrMultiplier": 1.25,
+          "patternRequired": true
+        }
+      },
+      {
+        "time": 1795269340.523,
+        "product": "DOGE-USD",
+        "signal": "WAIT",
+        "observedSignal": "WAIT",
+        "action": "HOLD",
+        "reason": "Open virtual position monitored at fresh quote.",
+        "setup": "aggressive-exploration",
+        "strategy": "aggressive",
+        "pattern": {
+          "version": 1,
+          "timeframe": "1h",
+          "asOf": 1795266000,
+          "mode": "observe",
+          "confirmed": false,
+          "matches": [],
+          "context": [],
+          "status": "evaluated",
+          "volumeRatio": 0.47728809270569317,
+          "reason": "No completed-candle entry confirmation; context alone is insufficient.",
+          "levels": {
+            "closingHigh20": 0.05448,
+            "ma20": 0.053356499999999994
+          },
+          "rsi": 46.44282614205195,
+          "previousRsi": 44.180269062622735
+        },
+        "support": 0.05073,
+        "resistance": 0.05688,
+        "stop": 0.05147928571428572,
+        "target": 0.05952222110300621,
+        "price": 0.05399,
+        "trend": "experimental",
+        "config": {
+          "strategy": "aggressive",
+          "lookback": 48,
+          "pivotWindow": 3,
+          "proximity": 0.006,
+          "stopBuffer": 0.004,
+          "rewardRisk": 1.5,
+          "riskPct": 0.02,
+          "feeRate": 0.006,
+          "slippage": 0.0005,
+          "maxAllocation": 0.25,
+          "trendLookback": 180,
+          "maxHoldHours": 24,
+          "maxDailyLoss": 0.12,
+          "maxOpenPositions": 4,
+          "maxTotalRisk": 0.08,
+          "stopAtrMultiplier": 2.5,
+          "patternRequired": true
+        }
+      },
+      {
+        "time": 1795269340.523,
+        "product": "LINK-USD",
+        "signal": "WAIT",
+        "observedSignal": "WAIT",
+        "action": "WAIT",
+        "reason": "Research pattern filter: no completed-candle confirmation.",
+        "setup": "aggressive-exploration",
+        "strategy": "aggressive",
+        "pattern": {
+          "version": 1,
+          "timeframe": "1h",
+          "asOf": 1795266000,
+          "mode": "observe",
+          "confirmed": false,
+          "matches": [],
+          "context": [],
+          "status": "evaluated",
+          "volumeRatio": 0.5202415191041887,
+          "reason": "No completed-candle entry confirmation; context alone is insufficient.",
+          "levels": {
+            "closingHigh20": 8.569,
+            "ma20": 8.381700000000002
+          },
+          "rsi": 48.11710086397703,
+          "previousRsi": 46.21070094498928
+        },
+        "support": 7.962,
+        "resistance": 8.834,
+        "stop": 8.082642857142858,
+        "target": 9.361036134515949,
+        "price": 8.483,
+        "trend": "experimental",
+        "config": {
+          "strategy": "aggressive",
+          "lookback": 48,
+          "pivotWindow": 3,
+          "proximity": 0.006,
+          "stopBuffer": 0.004,
+          "rewardRisk": 1.5,
+          "riskPct": 0.02,
+          "feeRate": 0.006,
+          "slippage": 0.0005,
+          "maxAllocation": 0.25,
+          "trendLookback": 180,
+          "maxHoldHours": 24,
+          "maxDailyLoss": 0.12,
+          "maxOpenPositions": 4,
+          "maxTotalRisk": 0.08,
+          "stopAtrMultiplier": 2.5,
+          "patternRequired": true
+        }
+      },
+      {
+        "time": 1795269340.523,
+        "product": "AVAX-USD",
+        "signal": "WAIT",
+        "observedSignal": "WAIT",
+        "action": "WAIT",
+        "reason": "Research pattern filter: no completed-candle confirmation.",
+        "setup": "aggressive-exploration",
+        "strategy": "aggressive",
+        "pattern": {
+          "version": 1,
+          "timeframe": "1h",
+          "asOf": 1795266000,
+          "mode": "observe",
+          "confirmed": false,
+          "matches": [],
+          "context": [],
+          "status": "evaluated",
+          "volumeRatio": 0.4734147578400507,
+          "reason": "No completed-candle entry confirmation; context alone is insufficient.",
+          "levels": {
+            "closingHigh20": 6.579,
+            "ma20": 6.4012
+          },
+          "rsi": 47.9114634273445,
+          "previousRsi": 44.399842894474496
+        },
+        "support": 6.006,
+        "resistance": 6.871,
+        "stop": 6.1530000000000005,
+        "target": 7.202738916238802,
+        "price": 6.488,
+        "trend": "experimental",
+        "config": {
+          "strategy": "aggressive",
+          "lookback": 48,
+          "pivotWindow": 3,
+          "proximity": 0.006,
+          "stopBuffer": 0.004,
+          "rewardRisk": 1.5,
+          "riskPct": 0.02,
+          "feeRate": 0.006,
+          "slippage": 0.0005,
+          "maxAllocation": 0.25,
+          "trendLookback": 180,
+          "maxHoldHours": 24,
+          "maxDailyLoss": 0.12,
+          "maxOpenPositions": 4,
+          "maxTotalRisk": 0.08,
+          "stopAtrMultiplier": 2.5,
+          "patternRequired": true
+        }
       }
     ],
     "dailyRisk": {
@@ -68055,9 +68487,9 @@
       "AVAX-USD": 1795229456.077
     },
     "rebatesUSDC": 0,
-    "lastQuoteBucket": 5984230
+    "lastQuoteBucket": 5984231
   },
-  "lastMarketAt": "2026-11-21T13:50:26.891Z",
+  "lastMarketAt": "2026-11-21T13:55:24.561Z",
   "errors": [],
   "productConfigs": {
     "BTC-USD": {
@@ -68114,7 +68546,7 @@
       "rewardRisk": 1.5
     }
   },
-  "lastRunAt": "2026-11-21T13:50:26.891Z",
+  "lastRunAt": "2026-11-21T13:55:24.561Z",
   "executionMode": "quotes",
   "evidence": {
     "version": 1,
