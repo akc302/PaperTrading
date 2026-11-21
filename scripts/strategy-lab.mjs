@@ -7,7 +7,7 @@ import {eligibleTrades,summarize} from './evidence.mjs';
 import {decryptState,encryptState} from './private-state.mjs';
 export const EXPERIMENT='rolling-v2';
 // Only these keys may be adopted. Sizing, loss limits and costs are never touched.
-export const TUNABLE=Object.freeze(['strategy','patternRequired','maxHoldHours','stopAtrMultiplier','rewardRisk','mlWeights','mlThreshold']);
+export const TUNABLE=Object.freeze(['strategy','patternRequired','regimeFilter','maxHoldHours','stopAtrMultiplier','rewardRisk','mlWeights','mlThreshold']);
 export const FROZEN=Object.freeze(['riskPct','maxTotalRisk','maxAllocation','maxOpenPositions','maxDailyLoss','feeRate','slippage','makerFeeRate','takerFeeRate','rebateRate','rebateVerified']);
 const fresh={mlWeights:undefined,mlThreshold:undefined};
 export const CANDIDATES=Object.freeze([
@@ -21,6 +21,8 @@ export const CANDIDATES=Object.freeze([
  {id:'aggressive-day-hold',changes:{...fresh,strategy:'aggressive',maxHoldHours:24,stopAtrMultiplier:2.5,rewardRisk:1.5}},
  {id:'ema-trend-pullback',changes:{...fresh,strategy:'ema-trend',maxHoldHours:24,stopAtrMultiplier:2.5,rewardRisk:1.5}},
  {id:'donchian-breakout',changes:{...fresh,strategy:'donchian',maxHoldHours:24,stopAtrMultiplier:2.5,rewardRisk:1.5}},
+ {id:'regime-block',changes:{regimeFilter:true}},
+ {id:'aggressive-day-hold+regime-block',changes:{...fresh,strategy:'aggressive',maxHoldHours:24,stopAtrMultiplier:2.5,rewardRisk:1.5,patternRequired:true,regimeFilter:true}},
  {id:'rsi-reversion',changes:{...fresh,strategy:'rsi-reversion',maxHoldHours:24,stopAtrMultiplier:2.5,rewardRisk:1.5}},
 ]);
 

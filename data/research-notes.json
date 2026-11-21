@@ -14,10 +14,13 @@
         "Untagged entries (no pattern match): 35 trades, 0 wins, -1980.81. Pattern-tagged: oversold-bounce 1/5, ma20-reclaim 1/2 (the only 2 winners, both with 2-4h holds and MFE >3.6%).",
         "productConfigs adopted ~13:32 UTC (patternRequired, 24h hold, 2.5x ATR stop) address the hold/stop/pattern findings; only 1 trade (paper-44, win) closed since, so too early to judge. No regime filter or fee reduction adopted yet."
       ],
-      "changes": [],
+      "changes": [
+        "engine.js: new regimeFilter tunable + downtrendRegime() (EMA20<EMA50 and 24h <= -3% blocks BUY)",
+        "strategy-lab CANDIDATES: regime-block, aggressive-day-hold+regime-block (pattern required, 24h hold, 2.5x ATR stop)"
+      ],
       "adopted": false,
       "nextIdea": "Add strategy-lab CANDIDATES: (a) 'aggressive+regime-block' that skips entries when EMA20<EMA50 and 24h change < -3% (or requires a 4h close above EMA50); (b) cap same-run entries to 1-2 coins when they are highly correlated; (c) maker-limit entry modeling (0.4% maker vs 0.6% taker, before the 25% rebate) so entries are rejected unless expected move > 2.5x round-trip cost. Judge on the unseen newest-25% test with fees; FROZEN risk caps unchanged.",
-      "status": "Analysis only. Code changes, PR/merge and learning.yml dispatch were not done this run (outward actions held for owner confirmation)."
+      "status": "Regime filter PR opened; learning.yml research phase to be dispatched after merge."
     }
   ]
 }

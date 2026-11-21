@@ -12,6 +12,7 @@ const cfg = (c={}) => {
   if(x.mlWeights!=null&&(!Array.isArray(x.mlWeights)||x.mlWeights.length!==7||!x.mlWeights.every(Number.isFinite)||!Number.isFinite(x.mlThreshold)||x.mlThreshold<0||x.mlThreshold>1))throw new Error('Invalid ML entry filter.');
   if(!STRATEGIES.includes(x.strategy)||!Number.isInteger(x.trendLookback)||x.trendLookback<60||x.trendLookback>720)throw new Error('Invalid strategy or trendline window.');
   if(!finite(x.maxHoldHours)||x.maxHoldHours<0||x.maxHoldHours>720||!finite(x.maxDailyLoss)||x.maxDailyLoss<0||x.maxDailyLoss>0.5||!Number.isInteger(x.maxOpenPositions)||x.maxOpenPositions<1||x.maxOpenPositions>20||!positive(x.maxTotalRisk)||x.maxTotalRisk>0.2)throw new Error('Invalid portfolio risk limits.');
+  if(x.regimeFilter!=null&&typeof x.regimeFilter!=='boolean')throw new Error('Invalid regime filter.');
   if(!positive(x.stopAtrMultiplier)||x.stopAtrMultiplier<.5||x.stopAtrMultiplier>4)throw new Error('Invalid stop ATR multiplier.');
   return x;
 };
@@ -49,8 +50,16 @@ export function analyze(input,config={}){
   const result=indicator?indicator(input,c):c.strategy==='aggressive'?analyzeAggressive(input,c):c.strategy==='trendline'?analyzeTrendline(input,c):{...analyzeHorizontal(input,c),strategy:'horizontal',setup:'support-bounce',trend:'unconfirmed',trendlines:[]};
   const completed=normalizeCandles(input);result.pattern=patternConfirmation(completed,{asOf:(completed.at(-1)?.time??0)+3600});
   if(c.patternRequired===true&&result.signal==='BUY'&&!result.pattern.confirmed){result.signal='WAIT';result.reason='Research pattern filter: no completed-candle confirmation.';}
+  if(c.regimeFilter===true&&result.signal==='BUY'){const r=downtrendRegime(completed);if(r.blocked){result.signal='WAIT';result.reason=`Research regime filter: downtrend (EMA20 below EMA50, 24h ${(r.change24h*100).toFixed(1)}%).`;}}
   if(c.mlWeights&&result.signal==='BUY'){const x=featuresAt(completed,completed.length-1),p=x?mlProbability(c.mlWeights,x):null;result.mlProbability=p;if(p==null||p<c.mlThreshold){result.signal='WAIT';result.reason=`ML entry filter: ${p==null?'features unavailable':`probability ${(p*100).toFixed(1)}% below ${(c.mlThreshold*100).toFixed(1)}% threshold`}.`;}}
   return result;
+}
+
+/** Downtrend regime: EMA20 below EMA50 on completed hourly closes and 24h change at or below -3%. Needs 50 bars; otherwise not blocked. */
+export function downtrendRegime(bars,{minDrop=-0.03}={}){
+  if(!Array.isArray(bars)||bars.length<50)return {blocked:false,change24h:null};
+  const closes=bars.map(b=>b.close),e20=emaSeries(closes,20).at(-1),e50=emaSeries(closes,50).at(-1),change24h=closes.at(-1)/closes.at(-25)-1;
+  return {blocked:e20<e50&&change24h<=minDrop,change24h};
 }
 
 /** Aggregate already-completed, hourly bars. Incomplete or noncontiguous UTC groups are omitted. */
