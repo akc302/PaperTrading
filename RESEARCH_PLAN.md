@@ -29,3 +29,6 @@ Run from repository root using the private key injected into the environment (ne
 
 ## Known limits
 No fitting algorithm can repair missing market observations. Small samples, correlated crypto markets, overlapping trades and nonstationarity limit confidence. Backtests use saved fee assumptions, simulated taker entries/stop/time exits, maker resting targets, adverse slippage and conservative intrabar stop priority; exact exchange mechanics are not reproduced. Do not claim all algorithms were tried, a best strategy was found, or profit is guaranteed. The $85,000 paper goal does not override evidence guards.
+
+## Verified deployment checkpoint
+Initial unattended research workflow 44865566980 completed successfully; published private ciphertext matched the audited envelope. All 76 tests passed. No historical candidate cleared every criterion; outcome fitting remains below its sample threshold. Financial metrics remain encrypted. The baseline is the configuration frozen at experiment registration; if live paper settings change later, promotion must also compare against that newer incumbent on independent data.
