@@ -32,7 +32,7 @@ test('planned stop loss including fees respects risk budget',()=>{
 });
 
 test('allocation cap includes buy fee and a second market cannot overdraw virtual cash',()=>{
-  const a=createAccount(1000);const c={...config,maxAllocation:1};
+  const a=createAccount(1000);const c={...config,maxAllocation:1,maxExposure:1};
   openPaperTrade(a,{product:'A-USD',price:100,stop:99.999,target:110,time:1},c);near(a.cash,0);
   assert.throws(()=>openPaperTrade(a,{product:'B-USD',price:100,stop:90,target:110,time:1},c),/Insufficient/);
 });
@@ -210,7 +210,7 @@ test('holdout warmup uses earlier context without executing earlier trades',()=>
 });
 
 test('same-hour intrabar target proceeds cannot fund another markets opening fill',()=>{
-  const a=createAccount(1000),c={...config,maxAllocation:1,maxTotalRisk:0.2,maxHoldHours:0,maxDailyLoss:0};
+  const a=createAccount(1000),c={...config,maxAllocation:1,maxExposure:1,maxTotalRisk:0.2,maxHoldHours:0,maxDailyLoss:0};
   const history=supportPattern(),time=17*3600;
   a.lastProcessed={'A-USD':16*3600,'B-USD':16*3600};a.marks={'A-USD':100,'B-USD':95.5};
   openPaperTrade(a,{product:'A-USD',price:100,stop:99.999,target:105,time:16*3600},c);near(a.cash,0);

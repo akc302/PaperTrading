@@ -119,3 +119,31 @@ Public evidence is in data/evidence.json and data/research.json. The correspondi
 The dashboard shows the current confirmation and later-holdout comparison of the existing strategy against the same strategy requiring a pattern. A fixed 70/30 chronological split, actual modeled costs and at least five closed trades in each comparison arm guard the research verdict. The report states the available history, not years of data. Hourly replay differs from actual scheduled quote fills and is not proof of an edge. Reports refresh in the separate daily review, not every trading check.
 
 The automated engine stays in **observation mode**. It records immutable entry-time pattern context in decisions, positions and closed trades, allowing hourly outcome collection to group confirmed, unconfirmed and unrecorded entries. Existing positions are not retroactively tagged. A promising backtest still needs forward evidence; this feature does not silently enable the filter or change risk caps. An explicit initial offline report can be generated with `node scripts/pattern-research.mjs` when PAPER_STATE_KEY is securely supplied; private results remain inside the encrypted envelope and the script does not execute trades or advance trading heartbeats.
+
+## Trend following, execution and challengers (November 21)
+
+- **History.** `scripts/fetch-history.mjs` keeps about two years of 6h and daily candles per market in `data/history/<product>-6h.json` / `-1d.json`. They come from Coinbase's public candles endpoint, at most 300 bars per request, with a delay between pages; after the first run it only fetches what is new. Coinbase has no 4h granularity, so the trend series is **6h**. The daily review refreshes it. All 16 files together stay well under the 4 MB size check.
+- **Main rules: `trend-follow`.**
+  - Entry: the daily close is above its 50-day EMA, the 20-day EMA is above the 50-day, and a 6h close makes a new 20-bar closing high.
+  - Rank: only the top 2 trend-passing coins by 30-day return may be held.
+  - Exit: a chandelier trailing stop (highest 6h close since entry − 3×ATR). It only moves up. There is no fixed target and no time exit; a ×20 safety target exists only for the ledger.
+- **Execution.**
+  - Entries are paper limit buys at bid/last − 0.05%. One counts as filled (maker fee) only if a later 5-minute quote trades at or below it, and it is cancelled after 3 checks.
+  - Every fill records maker or taker.
+  - Each position risks the same share of equity, sized by its ATR stop distance.
+  - At most 60% of equity is invested in total.
+- **Drawdown pause** (`pause` in `data/paper.json`). At 10% below the equity peak, new position sizes are halved. At 15%, new entries stop until a supervisor or manager sets `pause.cleared: true`, which also restarts the peak. Exits always keep running. The pause state shows on the dashboard and in the team report.
+- **Challengers** (`challengers[]`). Five alternative rule sets trade as separate paper accounts on the same quotes, fees and caps, in the same five-minute run:
+  - trend with k=2 and k=4;
+  - the lab's 2-year trend leader;
+  - the previous hourly rules;
+  - the lab's hourly per-market rules.
+- **Promotion.** The daily review (`scripts/promotion.mjs`) promotes at most one challenger a day, and only if it beats the main on both tests:
+  - **Backtest:** the 2-year 6h portfolio replay, or the stored hourly window for hourly rules.
+  - **Live:** at least 7 days and 20 closed trades, higher net after fees, profit factor ≥ 1.2, and drawdown no worse.
+  - It must also pass a deflated-Sharpe penalty that grows with the number of rule sets tried.
+  - Every promotion and rejection is kept in `promotionHistory`.
+  - The five-hour strategy lab feeds the lab challengers; it no longer changes the main rules directly.
+- **Dashboard scorecard.** For the main account and every challenger: net profit after fees, profit factor, max drawdown, win rate and average win vs average loss. It also shows the drawdown-pause state and the estimated time to $85,000 at the trailing 30-day growth rate (not a promise).
+
+Risk caps (`riskPct`, `maxTotalRisk`, `maxAllocation`, `maxOpenPositions`, `maxDailyLoss`) are unchanged, and code refuses any change to them. This is still long-only spot paper trading only: no futures, leverage, shorting or real orders.

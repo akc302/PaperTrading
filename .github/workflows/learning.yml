@@ -22,7 +22,7 @@ concurrency:
 jobs:
   research:
     runs-on: ubuntu-latest
-    timeout-minutes: 10
+    timeout-minutes: 20
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
@@ -53,8 +53,10 @@ jobs:
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
           if [ "$LEARNING_PHASE" = research ]; then work='node scripts/strategy-lab.mjs'; else work="node scripts/journal-learning.mjs $LEARNING_PHASE"; fi
+          # Daily review: refresh the 2-year 6h/1d public candle history (a failed refresh keeps stored files), then apply rule changes.
+          if [ "$LEARNING_PHASE" = review ]; then work="(node scripts/fetch-history.mjs || echo 'History refresh incomplete; stored files kept.') && $work && node scripts/rules.mjs"; fi
           scripts/commit-retry.sh 'Collect journal evidence and daily research' "$work && node scripts/team-report.mjs" \
-            data/evidence.json data/research.json data/learning.json data/paper.json data/portfolio.enc.json data/team-report.json
+            data/evidence.json data/research.json data/learning.json data/paper.json data/portfolio.enc.json data/team-report.json data/history
       - run: npm run build
       - uses: actions/configure-pages@v5
         with:

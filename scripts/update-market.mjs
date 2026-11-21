@@ -5,6 +5,8 @@ import path from 'node:path';
 import { DEFAULT_CONFIG, normalizeCandles, createAccount, processBarBatch, processQuoteBatch, reviewStrategy } from '../engine.js';
 import {trainShadow,featuresAt} from './learning.mjs';
 import { encryptState, decryptState } from './private-state.mjs';
+import { loadHistory } from './history.mjs';
+import { runChallengers } from './challengers.mjs';
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const DATA = path.join(ROOT, 'data');
@@ -90,6 +92,8 @@ for (const product of PRODUCTS) {
   }
 }
 
+// Stored 6h/daily Coinbase history (refreshed by the daily review) feeds trend-follow and trailing stops.
+const history = await loadHistory(path.join(DATA, 'history'), PRODUCTS);
 const productConfig = (state, product) => ({ ...DEFAULT_CONFIG, ...state.config, ...state.productConfigs?.[product], ...(state.feeProfile??{}) });
 
 /** Preflight the whole enabled universe before any shared-ledger mutation. */
@@ -98,8 +102,8 @@ async function processAccount(state) {
     const enabled=[...new Set(state.products)],problems=[];
     if(enabled.some(p=>!PRODUCTS.includes(p)||!refreshed.has(p)))return {ready:false,problems:[{product:null,message:'Live paper checks paused: all enabled feeds must be current.',time:stamp}],processed:0,markets:[]};
     const events=[];
-    try{for(const product of enabled){const response=await fetch(`https://api.exchange.coinbase.com/products/${product}/ticker`,{signal:AbortSignal.timeout(15000)});if(!response.ok)throw new Error();const quote=await response.json();events.push({product,quote,bars:market.products[product].candles,config:productConfig(state,product)});}
-      const previous=state.account.lastQuoteBucket;const working=structuredClone(state.account);processQuoteBatch(working,events,{time:Date.now()/1000});for(const p of working.positions){if(!p.learningContext){const e=events.find(v=>v.product===p.product);p.learningContext={featureTime:e.bars.at(-1).time,features:featuresAt(e.bars,e.bars.length-1),mode:'shadow',usedForExecution:false};}}state.account=working;
+    try{for(const product of enabled){const response=await fetch(`https://api.exchange.coinbase.com/products/${product}/ticker`,{signal:AbortSignal.timeout(15000)});if(!response.ok)throw new Error();const quote=await response.json();events.push({product,quote,bars:market.products[product].candles,history:history[product],config:productConfig(state,product)});}
+      const previous=state.account.lastQuoteBucket;const working=structuredClone(state.account),pause=structuredClone(state.pause??{});processQuoteBatch(working,events,{time:Date.now()/1000,pause});state.pause=pause;for(const p of working.positions){if(!p.learningContext){const e=events.find(v=>v.product===p.product);p.learningContext={featureTime:e.bars.at(-1).time,features:featuresAt(e.bars,e.bars.length-1),mode:'shadow',usedForExecution:false};}}state.account=working;runChallengers(state,events,Date.now()/1000);
       for(const e of events){market.products[e.product].quote={price:+e.quote.price,time:e.quote.time};state.account.lastProcessed[e.product]=e.bars.at(-1).time;}
       return {ready:true,problems,processed:state.account.lastQuoteBucket!==previous?events.length:0,markets:enabled};
     }catch{return {ready:false,problems:[{product:null,message:'Live paper check rejected: fresh complete quotes required for the whole account.',time:stamp}],processed:0,markets:[]};}

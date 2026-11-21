@@ -39,3 +39,13 @@ Initial unattended research workflow 44865566980 completed successfully; publish
 - Adoption per market into `productConfigs`, which the five-minute trader reads: `adopt-validated` (profitable on the unseen window after costs and the no-rebate/double-slippage stress) or `adopt-improvement` (lost less than current rules with no worse drawdown). Otherwise current rules are kept. Only entry/exit keys change; risk caps are refused by code.
 - Every run's decisions stay in `strategyLabHistory`, failed experiments included. Re-ranking on overlapping windows can overfit; an improvement adoption is not a proven edge.
 - A loss diagnosis records cost share, time exits, target reachability and clustered entries.
+
+## trend-v1: trend following with challengers (supersedes rolling-v2 adoption into the main rules)
+- [x] About two years of 6h/1d Coinbase history stored and refreshed daily. 6h is used because Coinbase has no 4h granularity.
+- [x] Main rules are `trend-follow`: daily EMA20/50 trend test, new 20-bar 6h closing high, top-2 rank by 30-day return, and a chandelier k×ATR trailing stop with no target or time exit. The old hourly rules are archived in `rulesHistory` and continue as challengers.
+- [x] The lab runs a walk-forward on the 2-year history: rank k ∈ {2,3,4} × top 2/3 on the earlier 70%, then check once on the newest 30%, with a no-rebate/double-slippage stress test. Hourly research is recorded as shadow evidence and feeds the `lab-hourly` challenger.
+- [x] Execution: maker limit entries that fill only on a later quote, equal-risk ATR sizing, a 60% exposure cap, and the 10%/15% drawdown pause.
+- [x] Promotion gate: beat the main on the backtest and live (7 days, 20 trades, higher net, PF ≥ 1.2, drawdown no worse), plus a deflated-Sharpe threshold that rises with the number of rule sets tried. Every decision is logged.
+- [ ] Watch the first week of live challenger results. No promotion is possible before 7 days and 20 closed trades.
+- [ ] Hourly challengers can only be backtested on the ~90-day hourly window. A 2-year comparison for them would need hourly history, which is deliberately not stored (file size).
+- Known limits: the 6h replay cannot see the order of moves inside a bar (a stop takes priority over a fill), and live limit fills use the last-trade price, not the order book. Trend following has long flat or losing stretches in sideways markets. The goal estimate extrapolates past growth and is not a forecast.
