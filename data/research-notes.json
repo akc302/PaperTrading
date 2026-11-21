@@ -18,9 +18,9 @@
         "engine.js: new regimeFilter tunable + downtrendRegime() (EMA20<EMA50 and 24h <= -3% blocks BUY)",
         "strategy-lab CANDIDATES: regime-block, aggressive-day-hold+regime-block (pattern required, 24h hold, 2.5x ATR stop)"
       ],
-      "adopted": false,
+      "adopted": true,
       "nextIdea": "Add strategy-lab CANDIDATES: (a) 'aggressive+regime-block' that skips entries when EMA20<EMA50 and 24h change < -3% (or requires a 4h close above EMA50); (b) cap same-run entries to 1-2 coins when they are highly correlated; (c) maker-limit entry modeling (0.4% maker vs 0.6% taker, before the 25% rebate) so entries are rejected unless expected move > 2.5x round-trip cost. Judge on the unseen newest-25% test with fees; FROZEN risk caps unchanged.",
-      "status": "Regime filter PR opened; learning.yml research phase to be dispatched after merge."
+      "status": "Regime filter merged (PR #11). learning.yml research run at 17:58Z adopted: ADA-USD regime-block (regimeFilter:true, 4h hold); SOL/LINK 4h hold; DOGE 1.5x ATR stop. BTC/ETH/XRP/AVAX kept current rules (no candidate beat them on unseen data). Judge at next run whether downtrend losses stop on ADA."
     }
   ]
 }

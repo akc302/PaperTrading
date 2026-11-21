@@ -39,7 +39,7 @@ export function readiness(state,now=Date.now()/1000){
  const passed=checks.filter(c=>c.pass).length;
  return {ready:passed===checks.length,passed,total:checks.length,checks,message:passed===checks.length?'All evidence checks passed. Review the journal before deciding anything about a real account.':`Not ready: ${passed}/${checks.length} evidence checks passed. Keep paper trading.`};
 }
-export function teamReport(state,market,now=Date.now()/1000,{operations={}}={}){
+export function teamReport(state,market,now=Date.now()/1000,{operations={},researchNotes=null}={}){
  const a=state.account,prices=Object.fromEntries(Object.entries(market.products??{}).map(([p,v])=>[p,v.quote?.price??v.candles?.at(-1)?.close])),m=markToMarket(a,prices);
  const trades=(a.trades??[]).filter(t=>!String(t.reason).includes('rebalance')),day=trades.filter(t=>t.closedAt>=now-24*HOUR);
  let streak=0;for(const t of [...trades].reverse()){if(t.pnl>0)break;streak++;}
@@ -54,10 +54,13 @@ export function teamReport(state,market,now=Date.now()/1000,{operations={}}={}){
  if(operations.scheduleEventCount===0)issues.push('GitHub has not delivered any scheduled trader runs; only manual runs are trading.');
  if(lastEntry&&now-lastEntry>24*HOUR)issues.push(`No new paper entry for ${Math.round((now-lastEntry)/HOUR)}h; current rules may be too strict for this market.`);
  const ledger=integrity(a);if(!ledger.ok)issues.push(...ledger.problems.map(p=>'Calculation error: '+p));
+ const note=researchNotes?.entries?.at(-1)??null,noteAge=age(note?.at);
+ if(noteAge>6*HOUR)issues.push(`Researcher (agent 2) has not written data/research-notes.json for ${Number.isFinite(noteAge)?Math.round(noteAge/HOUR)+'h':'ever'}; expected every 5h.`);
+ if(day.length>=10&&day.filter(t=>t.pnl>0).length/day.length<0.4)issues.push(`Last 24h win rate ${(day.filter(t=>t.pnl>0).length/day.length*100).toFixed(0)}% over ${day.length} trades; rules are losing and the researcher must change them.`);
  if(streak>=10)issues.push(`${streak} losing trades in a row; researcher must replace the rules at its next run.`);
  const rules=Object.fromEntries((state.products??[]).map(p=>[p,{strategy:{...state.config,...state.productConfigs?.[p]}.strategy,approach:state.strategyLab?.products?.[p]?.selected??'current',decision:state.strategyLab?.products?.[p]?.decision??'none'}]));
  return {version:1,generatedAt:new Date(now*1000).toISOString(),goal:GOAL,equity:m.equity,startingEquity:a.initial,progressToGoal:(m.equity-a.initial)/(GOAL-a.initial),returnPct:(m.equity-a.initial)/a.initial,drawdown:m.drawdown,openPositions:(a.positions??[]).length,last24h:stat(day),allTime:stat(trades),losingStreak:streak,rulesInUse:rules,
-  agents:{trader:{role:'5-minute paper trader',lastRunMinutesAgo:Math.round(trader/60),healthy:trader<=20*60},researcher:{role:'5-hour backtest and rule adoption',lastRunHoursAgo:Number.isFinite(research)?+(research/HOUR).toFixed(1):null,healthy:research<=6*HOUR},verifier:{role:'hourly health check and one retry',workflow:'health.yml'},manager:{role:'this hourly goal report',workflow:'learning.yml collect'},supervisor:{role:'Claude session every 3 hours: verifies, researches, repairs'}},
+  agents:{trader:{role:'5-minute paper trader',lastRunMinutesAgo:Math.round(trader/60),healthy:trader<=20*60},researcher:{role:'Claude every 5h: loss analysis, backtest, rule adoption',lastRunHoursAgo:Number.isFinite(research)?+(research/HOUR).toFixed(1):null,healthy:research<=6*HOUR&&noteAge<=6*HOUR,latestNote:note&&{at:note.at,tradesReviewed:note.tradesReviewed,losses:note.losses,findings:(note.findings??[]).length,changes:(note.changes??[]).length,adopted:note.adopted,nextIdea:note.nextIdea}},verifier:{role:'hourly health check and one retry',workflow:'health.yml'},manager:{role:'Claude every 6h: reads this report and the researcher notes, restarts and fixes jobs'},supervisor:{role:'Claude every 8h: audits the manager and researcher for the owner'}},
   integrity:ledger,readiness:readiness(state,now),
   verdict:issues.length?'needs-attention':'on-track',issues,dispatch:[...new Set(dispatch)]};
 }
@@ -65,9 +68,10 @@ export function teamReport(state,market,now=Date.now()/1000,{operations={}}={}){
 export async function run(){
  const read=async p=>JSON.parse(await readFile(p,'utf8')),now=Date.now()/1000,market=await read('data/market.json'),paper=await read('data/paper.json');
  let operations={};try{operations=await read('data/operations.json');}catch{}
- const report=teamReport(paper,market,now,{operations});await writeFile('data/team-report.json',JSON.stringify(report,null,2)+'\n');
+ let researchNotes=null;try{researchNotes=await read('data/research-notes.json');}catch{}
+ const report=teamReport(paper,market,now,{operations,researchNotes});await writeFile('data/team-report.json',JSON.stringify(report,null,2)+'\n');
  const key=process.env.PAPER_STATE_KEY?.trim();let privateDispatch=[];
- if(key){try{const state=await decryptState(await read('data/portfolio.enc.json'),key);state.teamReport=teamReport(state,market,now,{operations});privateDispatch=state.teamReport.dispatch;const tmp='data/.team.enc.tmp';try{await writeFile(tmp,JSON.stringify(await encryptState(state,key),null,2)+'\n',{mode:0o600});await rename(tmp,'data/portfolio.enc.json');}finally{await rm(tmp,{force:true});}}catch{console.error('Private team report failed; ciphertext unchanged.');}}
+ if(key){try{const state=await decryptState(await read('data/portfolio.enc.json'),key);state.teamReport=teamReport(state,market,now,{operations,researchNotes});privateDispatch=state.teamReport.dispatch;const tmp='data/.team.enc.tmp';try{await writeFile(tmp,JSON.stringify(await encryptState(state,key),null,2)+'\n',{mode:0o600});await rename(tmp,'data/portfolio.enc.json');}finally{await rm(tmp,{force:true});}}catch{console.error('Private team report failed; ciphertext unchanged.');}}
  const all=[...new Set([...report.dispatch,...privateDispatch])];
  console.log(`Team verdict: ${report.verdict}. ${report.issues.join(' ')}`);
  if(process.env.GITHUB_OUTPUT)await writeFile(process.env.GITHUB_OUTPUT,`dispatch=${all.join(' ')}\n`,{flag:'a'});

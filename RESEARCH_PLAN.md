@@ -14,7 +14,7 @@ Improve net expectancy and drawdown on unseen data. Winning every trade is not a
 - [x] Same-input checkpoint prevents redundant research. Dashboard exposes private results only after unlocking.
 
 ## Repeating work
-The separate Codex research automation runs every five hours. It dispatches `learning.yml` with `phase=research`, verifies the result, inspects new evidence and resumes this checklist. The existing trading, hourly collection, daily review and hourly recovery schedules are preserved. Research is manual-dispatch only in GitHub; it does not add a competing GitHub cron. Codex usage/reset time cannot be inspected or guaranteed. Failed or unavailable runs resume at a later opportunity.
+The Claude researcher (agent 2) runs every five hours. It dispatches `learning.yml` with `phase=research`, verifies the result, inspects new evidence and resumes this checklist. The existing trading, hourly collection, daily review and hourly recovery schedules are preserved. Research is manual-dispatch only in GitHub; it does not add a competing GitHub cron. Failed or unavailable runs resume at a later opportunity.
 
 Run from repository root using the private key injected into the environment (never put its value in a command, file in this repo, log or workflow source): `node scripts/strategy-lab.mjs`. GitHub obtains it from its existing Actions secret.
 
@@ -34,7 +34,7 @@ No fitting algorithm can repair missing market observations. Small samples, corr
 Initial unattended research workflow 44865566980 completed successfully; published private ciphertext matched the audited envelope. All 76 tests passed. No historical candidate cleared every criterion; outcome fitting remains below its sample threshold. Financial metrics remain encrypted. The baseline is the configuration frozen at experiment registration; if live paper settings change later, promotion must also compare against that newer incumbent on independent data.
 
 ## rolling-v2 (supersedes the frozen cost-aware-v1 checkpoint at the owner's request)
-- GitHub runs `learning.yml` research every five hours (`17 */5 * * *`); identical inputs are deduplicated, so an extra Codex dispatch is harmless.
+- GitHub runs `learning.yml` research every five hours (`17 */5 * * *`); identical inputs are deduplicated, so an extra researcher dispatch is harmless.
 - Each run re-ranks 11 approaches plus a logistic-regression entry filter on two earlier windows and checks the leader once on the newest 25%. Added approaches: EMA20/50 trend pullback, Donchian 20h breakout with volume, RSI(14) oversold reclaim, aggressive with a 24h hold.
 - Adoption per market into `productConfigs`, which the five-minute trader reads: `adopt-validated` (profitable on the unseen window after costs and the no-rebate/double-slippage stress) or `adopt-improvement` (lost less than current rules with no worse drawdown). Otherwise current rules are kept. Only entry/exit keys change; risk caps are refused by code.
 - Every run's decisions stay in `strategyLabHistory`, failed experiments included. Re-ranking on overlapping windows can overfit; an improvement adoption is not a proven edge.
