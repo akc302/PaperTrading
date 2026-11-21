@@ -69,6 +69,9 @@ if (!market.products || typeof market.products !== 'object') throw new Error('In
 if (!paper.account || !Array.isArray(paper.products) || !Array.isArray(reviews.reviews)) throw new Error('Invalid saved public paper account.');
 paper.products = [...PRODUCTS];
 paper.config = { ...DEFAULT_CONFIG, ...paper.config, strategy: paper.config?.strategy ?? 'trendline' };
+// The owner's current Coinbase tier applies to every account; open positions keep the fees they were opened with.
+const feeTier = await readJSON('fee-tier.json', null);
+if (feeTier) paper.feeProfile = { ...paper.feeProfile, ...feeTier };
 paper.productConfigs ??= {};
 market.errors = [];
 const refreshed = new Set();
@@ -260,6 +263,7 @@ if (unreadableEnvelope) {
     const state = await decryptState(envelope, stateKey);
     if (!state.account || !Array.isArray(state.products) || !Array.isArray(state.reviews) || !Array.isArray(state.events)) throw new Error();
     state.config = { ...DEFAULT_CONFIG, ...state.config, strategy: state.config?.strategy ?? 'trendline' };
+    if (feeTier) state.feeProfile = { ...state.feeProfile, ...feeTier };
     const beforeTrades = state.account.trades.length;
     if(!TRADE_ONLY&&state.learning?.trainedOnDate!==date)state.learning={...trainShadow(market.products,{feeRate:productConfig(state,state.products[0]).feeRate}),trainedOnDate:date,updatedAt:stamp};
     const update = await processAccount(state);
