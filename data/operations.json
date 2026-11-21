@@ -1,20 +1,26 @@
 {
-  "updatedAt": "2026-11-21T16:10:45.201Z",
+  "updatedAt": "2026-11-21T16:15:45.078Z",
   "triggerEvent": "workflow_dispatch",
   "scheduleEventCount": 6,
   "fiveMinuteCadenceVerified": true,
   "recentRuns": [
     {
+      "createdAt": "2026-11-21T16:15:02Z",
+      "event": "workflow_dispatch",
+      "status": "in_progress",
+      "conclusion": null
+    },
+    {
       "createdAt": "2026-11-21T16:10:25Z",
       "event": "schedule",
-      "status": "pending",
-      "conclusion": null
+      "status": "completed",
+      "conclusion": "cancelled"
     },
     {
       "createdAt": "2026-11-21T16:10:01Z",
       "event": "workflow_dispatch",
-      "status": "in_progress",
-      "conclusion": null
+      "status": "completed",
+      "conclusion": "success"
     },
     {
       "createdAt": "2026-11-21T16:05:01Z",
@@ -30,12 +36,6 @@
     },
     {
       "createdAt": "2026-11-21T15:55:01Z",
-      "event": "workflow_dispatch",
-      "status": "completed",
-      "conclusion": "success"
-    },
-    {
-      "createdAt": "2026-11-21T15:50:02Z",
       "event": "workflow_dispatch",
       "status": "completed",
       "conclusion": "success"
