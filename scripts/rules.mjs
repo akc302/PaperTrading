@@ -5,7 +5,7 @@ import {pathToFileURL} from 'node:url';
 import {TREND_DEFAULTS} from '../engine.js';
 import {decryptState,encryptState} from './private-state.mjs';
 export const RULES_VERSION='trend-v1';
-export const MAIN_TREND=Object.freeze({strategy:'trend-follow',...TREND_DEFAULTS,maxHoldHours:0,patternRequired:false});
+export const MAIN_TREND=Object.freeze({strategy:'trend-follow',...TREND_DEFAULTS,maxHoldHours:0,patternRequired:false,entryOrder:'limit',limitOffset:0.0005,limitChecks:3});
 const CAPS=['riskPct','maxTotalRisk','maxAllocation','maxOpenPositions','maxDailyLoss'];
 export function migrateToTrend(state,now=Date.now()/1000){
  if(state.rulesVersion===RULES_VERSION)return false;

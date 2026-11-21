@@ -54,11 +54,12 @@ export function teamReport(state,market,now=Date.now()/1000,{operations={}}={}){
  if(operations.scheduleEventCount===0)issues.push('GitHub has not delivered any scheduled trader runs; only manual runs are trading.');
  if(lastEntry&&now-lastEntry>24*HOUR)issues.push(`No new paper entry for ${Math.round((now-lastEntry)/HOUR)}h; current rules may be too strict for this market.`);
  const ledger=integrity(a);if(!ledger.ok)issues.push(...ledger.problems.map(p=>'Calculation error: '+p));
+ const pause=state.pause??null;if(pause?.state==='blocked')issues.push(`Drawdown pause: equity ${(pause.drawdown*100).toFixed(1)}% below its peak; new entries blocked until a supervisor or manager sets pause.cleared in paper.json.`);else if(pause?.state==='halved')issues.push(`Drawdown ${(pause.drawdown*100).toFixed(1)}% from peak: new position sizes halved.`);
  if(streak>=10)issues.push(`${streak} losing trades in a row; researcher must replace the rules at its next run.`);
  const rules=Object.fromEntries((state.products??[]).map(p=>[p,{strategy:{...state.config,...state.productConfigs?.[p]}.strategy,approach:state.strategyLab?.products?.[p]?.selected??'current',decision:state.strategyLab?.products?.[p]?.decision??'none'}]));
  return {version:1,generatedAt:new Date(now*1000).toISOString(),goal:GOAL,equity:m.equity,startingEquity:a.initial,progressToGoal:(m.equity-a.initial)/(GOAL-a.initial),returnPct:(m.equity-a.initial)/a.initial,drawdown:m.drawdown,openPositions:(a.positions??[]).length,last24h:stat(day),allTime:stat(trades),losingStreak:streak,rulesInUse:rules,
   agents:{trader:{role:'5-minute paper trader',lastRunMinutesAgo:Math.round(trader/60),healthy:trader<=20*60},researcher:{role:'5-hour backtest and rule adoption',lastRunHoursAgo:Number.isFinite(research)?+(research/HOUR).toFixed(1):null,healthy:research<=6*HOUR},verifier:{role:'hourly health check and one retry',workflow:'health.yml'},manager:{role:'this hourly goal report',workflow:'learning.yml collect'},supervisor:{role:'Claude session every 3 hours: verifies, researches, repairs'}},
-  integrity:ledger,readiness:readiness(state,now),
+  integrity:ledger,readiness:readiness(state,now),drawdownPause:pause&&{state:pause.state,drawdown:pause.drawdown,peak:pause.peak,sizeMultiplier:pause.sizeMultiplier,triggeredAt:pause.triggeredAt??null,clearedAt:pause.clearedAt??null},
   verdict:issues.length?'needs-attention':'on-track',issues,dispatch:[...new Set(dispatch)]};
 }
 

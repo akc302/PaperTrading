@@ -11,7 +11,7 @@ export const EXPERIMENT='rolling-v2';
 export const TUNABLE=Object.freeze(['strategy','patternRequired','maxHoldHours','stopAtrMultiplier','rewardRisk','mlWeights','mlThreshold','trailAtrMultiplier','trendTopN','trendBreakout','trendRankDays']);
 /** Two-year trend-follow candidates: chandelier k in {2,3,4} and top 2 or 3 coins. */
 export const TREND_CANDIDATES=Object.freeze([2,3,4].flatMap(k=>[2,3].map(n=>({id:`trend-k${k}-top${n}`,changes:{strategy:'trend-follow',trailAtrMultiplier:k,trendTopN:n,trendBreakout:20,trendRankDays:30,maxHoldHours:0}}))));
-export const FROZEN=Object.freeze(['riskPct','maxTotalRisk','maxAllocation','maxOpenPositions','maxDailyLoss','feeRate','slippage','makerFeeRate','takerFeeRate','rebateRate','rebateVerified']);
+export const FROZEN=Object.freeze(['riskPct','maxTotalRisk','maxAllocation','maxOpenPositions','maxDailyLoss','maxExposure','feeRate','slippage','makerFeeRate','takerFeeRate','rebateRate','rebateVerified']);
 const fresh={mlWeights:undefined,mlThreshold:undefined};
 export const CANDIDATES=Object.freeze([
  {id:'current',changes:{}},

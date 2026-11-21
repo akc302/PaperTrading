@@ -6,6 +6,12 @@ export const STRATEGIES = Object.freeze(['horizontal','trendline','aggressive','
 export const TREND_DEFAULTS = Object.freeze({trailAtrMultiplier:3,trendTopN:2,trendBreakout:20,trendRankDays:30});
 /** Trend positions have no fixed target; this far-away safety target only satisfies the ledger's bracket invariant. */
 export const TREND_SAFETY_TARGET = 20;
+/** At most this share of equity may be invested across all open positions (correlated crypto exposure cap). */
+export const MAX_EXPOSURE = 0.6;
+/** Equity-peak drawdown pauses: halve new position sizes at 10%, block new entries at 15% until pause.cleared is set. */
+export const DRAWDOWN_RULES = Object.freeze({halveAt:0.10,blockAt:0.15});
+/** Simulated maker entries: limit below bid/last by this offset, cancelled after this many unfilled 5-minute checks. */
+export const LIMIT_DEFAULTS = Object.freeze({limitOffset:0.0005,limitChecks:3});
 const finite = (n) => Number.isFinite(Number(n));
 const positive = (n) => finite(n) && Number(n)>0;
 const cfg = (c={}) => {
@@ -17,6 +23,9 @@ const cfg = (c={}) => {
   if(!STRATEGIES.includes(x.strategy)||!Number.isInteger(x.trendLookback)||x.trendLookback<60||x.trendLookback>720)throw new Error('Invalid strategy or trendline window.');
   if(!finite(x.maxHoldHours)||x.maxHoldHours<0||x.maxHoldHours>720||!finite(x.maxDailyLoss)||x.maxDailyLoss<0||x.maxDailyLoss>0.5||!Number.isInteger(x.maxOpenPositions)||x.maxOpenPositions<1||x.maxOpenPositions>20||!positive(x.maxTotalRisk)||x.maxTotalRisk>0.2)throw new Error('Invalid portfolio risk limits.');
   if(!positive(x.stopAtrMultiplier)||x.stopAtrMultiplier<.5||x.stopAtrMultiplier>4)throw new Error('Invalid stop ATR multiplier.');
+  if(x.maxExposure!=null&&(!positive(x.maxExposure)||x.maxExposure>1))throw new Error('Invalid exposure cap.');
+  if(x.entryOrder!=null&&!['market','limit'].includes(x.entryOrder))throw new Error('Invalid entry order type.');
+  if(x.limitOffset!=null&&(!finite(x.limitOffset)||x.limitOffset<0||x.limitOffset>.02)||x.limitChecks!=null&&(!Number.isInteger(x.limitChecks)||x.limitChecks<1||x.limitChecks>36))throw new Error('Invalid limit entry settings.');
   if(x.trailAtrMultiplier!=null&&(!positive(x.trailAtrMultiplier)||x.trailAtrMultiplier<1||x.trailAtrMultiplier>6))throw new Error('Invalid trailing ATR multiplier.');
   for(const [k,lo,hi] of [['trendTopN',1,8],['trendBreakout',5,100],['trendRankDays',5,120]])if(x[k]!=null&&(!Number.isInteger(x[k])||x[k]<lo||x[k]>hi))throw new Error(`Invalid ${k}.`);
   return x;
@@ -204,23 +213,30 @@ export function markToMarket(account,prices={}){
 }
 
 /** Mutates account, returns it. Fills are modeled with adverse slippage and fees. */
-export function openPaperTrade(account,{product,price,stop,target,time=Date.now()/1000,source='manual',pattern=null,trail=null},config={}){
+/** liquidity 'maker' = a simulated resting limit fill at `price` (no slippage, maker fee). riskScale<1 applies drawdown halving. */
+export function openPaperTrade(account,{product,price,stop,target,time=Date.now()/1000,source='manual',pattern=null,trail=null,liquidity='taker',riskScale=1},config={}){
   const c=cfg(config);
   if(typeof product!=='string'||!product||![price,stop,target].every(positive)||!finite(time))throw new Error('Invalid paper trade.');
   if(account.positions.some(p=>p.product===product))throw new Error('A paper position is already open for this market.');
   if(account.positions.length>=c.maxOpenPositions)throw new Error('Maximum shared paper positions reached.');
   if(dayRisk(account,+time,c).blocked)throw new Error('UTC daily loss circuit is active; new paper entries are paused for this day.');
-  const {entry,risk:lossPerUnit,reward}=executionAt(+price,+stop,+target,c);
+  const maker=liquidity==='maker',ec=maker?{...c,slippage:0,feeRate:c.makerFeeRate??c.feeRate}:c;
+  if(!(riskScale>0&&riskScale<=1))throw new Error('Invalid risk scale.');
+  const {entry,risk:lossPerUnit,reward}=executionAt(+price,+stop,+target,{...ec,slippage:maker?0:c.slippage});
   if(+stop>=entry||+target<=entry)throw new Error('Stop must be below entry; target must be above entry.');
   const equity=markToMarket(account).equity;
   const remainingRisk=Math.max(0,equity*c.maxTotalRisk-reservedRisk(account));
   if(remainingRisk<=1e-8)throw new Error('Maximum shared paper stop risk reached.');
-  const quantity=Math.min(equity*c.riskPct/lossPerUnit,remainingRisk/lossPerUnit,equity*c.maxAllocation/(entry*(1+c.feeRate)),account.cash/(entry*(1+c.feeRate)));
+  const invested=account.positions.reduce((s,p)=>s+p.quantity*(positive(account.marks?.[p.product])?+account.marks[p.product]:p.entry),0),room=equity*(c.maxExposure??MAX_EXPOSURE)-invested;
+  if(account.cash<=0.01)throw new Error('Insufficient virtual cash.');
+  if(room<=equity*0.01)throw new Error(`Maximum ${((c.maxExposure??MAX_EXPOSURE)*100).toFixed(0)}% invested exposure reached.`);
+  // Equal risk per position: size = risk budget / stop distance (an ATR stop for the ATR-based strategies).
+  const quantity=Math.min(equity*c.riskPct*riskScale/lossPerUnit,remainingRisk/lossPerUnit,equity*c.maxAllocation/(entry*(1+c.feeRate)),room/(entry*(1+c.feeRate)),account.cash/(entry*(1+c.feeRate)));
   if(!positive(quantity)||quantity*entry<0.01)throw new Error('Insufficient virtual cash.');
-  const entryFeeDetail=feeForFill(entry*quantity,'taker',c,+time),entryFee=entryFeeDetail.gross;
+  const entryFeeDetail=feeForFill(entry*quantity,maker?'maker':'taker',c,+time),entryFee=entryFeeDetail.gross;
   account.cash-=entry*quantity+entryFee-entryFeeDetail.rebateCredited;
   account.rebatesUSDC=(account.rebatesUSDC??0)+entryFeeDetail.rebateCredited;
-  account.positions.push({id:`paper-${account.nextId++}`,product,entry,quantity,stop:+stop,target:+target,openedAt:+time,entryFee,entryFeeDetail,entryOrderType:'market',feeProfile:{makerFeeRate:c.makerFeeRate,takerFeeRate:c.takerFeeRate,feeTier:c.feeTier,feeObservedAt:c.feeObservedAt,rebateRate:c.rebateRate,rebateVerified:c.rebateVerified},source,pattern,...(trail?{trail:{...trail}}:{}),riskBudget:Math.min(equity*c.riskPct,remainingRisk),estimatedRewardRisk:reward/lossPerUnit,feeRate:c.feeRate,slippage:c.slippage,maxHoldHours:c.maxHoldHours});
+  account.positions.push({id:`paper-${account.nextId++}`,product,entry,quantity,stop:+stop,target:+target,openedAt:+time,entryFee,entryFeeDetail,entryOrderType:maker?'limit (simulated maker)':'market',entryLiquidity:maker?'maker':'taker',sizing:{method:'equal-risk-stop-distance',riskScale,stopDistance:entry-+stop},feeProfile:{makerFeeRate:c.makerFeeRate,takerFeeRate:c.takerFeeRate,feeTier:c.feeTier,feeObservedAt:c.feeObservedAt,rebateRate:c.rebateRate,rebateVerified:c.rebateVerified},source,pattern,...(trail?{trail:{...trail}}:{}),riskBudget:Math.min(equity*c.riskPct*riskScale,remainingRisk),estimatedRewardRisk:reward/lossPerUnit,feeRate:c.feeRate,slippage:c.slippage,maxHoldHours:c.maxHoldHours});
   account.marks[product]=+price;
   return account;
 }
@@ -235,7 +251,7 @@ export function closePaperTrade(account,id,price,time=Date.now()/1000,reason='ma
   const exitFeeDetail=feeForFill(exit*p.quantity,restingTarget?'maker':'taker',{feeRate:p.feeRate,...p.feeProfile,...config},+time),exitFee=exitFeeDetail.gross;
   account.cash+=exit*p.quantity-exitFee+exitFeeDetail.rebateCredited;
   account.rebatesUSDC=(account.rebatesUSDC??0)+exitFeeDetail.rebateCredited;
-  account.trades.push({...p,exit,closedAt:+time,exitFee,exitFeeDetail,exitOrderType:restingTarget?'resting-limit (simulated)':'market (simulated)',rebatePending:(p.entryFeeDetail?.rebatePending??0)+exitFeeDetail.rebatePending,rebateCredited:(p.entryFeeDetail?.rebateCredited??0)+exitFeeDetail.rebateCredited,fees:p.entryFee+exitFee,pnl:(exit-p.entry)*p.quantity-p.entryFee-exitFee+(p.entryFeeDetail?.rebateCredited??0)+exitFeeDetail.rebateCredited,reason});
+  account.trades.push({...p,exit,closedAt:+time,exitFee,exitFeeDetail,exitOrderType:restingTarget?'resting-limit (simulated)':'market (simulated)',exitLiquidity:restingTarget?'maker':'taker',rebatePending:(p.entryFeeDetail?.rebatePending??0)+exitFeeDetail.rebatePending,rebateCredited:(p.entryFeeDetail?.rebateCredited??0)+exitFeeDetail.rebateCredited,fees:p.entryFee+exitFee,pnl:(exit-p.entry)*p.quantity-p.entryFee-exitFee+(p.entryFeeDetail?.rebateCredited??0)+exitFeeDetail.rebateCredited,reason});
   account.positions.splice(index,1);account.marks[p.product]=+price;
   return account;
 }
@@ -410,7 +426,7 @@ function analyzeAggressive(input,c){
 
 /** Current-quote execution never backdates fills into already-observed hourly candles.
  * Events may carry `history:{sixHour,daily}` (stored Coinbase candles) used by trend-follow and trailing stops. */
-export function processQuoteBatch(account,events,{time=Date.now()/1000}={}){
+export function processQuoteBatch(account,events,{time=Date.now()/1000,pause=null}={}){
  if(!Array.isArray(events)||!events.length||new Set(events.map(e=>e.product)).size!==events.length)throw new Error('Invalid quote batch');
  const prepared=events.map(e=>({...e,config:cfg(e.config),bars:normalizeCandles(e.bars)}));
  for(const e of prepared){const stamp=Date.parse(e.quote.time)/1000;if(!positive(e.quote.price)||!Number.isFinite(stamp)||time-stamp>120||stamp-time>30||e.bars.length<24||e.bars.some(b=>b.time+3600>time)||e.bars.slice(-24).some((b,i,a)=>i>0&&b.time!==a[i-1].time+3600)||time-(e.bars.at(-1).time+3600)>3600)throw new Error('Fresh quotes and completed history required for all markets.');}
@@ -426,6 +442,18 @@ export function processQuoteBatch(account,events,{time=Date.now()/1000}={}){
   const reason=price<=p.stop?(p.trail?'trail-stop':'quote-stop'):price>=p.target?'target':(p.maxHoldHours??e.config.maxHoldHours)>0&&time>=p.openedAt+(p.maxHoldHours??e.config.maxHoldHours)*3600?'time-exit':null;
   if(reason){closePaperTrade(account,p.id,reason==='target'?p.target:price,time,reason,e.config);exited.add(e.product);account.lastExits[e.product]=time;}
  }
+ const gate=updateDrawdownPause(pause??account.pause??{},markToMarket(account).equity,time);if(pause)Object.assign(pause,gate);else account.pause=gate;
+ // Resting paper limit orders from earlier checks: filled only when a later quote trades at or below the limit.
+ account.pendingOrders??=[];account.orderLog??=[];const filled=new Set();
+ for(const o of [...account.pendingOrders]){const e=prepared.find(v=>v.product===o.product),price=+e?.quote.price;let outcome=null,detail='';
+  if(!e||time<=o.createdAt)continue;
+  if(account.positions.some(p=>p.product===o.product)||exited.has(o.product))outcome='cancelled',detail='position changed';
+  else if(gate.state==='blocked')outcome='cancelled',detail='drawdown pause blocks new entries';
+  else if(price<=o.limit){const stop=o.limit-o.stopDistance;try{openPaperTrade(account,{product:o.product,price:o.limit,stop,target:o.limit*o.targetMultiple,time,source:o.setup,pattern:o.pattern,trail:o.trail?{...o.trail,highestClose:o.trail.highestClose,initialStop:stop}:null,liquidity:'maker',riskScale:gate.sizeMultiplier},e.config);outcome='filled';filled.add(o.product);account.lastEntries[o.product]=time;}catch(error){outcome='cancelled';detail=error.message;}}
+  else if(++o.checks>=o.maxChecks)outcome='cancelled',detail=`not filled after ${o.maxChecks} checks`;
+  if(outcome){account.pendingOrders.splice(account.pendingOrders.indexOf(o),1);account.orderLog.unshift({...o,outcome,detail,resolvedAt:time,quote:price});journal(account,o.product,time,{signal:'BUY',price,setup:o.setup,stop:o.limit-o.stopDistance},e.config,outcome==='filled'?`Paper limit buy filled at ${o.limit.toPrecision(6)} (maker).`:`Paper limit order cancelled: ${detail}.`,outcome==='filled'?'BUY':'CANCEL');}
+ }
+ account.orderLog.splice(300);
  const priority=['XRP-USD','SOL-USD','ETH-USD','BTC-USD','ADA-USD','DOGE-USD','LINK-USD','AVAX-USD'];
  const ordered=prepared.sort((a,b)=>(priority.indexOf(a.product)<0?99:priority.indexOf(a.product))-(priority.indexOf(b.product)<0?99:priority.indexOf(b.product))||a.product.localeCompare(b.product));
  for(const e of ordered)e.signal=e.config.strategy==='trend-follow'?{...trendSignal(e.ctx,e.config),pattern:patternConfirmation(e.bars,{asOf:time})}:analyze(e.bars,e.config);
@@ -433,22 +461,39 @@ export function processQuoteBatch(account,events,{time=Date.now()/1000}={}){
  for(const e of ordered){const signal=e.signal,price=+e.quote.price;
   if(e.config.strategy==='aggressive'&&signal.signal==='BUY'){signal.price=price;signal.stop=price-Math.max(price*.015,signal.atr*e.config.stopAtrMultiplier);const fill=executionAt(price,signal.stop,price,e.config);signal.target=(fill.entry*(1+e.config.feeRate)+fill.risk*e.config.rewardRisk)/((1-e.config.slippage)*(1-e.config.feeRate));}
   if(e.config.strategy==='trend-follow'){
-   const held=account.positions.filter(p=>p.trail).length,limit=e.config.trendTopN??TREND_DEFAULTS.trendTopN;
+   const held=account.positions.filter(p=>p.trail).length+account.pendingOrders.filter(o=>o.trail&&o.product!==e.product).length,limit=e.config.trendTopN??TREND_DEFAULTS.trendTopN;
    if(signal.signal==='BUY'&&!leaders.has(e.product)){signal.signal='WAIT';signal.reason=`Trend breakout, but not in the top ${limit} trend-passing coins by ${e.config.trendRankDays??30}-day return.`;}
    else if(signal.signal==='BUY'&&held>=limit&&!account.positions.some(p=>p.product===e.product)){signal.signal='WAIT';signal.reason=`Already holding ${held} trend positions (top-${limit} limit).`;}
    else if(signal.signal==='BUY'&&(account.lastExits[e.product]??-1)>=signal.barEnd){signal.signal='WAIT';signal.reason='Trailing stop already exited after this 6h breakout; waiting for a new breakout.';}
    if(signal.signal==='BUY'){signal.price=price;signal.stop=price-(e.config.trailAtrMultiplier??TREND_DEFAULTS.trailAtrMultiplier)*signal.atr;signal.target=price*TREND_SAFETY_TARGET;}
   }
   let action='WAIT',reason=signal.reason;
+  if(filled.has(e.product))continue;
   if(account.positions.some(p=>p.product===e.product)){action='HOLD';reason='Open virtual position monitored at fresh quote.';}
+  else if(account.pendingOrders.some(o=>o.product===e.product)){action='ORDER';reason='Paper limit buy resting below the market; waiting for a later quote at or below it.';}
   else if(exited.has(e.product)){action='EXIT';reason='Virtual exit executed at this check; no immediate same-check re-entry.';}
   else if(time-(account.lastEntries[e.product]??0)<1800)reason='30-minute exploration re-entry cooldown.';
-  else if(signal.signal==='BUY')try{openPaperTrade(account,{product:e.product,price,stop:signal.stop,target:signal.target,time,source:signal.setup,pattern:signal.pattern,trail:trailFor(signal,e.config)},e.config);action='BUY';account.lastEntries[e.product]=time;}catch(error){reason=error.message;}
+  else if(signal.signal==='BUY'&&gate.state==='blocked')reason=`Drawdown pause: equity ${(gate.drawdown*100).toFixed(1)}% below its peak; new entries blocked until pause.cleared is set by the supervisor or manager.`;
+  else if(signal.signal==='BUY'&&e.config.entryOrder==='limit'){const ref=Math.min(price,positive(e.quote.bid)?+e.quote.bid:price),limit=ref*(1-(e.config.limitOffset??LIMIT_DEFAULTS.limitOffset));
+   account.pendingOrders.push({id:`order-${account.nextId++}`,product:e.product,limit,stopDistance:price-signal.stop,targetMultiple:signal.target/price,createdAt:time,checks:0,maxChecks:e.config.limitChecks??LIMIT_DEFAULTS.limitChecks,setup:signal.setup,pattern:signal.pattern??null,trail:trailFor(signal,e.config),liquidity:'maker',riskScale:gate.sizeMultiplier});
+   action='ORDER';reason=`${signal.reason} Paper limit buy placed at ${limit.toPrecision(6)} (bid/last minus ${((e.config.limitOffset??LIMIT_DEFAULTS.limitOffset)*100).toFixed(2)}%); counts only if a later quote trades at or below it.`;}
+  else if(signal.signal==='BUY')try{openPaperTrade(account,{product:e.product,price,stop:signal.stop,target:signal.target,time,source:signal.setup,pattern:signal.pattern,trail:trailFor(signal,e.config),riskScale:gate.sizeMultiplier},e.config);action='BUY';account.lastEntries[e.product]=time;}catch(error){reason=error.message;}
   journal(account,e.product,time,signal,e.config,reason,action);
  }
  account.lastQuoteBucket=bucket;account.equityHistory.push({time,equity:markToMarket(account).equity});if(account.equityHistory.length>5000)account.equityHistory.shift();return account;
 }
 
+/** Equity-peak drawdown gate. `cleared:true` (set by the supervisor or manager in paper.json) lifts a block and restarts the peak. */
+export function updateDrawdownPause(pause={},equity,time=Date.now()/1000){
+ const p={state:'normal',...pause};p.history=[...(p.history??[])].slice(0,50);
+ if(p.cleared===true){if(p.state==='blocked')p.history.unshift({event:'cleared',at:time,equity,drawdown:p.drawdown});p.state='normal';p.peak=equity;p.cleared=false;p.clearedAt=time;}
+ p.peak=Math.max(Number.isFinite(p.peak)?p.peak:equity,equity);p.drawdown=p.peak>0?Math.max(0,1-equity/p.peak):0;
+ const next=p.state==='blocked'||p.drawdown>=DRAWDOWN_RULES.blockAt?'blocked':p.drawdown>=DRAWDOWN_RULES.halveAt?'halved':'normal';
+ if(next!==p.state){p.history.unshift({event:next,at:time,equity,drawdown:p.drawdown});if(next==='blocked')p.triggeredAt=time;}
+ p.state=next;p.sizeMultiplier=next==='blocked'?0:next==='halved'?.5:1;p.equity=equity;p.updatedAt=time;p.cleared=false;
+ p.rules={halveNewSizesAt:DRAWDOWN_RULES.halveAt,blockNewEntriesAt:DRAWDOWN_RULES.blockAt,resume:'set pause.cleared = true in data/paper.json'};
+ return p;
+}
 const SIX_HOURS=21600,ONE_DAY=86400;
 /** Completed 6h and daily candles at `asOf`: stored Coinbase history merged with aggregates of completed hourly bars.
  * Coinbase has no 4h granularity, so the trend series is 6h (aligned 00/06/12/18 UTC). */
@@ -520,8 +565,10 @@ export function backtestTrendPortfolio(histories,config={},{startTime=-Infinity,
   const signals=live.map(p=>({product:p,signal:trendSignalAt(P[p],ptr[p].s,ptr[p].d,c)})),leaders=rankTrend(signals,c.trendTopN??TREND_DEFAULTS.trendTopN);
   for(const {product:p,signal} of signals){
    if(signal.signal!=='BUY'||!leaders.has(p)||account.positions.some(v=>v.product===p)||(lastExit[p]??-1)>=signal.barEnd||account.positions.length>=(c.trendTopN??TREND_DEFAULTS.trendTopN))continue;
-   const bar=P[p].six[ptr[p].bar.get(t)],stop=bar.open-(c.trailAtrMultiplier??3)*signal.atr;if(!(stop>0))continue;
-   try{openPaperTrade(account,{product:p,price:bar.open,stop,target:bar.open*TREND_SAFETY_TARGET,time:t,source:'trend-breakout',trail:{type:'chandelier',atrMultiplier:c.trailAtrMultiplier??3,highestClose:signal.price,atr:signal.atr,initialStop:stop}},c);}catch{}
+   const bar=P[p].six[ptr[p].bar.get(t)],limit=c.entryOrder==='limit'?bar.open*(1-(c.limitOffset??LIMIT_DEFAULTS.limitOffset)):null,price=limit??bar.open,stop=price-(c.trailAtrMultiplier??3)*signal.atr;if(!(stop>0))continue;
+   // A limit entry fills inside this 6h bar only if its low reaches the limit; otherwise it is cancelled.
+   if(limit&&bar.low>limit)continue;
+   try{openPaperTrade(account,{product:p,price,stop,target:price*TREND_SAFETY_TARGET,time:t,source:'trend-breakout',liquidity:limit?'maker':'taker',trail:{type:'chandelier',atrMultiplier:c.trailAtrMultiplier??3,highestClose:signal.price,atr:signal.atr,initialStop:stop}},c);}catch{}
   }
   for(const p of live){const pos=account.positions.find(v=>v.product===p);const bar=P[p].six[ptr[p].bar.get(t)];if(pos&&pos.openedAt<=t&&bar.low<=pos.stop){closePaperTrade(account,pos.id,Math.min(bar.open,pos.stop),t,'trail-stop',c);lastExit[p]=t;}account.marks[p]=bar.close;}
   const equity=markToMarket(account).equity;peak=Math.max(peak,equity);maxDd=Math.max(maxDd,(peak-equity)/peak);account.equityHistory.push({time:t,equity});
