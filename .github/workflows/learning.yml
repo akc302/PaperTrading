@@ -7,9 +7,9 @@ on:
     inputs:
       phase:
         type: choice
-        options: [collect, review]
+        options: [collect, review, research]
         default: collect
-        description: Collect outcomes or run one daily review
+        description: Collect outcomes, daily review, or shadow strategy research
 permissions:
   contents: write
   pages: write
@@ -41,12 +41,18 @@ jobs:
         run: |
           phase=collect
           if [ "$REQUESTED_PHASE" = review ] || [ "$SCHEDULE" = '37 0 * * *' ]; then phase=review; fi
+          if [ "$REQUESTED_PHASE" = research ]; then phase=research; fi
           echo "value=$phase" >> "$GITHUB_OUTPUT"
       - name: Collect evidence without executing trades
         env:
           PAPER_STATE_KEY: ${{ secrets.PAPER_STATE_KEY }}
           LEARNING_PHASE: ${{ steps.phase.outputs.value }}
-        run: node scripts/journal-learning.mjs "$LEARNING_PHASE"
+        run: |
+          if [ "$LEARNING_PHASE" = research ]; then
+            node scripts/strategy-lab.mjs
+          else
+            node scripts/journal-learning.mjs "$LEARNING_PHASE"
+          fi
       - name: Save research and encrypted journal
         run: |
           set -euo pipefail

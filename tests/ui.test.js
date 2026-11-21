@@ -125,12 +125,13 @@ test('private portfolio unlock rejects wrong keys, keeps plaintext out of storag
     config:{...DEFAULT_CONFIG},account:createAccount(total),goal:85000,reviews:[],events:[],
     snapshot:{capturedAt:new Date().toISOString(),totalUsd:total,source:'Synthetic test fixture only',unavailablePortfolios:['Perpetuals'],holdings:[{asset:'SYNTHETIC-ONLY',quantity:123.456789,available:123.456789,usdValue:total}]}
   };
+  privateState.strategyLab={experiment:'SYNTHETIC-LAB',updatedAt:privateState.updatedAt,outcomes:{closedTrades:3,wins:1,losses:2,netPnl:-7,grossFees:5,rebatesCredited:1},costDiagnosis:{costFlippedLosses:1},models:{status:'collecting-data',eligible:3,minimum:100,reason:'Synthetic research only'},products:{},limitations:['Synthetic shadow report']};
   const envelope=await encryptState(privateState,key);
   const h=await harness({privateFixture:envelope});
   try{
     await h.click('[data-account]',{account:'private'});
     assert.match(h.element('#view').innerHTML,/LOCKED/);
-    assert.doesNotMatch(h.element('#view').innerHTML,/43,210\.87|SYNTHETIC-ONLY|123\.456789/);
+    assert.doesNotMatch(h.element('#view').innerHTML,/43,210\.87|SYNTHETIC-ONLY|123\.456789|SYNTHETIC-LAB/);
     assert.ok(!h.calls.some(url=>url.includes('portfolio.enc.json')),'Locked view need not request encrypted portfolio data.');
     await h.unlock(wrongKey);
     assert.match(h.element('#toast').textContent,/Unable to unlock/);
@@ -139,6 +140,8 @@ test('private portfolio unlock rejects wrong keys, keeps plaintext out of storag
     await h.unlock(JSON.stringify({key}));
     assert.match(h.element('#view').innerHTML,/43,210\.87/);
     assert.match(h.element('#view').innerHTML,/SYNTHETIC-ONLY/);
+    assert.match(h.element('#view').innerHTML,/Strategy research lab/);
+    assert.match(h.element('#view').innerHTML,/SYNTHETIC-LAB/);
     const persisted=[...h.store.values()].join('\n');
     assert.ok(!persisted.includes(key));
     assert.ok(!persisted.includes('SYNTHETIC-ONLY'));
@@ -148,7 +151,7 @@ test('private portfolio unlock rejects wrong keys, keeps plaintext out of storag
     assert.match(h.element('#view').innerHTML,/Day-trade patterns/);
     await h.click('[data-action]',{action:'lock-private'});
     assert.match(h.element('#view').innerHTML,/LOCKED/);
-    assert.doesNotMatch(h.element('#view').innerHTML,/43,210\.87|SYNTHETIC-ONLY|123\.456789/);
+    assert.doesNotMatch(h.element('#view').innerHTML,/43,210\.87|SYNTHETIC-ONLY|123\.456789|SYNTHETIC-LAB/);
     await h.route('journal');
     assert.match(h.element('#view').innerHTML,/LOCKED/);
     assert.doesNotMatch(h.element('#view').innerHTML,/43,210\.87|SYNTHETIC-ONLY/);
