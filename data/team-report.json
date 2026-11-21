@@ -1,12 +1,12 @@
 {
   "version": 1,
-  "generatedAt": "2026-11-21T22:11:35.580Z",
+  "generatedAt": "2026-11-21T23:21:40.303Z",
   "goal": 85000,
-  "equity": 29857.67522866586,
+  "equity": 29901.775719070356,
   "startingEquity": 30000,
-  "progressToGoal": -0.002587723115166194,
-  "returnPct": -0.004744159044471356,
-  "drawdown": 0.005153290706385547,
+  "progressToGoal": -0.0017858960169026183,
+  "returnPct": -0.0032741426976548005,
+  "drawdown": 0.005233440454551092,
   "openPositions": 1,
   "last24h": {
     "closedTrades": 1,
@@ -75,7 +75,7 @@
     },
     "researcher": {
       "role": "Claude every 5h: loss analysis, backtest, rule adoption",
-      "lastRunHoursAgo": 1.7,
+      "lastRunHoursAgo": 2.9,
       "healthy": true,
       "latestNote": {
         "at": "2026-11-21T20:32:14.169Z",
@@ -112,7 +112,7 @@
         "id": "history",
         "label": "28+ days of forward paper trading with the research team",
         "pass": false,
-        "value": "0.7 days"
+        "value": "0.8 days"
       },
       {
         "id": "sample",
@@ -167,22 +167,22 @@
   },
   "goalEstimate": {
     "goal": 85000,
-    "equity": 29857.67522866586,
+    "equity": 29901.775719070356,
     "windowDays": 30,
     "label": "Estimated time to $85,000 at the trailing 30-day growth rate (not a promise)",
     "status": "insufficient-history",
-    "spanDays": 0.9247173611102281,
+    "spanDays": 0.973383136573765,
     "message": "Needs at least 7 days of equity history."
   },
   "scorecard": [
     {
       "id": "main",
       "label": "Main: trend-follow",
-      "equity": 29857.67522866586,
+      "equity": 29901.775719070356,
       "initial": 30000,
       "netPnl": -68.84274123655223,
       "profitFactor": 0,
-      "maxDrawdown": 0.005153290706385547,
+      "maxDrawdown": 0.005233440454551092,
       "winRate": 0,
       "avgWin": null,
       "avgLoss": -68.84274123655223,
@@ -192,7 +192,7 @@
       "takerFills": 2,
       "openPositions": 1,
       "pause": "normal",
-      "drawdown": 0.005153290706385594
+      "drawdown": 0.0036838786566816273
     },
     {
       "id": "trend-k2",
@@ -254,45 +254,45 @@
     {
       "id": "hourly-legacy",
       "label": "Previous hourly rules",
-      "equity": 29833.1377025897,
+      "equity": 29831.65573433657,
       "initial": 29975.046647868254,
-      "netPnl": 0,
-      "profitFactor": null,
-      "maxDrawdown": 0.004832970430730889,
-      "winRate": null,
+      "netPnl": -114.75210502432324,
+      "profitFactor": 0,
+      "maxDrawdown": 0.006330172918018716,
+      "winRate": 0,
       "avgWin": null,
-      "avgLoss": null,
-      "closedTrades": 0,
-      "fees": 0,
-      "makerFills": 0,
-      "takerFills": 0,
-      "openPositions": 2,
+      "avgLoss": -114.75210502432324,
+      "closedTrades": 1,
+      "fees": 25.013887224445632,
+      "makerFills": 1,
+      "takerFills": 1,
+      "openPositions": 1,
       "pause": "normal",
-      "drawdown": 0.004734236011227133
+      "drawdown": 0.0047836760761764685
     },
     {
       "id": "lab-hourly",
       "label": "Lab hourly per-market rules",
-      "equity": 29833.1377025897,
+      "equity": 29831.65573433657,
       "initial": 29975.046647868254,
-      "netPnl": 0,
-      "profitFactor": null,
-      "maxDrawdown": 0.004832970430730889,
-      "winRate": null,
+      "netPnl": -114.75210502432324,
+      "profitFactor": 0,
+      "maxDrawdown": 0.006330172918018716,
+      "winRate": 0,
       "avgWin": null,
-      "avgLoss": null,
-      "closedTrades": 0,
-      "fees": 0,
-      "makerFills": 0,
-      "takerFills": 0,
-      "openPositions": 2,
+      "avgLoss": -114.75210502432324,
+      "closedTrades": 1,
+      "fees": 25.013887224445632,
+      "makerFills": 1,
+      "takerFills": 1,
+      "openPositions": 1,
       "pause": "normal",
-      "drawdown": 0.004734236011227133
+      "drawdown": 0.0047836760761764685
     }
   ],
   "drawdownPause": {
     "state": "normal",
-    "drawdown": 0.005153290706385594,
+    "drawdown": 0.0036838786566816273,
     "peak": 30012.337528729568,
     "sizeMultiplier": 1,
     "triggeredAt": null,

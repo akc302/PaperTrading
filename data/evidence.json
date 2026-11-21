@@ -1,7 +1,7 @@
 {
   "version": 1,
   "cadence": "hourly collection; daily review",
-  "lastCollectedAt": "2026-11-21T22:11:34.339Z",
+  "lastCollectedAt": "2026-11-21T23:21:39.267Z",
   "hourly": [
     {
       "periodStart": "2026-11-20T03:00:00.000Z",
@@ -1791,11 +1791,72 @@
       "observedChecks": 12,
       "largestCheckGapSeconds": 307.89800000190735,
       "evidenceComplete": true
+    },
+    {
+      "periodStart": "2026-11-21T22:00:00.000Z",
+      "periodEnd": "2026-11-21T23:00:00.000Z",
+      "closedTrades": 1,
+      "wins": 0,
+      "losses": 1,
+      "flats": 0,
+      "winRate": 0,
+      "netPnl": -68.84274123655223,
+      "grossFees": 44.728765374336454,
+      "rebatesCredited": 11.182191343584114,
+      "pendingRebates": 0,
+      "expectancy": -68.84274123655223,
+      "profitFactor": 0,
+      "maxDrawdown": 0.0025892797059258936,
+      "byMarket": {
+        "ADA-USD": {
+          "trades": 1,
+          "wins": 0,
+          "losses": 1,
+          "netPnl": -68.84274123655223,
+          "grossFees": 44.728765374336454,
+          "rebatesCredited": 11.182191343584114
+        }
+      },
+      "bySetup": {
+        "aggressive-exploration": {
+          "trades": 1,
+          "wins": 0,
+          "losses": 1,
+          "netPnl": -68.84274123655223,
+          "grossFees": 44.728765374336454,
+          "rebatesCredited": 11.182191343584114
+        }
+      },
+      "byExit": {
+        "time-exit": {
+          "trades": 1,
+          "wins": 0,
+          "losses": 1,
+          "netPnl": -68.84274123655223,
+          "grossFees": 44.728765374336454,
+          "rebatesCredited": 11.182191343584114
+        }
+      },
+      "byPattern": {
+        "confirmed": {
+          "trades": 1,
+          "wins": 0,
+          "losses": 1,
+          "netPnl": -68.84274123655223,
+          "grossFees": 44.728765374336454,
+          "rebatesCredited": 11.182191343584114
+        }
+      },
+      "note": "Completed simulated trade outcomes after modeled costs. Virtual snapshot rebalances excluded. Null ratios mean insufficient denominator, not an infinite edge.",
+      "tradeHeartbeat": "2026-11-21T23:20:28.744Z",
+      "observedChecks": 12,
+      "largestCheckGapSeconds": 306.48600006103516,
+      "evidenceComplete": true
     }
   ],
   "allTime": {
     "periodStart": "1970-01-01T00:00:00.000Z",
-    "periodEnd": "2026-11-21T22:11:34.339Z",
+    "periodEnd": "2026-11-21T23:21:39.267Z",
     "closedTrades": 1,
     "wins": 0,
     "losses": 1,
@@ -1807,7 +1868,7 @@
     "pendingRebates": 0,
     "expectancy": -68.84274123655223,
     "profitFactor": 0,
-    "maxDrawdown": 0.005153290706385547,
+    "maxDrawdown": 0.005233440454551092,
     "byMarket": {
       "ADA-USD": {
         "trades": 1,
