@@ -1,0 +1,101 @@
+{
+  "version": 1,
+  "generatedAt": "2026-11-21T04:50:53.616Z",
+  "goal": 85000,
+  "equity": 8007.627847195662,
+  "startingEquity": 10000,
+  "progressToGoal": -0.02656496203739117,
+  "returnPct": -0.19923721528043378,
+  "drawdown": 0.19923721528043378,
+  "openPositions": 4,
+  "last24h": {
+    "closedTrades": 32,
+    "wins": 0,
+    "winRate": 0,
+    "netPnl": -1940.4253982204882,
+    "grossFees": 884.1348768535753,
+    "rebatesCredited": 0
+  },
+  "allTime": {
+    "closedTrades": 32,
+    "wins": 0,
+    "winRate": 0,
+    "netPnl": -1940.4253982204882,
+    "grossFees": 884.1348768535753,
+    "rebatesCredited": 0
+  },
+  "losingStreak": 32,
+  "rulesInUse": {
+    "BTC-USD": {
+      "strategy": "aggressive",
+      "approach": "pattern-confirmation",
+      "decision": "adopt-improvement"
+    },
+    "ETH-USD": {
+      "strategy": "aggressive",
+      "approach": "pattern-confirmation",
+      "decision": "adopt-improvement"
+    },
+    "SOL-USD": {
+      "strategy": "aggressive",
+      "approach": "pattern-confirmation",
+      "decision": "adopt-improvement"
+    },
+    "XRP-USD": {
+      "strategy": "aggressive",
+      "approach": "pattern-confirmation",
+      "decision": "adopt-improvement"
+    },
+    "ADA-USD": {
+      "strategy": "aggressive",
+      "approach": "pattern-confirmation",
+      "decision": "adopt-improvement"
+    },
+    "DOGE-USD": {
+      "strategy": "aggressive",
+      "approach": "pattern-confirmation",
+      "decision": "adopt-improvement"
+    },
+    "LINK-USD": {
+      "strategy": "aggressive",
+      "approach": "pattern-confirmation",
+      "decision": "adopt-improvement"
+    },
+    "AVAX-USD": {
+      "strategy": "aggressive",
+      "approach": "pattern-confirmation",
+      "decision": "adopt-improvement"
+    }
+  },
+  "agents": {
+    "trader": {
+      "role": "5-minute paper trader",
+      "lastRunMinutesAgo": 35,
+      "healthy": false
+    },
+    "researcher": {
+      "role": "5-hour backtest and rule adoption",
+      "lastRunHoursAgo": 0.2,
+      "healthy": true
+    },
+    "verifier": {
+      "role": "hourly health check and one retry",
+      "workflow": "health.yml"
+    },
+    "manager": {
+      "role": "this hourly goal report",
+      "workflow": "learning.yml collect"
+    },
+    "supervisor": {
+      "role": "daily Claude session that reviews, researches and repairs"
+    }
+  },
+  "verdict": "needs-attention",
+  "issues": [
+    "Trader (agent 1) last updated 35 min ago; expected every 5 min.",
+    "32 losing trades in a row; researcher must replace the rules at its next run."
+  ],
+  "dispatch": [
+    "update.yml"
+  ]
+}
