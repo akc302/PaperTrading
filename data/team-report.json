@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "generatedAt": "2026-11-21T11:16:02.097Z",
+  "generatedAt": "2026-11-21T11:16:54.609Z",
   "goal": 85000,
   "equity": 7898.6275689133345,
   "startingEquity": 10000,
@@ -9,11 +9,11 @@
   "drawdown": 0.2108052447147621,
   "openPositions": 1,
   "last24h": {
-    "closedTrades": 32,
+    "closedTrades": 28,
     "wins": 1,
-    "winRate": 0.03125,
-    "netPnl": -1834.479583587443,
-    "grossFees": 839.4095149211357,
+    "winRate": 0.03571428571428571,
+    "netPnl": -1661.97669178277,
+    "grossFees": 723.8320132947176,
     "rebatesCredited": 0
   },
   "allTime": {
@@ -28,42 +28,42 @@
   "rulesInUse": {
     "BTC-USD": {
       "strategy": "aggressive",
-      "approach": "pattern-confirmation",
+      "approach": "aggressive-day-hold",
       "decision": "adopt-improvement"
     },
     "ETH-USD": {
       "strategy": "aggressive",
-      "approach": "pattern-confirmation",
+      "approach": "aggressive-day-hold",
       "decision": "adopt-improvement"
     },
     "SOL-USD": {
       "strategy": "aggressive",
-      "approach": "pattern-confirmation",
+      "approach": "aggressive-day-hold",
       "decision": "adopt-improvement"
     },
     "XRP-USD": {
       "strategy": "aggressive",
-      "approach": "pattern-confirmation",
+      "approach": "aggressive-day-hold",
       "decision": "adopt-improvement"
     },
     "ADA-USD": {
       "strategy": "aggressive",
-      "approach": "pattern-confirmation",
+      "approach": "longer-hold",
       "decision": "adopt-improvement"
     },
     "DOGE-USD": {
       "strategy": "aggressive",
-      "approach": "pattern-confirmation",
+      "approach": "aggressive-day-hold",
       "decision": "adopt-improvement"
     },
     "LINK-USD": {
       "strategy": "aggressive",
-      "approach": "pattern-confirmation",
+      "approach": "aggressive-day-hold",
       "decision": "adopt-improvement"
     },
     "AVAX-USD": {
       "strategy": "aggressive",
-      "approach": "pattern-confirmation",
+      "approach": "aggressive-day-hold",
       "decision": "adopt-improvement"
     }
   },
@@ -75,8 +75,8 @@
     },
     "researcher": {
       "role": "5-hour backtest and rule adoption",
-      "lastRunHoursAgo": 6.6,
-      "healthy": false
+      "lastRunHoursAgo": 0,
+      "healthy": true
     },
     "verifier": {
       "role": "hourly health check and one retry",
@@ -157,11 +157,7 @@
     ],
     "message": "Not ready: 1/9 evidence checks passed. Keep paper trading."
   },
-  "verdict": "needs-attention",
-  "issues": [
-    "Researcher (agent 2) last ran 7h ago; expected every 5h."
-  ],
-  "dispatch": [
-    "learning.yml:research"
-  ]
+  "verdict": "on-track",
+  "issues": [],
+  "dispatch": []
 }
