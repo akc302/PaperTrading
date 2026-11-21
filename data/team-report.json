@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "generatedAt": "2026-11-21T17:16:25.674Z",
+  "generatedAt": "2026-11-21T17:58:10.444Z",
   "goal": 85000,
   "equity": 30000,
   "startingEquity": 30000,
@@ -38,28 +38,28 @@
     },
     "SOL-USD": {
       "strategy": "aggressive",
-      "approach": "aggressive-day-hold",
-      "decision": "keep"
+      "approach": "longer-hold",
+      "decision": "adopt-improvement"
     },
     "XRP-USD": {
       "strategy": "aggressive",
-      "approach": "wider-stop",
+      "approach": "aggressive-day-hold+regime-block",
       "decision": "keep"
     },
     "ADA-USD": {
       "strategy": "aggressive",
-      "approach": "current",
-      "decision": "keep"
+      "approach": "regime-block",
+      "decision": "adopt-improvement"
     },
     "DOGE-USD": {
       "strategy": "aggressive",
-      "approach": "aggressive-day-hold",
-      "decision": "keep"
+      "approach": "wider-stop",
+      "decision": "adopt-improvement"
     },
     "LINK-USD": {
       "strategy": "aggressive",
-      "approach": "aggressive-day-hold",
-      "decision": "keep"
+      "approach": "longer-hold",
+      "decision": "adopt-improvement"
     },
     "AVAX-USD": {
       "strategy": "aggressive",
@@ -70,12 +70,12 @@
   "agents": {
     "trader": {
       "role": "5-minute paper trader",
-      "lastRunMinutesAgo": 1,
+      "lastRunMinutesAgo": 3,
       "healthy": true
     },
     "researcher": {
       "role": "5-hour backtest and rule adoption",
-      "lastRunHoursAgo": 3.7,
+      "lastRunHoursAgo": 0,
       "healthy": true
     },
     "verifier": {
@@ -104,7 +104,7 @@
         "id": "history",
         "label": "28+ days of forward paper trading with the research team",
         "pass": false,
-        "value": "0.5 days"
+        "value": "0.6 days"
       },
       {
         "id": "sample",
