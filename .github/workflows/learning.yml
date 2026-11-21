@@ -3,6 +3,7 @@ on:
   schedule:
     - cron: '23 * * * *'
     - cron: '37 0 * * *'
+    - cron: '17 */5 * * *'
   workflow_dispatch:
     inputs:
       phase:
@@ -41,7 +42,7 @@ jobs:
         run: |
           phase=collect
           if [ "$REQUESTED_PHASE" = review ] || [ "$SCHEDULE" = '37 0 * * *' ]; then phase=review; fi
-          if [ "$REQUESTED_PHASE" = research ]; then phase=research; fi
+          if [ "$REQUESTED_PHASE" = research ] || [ "$SCHEDULE" = '17 */5 * * *' ]; then phase=research; fi
           echo "value=$phase" >> "$GITHUB_OUTPUT"
       - name: Collect evidence without executing trades
         env:
