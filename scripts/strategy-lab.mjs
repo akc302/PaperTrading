@@ -1,20 +1,29 @@
-/** Fixed-budget research. No orders, account mutations, risk changes, or strategy adoption. */
+/** Rolling five-hour research. Re-ranks approaches on fresh data each run and hands the 5-minute paper trader its entry/exit rules. Never places real orders or changes risk caps. */
 import {createHash} from 'node:crypto';
 import {readFile,writeFile,rename,rm} from 'node:fs/promises';
 import {pathToFileURL} from 'node:url';
-import {backtest,normalizeCandles,DEFAULT_CONFIG} from '../engine.js';
+import {backtest,normalizeCandles,DEFAULT_CONFIG,featuresAt,mlProbability} from '../engine.js';
 import {eligibleTrades,summarize} from './evidence.mjs';
 import {decryptState,encryptState} from './private-state.mjs';
-export const EXPERIMENT='cost-aware-v1';
+export const EXPERIMENT='rolling-v2';
+// Only these keys may be adopted. Sizing, loss limits and costs are never touched.
+export const TUNABLE=Object.freeze(['strategy','patternRequired','maxHoldHours','stopAtrMultiplier','rewardRisk','mlWeights','mlThreshold']);
+export const FROZEN=Object.freeze(['riskPct','maxTotalRisk','maxAllocation','maxOpenPositions','maxDailyLoss','feeRate','slippage','makerFeeRate','takerFeeRate','rebateRate','rebateVerified']);
+const fresh={mlWeights:undefined,mlThreshold:undefined};
 export const CANDIDATES=Object.freeze([
  {id:'current',changes:{}},
  {id:'pattern-confirmation',changes:{patternRequired:true}},
- {id:'horizontal-support',changes:{strategy:'horizontal'}},
- {id:'trendline',changes:{strategy:'trendline'}},
+ {id:'horizontal-support',changes:{...fresh,strategy:'horizontal',maxHoldHours:24}},
+ {id:'trendline',changes:{...fresh,strategy:'trendline',maxHoldHours:48}},
  {id:'longer-hold',changes:{maxHoldHours:4}},
  {id:'wider-stop',changes:{stopAtrMultiplier:1.5}},
  {id:'higher-reward',changes:{rewardRisk:2}},
+ {id:'aggressive-day-hold',changes:{...fresh,strategy:'aggressive',maxHoldHours:24,stopAtrMultiplier:2.5,rewardRisk:1.5}},
+ {id:'ema-trend-pullback',changes:{...fresh,strategy:'ema-trend',maxHoldHours:24,stopAtrMultiplier:2.5,rewardRisk:1.5}},
+ {id:'donchian-breakout',changes:{...fresh,strategy:'donchian',maxHoldHours:24,stopAtrMultiplier:2.5,rewardRisk:1.5}},
+ {id:'rsi-reversion',changes:{...fresh,strategy:'rsi-reversion',maxHoldHours:24,stopAtrMultiplier:2.5,rewardRisk:1.5}},
 ]);
+
 const hash=value=>createHash('sha256').update(JSON.stringify(value)).digest('hex');
 const avg=xs=>xs.reduce((s,v)=>s+v,0)/xs.length;
 const sigmoid=x=>1/(1+Math.exp(-Math.max(-30,Math.min(30,x))));
@@ -52,40 +61,78 @@ function metrics(bars,config,startTime){
  return {returnPct:r.returnPct,drawdown:r.drawdown,closedTrades:r.closedTrades,winRate:r.winRate,netPnl:r.realized,grossFees:r.totalFees,rebatesCredited:trades.reduce((s,t)=>s+(t.rebateCredited??0),0),expectancy:trades.length?r.realized/trades.length:null};
 }
 function segment(bars,config,start,end){return metrics(bars.slice(Math.max(0,start-240),end),config,bars[start].time);}
-function researchProduct(input,config,previous,now){
+/** Logistic filter fitted only on bars before the development windows; threshold = 70th percentile of its training scores. */
+export function fitEntryFilter(bars,end,feeRate,horizon=4){
+ const rows=[];for(let i=24;i+horizon<end;i++)if(bars[i+horizon].time===bars[i].time+horizon*3600)rows.push({x:featuresAt(bars,i),y:+(bars[i+horizon].close/bars[i].close-1>2*feeRate+.001)});
+ if(rows.length<100||new Set(rows.map(r=>r.y)).size<2)return null;
+ const w=Array(7).fill(0);for(let e=0;e<200;e++){const g=Array(7).fill(0);for(const r of rows){const err=mlProbability(w,r.x)-r.y;for(let j=0;j<7;j++)g[j]+=err*r.x[j];}for(let j=0;j<7;j++)w[j]-=.1*(g[j]/rows.length+(j?.02*w[j]:0));}
+ const sc=rows.map(r=>mlProbability(w,r.x)).sort((p,q)=>p-q);return {mlWeights:w,mlThreshold:sc[Math.floor(sc.length*.7)]};
+}
+function researchProduct(input,config,now){
  const bars=normalizeCandles(input).filter(b=>b.time+3600<=now);
  const contiguous=bars.every((b,i)=>!i||b.time===bars[i-1].time+3600);
- if(bars.length<600||!contiguous)return previous?.experiment===EXPERIMENT?{...structuredClone(previous),status:'forward-data-gap',forwardReason:'Missing history; frozen tests retained. No forward evaluation.'}:{status:'collecting-data',reason:'Need 600 contiguous completed hourly bars; gaps are not filled with invented prices.'};
- // Historical winner and test remain frozen; new candles extend a forward shadow comparison only.
- if(previous?.experiment===EXPERIMENT){
-  const out=structuredClone(previous),start=bars.findIndex(b=>b.time>=out.forwardStart);
-  if(start<0||bars.at(0).time>out.forwardStart||bars.length-start<72)return {...out,status:out.status==='forward-shadow'?'forward-gap':out.status,forwardReason:'Need at least 72 new contiguous hourly bars with full forward-window coverage.'};
-  const c=out.frozenConfig,chosen=CANDIDATES.find(v=>v.id===out.selected),n=segment(bars,{...c,...chosen.changes},start,bars.length),baseline=segment(bars,c,start,bars.length);
-  return {...out,status:'forward-shadow',forward:{candidate:n,baseline,through:bars.at(-1).time,passed:n.closedTrades>=30&&baseline.closedTrades>=30&&n.returnPct>0&&n.returnPct>baseline.returnPct&&n.drawdown<=baseline.drawdown},forwardReason:'Forward shadow replay is not approval to change live paper entries; execution coverage and daily-review guards still apply.'};
- }
+ if(bars.length<600||!contiguous)return {status:'collecting-data',decision:'keep',reason:'Need 600 contiguous completed hourly bars; gaps are not filled with invented prices.'};
+ // Fresh walk-forward every run: rank on two earlier windows, check once on the newest 25%.
  const cut=Math.floor(bars.length*.75),middle=Math.floor(bars.length*.5),start=Math.floor(bars.length*.3);
- const ranking=CANDIDATES.map(({id,changes})=>{const c={...config,...changes},folds=[segment(bars,c,start,middle),segment(bars,c,middle,cut)];return {id,folds,score:Math.min(...folds.map(f=>f.returnPct-f.drawdown)),eligible:folds.every(f=>f.closedTrades>=5)};}).sort((a,b)=>Number(b.eligible)-Number(a.eligible)||b.score-a.score||a.id.localeCompare(b.id));
- const selected=ranking.find(r=>r.eligible)?.id??'current',chosen=CANDIDATES.find(c=>c.id===selected),candidateConfig={...config,...chosen.changes};
+ const rank=({id,changes})=>{const c={...config,...changes},folds=[segment(bars,c,start,middle),segment(bars,c,middle,cut)];return {id,changes,folds,score:Math.min(...folds.map(f=>f.returnPct-f.drawdown)),eligible:folds.every(f=>f.closedTrades>=5)};};
+ const order=(x,y)=>Number(y.eligible)-Number(x.eligible)||y.score-x.score||x.id.localeCompare(y.id);
+ const ranking=CANDIDATES.map(rank).sort(order);
+ const leader=ranking.find(r=>r.eligible&&r.id!=='current'),filter=leader&&fitEntryFilter(bars,start,config.feeRate??DEFAULT_CONFIG.feeRate);
+ if(filter)ranking.push(rank({id:leader.id+'+ml-filter',changes:{...leader.changes,...filter}}));ranking.sort(order);
+ const best=ranking.find(r=>r.eligible)??ranking.find(r=>r.id==='current'),candidateConfig={...config,...best.changes};
  const finalTest={candidate:segment(bars,candidateConfig,cut,bars.length),baseline:segment(bars,config,cut,bars.length)};
  const stress=segment(bars,{...candidateConfig,rebateVerified:false,rebateRate:0,slippage:config.slippage*2},cut,bars.length);
- const c=finalTest.candidate,b=finalTest.baseline,passed=selected!=='current'&&c.closedTrades>=10&&b.closedTrades>=10&&c.returnPct>0&&c.returnPct>b.returnPct&&c.drawdown<=b.drawdown&&stress.returnPct>0;
- return {experiment:EXPERIMENT,status:passed?'awaiting-forward-evidence':'no-validated-edge',selected,frozenConfig:config,development:ranking,finalTest,stress,passed,selectionEnd:bars[cut].time,historyStart:bars[0].time,forwardStart:Math.max(bars.at(-1).time+3600,Math.ceil(now/3600)*3600),registeredAt:new Date(now*1000).toISOString(),reason:'Seven predefined approaches ranked on two earlier chronological windows; only the selected approach and baseline use the final test. No retry against the test after a loss. Stress removes rebates and doubles slippage.'};
+ const c=finalTest.candidate,b=finalTest.baseline,changed=best.id!=='current';
+ const passed=changed&&c.closedTrades>=10&&b.closedTrades>=10&&c.returnPct>0&&c.returnPct>b.returnPct&&c.drawdown<=b.drawdown&&stress.returnPct>0;
+ // Not profitable yet, but chosen on earlier data and then lost less with no worse drawdown on the unseen window.
+ const improved=!passed&&changed&&c.closedTrades>=5&&c.returnPct>b.returnPct&&c.drawdown<=b.drawdown;
+ const decision=passed?'adopt-validated':improved?'adopt-improvement':'keep';
+ return {experiment:EXPERIMENT,status:passed?'validated-edge':improved?'less-bad-than-current':'no-better-rules',decision,selected:best.id,changes:best.changes,development:ranking.map(({changes,...r})=>r),finalTest,stress,passed,selectionEnd:bars[cut].time,historyStart:bars[0].time,registeredAt:new Date(now*1000).toISOString(),
+  reason:passed?`${best.id} ranked first on earlier data and was profitable on the unseen newest 25% after costs, including the no-rebate/double-slippage stress.`:improved?`${best.id} ranked first on earlier data and lost less than the current rules on the unseen newest 25% with no worse drawdown. Adopted as an improvement, not a proven edge.`:'No approach beat the current rules on the unseen newest 25%; current rules kept and every losing experiment recorded.'};
+}
+/** Where realized losses came from: costs, unreachable targets, time exits, clustered entries. */
+export function diagnoseLosses(account,market){
+ const trades=(account?.trades??[]).filter(t=>!String(t.reason).includes('rebalance'));const findings=[];
+ if(!trades.length)return {closedTrades:0,findings:['No closed trades yet.']};
+ const sum=f=>trades.reduce((s,t)=>s+f(t),0),net=sum(t=>t.pnl),costs=sum(t=>(t.fees??0)-(t.rebateCredited??0)),breakeven=2*(trades[0].feeRate??.006)+2*(trades[0].slippage??.0005);
+ let measured=0,reached=0,mfe=0;
+ for(const t of trades){const bars=normalizeCandles(market.products?.[t.product]?.candles??[]).filter(b=>b.time+3600>t.openedAt&&b.time<t.closedAt);if(!bars.length)continue;const hi=Math.max(...bars.map(b=>b.high));measured++;mfe+=hi/t.entry-1;if(hi>=t.target)reached++;}
+ const times=trades.filter(t=>t.reason==='time-exit').length,slots=trades.map(t=>Math.floor(t.openedAt/300)),clustered=slots.filter(v=>slots.filter(w=>w===v).length>=3).length;
+ if(net<0&&costs>0)findings.push(`Costs were $${costs.toFixed(2)} (${(costs/Math.abs(net)*100).toFixed(0)}% of the net loss); each trade needs ~${(breakeven*100).toFixed(2)}% to break even.`);
+ if(net+costs<0)findings.push(`Before costs, entries still lost $${(-(net+costs)).toFixed(2)}: entry timing had no edge.`);
+ if(times/trades.length>.4)findings.push(`${times}/${trades.length} trades ended on the time exit before target or stop.`);
+ if(measured)findings.push(`Target touched on ${reached}/${measured} trades; average best move after entry ${(mfe/measured*100).toFixed(2)}% vs average target ${(sum(t=>t.target/t.entry-1)/trades.length*100).toFixed(2)}%.`);
+ if(clustered/trades.length>.5)findings.push(`${clustered}/${trades.length} entries opened alongside 2+ other markets in the same check; correlated losses.`);
+ return {closedTrades:trades.length,wins:trades.filter(t=>t.pnl>0).length,netPnl:net,netCosts:costs,timeExits:times,targetReached:measured?reached/measured:null,findings};
 }
 export function runLab(state,market,now=Date.now()/1000){
  const trades=eligibleTrades(state.account,now),old=state.strategyLab;
  const inputHash=hash({experiment:EXPERIMENT,trades,products:state.products.map(p=>[p,normalizeCandles(market.products[p]?.candles??[]).filter(b=>b.time+3600<=now)]),config:state.config,productConfigs:state.productConfigs,fees:state.feeProfile});
  if(old?.inputHash===inputHash)return old;
- const outcomes=summarize(state.account,0,now),models=old?.models?.status==='evaluated-shadow'?old.models:compareModels(trades);
- const products=Object.fromEntries(state.products.map(p=>[p,researchProduct(market.products[p]?.candles??[],{...DEFAULT_CONFIG,...state.config,...state.productConfigs?.[p],...state.feeProfile},old?.products?.[p],now)]));
- return {version:1,experiment:EXPERIMENT,inputHash,updatedAt:new Date(now*1000).toISOString(),mode:'shadow',outcomes,costDiagnosis:{netFees:outcomes.grossFees-outcomes.rebatesCredited,costFlippedLosses:trades.filter(t=>t.pnl<0&&t.pnl+(t.fees??0)-(t.rebateCredited??0)>0).length},models,products,limitations:['Hourly replay cannot reproduce missed five-minute checks, order-book liquidity or exact historical fills.','Fees use the saved tier, modeled rebates and adverse slippage; this is not a live tier verification.','One-market simulations do not prove portfolio-wide returns under shared capital.','No automatic adoption from this report. Frozen historical tests, new forward data and daily coverage/sample guards are required.','All wins is not a stopping rule. No-trade and the current strategy remain valid baselines.']};
+ const outcomes=summarize(state.account,0,now),models=compareModels(trades);
+ const products=Object.fromEntries(state.products.map(p=>[p,researchProduct(market.products[p]?.candles??[],{...DEFAULT_CONFIG,...state.config,...state.productConfigs?.[p],...state.feeProfile},now)]));
+ return {version:2,experiment:EXPERIMENT,inputHash,updatedAt:new Date(now*1000).toISOString(),mode:'rolling-adoption',outcomes,diagnosis:diagnoseLosses(state.account,market),costDiagnosis:{netFees:outcomes.grossFees-outcomes.rebatesCredited,costFlippedLosses:trades.filter(t=>t.pnl<0&&t.pnl+(t.fees??0)-(t.rebateCredited??0)>0).length},models,products,limitations:['Hourly replay cannot reproduce missed five-minute checks, order-book liquidity or exact historical fills.','Fees use the saved tier, modeled rebates and adverse slippage; this is not a live tier verification.','Re-ranking every five hours on overlapping windows can overfit; every run and its result is kept in history.','An improvement adoption means losing less on unseen data, not a proven profitable edge.','No strategy can guarantee winning trades; risk caps stay fixed.']};
+}
+/** Writes each market's adopted entry/exit rules where the 5-minute trader reads them. Refuses any risk-cap change. */
+export function applyLab(state,report){
+ const adopted=[];state.productConfigs??={};
+ for(const [product,r] of Object.entries(report.products??{})){
+  if(!r.decision?.startsWith('adopt'))continue;
+  const before=FROZEN.map(k=>({...state.config,...state.productConfigs[product]})[k]),next={...state.productConfigs[product]};
+  for(const k of TUNABLE)if(k in r.changes){if(r.changes[k]===undefined)delete next[k];else next[k]=r.changes[k];}
+  if(Object.keys(r.changes).some(k=>!TUNABLE.includes(k))||JSON.stringify(FROZEN.map(k=>({...state.config,...next})[k]))!==JSON.stringify(before))throw Error('Risk cap mutation refused');
+  state.productConfigs[product]=next;adopted.push({product,approach:r.selected,decision:r.decision});
+ }
+ if(adopted.length||report.inputHash!==state.strategyLabHistory?.[0]?.inputHash)state.strategyLabHistory=[{at:report.updatedAt,inputHash:report.inputHash,adopted,decisions:Object.fromEntries(Object.entries(report.products??{}).map(([p,r])=>[p,{selected:r.selected,decision:r.decision,finalTest:r.finalTest&&{candidate:r.finalTest.candidate.returnPct,current:r.finalTest.baseline.returnPct}}]))},...(state.strategyLabHistory??[])].slice(0,300);
+ state.strategyLab={...report,adopted};return adopted;
 }
 export async function run(){
  const key=process.env.PAPER_STATE_KEY?.trim();if(!key)throw Error('Private research key required; nothing changed.');
  const market=JSON.parse(await readFile('data/market.json','utf8')),paper=JSON.parse(await readFile('data/paper.json','utf8'));let state;
  try{state=await decryptState(JSON.parse(await readFile('data/portfolio.enc.json','utf8')),key);}catch{throw Error('Private research unlock failed; nothing changed.');}
- const now=Date.now()/1000;paper.strategyLab=runLab(paper,market,now);state.strategyLab=runLab(state,market,now);
+ const now=Date.now()/1000;applyLab(paper,runLab(paper,market,now));applyLab(state,runLab(state,market,now));
  const cipher=await encryptState(state,key),tmp='data/.strategy-lab.enc.tmp';
  try{await writeFile(tmp,JSON.stringify(cipher,null,2)+'\n',{mode:0o600});await rename(tmp,'data/portfolio.enc.json');}finally{await rm(tmp,{force:true});}
- await writeFile('data/paper.json',JSON.stringify(paper,null,2)+'\n');console.log('Research completed; private results encrypted; execution and configuration unchanged.');
+ await writeFile('data/paper.json',JSON.stringify(paper,null,2)+'\n');console.log('Research completed; adopted rules: public '+JSON.stringify(paper.strategyLab.adopted)+'; private results encrypted.');
 }
 if(process.argv[1]&&import.meta.url===pathToFileURL(process.argv[1]).href)await run();

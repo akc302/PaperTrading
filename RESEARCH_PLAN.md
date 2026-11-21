@@ -32,3 +32,10 @@ No fitting algorithm can repair missing market observations. Small samples, corr
 
 ## Verified deployment checkpoint
 Initial unattended research workflow 44865566980 completed successfully; published private ciphertext matched the audited envelope. All 76 tests passed. No historical candidate cleared every criterion; outcome fitting remains below its sample threshold. Financial metrics remain encrypted. The baseline is the configuration frozen at experiment registration; if live paper settings change later, promotion must also compare against that newer incumbent on independent data.
+
+## rolling-v2 (supersedes the frozen cost-aware-v1 checkpoint at the owner's request)
+- GitHub runs `learning.yml` research every five hours (`17 */5 * * *`); identical inputs are deduplicated, so an extra Codex dispatch is harmless.
+- Each run re-ranks 11 approaches plus a logistic-regression entry filter on two earlier windows and checks the leader once on the newest 25%. Added approaches: EMA20/50 trend pullback, Donchian 20h breakout with volume, RSI(14) oversold reclaim, aggressive with a 24h hold.
+- Adoption per market into `productConfigs`, which the five-minute trader reads: `adopt-validated` (profitable on the unseen window after costs and the no-rebate/double-slippage stress) or `adopt-improvement` (lost less than current rules with no worse drawdown). Otherwise current rules are kept. Only entry/exit keys change; risk caps are refused by code.
+- Every run's decisions stay in `strategyLabHistory`, failed experiments included. Re-ranking on overlapping windows can overfit; an improvement adoption is not a proven edge.
+- A loss diagnosis records cost share, time exits, target reachability and clustered entries.
