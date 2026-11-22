@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "generatedAt": "2026-11-22T20:30:07.586Z",
+  "generatedAt": "2026-11-22T21:41:34.092Z",
   "goal": 85000,
   "equity": 29865.26287940766,
   "startingEquity": 30000,
@@ -70,12 +70,12 @@
   "agents": {
     "trader": {
       "role": "5-minute paper trader",
-      "lastRunMinutesAgo": 5,
+      "lastRunMinutesAgo": 1,
       "healthy": true
     },
     "researcher": {
       "role": "Claude every 5h: loss analysis, backtest, rule adoption",
-      "lastRunHoursAgo": 0,
+      "lastRunHoursAgo": 1.2,
       "healthy": true,
       "latestNote": {
         "at": "2026-11-22T20:28:43.538Z",
@@ -171,7 +171,7 @@
     "windowDays": 30,
     "label": "Estimated time to $85,000 at the trailing 30-day growth rate (not a promise)",
     "status": "insufficient-history",
-    "spanDays": 1.8542544675921953,
+    "spanDays": 1.9038668055556438,
     "message": "Needs at least 7 days of equity history."
   },
   "scorecard": [
@@ -254,7 +254,7 @@
     {
       "id": "hourly-legacy",
       "label": "Previous hourly rules",
-      "equity": 29919.963239465927,
+      "equity": 29984.809242371222,
       "initial": 29975.046647868254,
       "netPnl": -152.29220271457623,
       "profitFactor": 0.1854276580606489,
@@ -268,12 +268,12 @@
       "takerFills": 3,
       "openPositions": 2,
       "pause": "normal",
-      "drawdown": 0.004494674963093526
+      "drawdown": 0.0023371007480815775
     },
     {
       "id": "lab-hourly",
       "label": "Lab hourly per-market rules",
-      "equity": 29921.41033145035,
+      "equity": 29986.80850495523,
       "initial": 29975.046647868254,
       "netPnl": -186.9597025010642,
       "profitFactor": 0,
@@ -287,7 +287,7 @@
       "takerFills": 2,
       "openPositions": 2,
       "pause": "normal",
-      "drawdown": 0.004028031059172266
+      "drawdown": 0.0018511701789776236
     },
     {
       "id": "scout-daytrade",
@@ -319,7 +319,7 @@
   },
   "verdict": "needs-attention",
   "issues": [
-    "No new paper entry for 26h; current rules may be too strict for this market."
+    "No new paper entry for 28h; current rules may be too strict for this market."
   ],
   "dispatch": []
 }
