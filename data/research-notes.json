@@ -139,6 +139,21 @@
       "adopted": false,
       "nextIdea": "The scout's setups lose mainly to the taker stop-exit fee. Test a maker-style stop (a resting limit just below support, simulated maker at 0.15%) and an entry filter that requires the 1h ATR to be at least 3x the round-trip fee. Both target the fee share of losses rather than the stop distance.",
       "status": "No rule change; the scout keeps running for more evidence."
+    },
+    {
+      "at": "2026-11-22T15:29:22.877Z",
+      "tradesReviewed": 1,
+      "losses": 0,
+      "findings": [
+        "1 trade closed since 12:15Z: hourly-legacy LINK-USD, a win, time-exited at 4.0h of 4h for +34.67 net (+48.48 gross, 13.81 fees). Entered 09:05Z with 24h +4.1%, so it was not in a downtrend. MFE was +3.08% against a +4.67% target, with a stop 1.94% away. Same lesson as before: the target is not reached within 4h, but this time the price drift was positive.",
+        "The scout made no new entries since its 2 ETH stop-outs.",
+        "Hypothesis tested (failed on unseen data): an entry filter requiring ATR >= k x round-trip fee for the scout setup. Walk-forward results (train / validation / unseen) for k=0: 20t 15% -407 / 21t 29% -328 / 13t 46% -8. k=2: 14t 14% -272 / 11t 36% -91 / 12t 42% -46. k=3: 2t / 0t / 5t 40% -37, too few trades. It improves the older windows but not the unseen newest 25%, so it is not adopted and the code is reverted.",
+        "Main and both hourly challengers still hold XRP (20-21h of 24h). The hourly challengers also hold ETH (6.4h), DOGE and AVAX."
+      ],
+      "changes": [],
+      "adopted": false,
+      "nextIdea": "The win (LINK) entered with a positive 24h change; most losers entered with a negative one. Test a simple 24h momentum gate (24h change > 0) for the scout and the hourly challengers on the same walk-forward split. Separately, model a maker-limit stop exit to cut the 0.3% taker fee on stop-outs.",
+      "status": "No rule change this run."
     }
   ]
 }
