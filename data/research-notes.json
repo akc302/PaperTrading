@@ -89,6 +89,23 @@
       "adopted": false,
       "nextIdea": "Next run: if the scout has made 0 entries for 12h, test proximity 0.008-0.01 and a 1h-close-above-support confirmation in the lab so it trades more without dropping the fee guard. Once it has 5+ closed trades, fit hour-of-day and volume-ratio filters on them.",
       "status": "Monitoring; no rule change this run."
+    },
+    {
+      "at": "2026-11-22T06:09:06.378Z",
+      "tradesReviewed": 0,
+      "losses": 0,
+      "findings": [
+        "Owner asked to widen the scout entry zone now, instead of waiting 12h for evidence.",
+        "Backtest of the scout setup (horizontal, 4h hold, 1.5x ATR, 1R, maker entry, 0.5% risk) over ~30 days for proximity 0.6/0.8/1.0/1.2/1.5%: 1.4/1.5/1.6/1.7/1.8 trades/day. Last 8 days: 9t 44% -1 / 9t 44% -1 / 11t 36% -60 / 13t 38% -62 / 14t 43% -26.",
+        "1.5% gives the most trades (+29% vs 0.6%) for almost the same 8-day result; 1.0-1.2% are worse on both counts."
+      ],
+      "changes": [
+        "scripts/challengers.mjs: scout proximity 0.006 to 0.015; researcher-owned seed rules are synced into the existing scout in place (ledger kept, change logged in rulesHistory)",
+        "tests: in-place sync keeps the ledger, runs once, and leaves other challengers untouched"
+      ],
+      "adopted": true,
+      "nextIdea": "Review the scout's first closed trades: is the win rate near the backtest's ~40% and do entries cluster at certain hours? If 1.5% entries lose more than the 0.6% ones would have, revert to 0.6%.",
+      "status": "Applied via the daily-review rules step."
     }
   ]
 }

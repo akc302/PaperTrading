@@ -16,14 +16,18 @@ export function seedChallengers(state){
   {id:'hourly-legacy',label:'Previous hourly rules',source:'archived main rules',rules:hourly,productConfigs:hp},
   {id:'lab-hourly',label:'Lab hourly per-market rules',source:'strategy-lab',rules:hourly,productConfigs:structuredClone(hp)},
   // Always-on day-trade scout at 1/4 of main risk: keeps live trades and evidence flowing when the main trend rules sit out a downtrend.
-  {id:'scout-daytrade',label:'Day-trade scout: support bounce, 4h hold, 1/4 risk',source:'researcher',riskScale:0.25,rules:{strategy:'horizontal',maxHoldHours:4,stopAtrMultiplier:1.5,rewardRisk:1,patternRequired:false,regimeFilter:false,entryOrder:'limit',mlWeights:undefined,mlThreshold:undefined,trailAtrMultiplier:undefined},productConfigs:{}},
+  {id:'scout-daytrade',label:'Day-trade scout: support bounce (1.5% zone), 4h hold, 1/4 risk',source:'researcher',riskScale:0.25,rules:{strategy:'horizontal',maxHoldHours:4,stopAtrMultiplier:1.5,rewardRisk:1,proximity:0.015,patternRequired:false,regimeFilter:false,entryOrder:'limit',mlWeights:undefined,mlThreshold:undefined,trailAtrMultiplier:undefined},productConfigs:{}},
  ];
 }
 export function freshAccount(state){const a=createAccount(Math.max(1,markToMarket(state.account).equity));Object.assign(a,{compactJournal:true,decisionLimit:300,equityLimit:2600,orderLogLimit:50});return a;}
 export function ensureChallengers(state,now=Date.now()/1000){
  const at=new Date(now*1000).toISOString(),have=new Set((state.challengers??[]).map(c=>c.id));
  const added=seedChallengers(state).filter(c=>!have.has(c.id)).map(c=>({...c,rules:JSON.parse(JSON.stringify(c.rules)),account:freshAccount(state),pause:{},startedAt:at,rulesSince:at,rulesVersion:1}));
- if(!added.length)return false;
+ // Researcher-owned seeds follow their seed rules: an existing one is updated in place (ledger kept, rulesHistory logged).
+ let synced=false;
+ for(const seed of seedChallengers(state).filter(c=>c.source==='researcher')){const ch=(state.challengers??[]).find(c=>c.id===seed.id);
+  if(ch){ch.riskScale=seed.riskScale;ch.label=seed.label;synced=setChallengerRules(ch,{rules:JSON.parse(JSON.stringify(seed.rules))},now,'researcher seed rules updated')||synced;}}
+ if(!added.length)return synced;
  state.challengers=[...(state.challengers??[]),...added];return true;
 }
 /** Effective per-market config: main caps and fees, the challenger's entry/exit rules. Undefined values remove main-rule keys. */
