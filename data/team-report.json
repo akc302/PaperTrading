@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "generatedAt": "2026-11-22T15:26:03.912Z",
+  "generatedAt": "2026-11-22T15:30:43.885Z",
   "goal": 85000,
   "equity": 29840.035032504064,
   "startingEquity": 30000,
@@ -28,8 +28,8 @@
   "rulesInUse": {
     "BTC-USD": {
       "strategy": "trend-follow",
-      "approach": "aggressive-day-hold+regime-block",
-      "decision": "shadow"
+      "approach": "higher-reward",
+      "decision": "keep"
     },
     "ETH-USD": {
       "strategy": "trend-follow",
@@ -43,7 +43,7 @@
     },
     "XRP-USD": {
       "strategy": "trend-follow",
-      "approach": "current",
+      "approach": "aggressive-day-hold+regime-block",
       "decision": "keep"
     },
     "ADA-USD": {
@@ -70,21 +70,21 @@
   "agents": {
     "trader": {
       "role": "5-minute paper trader",
-      "lastRunMinutesAgo": 1,
+      "lastRunMinutesAgo": 5,
       "healthy": true
     },
     "researcher": {
       "role": "Claude every 5h: loss analysis, backtest, rule adoption",
-      "lastRunHoursAgo": 5,
+      "lastRunHoursAgo": 0,
       "healthy": true,
       "latestNote": {
-        "at": "2026-11-22T12:16:05.801Z",
-        "tradesReviewed": 2,
-        "losses": 2,
+        "at": "2026-11-22T15:29:22.877Z",
+        "tradesReviewed": 1,
+        "losses": 0,
         "findings": 4,
         "changes": 0,
         "adopted": false,
-        "nextIdea": "The scout's setups lose mainly to the taker stop-exit fee. Test a maker-style stop (a resting limit just below support, simulated maker at 0.15%) and an entry filter that requires the 1h ATR to be at least 3x the round-trip fee. Both target the fee share of losses rather than the stop distance."
+        "nextIdea": "The win (LINK) entered with a positive 24h change; most losers entered with a negative one. Test a simple 24h momentum gate (24h change > 0) for the scout and the hourly challengers on the same walk-forward split. Separately, model a maker-limit stop exit to cut the 0.3% taker fee on stop-outs."
       }
     },
     "verifier": {
@@ -112,7 +112,7 @@
         "id": "history",
         "label": "28+ days of forward paper trading with the research team",
         "pass": false,
-        "value": "1.4 days"
+        "value": "1.5 days"
       },
       {
         "id": "sample",
@@ -171,7 +171,7 @@
     "windowDays": 30,
     "label": "Estimated time to $85,000 at the trailing 30-day growth rate (not a promise)",
     "status": "insufficient-history",
-    "spanDays": 1.643100833332649,
+    "spanDays": 1.6463412615739637,
     "message": "Needs at least 7 days of equity history."
   },
   "scorecard": [
