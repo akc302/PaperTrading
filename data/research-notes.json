@@ -124,6 +124,21 @@
       "adopted": true,
       "nextIdea": "When the scout's first trades close, compare its support-based stops (here 0.21%) with ATR. If they are mostly stopped out within 1h, test a minimum stop of max(support stop, 1x ATR) in the horizontal strategy for the scout.",
       "status": "Monitoring; no code change this run."
+    },
+    {
+      "at": "2026-11-22T12:16:05.801Z",
+      "tradesReviewed": 2,
+      "losses": 2,
+      "findings": [
+        "The scout's first 2 trades were both ETH-USD quote-stops: -47.97 (held 0.2h) and -45.81 (held 0.5h). Fees were 33.34 and 33.30 each (0.15% maker entry, 0.3% taker stop exit).",
+        "Cause: the support-based stop sat about 0.2% below entry. At 0.5% risk this would mean a very large position, so the 25% allocation cap limited it to about $7.4k notional. Real risk was about $14 of price move plus $33 of fees, so fees were 70% of each loss and ordinary hourly noise hit the stop.",
+        "Hypothesis tested (failed): a volatility floor on the stop (minStopAtr 0.5/0.75/1/1.5 x ATR, with 1R and 0.8R targets) over ~30 days. It cuts the stopped-in-1h losses from 21 to as few as 1, but does not raise the win rate (15-29%) and makes net and last-8-day results worse (e.g. 1.0 ATR: 5t 20% -92 vs current 14t 43% -26). Not adopted; experimental code reverted.",
+        "Main and both hourly challengers still hold XRP (17-18h of 24h). The hourly challengers' ETH, LINK and AVAX positions are 3.2h old."
+      ],
+      "changes": [],
+      "adopted": false,
+      "nextIdea": "The scout's setups lose mainly to the taker stop-exit fee. Test a maker-style stop (a resting limit just below support, simulated maker at 0.15%) and an entry filter that requires the 1h ATR to be at least 3x the round-trip fee. Both target the fee share of losses rather than the stop distance.",
+      "status": "No rule change; the scout keeps running for more evidence."
     }
   ]
 }
