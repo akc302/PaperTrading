@@ -1,14 +1,16 @@
 {
-  "at": "2026-11-22T17:20:00Z",
+  "at": "2026-11-22T17:20:23.826Z",
   "goal": 85000,
   "start": 30000,
-  "equity": 29900,
-  "remaining": 55100,
+  "equity": 29884.94,
+  "remaining": 55115.06,
   "progressPct": 0,
   "onTrack": false,
-  "verdict": "Flat, not losing. All 8 coins are in a daily downtrend, so the main trend-follow account is correctly waiting (1 open XRP position, 1 closed ADA trade). Hourly challengers are trading for evidence and are slightly negative.",
-  "last24h": "Main: 1 closed (0 wins, -$69). Challengers: 5 closed, -$289 combined.",
-  "readiness": "1/9",
-  "fixed": ["Added this supervisor report to the dashboard"],
-  "nextStep": "Wait for the daily trend to turn up; meanwhile challengers keep collecting evidence and the researcher tunes the hourly rules."
+  "verdict": "Not on track yet: the account is roughly flat at -0.4% because every coin is still in a daily downtrend and no buy-only rule has made money after fees on recent data. All jobs are running without errors; the main account is correctly waiting while the scout and hourly challengers trade small to find rules that work.",
+  "last24h": "Main: 1 closed (0 wins, -$68.84). Best challenger hourly-legacy: 2 closed (1 wins, -$80.08).",
+  "readiness": "2/9",
+  "fixed": [
+    "No faults found this run; corrected this report (readiness is 2/9, not 1/9)"
+  ],
+  "nextStep": "Have the researcher test a 24h-momentum entry gate (buy only when the coin is up over 24h) on the scout and hourly challengers, adopting it only if it beats current rules on the newest unseen data after fees."
 }
