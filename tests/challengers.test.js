@@ -7,9 +7,9 @@ import {applyLab} from '../scripts/strategy-lab.mjs';
 const T=Date.parse('2026-11-20T12:02:00Z')/1000;
 const base=()=>{const s={config:{...DEFAULT_CONFIG,strategy:'aggressive',riskPct:.02,maxTotalRisk:.08,maxAllocation:.25,maxDailyLoss:.12,maxHoldHours:2},productConfigs:{'BTC-USD':{strategy:'aggressive',patternRequired:true,maxHoldHours:24}},products:['BTC-USD','ETH-USD'],account:createAccount(30000),feeProfile:{feeRate:.003,makerFeeRate:.0015,takerFeeRate:.003}};migrateToTrend(s,T);ensureChallengers(s,T);return s;};
 const bars=now=>{const out=[];for(let t=Math.floor(now/3600)*3600-30*3600;t+3600<=now;t+=3600)out.push({time:t,open:100,high:101,low:99,close:100.5,volume:1});return out;};
-test('3-5 challengers seed with fresh accounts and inherit the main risk caps and fees',()=>{
- const s=base();assert.ok(s.challengers.length>=3&&s.challengers.length<=5);assert.ok(s.challengers.every(c=>c.account.initial===30000&&c.account.compactJournal));
- for(const ch of s.challengers)for(const p of s.products){const c=challengerConfig(s,ch,p);for(const k of CAP_KEYS)assert.equal(c[k],s.config[k]);assert.equal(c.takerFeeRate,.003);}
+test('3-6 challengers seed with fresh accounts and inherit the main risk caps (never above) and fees',()=>{
+ const s=base();assert.ok(s.challengers.length>=3&&s.challengers.length<=6);assert.ok(s.challengers.every(c=>c.account.initial===30000&&c.account.compactJournal));
+ for(const ch of s.challengers)for(const p of s.products){const c=challengerConfig(s,ch,p);for(const k of CAP_KEYS){if(k==='riskPct'&&ch.riskScale<1){assert.ok(c[k]<s.config[k]);continue;}assert.equal(c[k],s.config[k]);}assert.equal(c.takerFeeRate,.003);}
  const legacy=s.challengers.find(c=>c.id==='hourly-legacy');assert.equal(challengerConfig(s,legacy,'BTC-USD').strategy,'aggressive');assert.equal(challengerConfig(s,legacy,'BTC-USD').patternRequired,true);
  assert.equal(challengerConfig(s,legacy,'BTC-USD').trailAtrMultiplier,undefined);assert.equal(ensureChallengers(s,T),false);
 });
@@ -51,4 +51,15 @@ test('every lab-tunable rule key survives into challenger accounts (regimeFilter
  assert.deepEqual(pickRules({regimeFilter:true,maxHoldHours:4,riskPct:0.5}),{regimeFilter:true,maxHoldHours:4});
  const c=challengerConfig({config:{...DEFAULT_CONFIG}},{rules:{strategy:'aggressive'},productConfigs:{'ADA-USD':{regimeFilter:true}}},'ADA-USD');
  assert.equal(c.regimeFilter,true);
+});
+
+test('scout day-trade challenger is added to existing sets once, at reduced risk that can never exceed main',async()=>{
+ const {ensureChallengers}=await import('../scripts/challengers.mjs');
+ const state={config:{...DEFAULT_CONFIG,riskPct:0.02},account:createAccount(30000),challengers:[{id:'trend-k2',rules:{},account:createAccount(30000)}]};
+ assert.equal(ensureChallengers(state,1.8e9),true);
+ const scout=state.challengers.find(c=>c.id==='scout-daytrade');assert.ok(scout);assert.equal(state.challengers.filter(c=>c.id==='trend-k2').length,1);
+ assert.equal(ensureChallengers(state,1.8e9+60),false,'second call adds nothing');
+ const c=challengerConfig(state,scout,'BTC-USD');assert.equal(c.strategy,'horizontal');assert.equal(c.maxHoldHours,4);assert.equal(c.entryOrder,'limit');
+ assert.ok(Math.abs(c.riskPct-0.005)<1e-12);assert.equal(c.maxOpenPositions,state.config.maxOpenPositions);
+ assert.equal(challengerConfig(state,{...scout,riskScale:5},'BTC-USD').riskPct,0.02,'scale above 1 is clamped to main risk');
 });

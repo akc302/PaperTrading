@@ -55,6 +55,25 @@
       "adopted": false,
       "nextIdea": "If lab-hourly logs 3+ more 4h time-exits with MFE below 1/3 of target, add a candidate that scales the target to what is reachable in the hold: target = entry + k*ATR*sqrt(holdHours), with k fitted on train data. Alternatively, drop the 4h ADA hold for aggressive-day-hold. Judge on unseen data after fees.",
       "status": "Analysis recorded; no code change this run (insufficient new evidence)."
+    },
+    {
+      "at": "2026-11-22T03:08:21.191Z",
+      "tradesReviewed": 0,
+      "losses": 0,
+      "findings": [
+        "Owner asked for steady trading activity (day/scalp style), not days of no trades.",
+        "Sweep of 90 hourly variants (aggressive, rsi-reversion, donchian, ema-trend, horizontal x hold 4/8/24h x stop 1.5/2.5 ATR x 1-1.5R x regime filter) on the newest ~8 days, taker 0.3%: 0 profitable after fees.",
+        "Walk-forward of 432 scalp variants (hold 2/3/6h, stop 0.75-1.25 ATR, 0.6-1R, maker 0.15% entries): 0 profitable on both train and validation windows; best unseen -26.",
+        "Over ~30 days at 0.5% risk: horizontal support-bounce with a 4h hold, 1.5x ATR stop and 1R trades 1.4/day across 8 coins at 29% wins. That is the least-bad active setup; aggressive trades 9-13/day but at 16-22% wins and 10x the loss.",
+        "Conclusion: in this ~10% downtrend, no long-only hourly rule has a positive edge after fees, so making the main account more aggressive would lose money."
+      ],
+      "changes": [
+        "scripts/challengers.mjs: new 'scout-daytrade' challenger (horizontal, 4h hold, 1.5x ATR, 1R, maker-limit entry) at riskScale 0.25 (0.5% risk/trade); existing challenger sets get missing seeds appended; riskScale can only lower risk",
+        "tests: scout seeding is idempotent, risk is clamped to at most the main caps"
+      ],
+      "adopted": true,
+      "nextIdea": "Use the scout's live trades plus lab backtests to fit entry filters (hour of day, distance to support in ATR, volume ratio) that raise its win rate above 45%. Promote it only through the daily gate (7+ days, 20+ trades, PF 1.2+).",
+      "status": "Scout runs on every 5-minute trader pass; main account stays on gated trend rules."
     }
   ]
 }
