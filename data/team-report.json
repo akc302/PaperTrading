@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "generatedAt": "2026-11-22T03:06:39.660Z",
+  "generatedAt": "2026-11-22T03:09:20.000Z",
   "goal": 85000,
   "equity": 29788.7180982152,
   "startingEquity": 30000,
@@ -70,21 +70,21 @@
   "agents": {
     "trader": {
       "role": "5-minute paper trader",
-      "lastRunMinutesAgo": 1,
+      "lastRunMinutesAgo": 4,
       "healthy": true
     },
     "researcher": {
       "role": "Claude every 5h: loss analysis, backtest, rule adoption",
-      "lastRunHoursAgo": 2.6,
+      "lastRunHoursAgo": 2.7,
       "healthy": true,
       "latestNote": {
-        "at": "2026-11-22T00:29:37.443Z",
-        "tradesReviewed": 1,
-        "losses": 1,
+        "at": "2026-11-22T03:08:21.191Z",
+        "tradesReviewed": 0,
+        "losses": 0,
         "findings": 5,
-        "changes": 0,
-        "adopted": false,
-        "nextIdea": "If lab-hourly logs 3+ more 4h time-exits with MFE below 1/3 of target, add a candidate that scales the target to what is reachable in the hold: target = entry + k*ATR*sqrt(holdHours), with k fitted on train data. Alternatively, drop the 4h ADA hold for aggressive-day-hold. Judge on unseen data after fees."
+        "changes": 2,
+        "adopted": true,
+        "nextIdea": "Use the scout's live trades plus lab backtests to fit entry filters (hour of day, distance to support in ATR, volume ratio) that raise its win rate above 45%. Promote it only through the daily gate (7+ days, 20+ trades, PF 1.2+)."
       }
     },
     "verifier": {
@@ -171,7 +171,7 @@
     "windowDays": 30,
     "label": "Estimated time to $85,000 at the trailing 30-day growth rate (not a promise)",
     "status": "insufficient-history",
-    "spanDays": 1.129625694445438,
+    "spanDays": 1.1314814814814815,
     "message": "Needs at least 7 days of equity history."
   },
   "scorecard": [
@@ -288,6 +288,25 @@
       "openPositions": 1,
       "pause": "normal",
       "drawdown": 0.00854326322617227
+    },
+    {
+      "id": "scout-daytrade",
+      "label": "Day-trade scout: support bounce, 4h hold, 1/4 risk",
+      "equity": 29788.7180982152,
+      "initial": 29788.7180982152,
+      "netPnl": 0,
+      "profitFactor": null,
+      "maxDrawdown": 0,
+      "winRate": null,
+      "avgWin": null,
+      "avgLoss": null,
+      "closedTrades": 0,
+      "fees": 0,
+      "makerFills": 0,
+      "takerFills": 0,
+      "openPositions": 0,
+      "pause": "normal",
+      "drawdown": null
     }
   ],
   "drawdownPause": {

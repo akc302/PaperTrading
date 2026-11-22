@@ -105381,6 +105381,42 @@
       "rulesVersion": 1,
       "lastError": null,
       "updatedAt": "2026-11-22T03:05:42.276Z"
+    },
+    {
+      "id": "scout-daytrade",
+      "label": "Day-trade scout: support bounce, 4h hold, 1/4 risk",
+      "source": "researcher",
+      "riskScale": 0.25,
+      "rules": {
+        "strategy": "horizontal",
+        "maxHoldHours": 4,
+        "stopAtrMultiplier": 1.5,
+        "rewardRisk": 1,
+        "patternRequired": false,
+        "regimeFilter": false,
+        "entryOrder": "limit"
+      },
+      "productConfigs": {},
+      "account": {
+        "initial": 29788.7180982152,
+        "cash": 29788.7180982152,
+        "positions": [],
+        "trades": [],
+        "equityHistory": [],
+        "lastProcessed": {},
+        "marks": {},
+        "nextId": 1,
+        "decisions": [],
+        "dailyRisk": {},
+        "compactJournal": true,
+        "decisionLimit": 300,
+        "equityLimit": 2600,
+        "orderLogLimit": 50
+      },
+      "pause": {},
+      "startedAt": "2026-11-22T03:09:18.512Z",
+      "rulesSince": "2026-11-22T03:09:18.512Z",
+      "rulesVersion": 1
     }
   ],
   "promotion": {
