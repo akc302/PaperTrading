@@ -106,6 +106,24 @@
       "adopted": true,
       "nextIdea": "Review the scout's first closed trades: is the win rate near the backtest's ~40% and do entries cluster at certain hours? If 1.5% entries lose more than the 0.6% ones would have, revert to 0.6%.",
       "status": "Applied via the daily-review rules step."
+    },
+    {
+      "at": "2026-11-22T10:29:36.288Z",
+      "tradesReviewed": 0,
+      "losses": 0,
+      "findings": [
+        "No trades closed since 06:09Z. Main and both hourly challengers still hold XRP (15-16h of a 24h hold).",
+        "The scout made its first entry after the 1.5% zone change: ETH at 1709.57, filled as a simulated maker limit at 0.15% fee. Its stop sits 0.21% below entry, at support less the stop buffer rather than 1.5x ATR, and its target is +2.1%. A support-based stop this tight can be hit by normal hourly noise; check it when the trade closes.",
+        "The hourly challengers opened ETH+LINK (hourly-legacy) and ETH+AVAX (lab-hourly) about 1.4h ago.",
+        "Lab at 10:28Z: BTC adopt-improvement for aggressive-day-hold+regime-block, fed into lab-hourly with regimeFilter:true. This is the first end-to-end use of the regime filter in a challenger and confirms the RULE_KEYS fix. The other markets kept their rules; the trend leader is still not validated.",
+        "GitHub skipped the 10:17Z research schedule; it was dispatched at 10:27Z."
+      ],
+      "changes": [
+        "lab-hourly BTC-USD adopted regimeFilter:true (aggressive, 24h hold, 2.5x ATR, 1.5R)"
+      ],
+      "adopted": true,
+      "nextIdea": "When the scout's first trades close, compare its support-based stops (here 0.21%) with ATR. If they are mostly stopped out within 1h, test a minimum stop of max(support stop, 1x ATR) in the horizontal strategy for the scout.",
+      "status": "Monitoring; no code change this run."
     }
   ]
 }
