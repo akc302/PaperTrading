@@ -15,14 +15,16 @@ export function seedChallengers(state){
   {id:'lab-trend',label:'Lab trend leader (2-year walk-forward)',source:'strategy-lab',rules:trend(3,3),productConfigs:{}},
   {id:'hourly-legacy',label:'Previous hourly rules',source:'archived main rules',rules:hourly,productConfigs:hp},
   {id:'lab-hourly',label:'Lab hourly per-market rules',source:'strategy-lab',rules:hourly,productConfigs:structuredClone(hp)},
+  // Always-on day-trade scout at 1/4 of main risk: keeps live trades and evidence flowing when the main trend rules sit out a downtrend.
+  {id:'scout-daytrade',label:'Day-trade scout: support bounce, 4h hold, 1/4 risk',source:'researcher',riskScale:0.25,rules:{strategy:'horizontal',maxHoldHours:4,stopAtrMultiplier:1.5,rewardRisk:1,patternRequired:false,regimeFilter:false,entryOrder:'limit',mlWeights:undefined,mlThreshold:undefined,trailAtrMultiplier:undefined},productConfigs:{}},
  ];
 }
 export function freshAccount(state){const a=createAccount(Math.max(1,markToMarket(state.account).equity));Object.assign(a,{compactJournal:true,decisionLimit:300,equityLimit:2600,orderLogLimit:50});return a;}
 export function ensureChallengers(state,now=Date.now()/1000){
- if(Array.isArray(state.challengers)&&state.challengers.length)return false;
- const at=new Date(now*1000).toISOString();
- state.challengers=seedChallengers(state).map(c=>({...c,rules:JSON.parse(JSON.stringify(c.rules)),account:freshAccount(state),pause:{},startedAt:at,rulesSince:at,rulesVersion:1}));
- return true;
+ const at=new Date(now*1000).toISOString(),have=new Set((state.challengers??[]).map(c=>c.id));
+ const added=seedChallengers(state).filter(c=>!have.has(c.id)).map(c=>({...c,rules:JSON.parse(JSON.stringify(c.rules)),account:freshAccount(state),pause:{},startedAt:at,rulesSince:at,rulesVersion:1}));
+ if(!added.length)return false;
+ state.challengers=[...(state.challengers??[]),...added];return true;
 }
 /** Effective per-market config: main caps and fees, the challenger's entry/exit rules. Undefined values remove main-rule keys. */
 export function challengerConfig(state,ch,product){
@@ -30,6 +32,8 @@ export function challengerConfig(state,ch,product){
  for(const [k,v] of Object.entries(pickRules(ch.productConfigs?.[product])))c[k]=v;
  for(const k of RULE_KEYS)if(c[k]===undefined)delete c[k];
  if(c.strategy!=='trend-follow')for(const k of ['trailAtrMultiplier','trendTopN','trendBreakout','trendRankDays'])delete c[k];
+ // A challenger may only scale its risk down (0-1) from the main caps, never up.
+ const scale=Number.isFinite(ch.riskScale)?Math.min(1,Math.max(0,ch.riskScale)):1;if(scale<1)c.riskPct=c.riskPct*scale;
  return {...c,...(state.feeProfile??{})};
 }
 /** Replace a challenger's rules (e.g. from the lab). Its account is kept; live evaluation restarts at rulesSince. */
