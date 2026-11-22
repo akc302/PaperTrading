@@ -154,6 +154,22 @@
       "adopted": false,
       "nextIdea": "The win (LINK) entered with a positive 24h change; most losers entered with a negative one. Test a simple 24h momentum gate (24h change > 0) for the scout and the hourly challengers on the same walk-forward split. Separately, model a maker-limit stop exit to cut the 0.3% taker fee on stop-outs.",
       "status": "No rule change this run."
+    },
+    {
+      "at": "2026-11-22T20:28:43.538Z",
+      "tradesReviewed": 3,
+      "losses": 3,
+      "findings": [
+        "3 losses closed, all the same XRP-USD position time-exiting at 24h: main -65.89 (gross -21.13, fees 44.77) and the hourly-legacy/lab-hourly copies -72.21 each (gross -38.77, fees 33.43). Entries were 21 Nov 18:01Z and 19:15Z with 24h +2.9%/+3.3%. Targets were +7.6-7.9% away; MFE was only +0.4-0.5% over 24h.",
+        "So a positive 24h change did NOT protect these trades. The repeated failure is the aggressive 2.5x ATR stop with 1.5R target: it puts targets about 7-8% away, which the market has not reached in 24h on any losing trade.",
+        "Hypothesis tested (failed): a 24h momentum gate (buy only if the close is above the close 24h ago). Walk-forward, train / validation / unseen. Hourly aggressive rules without the gate: 97t 29% -2087 / 55t 15% -2337 / 66t 27% -2685. With the gate: 57t 25% -1297 / 23t 0% -1590 / 33t 9% -1895. It loses less only by trading half as much, and the win rate falls. Scout: 13t 46% -8 unseen without the gate, 0t with it. Not adopted; code reverted.",
+        "Hypothesis tested (failed): a smaller target for the hourly rules (0.6R instead of 1.5R, same stop). Unseen 72t 29% -2440 vs 66t 27% -2685. Win rate rises only 2 points; still deeply negative after fees.",
+        "Overall: the aggressive hourly rules lose about $2.7k per 8 days per $10k at 2% risk on unseen data. They stay as challenger evidence only; nothing like them should reach the main account."
+      ],
+      "changes": [],
+      "adopted": false,
+      "nextIdea": "Stop tuning long-only hourly entries in this downtrend; 4 different filters have now failed out of sample. Test instead (a) the scout and hourly challengers at a lower riskScale (0.25) so evidence costs less, and (b) a 6h-bar mean-reversion entry (RSI(14) < 30 on 6h with a 1d close above EMA200) using the 2-year history, so there are hundreds of out-of-sample trades instead of about 13.",
+      "status": "No rule change this run."
     }
   ]
 }
