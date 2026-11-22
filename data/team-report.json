@@ -1,12 +1,12 @@
 {
   "version": 1,
-  "generatedAt": "2026-11-22T05:28:50.388Z",
+  "generatedAt": "2026-11-22T06:10:05.298Z",
   "goal": 85000,
-  "equity": 29759.05049557945,
+  "equity": 29776.690691741245,
   "startingEquity": 30000,
-  "progressToGoal": -0.004380900080373645,
-  "returnPct": -0.008031650147351684,
-  "drawdown": 0.008679879625674637,
+  "progressToGoal": -0.004060169241068268,
+  "returnPct": -0.007443643608625159,
+  "drawdown": 0.008947045452893567,
   "openPositions": 1,
   "last24h": {
     "closedTrades": 1,
@@ -70,21 +70,21 @@
   "agents": {
     "trader": {
       "role": "5-minute paper trader",
-      "lastRunMinutesAgo": 3,
+      "lastRunMinutesAgo": 5,
       "healthy": true
     },
     "researcher": {
       "role": "Claude every 5h: loss analysis, backtest, rule adoption",
-      "lastRunHoursAgo": 0,
+      "lastRunHoursAgo": 0.7,
       "healthy": true,
       "latestNote": {
-        "at": "2026-11-22T03:08:21.191Z",
+        "at": "2026-11-22T06:09:06.378Z",
         "tradesReviewed": 0,
         "losses": 0,
-        "findings": 5,
+        "findings": 3,
         "changes": 2,
         "adopted": true,
-        "nextIdea": "Use the scout's live trades plus lab backtests to fit entry filters (hour of day, distance to support in ATR, volume ratio) that raise its win rate above 45%. Promote it only through the daily gate (7+ days, 20+ trades, PF 1.2+)."
+        "nextIdea": "Review the scout's first closed trades: is the win rate near the backtest's ~40% and do entries cluster at certain hours? If 1.5% entries lose more than the 0.6% ones would have, revert to 0.6%."
       }
     },
     "verifier": {
@@ -112,7 +112,7 @@
         "id": "history",
         "label": "28+ days of forward paper trading with the research team",
         "pass": false,
-        "value": "1.0 days"
+        "value": "1.1 days"
       },
       {
         "id": "sample",
@@ -167,22 +167,22 @@
   },
   "goalEstimate": {
     "goal": 85000,
-    "equity": 29759.05049557945,
+    "equity": 29776.690691741245,
     "windowDays": 30,
     "label": "Estimated time to $85,000 at the trailing 30-day growth rate (not a promise)",
     "status": "insufficient-history",
-    "spanDays": 1.2283609722223547,
+    "spanDays": 1.2570057638900147,
     "message": "Needs at least 7 days of equity history."
   },
   "scorecard": [
     {
       "id": "main",
       "label": "Main: trend-follow",
-      "equity": 29759.05049557945,
+      "equity": 29776.690691741245,
       "initial": 30000,
       "netPnl": -68.84274123655223,
       "profitFactor": 0,
-      "maxDrawdown": 0.008679879625674637,
+      "maxDrawdown": 0.008947045452893567,
       "winRate": 0,
       "avgWin": null,
       "avgLoss": -68.84274123655223,
@@ -192,7 +192,7 @@
       "takerFills": 2,
       "openPositions": 1,
       "pause": "normal",
-      "drawdown": 0.00843943038117767
+      "drawdown": 0.007851665561296128
     },
     {
       "id": "trend-k2",
@@ -254,11 +254,11 @@
     {
       "id": "hourly-legacy",
       "label": "Previous hourly rules",
-      "equity": 29689.389802171907,
+      "equity": 29706.973231990014,
       "initial": 29975.046647868254,
       "netPnl": -114.75210502432324,
       "profitFactor": 0,
-      "maxDrawdown": 0.009769795204185208,
+      "maxDrawdown": 0.010036432590709632,
       "winRate": 0,
       "avgWin": null,
       "avgLoss": -114.75210502432324,
@@ -268,16 +268,16 @@
       "takerFills": 1,
       "openPositions": 1,
       "pause": "normal",
-      "drawdown": 0.0095298215563131
+      "drawdown": 0.008943219305959094
     },
     {
       "id": "lab-hourly",
       "label": "Lab hourly per-market rules",
-      "equity": 29689.389802171907,
+      "equity": 29706.973231990014,
       "initial": 29975.046647868254,
       "netPnl": -114.75210502432324,
       "profitFactor": 0,
-      "maxDrawdown": 0.009769795204185208,
+      "maxDrawdown": 0.010036432590709632,
       "winRate": 0,
       "avgWin": null,
       "avgLoss": -114.75210502432324,
@@ -287,11 +287,11 @@
       "takerFills": 1,
       "openPositions": 1,
       "pause": "normal",
-      "drawdown": 0.0095298215563131
+      "drawdown": 0.008943219305959094
     },
     {
       "id": "scout-daytrade",
-      "label": "Day-trade scout: support bounce, 4h hold, 1/4 risk",
+      "label": "Day-trade scout: support bounce (1.5% zone), 4h hold, 1/4 risk",
       "equity": 29788.7180982152,
       "initial": 29788.7180982152,
       "netPnl": 0,
@@ -311,7 +311,7 @@
   ],
   "drawdownPause": {
     "state": "normal",
-    "drawdown": 0.00843943038117767,
+    "drawdown": 0.007851665561296128,
     "peak": 30012.337528729568,
     "sizeMultiplier": 1,
     "triggeredAt": null,

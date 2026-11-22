@@ -125620,7 +125620,7 @@
     },
     {
       "id": "scout-daytrade",
-      "label": "Day-trade scout: support bounce, 4h hold, 1/4 risk",
+      "label": "Day-trade scout: support bounce (1.5% zone), 4h hold, 1/4 risk",
       "source": "researcher",
       "riskScale": 0.25,
       "rules": {
@@ -125628,6 +125628,7 @@
         "maxHoldHours": 4,
         "stopAtrMultiplier": 1.5,
         "rewardRisk": 1,
+        "proximity": 0.015,
         "patternRequired": false,
         "regimeFilter": false,
         "entryOrder": "limit"
@@ -130736,10 +130737,26 @@
         }
       },
       "startedAt": "2026-11-22T03:09:18.512Z",
-      "rulesSince": "2026-11-22T03:09:18.512Z",
-      "rulesVersion": 1,
+      "rulesSince": "2026-11-22T06:10:04.066Z",
+      "rulesVersion": 2,
       "lastError": null,
-      "updatedAt": "2026-11-22T06:05:45.087Z"
+      "updatedAt": "2026-11-22T06:05:45.087Z",
+      "rulesHistory": [
+        {
+          "at": "2026-11-22T06:10:04.066Z",
+          "reason": "researcher seed rules updated",
+          "rules": {
+            "strategy": "horizontal",
+            "maxHoldHours": 4,
+            "stopAtrMultiplier": 1.5,
+            "rewardRisk": 1,
+            "patternRequired": false,
+            "regimeFilter": false,
+            "entryOrder": "limit"
+          },
+          "productConfigs": {}
+        }
+      ]
     }
   ],
   "promotion": {
