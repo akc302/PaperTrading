@@ -1,11 +1,11 @@
 {
   "version": 1,
-  "generatedAt": "2026-11-22T11:41:36.278Z",
+  "generatedAt": "2026-11-22T12:56:39.534Z",
   "goal": 85000,
-  "equity": 29881.730041613766,
+  "equity": 29828.809453128375,
   "startingEquity": 30000,
-  "progressToGoal": -0.0021503628797497104,
-  "returnPct": -0.0039423319462078025,
+  "progressToGoal": -0.003112555397665909,
+  "returnPct": -0.0057063515623874995,
   "drawdown": 0.008947045452893567,
   "openPositions": 1,
   "last24h": {
@@ -75,16 +75,16 @@
     },
     "researcher": {
       "role": "Claude every 5h: loss analysis, backtest, rule adoption",
-      "lastRunHoursAgo": 1.2,
+      "lastRunHoursAgo": 2.5,
       "healthy": true,
       "latestNote": {
-        "at": "2026-11-22T10:29:36.288Z",
-        "tradesReviewed": 0,
-        "losses": 0,
-        "findings": 5,
-        "changes": 1,
-        "adopted": true,
-        "nextIdea": "When the scout's first trades close, compare its support-based stops (here 0.21%) with ATR. If they are mostly stopped out within 1h, test a minimum stop of max(support stop, 1x ATR) in the horizontal strategy for the scout."
+        "at": "2026-11-22T12:16:05.801Z",
+        "tradesReviewed": 2,
+        "losses": 2,
+        "findings": 4,
+        "changes": 0,
+        "adopted": false,
+        "nextIdea": "The scout's setups lose mainly to the taker stop-exit fee. Test a maker-style stop (a resting limit just below support, simulated maker at 0.15%) and an entry filter that requires the 1h ATR to be at least 3x the round-trip fee. Both target the fee share of losses rather than the stop distance."
       }
     },
     "verifier": {
@@ -167,18 +167,18 @@
   },
   "goalEstimate": {
     "goal": 85000,
-    "equity": 29881.730041613766,
+    "equity": 29828.809453128375,
     "windowDays": 30,
     "label": "Estimated time to $85,000 at the trailing 30-day growth rate (not a promise)",
     "status": "insufficient-history",
-    "spanDays": 1.4872254398161615,
+    "spanDays": 1.5393464583324061,
     "message": "Needs at least 7 days of equity history."
   },
   "scorecard": [
     {
       "id": "main",
       "label": "Main: trend-follow",
-      "equity": 29881.730041613766,
+      "equity": 29828.809453128375,
       "initial": 30000,
       "netPnl": -68.84274123655223,
       "profitFactor": 0,
@@ -192,7 +192,7 @@
       "takerFills": 2,
       "openPositions": 1,
       "pause": "normal",
-      "drawdown": 0.004351793224728895
+      "drawdown": 0.00611508768437341
     },
     {
       "id": "trend-k2",
@@ -254,7 +254,7 @@
     {
       "id": "hourly-legacy",
       "label": "Previous hourly rules",
-      "equity": 29946.210412325992,
+      "equity": 29889.40961804203,
       "initial": 29975.046647868254,
       "netPnl": -114.75210502432324,
       "profitFactor": 0,
@@ -268,12 +268,12 @@
       "takerFills": 1,
       "openPositions": 3,
       "pause": "normal",
-      "drawdown": 0.0020704993639985014
+      "drawdown": 0.005511263539196176
     },
     {
       "id": "lab-hourly",
       "label": "Lab hourly per-market rules",
-      "equity": 29936.60564689002,
+      "equity": 29880.1812201589,
       "initial": 29975.046647868254,
       "netPnl": -114.75210502432324,
       "profitFactor": 0,
@@ -287,7 +287,7 @@
       "takerFills": 1,
       "openPositions": 3,
       "pause": "normal",
-      "drawdown": 0.0018331428922278015
+      "drawdown": 0.0054003941495399665
     },
     {
       "id": "scout-daytrade",
@@ -311,7 +311,7 @@
   ],
   "drawdownPause": {
     "state": "normal",
-    "drawdown": 0.004351793224728895,
+    "drawdown": 0.00611508768437341,
     "peak": 30012.337528729568,
     "sizeMultiplier": 1,
     "triggeredAt": null,
