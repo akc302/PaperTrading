@@ -63,3 +63,13 @@ test('scout day-trade challenger is added to existing sets once, at reduced risk
  assert.ok(Math.abs(c.riskPct-0.005)<1e-12);assert.equal(c.maxOpenPositions,state.config.maxOpenPositions);
  assert.equal(challengerConfig(state,{...scout,riskScale:5},'BTC-USD').riskPct,0.02,'scale above 1 is clamped to main risk');
 });
+
+test('an existing scout picks up updated researcher seed rules in place, keeping its ledger',async()=>{
+ const {ensureChallengers}=await import('../scripts/challengers.mjs');
+ const state={config:{...DEFAULT_CONFIG},account:createAccount(30000)};ensureChallengers(state,1.8e9);
+ const scout=state.challengers.find(c=>c.id==='scout-daytrade');scout.rules={...scout.rules,proximity:0.006};scout.account.cash=12345;
+ assert.equal(ensureChallengers(state,1.8e9+60),true);
+ assert.equal(scout.rules.proximity,0.015);assert.equal(scout.account.cash,12345);assert.equal(scout.rulesHistory[0].rules.proximity,0.006);
+ assert.equal(ensureChallengers(state,1.8e9+120),false,'no change when rules already match');
+ assert.equal(state.challengers.find(c=>c.id==='trend-k2').rulesHistory,undefined,'non-researcher seeds untouched');
+});
