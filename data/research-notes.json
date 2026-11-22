@@ -74,6 +74,21 @@
       "adopted": true,
       "nextIdea": "Use the scout's live trades plus lab backtests to fit entry filters (hour of day, distance to support in ATR, volume ratio) that raise its win rate above 45%. Promote it only through the daily gate (7+ days, 20+ trades, PF 1.2+).",
       "status": "Scout runs on every 5-minute trader pass; main account stays on gated trend rules."
+    },
+    {
+      "at": "2026-11-22T05:29:37.229Z",
+      "tradesReviewed": 0,
+      "losses": 0,
+      "findings": [
+        "No trades closed in any account since 03:09Z. Main and both hourly challengers still hold the same XRP position (10-11h of a 24h hold).",
+        "scout-daytrade has been live since 03:09Z with no errors and no entries yet. Six coins are away from the support zone; ETH and XRP have support but too little room to resistance after fees, which is the fee guard working as intended. Expected pace is about 1.4 trades/day, so 2h without an entry is within normal range.",
+        "Trend challengers and main stay flat: every market still fails the daily EMA50 trend test.",
+        "GitHub skipped the 05:17Z research schedule; it was dispatched at 05:27Z. The lab chose keep for all 8 markets, and the 2-year trend leader trend-k3-top3 is still not validated."
+      ],
+      "changes": [],
+      "adopted": false,
+      "nextIdea": "Next run: if the scout has made 0 entries for 12h, test proximity 0.008-0.01 and a 1h-close-above-support confirmation in the lab so it trades more without dropping the fee guard. Once it has 5+ closed trades, fit hour-of-day and volume-ratio filters on them.",
+      "status": "Monitoring; no rule change this run."
     }
   ]
 }
