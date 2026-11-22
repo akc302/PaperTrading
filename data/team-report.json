@@ -1,11 +1,11 @@
 {
   "version": 1,
-  "generatedAt": "2026-11-22T09:46:33.505Z",
+  "generatedAt": "2026-11-22T10:28:46.631Z",
   "goal": 85000,
-  "equity": 29855.269747371072,
+  "equity": 29916.208606839096,
   "startingEquity": 30000,
-  "progressToGoal": -0.0026314591387077762,
-  "returnPct": -0.00482434175429759,
+  "progressToGoal": -0.001523479875652794,
+  "returnPct": -0.0027930464386967894,
   "drawdown": 0.008947045452893567,
   "openPositions": 1,
   "last24h": {
@@ -28,8 +28,8 @@
   "rulesInUse": {
     "BTC-USD": {
       "strategy": "trend-follow",
-      "approach": "aggressive-day-hold",
-      "decision": "keep"
+      "approach": "aggressive-day-hold+regime-block",
+      "decision": "shadow"
     },
     "ETH-USD": {
       "strategy": "trend-follow",
@@ -38,13 +38,13 @@
     },
     "SOL-USD": {
       "strategy": "trend-follow",
-      "approach": "wider-stop",
+      "approach": "current",
       "decision": "keep"
     },
     "XRP-USD": {
       "strategy": "trend-follow",
-      "approach": "wider-stop",
-      "decision": "shadow"
+      "approach": "current",
+      "decision": "keep"
     },
     "ADA-USD": {
       "strategy": "trend-follow",
@@ -58,8 +58,8 @@
     },
     "LINK-USD": {
       "strategy": "trend-follow",
-      "approach": "wider-stop+ml-filter",
-      "decision": "shadow"
+      "approach": "current",
+      "decision": "keep"
     },
     "AVAX-USD": {
       "strategy": "trend-follow",
@@ -70,12 +70,12 @@
   "agents": {
     "trader": {
       "role": "5-minute paper trader",
-      "lastRunMinutesAgo": 1,
+      "lastRunMinutesAgo": 3,
       "healthy": true
     },
     "researcher": {
       "role": "Claude every 5h: loss analysis, backtest, rule adoption",
-      "lastRunHoursAgo": 2.8,
+      "lastRunHoursAgo": 0,
       "healthy": true,
       "latestNote": {
         "at": "2026-11-22T06:09:06.378Z",
@@ -167,18 +167,18 @@
   },
   "goalEstimate": {
     "goal": 85000,
-    "equity": 29855.269747371072,
+    "equity": 29916.208606839096,
     "windowDays": 30,
     "label": "Estimated time to $85,000 at the trailing 30-day growth rate (not a promise)",
     "status": "insufficient-history",
-    "spanDays": 1.4073322337976208,
+    "spanDays": 1.436650821759745,
     "message": "Needs at least 7 days of equity history."
   },
   "scorecard": [
     {
       "id": "main",
       "label": "Main: trend-follow",
-      "equity": 29855.269747371072,
+      "equity": 29916.208606839096,
       "initial": 30000,
       "netPnl": -68.84274123655223,
       "profitFactor": 0,
@@ -192,7 +192,7 @@
       "takerFills": 2,
       "openPositions": 1,
       "pause": "normal",
-      "drawdown": 0.005233440454551097
+      "drawdown": 0.003202980167687719
     },
     {
       "id": "trend-k2",
@@ -254,7 +254,7 @@
     {
       "id": "hourly-legacy",
       "label": "Previous hourly rules",
-      "equity": 29810.740706589975,
+      "equity": 29983.627345467045,
       "initial": 29975.046647868254,
       "netPnl": -114.75210502432324,
       "profitFactor": 0,
@@ -268,12 +268,12 @@
       "takerFills": 1,
       "openPositions": 3,
       "pause": "normal",
-      "drawdown": 0.005481424039417204
+      "drawdown": 0.00035932199607868753
     },
     {
       "id": "lab-hourly",
       "label": "Lab hourly per-market rules",
-      "equity": 29814.004071088268,
+      "equity": 29973.440974463694,
       "initial": 29975.046647868254,
       "netPnl": -114.75210502432324,
       "profitFactor": 0,
@@ -287,16 +287,16 @@
       "takerFills": 1,
       "openPositions": 3,
       "pause": "normal",
-      "drawdown": 0.005372554667615104
+      "drawdown": 0.0006049541126301738
     },
     {
       "id": "scout-daytrade",
       "label": "Day-trade scout: support bounce (1.5% zone), 4h hold, 1/4 risk",
-      "equity": 29788.7180982152,
+      "equity": 29771.78833316522,
       "initial": 29788.7180982152,
       "netPnl": 0,
       "profitFactor": null,
-      "maxDrawdown": 0,
+      "maxDrawdown": 0.0005683280829393486,
       "winRate": null,
       "avgWin": null,
       "avgLoss": null,
@@ -304,14 +304,14 @@
       "fees": 0,
       "makerFills": 0,
       "takerFills": 0,
-      "openPositions": 0,
+      "openPositions": 1,
       "pause": "normal",
-      "drawdown": 0
+      "drawdown": 0.0005683280829393844
     }
   ],
   "drawdownPause": {
     "state": "normal",
-    "drawdown": 0.005233440454551097,
+    "drawdown": 0.003202980167687719,
     "peak": 30012.337528729568,
     "sizeMultiplier": 1,
     "triggeredAt": null,
