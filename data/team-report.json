@@ -1,11 +1,11 @@
 {
   "version": 1,
-  "generatedAt": "2026-11-22T07:21:11.817Z",
+  "generatedAt": "2026-11-22T08:31:41.523Z",
   "goal": 85000,
-  "equity": 29759.05049557945,
+  "equity": 29839.2332054058,
   "startingEquity": 30000,
-  "progressToGoal": -0.004380900080373645,
-  "returnPct": -0.008031650147351684,
+  "progressToGoal": -0.0029230326289854764,
+  "returnPct": -0.00535889315314004,
   "drawdown": 0.008947045452893567,
   "openPositions": 1,
   "last24h": {
@@ -75,7 +75,7 @@
     },
     "researcher": {
       "role": "Claude every 5h: loss analysis, backtest, rule adoption",
-      "lastRunHoursAgo": 0.3,
+      "lastRunHoursAgo": 1.5,
       "healthy": true,
       "latestNote": {
         "at": "2026-11-22T06:09:06.378Z",
@@ -112,7 +112,7 @@
         "id": "history",
         "label": "28+ days of forward paper trading with the research team",
         "pass": false,
-        "value": "1.1 days"
+        "value": "1.2 days"
       },
       {
         "id": "sample",
@@ -167,18 +167,18 @@
   },
   "goalEstimate": {
     "goal": 85000,
-    "equity": 29759.05049557945,
+    "equity": 29839.2332054058,
     "windowDays": 30,
     "label": "Estimated time to $85,000 at the trailing 30-day growth rate (not a promise)",
     "status": "insufficient-history",
-    "spanDays": 1.3063867708323178,
+    "spanDays": 1.3553417013889109,
     "message": "Needs at least 7 days of equity history."
   },
   "scorecard": [
     {
       "id": "main",
       "label": "Main: trend-follow",
-      "equity": 29759.05049557945,
+      "equity": 29839.2332054058,
       "initial": 30000,
       "netPnl": -68.84274123655223,
       "profitFactor": 0,
@@ -192,7 +192,7 @@
       "takerFills": 2,
       "openPositions": 1,
       "pause": "normal",
-      "drawdown": 0.00843943038117767
+      "drawdown": 0.005767772108988933
     },
     {
       "id": "trend-k2",
@@ -254,7 +254,7 @@
     {
       "id": "hourly-legacy",
       "label": "Previous hourly rules",
-      "equity": 29689.389802171907,
+      "equity": 29769.314483163293,
       "initial": 29975.046647868254,
       "netPnl": -114.75210502432324,
       "profitFactor": 0,
@@ -268,12 +268,12 @@
       "takerFills": 1,
       "openPositions": 1,
       "pause": "normal",
-      "drawdown": 0.0095298215563131
+      "drawdown": 0.006863447691067837
     },
     {
       "id": "lab-hourly",
       "label": "Lab hourly per-market rules",
-      "equity": 29689.389802171907,
+      "equity": 29769.314483163293,
       "initial": 29975.046647868254,
       "netPnl": -114.75210502432324,
       "profitFactor": 0,
@@ -287,7 +287,7 @@
       "takerFills": 1,
       "openPositions": 1,
       "pause": "normal",
-      "drawdown": 0.0095298215563131
+      "drawdown": 0.006863447691067837
     },
     {
       "id": "scout-daytrade",
@@ -311,7 +311,7 @@
   ],
   "drawdownPause": {
     "state": "normal",
-    "drawdown": 0.00843943038117767,
+    "drawdown": 0.005767772108988933,
     "peak": 30012.337528729568,
     "sizeMultiplier": 1,
     "triggeredAt": null,
