@@ -1,16 +1,16 @@
 {
-  "at": "2026-11-23T19:15:10.858Z",
+  "at": "2026-11-23T21:15:10.108Z",
   "goal": 85000,
   "start": 30000,
   "equity": 29865.26,
   "remaining": 55134.74,
   "progressPct": 0,
   "onTrack": false,
-  "verdict": "The main paper account (fake money) is at $29865.26 (-0.4%) and has made no trades since switching to the hourly rules at 17:20 UTC, because their pattern filter has not confirmed a setup on any coin. The same rules gave back the midday rally in the challengers this evening, and a 1-year backtest shows they lose after fees, so the owner has been asked to choose half size or a return to the trend rules.",
+  "verdict": "The main paper account (fake money) is at $29865.26 (-0.4%) with no trades in the 4 hours since switching to the hourly rules, because their pattern filter has not confirmed a setup; the hourly challengers on the same rules made no entries either, so this is the market, not a bug. The full-size day trader is the only account trading tonight (BTC, ETH and XRP opened), and the owner's choice of half size versus trend rules for the main account is still pending.",
   "last24h": "Main: 0 closed (0 wins, $0.00). Best challenger daytrader-range: 2 closed (1 wins, $89.59).",
   "readiness": "2/9",
   "fixed": [
-    "No faults; confirmed the main account waits only on its pattern filter (the same filter blocks the challengers), not a bug"
+    "No faults; confirmed main and the hourly challengers are all waiting on the same pattern filter"
   ],
-  "nextStep": "Owner decides: keep the hourly rules at half size (1% risk) or return the main paper account to the trend rules; the 30-trade safety check stays on."
+  "nextStep": "Owner decides half size or trend rules for the main paper account; researcher tests a three-signal entry to lift the win rate above 40%."
 }
