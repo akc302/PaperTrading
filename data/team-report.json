@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "generatedAt": "2026-11-23T14:32:01.232Z",
+  "generatedAt": "2026-11-23T15:46:45.197Z",
   "goal": 85000,
   "equity": 29865.26287940766,
   "startingEquity": 30000,
@@ -75,7 +75,7 @@
     },
     "researcher": {
       "role": "Claude every 5h: loss analysis, backtest, rule adoption",
-      "lastRunHoursAgo": 1.2,
+      "lastRunHoursAgo": 2.4,
       "healthy": true,
       "sweep": {
         "at": "2026-11-23T08:16:51.985Z",
@@ -100,13 +100,13 @@
         }
       },
       "latestNote": {
-        "at": "2026-11-23T12:35:44.669Z",
-        "tradesReviewed": 0,
-        "losses": 0,
-        "findings": 3,
-        "changes": 1,
+        "at": "2026-11-23T15:29:55.713Z",
+        "tradesReviewed": 7,
+        "losses": 3,
+        "findings": 4,
+        "changes": 0,
         "adopted": false,
-        "nextIdea": "When the regime signal shows coins back in a daily uptrend, add an RSI<30, 2R dip-6h challenger at 1/4 risk next to scout-dip6h, and judge both on live trades. Meanwhile test the same dip logic on daily RSI with a weekly-trend filter, so more history (2 years of daily bars) gives more trades."
+        "nextIdea": "If tomorrow's daily close lifts any coin above its EMA50, the regime turns 'mixed': re-run the 2-year trend validation on those coins and consider an RSI<30 2R dip-6h challenger. Keep watching whether the hourly challengers' rally gains survive their 30-trade retirement check."
       }
     },
     "verifier": {
@@ -134,7 +134,7 @@
         "id": "history",
         "label": "28+ days of forward paper trading with the research team",
         "pass": false,
-        "value": "2.4 days"
+        "value": "2.5 days"
       },
       {
         "id": "sample",
@@ -193,7 +193,7 @@
     "windowDays": 30,
     "label": "Estimated time to $85,000 at the trailing 30-day growth rate (not a promise)",
     "status": "insufficient-history",
-    "spanDays": 2.6055698148161173,
+    "spanDays": 2.6574675578706795,
     "message": "Needs at least 7 days of equity history."
   },
   "scorecard": [
@@ -276,11 +276,11 @@
     {
       "id": "hourly-legacy",
       "label": "Previous hourly rules",
-      "equity": 30596.75842424657,
+      "equity": 30185.01808992465,
       "initial": 29975.046647868254,
       "netPnl": 334.1084887124103,
       "profitFactor": 2.199337982986681,
-      "maxDrawdown": 0.011608184416212404,
+      "maxDrawdown": 0.015501585870559866,
       "winRate": 0.5714285714285714,
       "avgWin": 153.17147878398367,
       "avgLoss": -92.8591421411748,
@@ -290,12 +290,12 @@
       "takerFills": 5,
       "openPositions": 3,
       "pause": "normal",
-      "drawdown": 0.0020724832287973838
+      "drawdown": 0.01550158587055983
     },
     {
       "id": "lab-hourly",
       "label": "Lab hourly per-market rules",
-      "equity": 30438.0522488717,
+      "equity": 30120.365683227592,
       "initial": 29975.046647868254,
       "netPnl": 265.69849277305923,
       "profitFactor": 1.551442318552868,
@@ -307,9 +307,9 @@
       "fees": 208.44299413865588,
       "makerFills": 12,
       "takerFills": 8,
-      "openPositions": 2,
+      "openPositions": 3,
       "pause": "normal",
-      "drawdown": 0.001427635067150712
+      "drawdown": 0.011849886220701156
     },
     {
       "id": "scout-daytrade",
@@ -379,7 +379,7 @@
   },
   "verdict": "needs-attention",
   "issues": [
-    "No new paper entry for 45h; current rules may be too strict for this market."
+    "No new paper entry for 46h; current rules may be too strict for this market."
   ],
   "dispatch": []
 }
