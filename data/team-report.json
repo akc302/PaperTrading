@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "generatedAt": "2026-11-23T02:53:11.428Z",
+  "generatedAt": "2026-11-23T04:05:38.823Z",
   "goal": 85000,
   "equity": 29865.26287940766,
   "startingEquity": 30000,
@@ -70,21 +70,42 @@
   "agents": {
     "trader": {
       "role": "5-minute paper trader",
-      "lastRunMinutesAgo": 3,
+      "lastRunMinutesAgo": 5,
       "healthy": true
     },
     "researcher": {
       "role": "Claude every 5h: loss analysis, backtest, rule adoption",
-      "lastRunHoursAgo": 1.9,
+      "lastRunHoursAgo": 3.1,
       "healthy": true,
+      "sweep": {
+        "at": "2026-11-23T04:05:16.788Z",
+        "source": "data/history 1h (1 year)",
+        "days": 364.8,
+        "rulesTested": 32,
+        "passingAllWindows": 0,
+        "best": {
+          "config": {
+            "strategy": "rsi-reversion",
+            "stopAtrMultiplier": 2.5,
+            "rewardRisk": 2,
+            "maxHoldHours": 24
+          },
+          "unseen": {
+            "trades": 65,
+            "winRate": 0.38461538461538464,
+            "net": -1014.26,
+            "profitFactor": 0.5
+          }
+        }
+      },
       "latestNote": {
-        "at": "2026-11-23T02:51:09.797Z",
+        "at": "2026-11-23T03:05:42.689Z",
         "tradesReviewed": 0,
         "losses": 0,
-        "findings": 4,
-        "changes": 3,
+        "findings": 2,
+        "changes": 5,
         "adopted": true,
-        "nextIdea": "Use daytrader-range's live trades (expect 5-10 a day) to fit entry filters: skip ranges whose low was set in the last 3h (still falling), require 2+ touches of the low, and only trade coins whose 24h range is at least 2.5% wide. Re-test each on the newest unseen data before changing the challenger."
+        "nextIdea": "Once data/sweep.json comes from 1-year hourly data, promote any rule that is positive in all three windows into a challenger, and expand the grid around it."
       }
     },
     "verifier": {
@@ -112,7 +133,7 @@
         "id": "history",
         "label": "28+ days of forward paper trading with the research team",
         "pass": false,
-        "value": "1.9 days"
+        "value": "2.0 days"
       },
       {
         "id": "sample",
@@ -171,7 +192,7 @@
     "windowDays": 30,
     "label": "Estimated time to $85,000 at the trailing 30-day growth rate (not a promise)",
     "status": "insufficient-history",
-    "spanDays": 2.1202711574070983,
+    "spanDays": 2.1705882291661367,
     "message": "Needs at least 7 days of equity history."
   },
   "scorecard": [
@@ -254,7 +275,7 @@
     {
       "id": "hourly-legacy",
       "label": "Previous hourly rules",
-      "equity": 29706.166350601452,
+      "equity": 30038.98307341258,
       "initial": 29975.046647868254,
       "netPnl": -152.29220271457623,
       "profitFactor": 0.1854276580606489,
@@ -268,12 +289,12 @@
       "takerFills": 3,
       "openPositions": 3,
       "pause": "normal",
-      "drawdown": 0.011608184416212364
+      "drawdown": 0.0027790083054298753
     },
     {
       "id": "lab-hourly",
       "label": "Lab hourly per-market rules",
-      "equity": 29677.820408030984,
+      "equity": 29858.119236588944,
       "initial": 29975.046647868254,
       "netPnl": -327.17225270176664,
       "profitFactor": 0,
@@ -287,7 +308,7 @@
       "takerFills": 3,
       "openPositions": 2,
       "pause": "normal",
-      "drawdown": 0.012136229601776627
+      "drawdown": 0.0061347551629916675
     },
     {
       "id": "scout-daytrade",
@@ -330,11 +351,11 @@
     {
       "id": "daytrader-range",
       "label": "Day trader: buy 24h range low, sell near high, up to 50% per trade",
-      "equity": 29865.26287940766,
+      "equity": 29826.20858986323,
       "initial": 29865.26287940766,
       "netPnl": 0,
       "profitFactor": null,
-      "maxDrawdown": 0,
+      "maxDrawdown": 0.0028632934014937513,
       "winRate": null,
       "avgWin": null,
       "avgLoss": null,
@@ -342,9 +363,9 @@
       "fees": 0,
       "makerFills": 0,
       "takerFills": 0,
-      "openPositions": 0,
+      "openPositions": 2,
       "pause": "normal",
-      "drawdown": null
+      "drawdown": 0.001915701416191462
     }
   ],
   "drawdownPause": {
@@ -357,7 +378,7 @@
   },
   "verdict": "needs-attention",
   "issues": [
-    "No new paper entry for 33h; current rules may be too strict for this market."
+    "No new paper entry for 34h; current rules may be too strict for this market."
   ],
   "dispatch": []
 }
