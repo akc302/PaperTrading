@@ -226,6 +226,23 @@
       "adopted": true,
       "nextIdea": "Once data/sweep.json comes from 1-year hourly data, promote any rule that is positive in all three windows into a challenger, and expand the grid around it.",
       "status": "Merged; the daily review was dispatched to fetch the hourly year and run the first full sweep."
+    },
+    {
+      "at": "2026-11-23T04:07:23.649Z",
+      "tradesReviewed": 0,
+      "losses": 0,
+      "findings": [
+        "No trades closed since 03:04Z. daytrader-range is live with 2 resting limit buys (XRP, ADA). The hourly challengers hold ETH, DOGE, XRP and AVAX.",
+        "First full-year sweep (8 coins x 8,755 hourly candles, 32 rules, Advanced 2 fees, 2% risk, 25% allocation): 0 rules positive in any of the train, validation or unseen windows. Best profit factors were 0.5-0.8; every family loses over the year, not just in this month's downtrend.",
+        "Best by unseen result: rsi-reversion (2.5 ATR stop, 2R, 24h hold): train 142t 25% -4203 / validation 68t 31% -1254 / unseen 65t 38% -1014. donchian (2R, 24h): 424t/201t/180t with profit factor 0.52/0.81/0.69, the closest to break-even. horizontal and aggressive were worst, at profit factor 0.2-0.4.",
+        "Conclusion: with long-only spot and these fees, short-horizon hourly entries have no edge over a year. Hourly challengers are evidence only; the research focus moves to longer-horizon and trend-following rules, which hold for days and pay fees once per large move."
+      ],
+      "changes": [
+        "Review pipeline fixed (PR #28): the year of hourly history (4.8 MB) and the sweep are now committed; the sweep runs in about 9 min with worker threads"
+      ],
+      "adopted": false,
+      "nextIdea": "Add rule families built for bigger moves to the sweep: hourly donchian breakouts with an ATR trailing stop and no fixed target, multi-day holds (72-168h), and the dip-6h entry with a trailing exit. Keep only rules whose profit factor is above 1.1 in all three windows.",
+      "status": "Recorded; sweep grid expansion is next."
     }
   ]
 }
