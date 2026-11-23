@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "generatedAt": "2026-11-23T04:05:38.823Z",
+  "generatedAt": "2026-11-23T04:08:07.083Z",
   "goal": 85000,
   "equity": 29865.26287940766,
   "startingEquity": 30000,
@@ -43,17 +43,17 @@
     },
     "XRP-USD": {
       "strategy": "trend-follow",
-      "approach": "aggressive-day-hold+regime-block",
+      "approach": "current",
       "decision": "keep"
     },
     "ADA-USD": {
       "strategy": "trend-follow",
-      "approach": "regime-block",
-      "decision": "shadow"
+      "approach": "current",
+      "decision": "keep"
     },
     "DOGE-USD": {
       "strategy": "trend-follow",
-      "approach": "longer-hold",
+      "approach": "current",
       "decision": "keep"
     },
     "LINK-USD": {
@@ -70,12 +70,12 @@
   "agents": {
     "trader": {
       "role": "5-minute paper trader",
-      "lastRunMinutesAgo": 5,
+      "lastRunMinutesAgo": 2,
       "healthy": true
     },
     "researcher": {
       "role": "Claude every 5h: loss analysis, backtest, rule adoption",
-      "lastRunHoursAgo": 3.1,
+      "lastRunHoursAgo": 0,
       "healthy": true,
       "sweep": {
         "at": "2026-11-23T04:05:16.788Z",
@@ -99,13 +99,13 @@
         }
       },
       "latestNote": {
-        "at": "2026-11-23T03:05:42.689Z",
+        "at": "2026-11-23T04:07:23.649Z",
         "tradesReviewed": 0,
         "losses": 0,
-        "findings": 2,
-        "changes": 5,
-        "adopted": true,
-        "nextIdea": "Once data/sweep.json comes from 1-year hourly data, promote any rule that is positive in all three windows into a challenger, and expand the grid around it."
+        "findings": 4,
+        "changes": 1,
+        "adopted": false,
+        "nextIdea": "Add rule families built for bigger moves to the sweep: hourly donchian breakouts with an ATR trailing stop and no fixed target, multi-day holds (72-168h), and the dip-6h entry with a trailing exit. Keep only rules whose profit factor is above 1.1 in all three windows."
       }
     },
     "verifier": {
@@ -192,7 +192,7 @@
     "windowDays": 30,
     "label": "Estimated time to $85,000 at the trailing 30-day growth rate (not a promise)",
     "status": "insufficient-history",
-    "spanDays": 2.1705882291661367,
+    "spanDays": 2.1723042013882488,
     "message": "Needs at least 7 days of equity history."
   },
   "scorecard": [
@@ -275,7 +275,7 @@
     {
       "id": "hourly-legacy",
       "label": "Previous hourly rules",
-      "equity": 30038.98307341258,
+      "equity": 30037.812313674516,
       "initial": 29975.046647868254,
       "netPnl": -152.29220271457623,
       "profitFactor": 0.1854276580606489,
@@ -289,12 +289,12 @@
       "takerFills": 3,
       "openPositions": 3,
       "pause": "normal",
-      "drawdown": 0.0027790083054298753
+      "drawdown": 0.002817874673980869
     },
     {
       "id": "lab-hourly",
       "label": "Lab hourly per-market rules",
-      "equity": 29858.119236588944,
+      "equity": 29841.138953393383,
       "initial": 29975.046647868254,
       "netPnl": -327.17225270176664,
       "profitFactor": 0,
@@ -306,9 +306,9 @@
       "fees": 74.4795847223142,
       "makerFills": 3,
       "takerFills": 3,
-      "openPositions": 2,
+      "openPositions": 3,
       "pause": "normal",
-      "drawdown": 0.0061347551629916675
+      "drawdown": 0.006313944021764772
     },
     {
       "id": "scout-daytrade",
@@ -351,7 +351,7 @@
     {
       "id": "daytrader-range",
       "label": "Day trader: buy 24h range low, sell near high, up to 50% per trade",
-      "equity": 29826.20858986323,
+      "equity": 29828.269384321808,
       "initial": 29865.26287940766,
       "netPnl": 0,
       "profitFactor": null,
@@ -365,7 +365,7 @@
       "takerFills": 0,
       "openPositions": 2,
       "pause": "normal",
-      "drawdown": 0.001915701416191462
+      "drawdown": 0.001846740368543709
     }
   ],
   "drawdownPause": {
