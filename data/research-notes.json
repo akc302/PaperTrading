@@ -259,6 +259,24 @@
       "adopted": false,
       "nextIdea": "Stop searching for a long-only edge in the bear regime. Make capital preservation the main measure (main stays in cash until the daily trend turns), keep daytrader-range as the active evidence account, and add a regime detector to the sweep report (share of coins above daily EMA50) so the team switches to the validated trend rules the day the regime turns up.",
       "status": "Recorded; small grid addition."
+    },
+    {
+      "at": "2026-11-23T09:29:34.486Z",
+      "tradesReviewed": 4,
+      "losses": 0,
+      "findings": [
+        "4 closes since 06:30Z, all hourly-challenger winners on a relief bounce, all time exits short of their ~4.5% targets: ETH +151.08 (gross +185.02, 24.1h, in both hourly challengers), SOL +84.78 (4.1h) and AVAX +50.44 (24.1h) in lab-hourly.",
+        "These winners do not overturn the 1-year sweep (hourly rules lose overall, profit factor at most 0.8): one bounce day is noise against 300+ backtested trades per rule. They stay as challenger evidence.",
+        "Regime today: 0 of 8 coins in a daily uptrend (close > EMA50 and EMA20 > EMA50); BTC -6.36% over 7 days and -24.56% over 30 days. State: down. The main account correctly stays in cash."
+      ],
+      "changes": [
+        "scripts/sweep.mjs: regimeFrom() adds a market-regime block (coins in a daily uptrend, share, up/mixed/down, BTC 7d/30d change) to data/sweep.json",
+        "team report: researcher.sweep.regime so the manager sees the regime every hour",
+        "test for the regime signal"
+      ],
+      "adopted": true,
+      "nextIdea": "When the regime turns 'mixed' or 'up' (at least one coin back above its daily EMA50), re-run the 2-year trend validation and the dip-6h rule on those coins first. Until then, track whether the hourly challengers' bounce gains hold over the next 30 trades before their retirement check.",
+      "status": "Merged."
     }
   ]
 }

@@ -33,6 +33,14 @@ export function sweep(series,fees,configs=grid(),{riskPct=0.02,maxAllocation=0.2
  results.sort((x,y)=>(y.passesAll-x.passesAll)||(y.passesEarlier-x.passesEarlier)||(y.unseen.net-x.unseen.net));
  return results;
 }
+/** Market regime from stored daily candles: share of coins whose last daily close is above EMA50 and EMA20>EMA50,
+ * plus BTC's 7- and 30-day change. 'up' when at least half the coins pass, so the team knows when trend rules can trade. */
+export function regimeFrom(dailyByProduct){
+ const ema=(a,n)=>{const k=2/(n+1);let e=a[0];for(const v of a)e=v*k+e*(1-k);return e;};
+ const rows=Object.entries(dailyByProduct).filter(([,d])=>d.length>=60).map(([p,d])=>{const c=d.map(b=>b.close),e20=ema(c,20),e50=ema(c,50);return {product:p,above:c.at(-1)>e50&&e20>e50};});
+ const share=rows.length?rows.filter(r=>r.above).length/rows.length:0,btc=dailyByProduct['BTC-USD']??[],ch=n=>btc.length>n?+((btc.at(-1).close/btc.at(-1-n).close-1)*100).toFixed(2):null;
+ return {coinsInUptrend:rows.filter(r=>r.above).map(r=>r.product),share:+share.toFixed(2),state:share>=0.5?'up':share>0?'mixed':'down',btc7dPct:ch(7),btc30dPct:ch(30)};
+}
 export async function loadHourly(products=HISTORY_PRODUCTS,dir='data/history'){
  const out={};let source='data/history 1h (1 year)';
  for(const p of products){const f=await readHistoryFile(historyFile(dir,p,'1h')).catch(()=>null);if(f?.candles?.length)out[p]=normalizeCandles(f.candles);}
@@ -49,8 +57,9 @@ async function parallelSweep(series,fees,configs=grid()){
 if(!isMainThread&&workerData?.chunk){parentPort.postMessage(sweep(workerData.series,workerData.fees,workerData.chunk));}
 export async function run(){
  const {series,source}=await loadHourly(),ft=JSON.parse(await readFile('data/fee-tier.json','utf8')),fees={feeRate:ft.takerFeeRate,makerFeeRate:ft.makerFeeRate,takerFeeRate:ft.takerFeeRate},t0=Date.now();
+ const daily={};for(const p of HISTORY_PRODUCTS){const f=await readHistoryFile(historyFile('data/history',p,'1d')).catch(()=>null);daily[p]=normalizeCandles(f?.candles??[]);}
  const results=await parallelSweep(series,fees),bars=Math.max(...Object.values(series).map(b=>b.length));
- const report={at:new Date().toISOString(),source,barsPerCoin:bars,days:+(bars/24).toFixed(1),fees,windows:'train 50% / validation 25% / unseen newest 25%, by entry time',rulesTested:results.length,
+ const report={at:new Date().toISOString(),source,barsPerCoin:bars,days:+(bars/24).toFixed(1),fees,regime:regimeFrom(daily),windows:'train 50% / validation 25% / unseen newest 25%, by entry time',rulesTested:results.length,
   passingAllWindows:results.filter(r=>r.passesAll).length,best:results[0]??null,top:results.slice(0,12),seconds:+((Date.now()-t0)/1000).toFixed(1)};
  await writeFile('data/sweep.json',JSON.stringify(report,null,1)+'\n');
  console.log(`Sweep: ${report.rulesTested} rules on ${report.days} days, ${report.passingAllWindows} positive in all three windows (${report.seconds}s).`);
