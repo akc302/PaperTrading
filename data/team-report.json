@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "generatedAt": "2026-11-23T13:00:16.503Z",
+  "generatedAt": "2026-11-23T13:22:13.333Z",
   "goal": 85000,
   "equity": 29865.26287940766,
   "startingEquity": 30000,
@@ -38,8 +38,8 @@
     },
     "SOL-USD": {
       "strategy": "trend-follow",
-      "approach": "wider-stop",
-      "decision": "keep"
+      "approach": "regime-block",
+      "decision": "shadow"
     },
     "XRP-USD": {
       "strategy": "trend-follow",
@@ -70,12 +70,12 @@
   "agents": {
     "trader": {
       "role": "5-minute paper trader",
-      "lastRunMinutesAgo": 5,
+      "lastRunMinutesAgo": 2,
       "healthy": true
     },
     "researcher": {
       "role": "Claude every 5h: loss analysis, backtest, rule adoption",
-      "lastRunHoursAgo": 2.7,
+      "lastRunHoursAgo": 0,
       "healthy": true,
       "sweep": {
         "at": "2026-11-23T08:16:51.985Z",
@@ -134,7 +134,7 @@
         "id": "history",
         "label": "28+ days of forward paper trading with the research team",
         "pass": false,
-        "value": "2.3 days"
+        "value": "2.4 days"
       },
       {
         "id": "sample",
@@ -193,7 +193,7 @@
     "windowDays": 30,
     "label": "Estimated time to $85,000 at the trailing 30-day growth rate (not a promise)",
     "status": "insufficient-history",
-    "spanDays": 2.541857673611354,
+    "spanDays": 2.557098761573434,
     "message": "Needs at least 7 days of equity history."
   },
   "scorecard": [
@@ -276,7 +276,7 @@
     {
       "id": "hourly-legacy",
       "label": "Previous hourly rules",
-      "equity": 30007.784835557562,
+      "equity": 30078.76056569913,
       "initial": 29975.046647868254,
       "netPnl": -1.2141185008915727,
       "profitFactor": 0.9935059882710037,
@@ -290,12 +290,12 @@
       "takerFills": 4,
       "openPositions": 3,
       "pause": "normal",
-      "drawdown": 0.005766177743160017
+      "drawdown": 0.0034145722563564407
     },
     {
       "id": "lab-hourly",
       "label": "Lab hourly per-market rules",
-      "equity": 29769.925967549054,
+      "equity": 29838.48667896454,
       "initial": 29975.046647868254,
       "netPnl": -104.35564304179047,
       "profitFactor": 0.7328704205584521,
@@ -309,7 +309,7 @@
       "takerFills": 7,
       "openPositions": 3,
       "pause": "normal",
-      "drawdown": 0.009070379615180757
+      "drawdown": 0.006788249662613266
     },
     {
       "id": "scout-daytrade",
