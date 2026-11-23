@@ -277,6 +277,22 @@
       "adopted": true,
       "nextIdea": "When the regime turns 'mixed' or 'up' (at least one coin back above its daily EMA50), re-run the 2-year trend validation and the dip-6h rule on those coins first. Until then, track whether the hourly challengers' bounce gains hold over the next 30 trades before their retirement check.",
       "status": "Merged."
+    },
+    {
+      "at": "2026-11-23T12:35:44.669Z",
+      "tradesReviewed": 0,
+      "losses": 0,
+      "findings": [
+        "No trades closed since 09:29Z. The sweep is unchanged since 08:16Z: 0 of 34 rules pass all three windows.",
+        "New family tested on 1-year hourly data with the stored 6h/daily history: dip-6h (6h RSI dip, bought only while the daily close is above EMA100). Train and validation: 0 trades, because no coin was in a daily uptrend in those windows. Unseen: RSI<25 5t 100% +371.13; RSI<30 15t 67% +325.87 (1R, PF 1.58) / +466.20 (2R, PF 1.83).",
+        "This matches the 2-year 6h test (validation +2.3R, unseen +4.2R). It is the only family with a positive edge so far, but it trades only in daily uptrends and the sample is small (5-15 trades), so it cannot pass the three-window gate yet. scout-dip6h (RSI<25, 1/4 risk) is already live for it."
+      ],
+      "changes": [
+        "scripts/sweep.mjs: dip-6h (RSI 25/30, 1R/2R, 48h) added to the daily grid, with the stored 6h/daily history passed to every backtest"
+      ],
+      "adopted": false,
+      "nextIdea": "When the regime signal shows coins back in a daily uptrend, add an RSI<30, 2R dip-6h challenger at 1/4 risk next to scout-dip6h, and judge both on live trades. Meanwhile test the same dip logic on daily RSI with a weekly-trend filter, so more history (2 years of daily bars) gives more trades.",
+      "status": "Grid extended; daily review picks it up."
     }
   ]
 }
