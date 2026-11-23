@@ -326,6 +326,21 @@
       "adopted": true,
       "nextIdea": "Every 2h: review each main-account trade (entry regime, MFE, stop vs ATR, fees). If the main account loses over 30 trades with profit factor < 0.8, propose switching it back to the trend rules, with the numbers, rather than letting losses run.",
       "status": "Applied at the daily-review rules step on both the public and the encrypted paper accounts."
+    },
+    {
+      "at": "2026-11-23T18:33:12.287Z",
+      "tradesReviewed": 5,
+      "losses": 5,
+      "findings": [
+        "Main paper account: switched to hourly-legacy rules at 17:20Z; no entries yet (pattern filter not confirmed on any coin at the 17:20-18:25 checks).",
+        "Challengers gave back the rally: 5 losses, -979.71 in total. hourly-legacy BTC -105.81, ETH -281.45, SOL -239.78; lab-hourly ETH -113.87, SOL -238.80. All five entered at 14:05Z after a run-up (6h +3.9% to +6.4%, 24h +5.2% to +9.4%), reached MFE +2.0-3.7%, then fell 3.2-3.6% into 3% stops or 4h time exits. They bought late into the rally top.",
+        "Hypothesis tested (failed): a chase filter that skips buys after a 6h run above 2/3/5%, on the main account's current rules over 1 year (8 coins, fees). Train / validation / unseen: none -25,578 / -9,141 / -7,536; 2% -21,819 / -9,489 / -7,244; 3% -23,994 / -9,672 / -7,065. The small gains in train/unseen reverse in validation, and the win rate stays 25-29%. Not adopted; code reverted.",
+        "Warning for the owner: the main paper account's current rules lost about $42k on $80k of test capital over the year (about 3,400 trades, 26-29% wins). Today's +888 then -980 swing is typical of this rule set."
+      ],
+      "changes": [],
+      "adopted": false,
+      "nextIdea": "Report to the owner with numbers and recommend a smaller position size (riskScale 0.5) on the main paper account while it trades the hourly rules, or a return to trend rules, before the 30-trade safety check triggers. Keep searching for an edge in the daily-uptrend dip family once the regime turns.",
+      "status": "Recorded; no rule change."
     }
   ]
 }
