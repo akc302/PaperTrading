@@ -1,6 +1,8 @@
 /** Pure market analysis plus a virtual, long-only ledger. No account or order APIs. */
 export const DEFAULT_CONFIG = Object.freeze({strategy:'horizontal',lookback:48,pivotWindow:3,proximity:0.006,stopBuffer:0.004,rewardRisk:2,riskPct:0.01,feeRate:0.006,slippage:0.0005,maxAllocation:0.25,trendLookback:180,maxHoldHours:48,maxDailyLoss:0.04,maxOpenPositions:4,maxTotalRisk:0.03,stopAtrMultiplier:1.25});
 
+// A take-profit must clear both fees by at least this much at the live quote, or the entry is skipped.
+export const MIN_TARGET_EDGE=0.001;
 export const STRATEGIES = Object.freeze(['horizontal','trendline','aggressive','ema-trend','donchian','rsi-reversion','trend-follow','dip-6h','range']);
 /** Trend-follow defaults: chandelier k, how many top-ranked coins may be held, 6h breakout length, ranking window (days). */
 export const TREND_DEFAULTS = Object.freeze({trailAtrMultiplier:3,trendTopN:2,trendBreakout:20,trendRankDays:30});
@@ -491,6 +493,7 @@ export function processQuoteBatch(account,events,{time=Date.now()/1000,pause=nul
   else if(exited.has(e.product)){action='EXIT';reason='Virtual exit executed at this check; no immediate same-check re-entry.';}
   else if(time-(account.lastEntries[e.product]??0)<1800)reason='30-minute exploration re-entry cooldown.';
   else if(signal.signal==='BUY'&&gate.state==='blocked')reason=`Drawdown pause: equity ${(gate.drawdown*100).toFixed(1)}% below its peak; new entries blocked until pause.cleared is set by the supervisor or manager.`;
+  else if(signal.signal==='BUY'&&e.config.strategy!=='trend-follow'&&positive(signal.target)&&signal.target/price<1+2*(e.config.makerFeeRate??e.config.feeRate)+MIN_TARGET_EDGE)reason=`Target ${((signal.target/price-1)*100).toFixed(2)}% above the live quote does not cover round-trip fees plus ${(MIN_TARGET_EDGE*100).toFixed(1)}%.`;
   else if(signal.signal==='BUY'&&e.config.entryOrder==='limit'){const ref=Math.min(price,positive(e.quote.bid)?+e.quote.bid:price),limit=ref*(1-(e.config.limitOffset??LIMIT_DEFAULTS.limitOffset));
    account.pendingOrders.push({id:`order-${account.nextId++}`,product:e.product,limit,stopDistance:price-signal.stop,targetMultiple:signal.target/price,createdAt:time,checks:0,maxChecks:e.config.limitChecks??LIMIT_DEFAULTS.limitChecks,setup:signal.setup,pattern:signal.pattern??null,trail:trailFor(signal,e.config),liquidity:'maker',riskScale:gate.sizeMultiplier});
    action='ORDER';reason=`${signal.reason} Paper limit buy placed at ${limit.toPrecision(6)} (bid/last minus ${((e.config.limitOffset??LIMIT_DEFAULTS.limitOffset)*100).toFixed(2)}%); counts only if a later quote trades at or below it.`;}
