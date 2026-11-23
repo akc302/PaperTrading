@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "generatedAt": "2026-11-23T20:12:13.215Z",
+  "generatedAt": "2026-11-23T21:26:47.985Z",
   "goal": 85000,
   "equity": 29865.26287940766,
   "startingEquity": 30000,
@@ -70,12 +70,12 @@
   "agents": {
     "trader": {
       "role": "5-minute paper trader",
-      "lastRunMinutesAgo": 2,
+      "lastRunMinutesAgo": 1,
       "healthy": true
     },
     "researcher": {
       "role": "Claude every 5h: loss analysis, backtest, rule adoption",
-      "lastRunHoursAgo": 0,
+      "lastRunHoursAgo": 1.2,
       "healthy": true,
       "sweep": {
         "at": "2026-11-23T17:17:43.630Z",
@@ -107,13 +107,13 @@
         }
       },
       "latestNote": {
-        "at": "2026-11-23T18:33:12.287Z",
-        "tradesReviewed": 5,
-        "losses": 5,
-        "findings": 4,
+        "at": "2026-11-23T20:29:39.434Z",
+        "tradesReviewed": 0,
+        "losses": 0,
+        "findings": 3,
         "changes": 0,
         "adopted": false,
-        "nextIdea": "Report to the owner with numbers and recommend a smaller position size (riskScale 0.5) on the main paper account while it trades the hourly rules, or a return to trend rules, before the 30-trade safety check triggers. Keep searching for an edge in the daily-uptrend dip family once the regime turns."
+        "nextIdea": "Owner decision is pending (half size vs trend rules). Next research: a 'trade only when 2+ independent signals agree' entry (pattern + 1h RSI<35 + price within 1 ATR of the 24h low) to raise the win rate above 40%, tested on 1-year hourly data with fees."
       }
     },
     "verifier": {
@@ -141,7 +141,7 @@
         "id": "history",
         "label": "28+ days of forward paper trading with the research team",
         "pass": false,
-        "value": "2.6 days"
+        "value": "2.7 days"
       },
       {
         "id": "sample",
@@ -200,7 +200,7 @@
     "windowDays": 30,
     "label": "Estimated time to $85,000 at the trailing 30-day growth rate (not a promise)",
     "status": "insufficient-history",
-    "spanDays": 2.8418196180545623,
+    "spanDays": 2.893610937498786,
     "message": "Needs at least 7 days of equity history."
   },
   "scorecard": [
@@ -302,11 +302,11 @@
     {
       "id": "lab-hourly",
       "label": "Lab hourly per-market rules",
-      "equity": 29489.381860589456,
+      "equity": 29475.565782655365,
       "initial": 29975.046647868254,
       "netPnl": -247.19019886223452,
       "profitFactor": 0.7514960413887982,
-      "maxDrawdown": 0.03310824829472035,
+      "maxDrawdown": 0.0335615083622154,
       "winRate": 0.38461538461538464,
       "avgWin": 149.5046251602895,
       "avgLoss": -124.33916558296025,
@@ -316,7 +316,7 @@
       "takerFills": 11,
       "openPositions": 1,
       "pause": "normal",
-      "drawdown": 0.03255038975011115
+      "drawdown": 0.03300364981760617
     },
     {
       "id": "scout-daytrade",
@@ -359,11 +359,11 @@
     {
       "id": "daytrader-range",
       "label": "Day trader: buy 24h range low, sell near high, up to 50% per trade",
-      "equity": 29663.896018618103,
+      "equity": 29630.691199217938,
       "initial": 29865.26287940766,
       "netPnl": 89.5868794177667,
       "profitFactor": 32.69405714356033,
-      "maxDrawdown": 0.012277659421024139,
+      "maxDrawdown": 0.012844978459753135,
       "winRate": 0.5,
       "avgWin": 92.41349385251631,
       "avgLoss": -2.8266144347496125,
@@ -373,7 +373,7 @@
       "takerFills": 0,
       "openPositions": 3,
       "pause": "normal",
-      "drawdown": 0.01031288306026712
+      "drawdown": 0.011420707263804952
     }
   ],
   "drawdownPause": {
@@ -386,7 +386,7 @@
   },
   "verdict": "needs-attention",
   "issues": [
-    "No new paper entry for 50h; current rules may be too strict for this market."
+    "No new paper entry for 51h; current rules may be too strict for this market."
   ],
   "dispatch": []
 }
