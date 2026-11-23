@@ -22,7 +22,7 @@ concurrency:
 jobs:
   research:
     runs-on: ubuntu-latest
-    timeout-minutes: 40
+    timeout-minutes: 60
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
@@ -54,7 +54,13 @@ jobs:
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
           if [ "$LEARNING_PHASE" = research ]; then work='node scripts/strategy-lab.mjs'; else work="node scripts/journal-learning.mjs $LEARNING_PHASE"; fi
           # Daily review: refresh the 2-year 6h/1d public candle history (a failed refresh keeps stored files), then apply rule changes.
-          if [ "$LEARNING_PHASE" = review ]; then work="(node scripts/fetch-history.mjs || echo 'History refresh incomplete; stored files kept.') && $work && node scripts/rules.mjs && (node scripts/sweep.mjs || echo 'Rule sweep failed; previous sweep kept.')"; fi
+          # Slow public downloads and the rule sweep run once, before the save loop; a replay after a push conflict only copies their results.
+          if [ "$LEARNING_PHASE" = review ]; then
+            node scripts/fetch-history.mjs || echo 'History refresh incomplete; stored files kept.'
+            node scripts/sweep.mjs || echo 'Rule sweep failed; previous sweep kept.'
+            mkdir -p "$RUNNER_TEMP/review" && cp -r data/history "$RUNNER_TEMP/review/" && { cp data/sweep.json "$RUNNER_TEMP/review/" 2>/dev/null || true; }
+            work="cp -r \"$RUNNER_TEMP/review/history\" data/ && { cp \"$RUNNER_TEMP/review/sweep.json\" data/ 2>/dev/null || true; } && $work && node scripts/rules.mjs"
+          fi
           scripts/commit-retry.sh 'Collect journal evidence and daily research' "$work && node scripts/team-report.mjs" \
             data/evidence.json data/research.json data/learning.json data/paper.json data/portfolio.enc.json data/team-report.json data/sweep.json data/history
       - run: npm run build
