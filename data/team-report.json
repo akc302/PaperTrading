@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "generatedAt": "2026-11-23T19:17:18.686Z",
+  "generatedAt": "2026-11-23T20:12:13.215Z",
   "goal": 85000,
   "equity": 29865.26287940766,
   "startingEquity": 30000,
@@ -28,8 +28,8 @@
   "rulesInUse": {
     "BTC-USD": {
       "strategy": "aggressive",
-      "approach": "aggressive-day-hold+regime-block",
-      "decision": "adopt-improvement"
+      "approach": "wider-stop",
+      "decision": "keep"
     },
     "ETH-USD": {
       "strategy": "aggressive",
@@ -38,18 +38,18 @@
     },
     "SOL-USD": {
       "strategy": "aggressive",
-      "approach": "regime-block",
+      "approach": "wider-stop",
       "decision": "adopt-improvement"
     },
     "XRP-USD": {
       "strategy": "aggressive",
-      "approach": "wider-stop",
-      "decision": "adopt-improvement"
+      "approach": "current",
+      "decision": "keep"
     },
     "ADA-USD": {
       "strategy": "aggressive",
-      "approach": "regime-block",
-      "decision": "adopt-improvement"
+      "approach": "current",
+      "decision": "keep"
     },
     "DOGE-USD": {
       "strategy": "aggressive",
@@ -58,8 +58,8 @@
     },
     "LINK-USD": {
       "strategy": "aggressive",
-      "approach": "wider-stop",
-      "decision": "keep"
+      "approach": "regime-block+ml-filter",
+      "decision": "adopt-improvement"
     },
     "AVAX-USD": {
       "strategy": "aggressive",
@@ -70,12 +70,12 @@
   "agents": {
     "trader": {
       "role": "5-minute paper trader",
-      "lastRunMinutesAgo": 1,
+      "lastRunMinutesAgo": 2,
       "healthy": true
     },
     "researcher": {
       "role": "Claude every 5h: loss analysis, backtest, rule adoption",
-      "lastRunHoursAgo": 1.2,
+      "lastRunHoursAgo": 0,
       "healthy": true,
       "sweep": {
         "at": "2026-11-23T17:17:43.630Z",
@@ -200,7 +200,7 @@
     "windowDays": 30,
     "label": "Estimated time to $85,000 at the trailing 30-day growth rate (not a promise)",
     "status": "insufficient-history",
-    "spanDays": 2.803688495371629,
+    "spanDays": 2.8418196180545623,
     "message": "Needs at least 7 days of equity history."
   },
   "scorecard": [
@@ -302,11 +302,11 @@
     {
       "id": "lab-hourly",
       "label": "Lab hourly per-market rules",
-      "equity": 29552.085598905716,
+      "equity": 29489.381860589456,
       "initial": 29975.046647868254,
       "netPnl": -247.19019886223452,
       "profitFactor": 0.7514960413887982,
-      "maxDrawdown": 0.03112087722954973,
+      "maxDrawdown": 0.03310824829472035,
       "winRate": 0.38461538461538464,
       "avgWin": 149.5046251602895,
       "avgLoss": -124.33916558296025,
@@ -316,7 +316,7 @@
       "takerFills": 11,
       "openPositions": 1,
       "pause": "normal",
-      "drawdown": 0.030493286366864214
+      "drawdown": 0.03255038975011115
     },
     {
       "id": "scout-daytrade",
@@ -359,11 +359,11 @@
     {
       "id": "daytrader-range",
       "label": "Day trader: buy 24h range low, sell near high, up to 50% per trade",
-      "equity": 29910.704980167407,
+      "equity": 29663.896018618103,
       "initial": 29865.26287940766,
       "netPnl": 89.5868794177667,
       "profitFactor": 32.69405714356033,
-      "maxDrawdown": 0.004343190661830837,
+      "maxDrawdown": 0.012277659421024139,
       "winRate": 0.5,
       "avgWin": 92.41349385251631,
       "avgLoss": -2.8266144347496125,
@@ -371,9 +371,9 @@
       "fees": 57.46083356209864,
       "makerFills": 4,
       "takerFills": 0,
-      "openPositions": 2,
+      "openPositions": 3,
       "pause": "normal",
-      "drawdown": 0.002078507864328172
+      "drawdown": 0.01031288306026712
     }
   ],
   "drawdownPause": {
@@ -386,7 +386,7 @@
   },
   "verdict": "needs-attention",
   "issues": [
-    "No new paper entry for 49h; current rules may be too strict for this market."
+    "No new paper entry for 50h; current rules may be too strict for this market."
   ],
   "dispatch": []
 }
