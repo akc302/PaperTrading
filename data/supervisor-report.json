@@ -1,16 +1,16 @@
 {
-  "at": "2026-11-23T21:15:10.108Z",
+  "at": "2026-11-23T23:14:21.832Z",
   "goal": 85000,
   "start": 30000,
   "equity": 29865.26,
   "remaining": 55134.74,
   "progressPct": 0,
   "onTrack": false,
-  "verdict": "The main paper account (fake money) is at $29865.26 (-0.4%) with no trades in the 4 hours since switching to the hourly rules, because their pattern filter has not confirmed a setup; the hourly challengers on the same rules made no entries either, so this is the market, not a bug. The full-size day trader is the only account trading tonight (BTC, ETH and XRP opened), and the owner's choice of half size versus trend rules for the main account is still pending.",
+  "verdict": "The main paper account (fake money) is at $29865.26 (-0.4%) with no trades in the 6 hours since switching to the hourly rules: the pattern filter blocked most setups, and the lab's machine-learning filter skipped one LINK setup (26.2% vs a 27.6% bar) that the hourly-legacy challenger took. All jobs are healthy; the hourly challengers are down over 24h (lab-hourly -$360.99), the day trader is up, and the owner's half-size or trend-rules decision is still pending.",
   "last24h": "Main: 0 closed (0 wins, $0.00). Best challenger daytrader-range: 2 closed (1 wins, $89.59).",
   "readiness": "2/9",
   "fixed": [
-    "No faults; confirmed main and the hourly challengers are all waiting on the same pattern filter"
+    "No faults; traced the missing main entries to the pattern filter and one lab-adopted ML filter block on LINK (working as designed)"
   ],
-  "nextStep": "Owner decides half size or trend rules for the main paper account; researcher tests a three-signal entry to lift the win rate above 40%."
+  "nextStep": "Owner decides half size or trend rules for the main paper account; the researcher breaks down 1-year losses by coin and hour to keep trades high on the least-bad markets."
 }
