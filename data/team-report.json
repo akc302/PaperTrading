@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "generatedAt": "2026-11-23T18:07:22.309Z",
+  "generatedAt": "2026-11-23T19:17:18.686Z",
   "goal": 85000,
   "equity": 29865.26287940766,
   "startingEquity": 30000,
@@ -70,12 +70,12 @@
   "agents": {
     "trader": {
       "role": "5-minute paper trader",
-      "lastRunMinutesAgo": 2,
+      "lastRunMinutesAgo": 1,
       "healthy": true
     },
     "researcher": {
       "role": "Claude every 5h: loss analysis, backtest, rule adoption",
-      "lastRunHoursAgo": 0,
+      "lastRunHoursAgo": 1.2,
       "healthy": true,
       "sweep": {
         "at": "2026-11-23T17:17:43.630Z",
@@ -107,13 +107,13 @@
         }
       },
       "latestNote": {
-        "at": "2026-11-23T16:59:19.955Z",
-        "tradesReviewed": 0,
-        "losses": 0,
-        "findings": 3,
-        "changes": 3,
-        "adopted": true,
-        "nextIdea": "Every 2h: review each main-account trade (entry regime, MFE, stop vs ATR, fees). If the main account loses over 30 trades with profit factor < 0.8, propose switching it back to the trend rules, with the numbers, rather than letting losses run."
+        "at": "2026-11-23T18:33:12.287Z",
+        "tradesReviewed": 5,
+        "losses": 5,
+        "findings": 4,
+        "changes": 0,
+        "adopted": false,
+        "nextIdea": "Report to the owner with numbers and recommend a smaller position size (riskScale 0.5) on the main paper account while it trades the hourly rules, or a return to trend rules, before the 30-trade safety check triggers. Keep searching for an edge in the daily-uptrend dip family once the regime turns."
       }
     },
     "verifier": {
@@ -200,7 +200,7 @@
     "windowDays": 30,
     "label": "Estimated time to $85,000 at the trailing 30-day growth rate (not a promise)",
     "status": "insufficient-history",
-    "spanDays": 2.755119317129806,
+    "spanDays": 2.803688495371629,
     "message": "Needs at least 7 days of equity history."
   },
   "scorecard": [
@@ -283,40 +283,40 @@
     {
       "id": "hourly-legacy",
       "label": "Previous hourly rules",
-      "equity": 29716.299234657577,
+      "equity": 29682.12128306515,
       "initial": 29975.046647868254,
-      "netPnl": -53.14980604789673,
-      "profitFactor": 0.9201757965862836,
-      "maxDrawdown": 0.031603960633863726,
-      "winRate": 0.4444444444444444,
+      "netPnl": -292.92536480311037,
+      "profitFactor": 0.6765440412548455,
+      "maxDrawdown": 0.031903799291435615,
+      "winRate": 0.4,
       "avgWin": 153.17147878398367,
-      "avgLoss": -133.1671442367663,
-      "closedTrades": 9,
-      "fees": 169.93095044881682,
-      "makerFills": 11,
-      "takerFills": 7,
-      "openPositions": 1,
+      "avgLoss": -150.93521332317417,
+      "closedTrades": 10,
+      "fees": 194.944595211616,
+      "makerFills": 12,
+      "takerFills": 8,
+      "openPositions": 0,
       "pause": "normal",
-      "drawdown": 0.030789069492675902
+      "drawdown": 0.03190379929143561
     },
     {
       "id": "lab-hourly",
       "label": "Lab hourly per-market rules",
-      "equity": 29614.820076465494,
+      "equity": 29552.085598905716,
       "initial": 29975.046647868254,
-      "netPnl": -8.385621836568589,
-      "profitFactor": 0.988906568600018,
-      "maxDrawdown": 0.030436974009801113,
-      "winRate": 0.4166666666666667,
+      "netPnl": -247.19019886223452,
+      "profitFactor": 0.7514960413887982,
+      "maxDrawdown": 0.03112087722954973,
+      "winRate": 0.38461538461538464,
       "avgWin": 149.5046251602895,
-      "avgLoss": -107.98696394828801,
-      "closedTrades": 12,
-      "fees": 243.4899675740184,
-      "makerFills": 14,
-      "takerFills": 10,
-      "openPositions": 2,
+      "avgLoss": -124.33916558296025,
+      "closedTrades": 13,
+      "fees": 268.40231847609147,
+      "makerFills": 15,
+      "takerFills": 11,
+      "openPositions": 1,
       "pause": "normal",
-      "drawdown": 0.02843517453015776
+      "drawdown": 0.030493286366864214
     },
     {
       "id": "scout-daytrade",
@@ -359,11 +359,11 @@
     {
       "id": "daytrader-range",
       "label": "Day trader: buy 24h range low, sell near high, up to 50% per trade",
-      "equity": 29954.849758825425,
+      "equity": 29910.704980167407,
       "initial": 29865.26287940766,
       "netPnl": 89.5868794177667,
       "profitFactor": 32.69405714356033,
-      "maxDrawdown": 0.0028632934014937513,
+      "maxDrawdown": 0.004343190661830837,
       "winRate": 0.5,
       "avgWin": 92.41349385251631,
       "avgLoss": -2.8266144347496125,
@@ -371,9 +371,9 @@
       "fees": 57.46083356209864,
       "makerFills": 4,
       "takerFills": 0,
-      "openPositions": 0,
+      "openPositions": 2,
       "pause": "normal",
-      "drawdown": 0
+      "drawdown": 0.002078507864328172
     }
   ],
   "drawdownPause": {
@@ -386,7 +386,7 @@
   },
   "verdict": "needs-attention",
   "issues": [
-    "No new paper entry for 48h; current rules may be too strict for this market."
+    "No new paper entry for 49h; current rules may be too strict for this market."
   ],
   "dispatch": []
 }
