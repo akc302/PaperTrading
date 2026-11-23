@@ -13,30 +13,23 @@
     "AVAX-USD"
   ],
   "config": {
-    "strategy": "trend-follow",
+    "riskPct": 0.02,
+    "feeRate": 0.006,
+    "slippage": 0.0005,
+    "maxAllocation": 0.25,
+    "maxDailyLoss": 0.12,
+    "maxOpenPositions": 4,
+    "maxTotalRisk": 0.08,
+    "strategy": "aggressive",
     "lookback": 48,
     "pivotWindow": 3,
     "proximity": 0.006,
     "stopBuffer": 0.004,
     "rewardRisk": 1.5,
-    "riskPct": 0.02,
-    "feeRate": 0.006,
-    "slippage": 0.0005,
-    "maxAllocation": 0.25,
     "trendLookback": 180,
-    "maxHoldHours": 0,
-    "maxDailyLoss": 0.12,
-    "maxOpenPositions": 4,
-    "maxTotalRisk": 0.08,
+    "maxHoldHours": 2,
     "stopAtrMultiplier": 1.25,
-    "trailAtrMultiplier": 3,
-    "trendTopN": 2,
-    "trendBreakout": 20,
-    "trendRankDays": 30,
-    "patternRequired": false,
-    "entryOrder": "limit",
-    "limitOffset": 0.0005,
-    "limitChecks": 3
+    "entryOrder": "limit"
   },
   "account": {
     "initial": 30000,
@@ -314200,7 +314193,61 @@
   },
   "lastMarketAt": "2026-11-23T17:15:33.603Z",
   "errors": [],
-  "productConfigs": {},
+  "productConfigs": {
+    "BTC-USD": {
+      "patternRequired": true,
+      "strategy": "aggressive",
+      "maxHoldHours": 24,
+      "stopAtrMultiplier": 2.5,
+      "rewardRisk": 1.5
+    },
+    "ETH-USD": {
+      "patternRequired": true,
+      "strategy": "aggressive",
+      "maxHoldHours": 24,
+      "stopAtrMultiplier": 2.5,
+      "rewardRisk": 1.5
+    },
+    "SOL-USD": {
+      "patternRequired": true,
+      "strategy": "aggressive",
+      "maxHoldHours": 4,
+      "stopAtrMultiplier": 2.5,
+      "rewardRisk": 1.5
+    },
+    "XRP-USD": {
+      "patternRequired": true,
+      "strategy": "aggressive",
+      "maxHoldHours": 24,
+      "stopAtrMultiplier": 2.5,
+      "rewardRisk": 1.5
+    },
+    "ADA-USD": {
+      "patternRequired": true,
+      "maxHoldHours": 4
+    },
+    "DOGE-USD": {
+      "patternRequired": true,
+      "strategy": "aggressive",
+      "maxHoldHours": 24,
+      "stopAtrMultiplier": 1.5,
+      "rewardRisk": 1.5
+    },
+    "LINK-USD": {
+      "patternRequired": true,
+      "strategy": "aggressive",
+      "maxHoldHours": 4,
+      "stopAtrMultiplier": 2.5,
+      "rewardRisk": 1.5
+    },
+    "AVAX-USD": {
+      "patternRequired": true,
+      "strategy": "aggressive",
+      "maxHoldHours": 24,
+      "stopAtrMultiplier": 2.5,
+      "rewardRisk": 1.5
+    }
+  },
   "lastRunAt": "2026-11-23T17:15:33.603Z",
   "executionMode": "quotes",
   "evidence": {
@@ -325702,6 +325749,40 @@
   },
   "rulesHistory": [
     {
+      "at": "2026-11-23T17:18:06.432Z",
+      "event": "owner-switch-to-hourly",
+      "reason": "Owner asked the main paper account to trade the hourly-legacy rules daily.",
+      "previous": {
+        "config": {
+          "strategy": "trend-follow",
+          "lookback": 48,
+          "pivotWindow": 3,
+          "proximity": 0.006,
+          "stopBuffer": 0.004,
+          "rewardRisk": 1.5,
+          "riskPct": 0.02,
+          "feeRate": 0.006,
+          "slippage": 0.0005,
+          "maxAllocation": 0.25,
+          "trendLookback": 180,
+          "maxHoldHours": 0,
+          "maxDailyLoss": 0.12,
+          "maxOpenPositions": 4,
+          "maxTotalRisk": 0.08,
+          "stopAtrMultiplier": 1.25,
+          "trailAtrMultiplier": 3,
+          "trendTopN": 2,
+          "trendBreakout": 20,
+          "trendRankDays": 30,
+          "patternRequired": false,
+          "entryOrder": "limit",
+          "limitOffset": 0.0005,
+          "limitChecks": 3
+        },
+        "productConfigs": {}
+      }
+    },
+    {
       "at": "2026-11-21T18:29:47.177Z",
       "event": "archived-main-rules",
       "reason": "Trend following became the main strategy; previous hourly rules kept as challengers.",
@@ -325858,7 +325939,7 @@
     },
     "archivedAt": "2026-11-21T18:29:47.177Z"
   },
-  "rulesVersion": "trend-v1",
+  "rulesVersion": "owner-hourly-v1",
   "challengers": [
     {
       "id": "trend-k2",
