@@ -243,6 +243,22 @@
       "adopted": false,
       "nextIdea": "Add rule families built for bigger moves to the sweep: hourly donchian breakouts with an ATR trailing stop and no fixed target, multi-day holds (72-168h), and the dip-6h entry with a trailing exit. Keep only rules whose profit factor is above 1.1 in all three windows.",
       "status": "Recorded; sweep grid expansion is next."
+    },
+    {
+      "at": "2026-11-23T06:34:18.139Z",
+      "tradesReviewed": 2,
+      "losses": 1,
+      "findings": [
+        "daytrader-range closed 2 trades, both at target: ADA +92.41 (gross +128.47, held 2.2h) and XRP -2.83 (gross +37.73, held 0.5h). The XRP target was only 0.2% above the fill, so fees turned a winning exit into a loss; fixed in PR #30 (target must clear round-trip fees + 0.1% at the live quote).",
+        "Hypothesis tested (failed): let-winners-run rules on 1-year hourly data. 16 variants of donchian and ema-trend breakouts with 3-5R targets, 72-168h holds and 2.5-3.5 ATR stops. None is positive in all windows. Unseen results were -3.6k to -5.2k per $10k per coin, with profit factor 0.38-0.52. donchian 5R/168h/3.5ATR made money only in the validation window (+1,917, PF 1.37), which was a rally, and lost in train (PF 0.42) and unseen (PF 0.39).",
+        "Regime: over the stored history BTC fell from about 98,970 to 58,790 and the alt-coins fell further. In a bear year, long-only entries of any holding length lose after fees, and holding cash (the main account's daily trend filter) is what preserves capital. The 2-year trend leader is still not validated."
+      ],
+      "changes": [
+        "scripts/sweep.mjs: add donchian 3R/5R, 168h hold, 3.5 ATR (closest to break-even) to the daily grid so a regime change shows up quickly"
+      ],
+      "adopted": false,
+      "nextIdea": "Stop searching for a long-only edge in the bear regime. Make capital preservation the main measure (main stays in cash until the daily trend turns), keep daytrader-range as the active evidence account, and add a regime detector to the sweep report (share of coins above daily EMA50) so the team switches to the validated trend rules the day the regime turns up.",
+      "status": "Recorded; small grid addition."
     }
   ]
 }
