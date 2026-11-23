@@ -170,6 +170,24 @@
       "adopted": false,
       "nextIdea": "Stop tuning long-only hourly entries in this downtrend; 4 different filters have now failed out of sample. Test instead (a) the scout and hourly challengers at a lower riskScale (0.25) so evidence costs less, and (b) a 6h-bar mean-reversion entry (RSI(14) < 30 on 6h with a 1d close above EMA200) using the 2-year history, so there are hundreds of out-of-sample trades instead of about 13.",
       "status": "No rule change this run."
+    },
+    {
+      "at": "2026-11-23T00:30:24.689Z",
+      "tradesReviewed": 0,
+      "losses": 0,
+      "findings": [
+        "No new trades closed since 20:28Z. Main has not entered for about 30h because all 8 coins fail the daily EMA50 trend test (intended).",
+        "New research on the 2-year 6h/1d history (8 coins, chronological 50/25/25 split, maker entry 0.15% + taker exit 0.3%). 6h RSI(14) dip buys WITHOUT a daily trend filter lose out of sample: RSI<25 unseen 42t 45% -11.2R; RSI<30 unseen 88t 43% -24.3R.",
+        "With a daily uptrend filter (last daily close > EMA100), RSI<25, 2x 6h-ATR stop, 1R target, 48h max hold: train 4t 25% -1.6R, validation 5t 100% +2.3R, unseen 5t 100% +4.2R. RSI<30 with the same filter hovers around 0R. Positive out of sample on both later windows, but samples are small (14 trades in total)."
+      ],
+      "changes": [
+        "engine.js: new 'dip-6h' strategy (dipSignal), using the stored 6h/daily history like trend-follow, in the live batch path and backtests",
+        "scripts/challengers.mjs: new 'scout-dip6h' challenger (dipRsi 25, 2x ATR stop, 1R, 48h hold, maker limit entry) at riskScale 0.25",
+        "tests/dip6h.test.js: buys only on a 6h dip inside a daily uptrend; seeds at 1/4 risk"
+      ],
+      "adopted": true,
+      "nextIdea": "scout-dip6h will make no entries until coins close back above their daily EMA100 (none are today). Track its live trades from then on. Meanwhile, test the same dip rule on BTC/ETH only, and with an EMA50 daily filter, to see whether more trades keep the edge.",
+      "status": "Challenger seeded via the daily-review rules step; the main account is unchanged."
     }
   ]
 }
