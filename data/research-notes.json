@@ -341,6 +341,20 @@
       "adopted": false,
       "nextIdea": "Report to the owner with numbers and recommend a smaller position size (riskScale 0.5) on the main paper account while it trades the hourly rules, or a return to trend rules, before the 30-trade safety check triggers. Keep searching for an edge in the daily-uptrend dip family once the regime turns.",
       "status": "Recorded; no rule change."
+    },
+    {
+      "at": "2026-11-23T20:29:39.434Z",
+      "tradesReviewed": 0,
+      "losses": 0,
+      "findings": [
+        "No trades closed in any account since 18:27Z. The main paper account has made no entries for 3h on the hourly rules: the pattern filter (completed-candle confirmation) blocked every coin at every check up to 20:25Z.",
+        "Tested whether that filter is the problem: main account's current rules on 1-year hourly data (8 coins, fees). Train / validation / unseen. With the filter: 1,628t -24,908 / 858t -9,269 / 839t 29% -7,539, about 9.2 trades/day on unseen. Without it: 3,306t -40,667 / 1,722t -9,994 / 1,679t 25% -7,887, about 18.4/day. The filter cuts losses in every window and keeps a higher win rate, so it stays; 3 quiet hours is normal variance at about 9 trades/day.",
+        "The underlying rules still lose after fees in every window. Nothing found today makes them profitable."
+      ],
+      "changes": [],
+      "adopted": false,
+      "nextIdea": "Owner decision is pending (half size vs trend rules). Next research: a 'trade only when 2+ independent signals agree' entry (pattern + 1h RSI<35 + price within 1 ATR of the 24h low) to raise the win rate above 40%, tested on 1-year hourly data with fees.",
+      "status": "Recorded; pattern filter kept."
     }
   ]
 }
