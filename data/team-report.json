@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "generatedAt": "2026-11-23T09:17:00.707Z",
+  "generatedAt": "2026-11-23T10:17:04.518Z",
   "goal": 85000,
   "equity": 29865.26287940766,
   "startingEquity": 30000,
@@ -75,7 +75,7 @@
     },
     "researcher": {
       "role": "Claude every 5h: loss analysis, backtest, rule adoption",
-      "lastRunHoursAgo": 2.1,
+      "lastRunHoursAgo": 0,
       "healthy": true,
       "sweep": {
         "at": "2026-11-23T08:16:51.985Z",
@@ -83,6 +83,7 @@
         "days": 364.8,
         "rulesTested": 34,
         "passingAllWindows": 0,
+        "regime": null,
         "best": {
           "config": {
             "strategy": "rsi-reversion",
@@ -99,13 +100,13 @@
         }
       },
       "latestNote": {
-        "at": "2026-11-23T06:34:18.139Z",
-        "tradesReviewed": 2,
-        "losses": 1,
+        "at": "2026-11-23T09:29:34.486Z",
+        "tradesReviewed": 4,
+        "losses": 0,
         "findings": 3,
-        "changes": 1,
-        "adopted": false,
-        "nextIdea": "Stop searching for a long-only edge in the bear regime. Make capital preservation the main measure (main stays in cash until the daily trend turns), keep daytrader-range as the active evidence account, and add a regime detector to the sweep report (share of coins above daily EMA50) so the team switches to the validated trend rules the day the regime turns up."
+        "changes": 3,
+        "adopted": true,
+        "nextIdea": "When the regime turns 'mixed' or 'up' (at least one coin back above its daily EMA50), re-run the 2-year trend validation and the dip-6h rule on those coins first. Until then, track whether the hourly challengers' bounce gains hold over the next 30 trades before their retirement check."
       }
     },
     "verifier": {
@@ -192,7 +193,7 @@
     "windowDays": 30,
     "label": "Estimated time to $85,000 at the trailing 30-day growth rate (not a promise)",
     "status": "insufficient-history",
-    "spanDays": 2.3868137384261248,
+    "spanDays": 2.4285245138875866,
     "message": "Needs at least 7 days of equity history."
   },
   "scorecard": [
@@ -275,7 +276,7 @@
     {
       "id": "hourly-legacy",
       "label": "Previous hourly rules",
-      "equity": 30106.728521181205,
+      "equity": 30066.283422958277,
       "initial": 29975.046647868254,
       "netPnl": -1.2141185008915727,
       "profitFactor": 0.9935059882710037,
@@ -287,14 +288,14 @@
       "fees": 85.89867255162177,
       "makerFills": 4,
       "takerFills": 4,
-      "openPositions": 2,
+      "openPositions": 3,
       "pause": "normal",
-      "drawdown": 0.002487923140734094
+      "drawdown": 0.0038279715587727914
     },
     {
       "id": "lab-hourly",
       "label": "Lab hourly per-market rules",
-      "equity": 29931.644696486717,
+      "equity": 29887.20816773787,
       "initial": 29975.046647868254,
       "netPnl": -40.87238219109747,
       "profitFactor": 0.8750738124838642,
@@ -306,9 +307,9 @@
       "fees": 134.90736904269227,
       "makerFills": 6,
       "takerFills": 6,
-      "openPositions": 1,
+      "openPositions": 2,
       "pause": "normal",
-      "drawdown": 0.003687367280853837
+      "drawdown": 0.005166493316045018
     },
     {
       "id": "scout-daytrade",
@@ -378,7 +379,7 @@
   },
   "verdict": "needs-attention",
   "issues": [
-    "No new paper entry for 39h; current rules may be too strict for this market."
+    "No new paper entry for 40h; current rules may be too strict for this market."
   ],
   "dispatch": []
 }
