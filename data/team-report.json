@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "generatedAt": "2026-11-23T08:17:17.048Z",
+  "generatedAt": "2026-11-23T09:17:00.707Z",
   "goal": 85000,
   "equity": 29865.26287940766,
   "startingEquity": 30000,
@@ -75,7 +75,7 @@
     },
     "researcher": {
       "role": "Claude every 5h: loss analysis, backtest, rule adoption",
-      "lastRunHoursAgo": 1.1,
+      "lastRunHoursAgo": 2.1,
       "healthy": true,
       "sweep": {
         "at": "2026-11-23T08:16:51.985Z",
@@ -192,7 +192,7 @@
     "windowDays": 30,
     "label": "Estimated time to $85,000 at the trailing 30-day growth rate (not a promise)",
     "status": "insufficient-history",
-    "spanDays": 2.3453362037048295,
+    "spanDays": 2.3868137384261248,
     "message": "Needs at least 7 days of equity history."
   },
   "scorecard": [
@@ -275,40 +275,40 @@
     {
       "id": "hourly-legacy",
       "label": "Previous hourly rules",
-      "equity": 30009.392653232826,
+      "equity": 30106.728521181205,
       "initial": 29975.046647868254,
-      "netPnl": -152.29220271457623,
-      "profitFactor": 0.1854276580606489,
+      "netPnl": -1.2141185008915727,
+      "profitFactor": 0.9935059882710037,
       "maxDrawdown": 0.011608184416212404,
-      "winRate": 0.3333333333333333,
-      "avgWin": 34.66749978648798,
+      "winRate": 0.5,
+      "avgWin": 92.87279200008632,
       "avgLoss": -93.4798512505321,
-      "closedTrades": 3,
-      "fees": 60.44529891993797,
-      "makerFills": 3,
-      "takerFills": 3,
-      "openPositions": 3,
-      "pause": "normal",
-      "drawdown": 0.005712906676284213
-    },
-    {
-      "id": "lab-hourly",
-      "label": "Lab hourly per-market rules",
-      "equity": 29894.56706506381,
-      "initial": 29975.046647868254,
-      "netPnl": -242.3910000397779,
-      "profitFactor": 0.25913338298670135,
-      "maxDrawdown": 0.012136229601776658,
-      "winRate": 0.25,
-      "avgWin": 84.78125266198873,
-      "avgLoss": -109.05741756725554,
       "closedTrades": 4,
-      "fees": 99.06262783102048,
+      "fees": 85.89867255162177,
       "makerFills": 4,
       "takerFills": 4,
       "openPositions": 2,
       "pause": "normal",
-      "drawdown": 0.004921543115577798
+      "drawdown": 0.002487923140734094
+    },
+    {
+      "id": "lab-hourly",
+      "label": "Lab hourly per-market rules",
+      "equity": 29931.644696486717,
+      "initial": 29975.046647868254,
+      "netPnl": -40.87238219109747,
+      "profitFactor": 0.8750738124838642,
+      "maxDrawdown": 0.012136229601776658,
+      "winRate": 0.5,
+      "avgWin": 95.43329017022306,
+      "avgLoss": -109.05741756725554,
+      "closedTrades": 6,
+      "fees": 134.90736904269227,
+      "makerFills": 6,
+      "takerFills": 6,
+      "openPositions": 1,
+      "pause": "normal",
+      "drawdown": 0.003687367280853837
     },
     {
       "id": "scout-daytrade",
@@ -378,7 +378,7 @@
   },
   "verdict": "needs-attention",
   "issues": [
-    "No new paper entry for 38h; current rules may be too strict for this market."
+    "No new paper entry for 39h; current rules may be too strict for this market."
   ],
   "dispatch": []
 }
