@@ -43,3 +43,12 @@ test('fee details record maker vs taker per fill',()=>{
  const a=createAccount(30000);openPaperTrade(a,{product:'A',price:100,stop:95,target:120,time:1},{...DEFAULT_CONFIG,...fees});
  const s=performanceStats(a);assert.equal(a.positions[0].entryFeeDetail.liquidity,'taker');assert.equal(s.closedTrades,0);
 });
+
+test('no entry when the take-profit at the live quote cannot cover round-trip fees',()=>{
+ const rc={...cfg,strategy:'range',rangeHours:24,rangeEntry:0.35,rangeExit:0.8,rangeStopPct:0.02,rangeMinWidth:0.009,rewardRisk:0.1,maxHoldHours:24};
+ const rbars=now=>{const out=[];for(let t=Math.floor(now/3600)*3600-40*3600;t+3600<=now;t+=3600)out.push({time:t,open:100.5,high:101,low:100,close:100.5,volume:1});out.at(-1).open=100.1;out.at(-1).close=100.2;return out;};
+ const at=(price)=>[{product:'XRP-USD',quote:{price:String(price),bid:String(price),time:new Date(T*1000).toISOString()},bars:rbars(T),config:rc}];
+ const a=createAccount(30000);processQuoteBatch(a,at(100.6),{time:T});
+ assert.equal(a.pendingOrders.length,0);assert.match(a.decisions.at(-1).reason,/does not cover round-trip fees/);
+ const b=createAccount(30000);processQuoteBatch(b,at(100.2),{time:T});assert.equal(b.pendingOrders.length,1,'enough room at a lower quote');
+});
