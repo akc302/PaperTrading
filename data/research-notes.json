@@ -293,6 +293,21 @@
       "adopted": false,
       "nextIdea": "When the regime signal shows coins back in a daily uptrend, add an RSI<30, 2R dip-6h challenger at 1/4 risk next to scout-dip6h, and judge both on live trades. Meanwhile test the same dip logic on daily RSI with a weekly-trend filter, so more history (2 years of daily bars) gives more trades.",
       "status": "Grid extended; daily review picks it up."
+    },
+    {
+      "at": "2026-11-23T15:29:55.713Z",
+      "tradesReviewed": 7,
+      "losses": 3,
+      "findings": [
+        "Rally day: the hourly challengers made 4 target wins, +888.16 in total. hourly-legacy XRP +312.30 (13.9h, MFE 10.6%) and DOGE +114.64 (22.8h, MFE 9.4%); lab-hourly AVAX +338.97 (1.4h, MFE 7.8%) and XRP +122.25 (1.9h).",
+        "3 losses, all 4h time exits: ADA -91.62 and -91.17 (MFE 3.64% vs a 4.01% target, cut just short) and SOL -63.48 (MFE 0.48%). All winners had 24h holds; all losers had the lab-adopted 4h hold.",
+        "1-year check (lab-hourly rules, 4h vs 24h hold). Full year: ADA -5,659 vs -4,574, SOL -6,619 vs -3,897, LINK -6,198 vs -4,779, so 24h loses less on every coin. Newest 25% is mixed: ADA -1,455 vs -1,156, SOL -1,027 vs -1,312, LINK -857 vs -869. Both holds lose, so today's pattern does not justify a rule change; the lab keeps choosing per coin.",
+        "Regime is still 'down' on completed daily bars (0/8 above EMA50; BTC -6.4% 7d, -24.6% 30d). Today's rally is not yet in a closed daily candle."
+      ],
+      "changes": [],
+      "adopted": false,
+      "nextIdea": "If tomorrow's daily close lifts any coin above its EMA50, the regime turns 'mixed': re-run the 2-year trend validation on those coins and consider an RSI<30 2R dip-6h challenger. Keep watching whether the hourly challengers' rally gains survive their 30-trade retirement check.",
+      "status": "Recorded; no rule change."
     }
   ]
 }
