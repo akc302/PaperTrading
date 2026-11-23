@@ -355,6 +355,19 @@
       "adopted": false,
       "nextIdea": "Owner decision is pending (half size vs trend rules). Next research: a 'trade only when 2+ independent signals agree' entry (pattern + 1h RSI<35 + price within 1 ATR of the 24h low) to raise the win rate above 40%, tested on 1-year hourly data with fees.",
       "status": "Recorded; pattern filter kept."
+    },
+    {
+      "at": "2026-11-23T22:29:34.762Z",
+      "tradesReviewed": 1,
+      "losses": 1,
+      "findings": [
+        "1 close since 20:27Z: lab-hourly AVAX-USD quote-stop -300.76 (gross -267.99, held 5.7h). The main paper account still has no entries on the hourly rules (about 5h): the pattern filter has not confirmed any coin.",
+        "Hypothesis tested (failed): a three-signal confluence entry (pattern + 1h RSI<35 + close within 1 ATR of the 24h low) on the main account's rules over 1 year with fees. Train / validation / unseen: 128t 26% -3,538 / 44t 32% -809 / 48t 40% -409, 0.5 trades/day. With the pattern filter alone: 1,628t -24,908 / 858t -9,269 / 839t 29% -7,539, 9.2/day. The win rate rises to 40%, but the average result per trade is unchanged (about -$8 to -$9); losses fall only because trades fall 94%. It does not create an edge, and the owner wants more trades, so it is not adopted; code reverted."
+      ],
+      "changes": [],
+      "adopted": false,
+      "nextIdea": "Break the main rules' 1-year result down per coin and per UTC entry hour. If 2-3 coins or a block of hours carry most of the loss, drop them from the main account's entries (keeping trade count high on the rest) and test that on unseen data.",
+      "status": "Recorded; no rule change."
     }
   ]
 }
