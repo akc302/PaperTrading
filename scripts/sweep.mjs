@@ -14,6 +14,8 @@ export function grid(){
  for(const proximity of [0.006,0.015])for(const rewardRisk of [1,1.5])g.push({strategy:'horizontal',proximity,maxHoldHours:8,rewardRisk});
  for(const rangeHours of [12,24])for(const rangeEntry of [0.25,0.35])for(const rangeStopPct of [0.01,0.02])g.push({strategy:'range',rangeHours,rangeEntry,rangeExit:0.8,rangeStopPct,rangeMinWidth:0.015,rewardRisk:0.3,maxHoldHours:24});
  for(const rewardRisk of [1,2])for(const maxHoldHours of [24,48])for(const s of ['ema-trend','donchian','rsi-reversion'])g.push({strategy:s,stopAtrMultiplier:2.5,rewardRisk,maxHoldHours});
+ // Let-winners-run breakouts (multi-day hold, wide target): tracked daily so a regime change shows up quickly.
+ for(const rewardRisk of [3,5])g.push({strategy:'donchian',stopAtrMultiplier:3.5,rewardRisk,maxHoldHours:168});
  return g;
 }
 const sum=xs=>xs.reduce((a,v)=>a+v,0);
