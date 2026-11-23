@@ -7,7 +7,7 @@ import {pathToFileURL} from 'node:url';
 import {Worker,isMainThread,parentPort,workerData} from 'node:worker_threads';
 import {availableParallelism} from 'node:os';
 import {backtest,DEFAULT_CONFIG,normalizeCandles} from '../engine.js';
-import {HISTORY_PRODUCTS,historyFile,readHistoryFile} from './history.mjs';
+import {HISTORY_PRODUCTS,historyFile,readHistoryFile,loadHistory} from './history.mjs';
 export function grid(){
  const g=[];
  for(const maxHoldHours of [4,24])for(const stopAtrMultiplier of [1.5,2.5])for(const rewardRisk of [1,1.5])g.push({strategy:'aggressive',patternRequired:true,regimeFilter:true,maxHoldHours,stopAtrMultiplier,rewardRisk});
@@ -15,6 +15,8 @@ export function grid(){
  for(const rangeHours of [12,24])for(const rangeEntry of [0.25,0.35])for(const rangeStopPct of [0.01,0.02])g.push({strategy:'range',rangeHours,rangeEntry,rangeExit:0.8,rangeStopPct,rangeMinWidth:0.015,rewardRisk:0.3,maxHoldHours:24});
  for(const rewardRisk of [1,2])for(const maxHoldHours of [24,48])for(const s of ['ema-trend','donchian','rsi-reversion'])g.push({strategy:s,stopAtrMultiplier:2.5,rewardRisk,maxHoldHours});
  // Let-winners-run breakouts (multi-day hold, wide target): tracked daily so a regime change shows up quickly.
+ // 6h dip inside a daily uptrend (needs the stored 6h/daily history).
+ for(const dipRsi of [25,30])for(const rewardRisk of [1,2])g.push({strategy:'dip-6h',dipRsi,stopAtrMultiplier:2,rewardRisk,maxHoldHours:48});
  for(const rewardRisk of [3,5])g.push({strategy:'donchian',stopAtrMultiplier:3.5,rewardRisk,maxHoldHours:168});
  return g;
 }
@@ -24,9 +26,9 @@ export function score(trades,a,b){
   return {trades:t.length,winRate:t.length?t.filter(x=>x.pnl>0).length/t.length:null,net:+sum(t.map(x=>x.pnl)).toFixed(2),profitFactor:gl>0?+(gw/gl).toFixed(2):(gw>0?99:null)};};
  return {train:w(-Infinity,a),validation:w(a,b),unseen:w(b,Infinity)};
 }
-export function sweep(series,fees,configs=grid(),{riskPct=0.02,maxAllocation=0.25}={}){
+export function sweep(series,fees,configs=grid(),{riskPct=0.02,maxAllocation=0.25,history={}}={}){
  const results=configs.map(cfg=>{let trades=[];const cuts=[];
-  for(const [product,bars] of Object.entries(series)){if(bars.length<300)continue;const r=backtest(bars,{...DEFAULT_CONFIG,...cfg,...fees,riskPct,maxAllocation,entryOrder:'limit'},{startTime:bars[200].time});trades.push(...r.account.trades.map(t=>({...t,product})));}
+  for(const [product,bars] of Object.entries(series)){if(bars.length<300)continue;const r=backtest(bars,{...DEFAULT_CONFIG,...cfg,...fees,riskPct,maxAllocation,entryOrder:'limit'},{startTime:bars[200].time,history:history[product]});trades.push(...r.account.trades.map(t=>({...t,product})));}
   const times=Object.values(series).flatMap(b=>b.slice(200).map(x=>x.time)).sort((x,y)=>x-y),a=times[Math.floor(times.length*.5)],b=times[Math.floor(times.length*.75)];
   const s=score(trades,a,b);return {config:cfg,...s,passesEarlier:s.train.net>0&&s.validation.net>0,passesAll:s.train.net>0&&s.validation.net>0&&s.unseen.net>0};
  });
@@ -48,17 +50,18 @@ export async function loadHourly(products=HISTORY_PRODUCTS,dir='data/history'){
  return {series:out,source};
 }
 /** Runs the grid across worker threads (one per CPU, max 8); results are identical to a single-threaded sweep. */
-async function parallelSweep(series,fees,configs=grid()){
- const n=Math.max(1,Math.min(8,availableParallelism(),configs.length));if(n===1)return sweep(series,fees,configs);
+async function parallelSweep(series,fees,configs=grid(),history={}){
+ const n=Math.max(1,Math.min(8,availableParallelism(),configs.length));if(n===1)return sweep(series,fees,configs,{history});
  const chunks=Array.from({length:n},(_,i)=>configs.filter((_,j)=>j%n===i));
- const parts=await Promise.all(chunks.map(chunk=>new Promise((resolve,reject)=>{const w=new Worker(new URL(import.meta.url),{workerData:{series,fees,chunk}});w.once('message',resolve);w.once('error',reject);})));
+ const parts=await Promise.all(chunks.map(chunk=>new Promise((resolve,reject)=>{const w=new Worker(new URL(import.meta.url),{workerData:{series,fees,chunk,history}});w.once('message',resolve);w.once('error',reject);})));
  const results=parts.flat();results.sort((x,y)=>(y.passesAll-x.passesAll)||(y.passesEarlier-x.passesEarlier)||(y.unseen.net-x.unseen.net));return results;
 }
-if(!isMainThread&&workerData?.chunk){parentPort.postMessage(sweep(workerData.series,workerData.fees,workerData.chunk));}
+if(!isMainThread&&workerData?.chunk){parentPort.postMessage(sweep(workerData.series,workerData.fees,workerData.chunk,{history:workerData.history}));}
 export async function run(){
  const {series,source}=await loadHourly(),ft=JSON.parse(await readFile('data/fee-tier.json','utf8')),fees={feeRate:ft.takerFeeRate,makerFeeRate:ft.makerFeeRate,takerFeeRate:ft.takerFeeRate},t0=Date.now();
  const daily={};for(const p of HISTORY_PRODUCTS){const f=await readHistoryFile(historyFile('data/history',p,'1d')).catch(()=>null);daily[p]=normalizeCandles(f?.candles??[]);}
- const results=await parallelSweep(series,fees),bars=Math.max(...Object.values(series).map(b=>b.length));
+ const history=await loadHistory();
+ const results=await parallelSweep(series,fees,grid(),history),bars=Math.max(...Object.values(series).map(b=>b.length));
  const report={at:new Date().toISOString(),source,barsPerCoin:bars,days:+(bars/24).toFixed(1),fees,regime:regimeFrom(daily),windows:'train 50% / validation 25% / unseen newest 25%, by entry time',rulesTested:results.length,
   passingAllWindows:results.filter(r=>r.passesAll).length,best:results[0]??null,top:results.slice(0,12),seconds:+((Date.now()-t0)/1000).toFixed(1)};
  await writeFile('data/sweep.json',JSON.stringify(report,null,1)+'\n');
