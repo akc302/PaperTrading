@@ -3,7 +3,7 @@
 import {writeFile,mkdir,stat,rename} from 'node:fs/promises';
 import {pathToFileURL} from 'node:url';
 import {normalizeCandles} from '../engine.js';
-import {HISTORY_PRODUCTS,GRANULARITIES,HISTORY_DAYS,historyFile,compact,readHistoryFile} from './history.mjs';
+import {HISTORY_PRODUCTS,GRANULARITIES,DAYS_BY_LABEL,historyFile,compact,readHistoryFile} from './history.mjs';
 const sleep=ms=>new Promise(r=>setTimeout(r,ms));
 export async function fetchPage(product,granularity,start,end,{fetcher=fetch,delay=400}={}){
  const url=new URL(`https://api.exchange.coinbase.com/products/${product}/candles`);
@@ -18,7 +18,7 @@ export async function fetchPage(product,granularity,start,end,{fetcher=fetch,del
 }
 /** Returns completed bars for [now-days, now), merged with what is stored. */
 export async function refreshSeries(product,label,stored,now,options={}){
- const g=GRANULARITIES[label],first=Math.floor((now-HISTORY_DAYS*86400)/g)*g,end=Math.floor(now/g)*g;
+ const g=GRANULARITIES[label],first=Math.floor((now-DAYS_BY_LABEL[label]*86400)/g)*g,end=Math.floor(now/g)*g;
  const have=normalizeCandles(stored??[]).filter(b=>b.time>=first&&b.time+g<=now);
  let start=have.length?have.at(-1).time+g:first;const rows=[...have];
  while(start<end){const stop=Math.min(start+300*g,end);rows.push(...normalizeCandles(await fetchPage(product,g,start,stop-1,options)));start=stop;}
@@ -35,7 +35,7 @@ export async function run({dir='data/history',now=Date.now()/1000,options={}}={}
   }catch(e){failures.push(`${product} ${label}: ${e.message}`);console.error(`${product} ${label}: history refresh failed; keeping stored file.`);}
  }
  console.log(`History total ${(bytes/1024/1024).toFixed(2)} MB.`);
- if(bytes>4*1024*1024)throw new Error('History files exceed the 4 MB budget.');
+ if(bytes>12*1024*1024)throw new Error('History files exceed the 12 MB budget.');
  return {failures,bytes};
 }
-if(process.argv[1]&&import.meta.url===pathToFileURL(process.argv[1]).href){const r=await run();if(r.failures.length===HISTORY_PRODUCTS.length*2)process.exitCode=1;}
+if(process.argv[1]&&import.meta.url===pathToFileURL(process.argv[1]).href){const r=await run();if(r.failures.length===HISTORY_PRODUCTS.length*Object.keys(GRANULARITIES).length)process.exitCode=1;}

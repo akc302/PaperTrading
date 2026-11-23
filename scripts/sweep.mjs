@@ -1,0 +1,46 @@
+/** Daily automatic rule sweep (paper research only). Backtests a grid of entry/exit rules on stored hourly candles
+ * (1-year data/history/*-1h.json when present, else data/market.json) and scores each rule on three chronological
+ * windows: train (first 50%), validation (next 25%) and unseen (newest 25%), after the configured fees.
+ * Writes data/sweep.json for the researcher; it never changes any account's rules. */
+import {readFile,writeFile} from 'node:fs/promises';
+import {pathToFileURL} from 'node:url';
+import {backtest,DEFAULT_CONFIG,normalizeCandles} from '../engine.js';
+import {HISTORY_PRODUCTS,historyFile,readHistoryFile} from './history.mjs';
+export function grid(){
+ const g=[];
+ for(const maxHoldHours of [4,24])for(const stopAtrMultiplier of [1.5,2.5])for(const rewardRisk of [1,1.5])g.push({strategy:'aggressive',patternRequired:true,regimeFilter:true,maxHoldHours,stopAtrMultiplier,rewardRisk});
+ for(const proximity of [0.006,0.015])for(const rewardRisk of [1,1.5])g.push({strategy:'horizontal',proximity,maxHoldHours:8,rewardRisk});
+ for(const rangeHours of [12,24])for(const rangeEntry of [0.25,0.35])for(const rangeStopPct of [0.01,0.02])g.push({strategy:'range',rangeHours,rangeEntry,rangeExit:0.8,rangeStopPct,rangeMinWidth:0.015,rewardRisk:0.3,maxHoldHours:24});
+ for(const rewardRisk of [1,2])for(const maxHoldHours of [24,48])for(const s of ['ema-trend','donchian','rsi-reversion'])g.push({strategy:s,stopAtrMultiplier:2.5,rewardRisk,maxHoldHours});
+ return g;
+}
+const sum=xs=>xs.reduce((a,v)=>a+v,0);
+export function score(trades,a,b){
+ const w=(lo,hi)=>{const t=trades.filter(x=>x.openedAt>=lo&&x.openedAt<hi),gw=sum(t.filter(x=>x.pnl>0).map(x=>x.pnl)),gl=-sum(t.filter(x=>x.pnl<=0).map(x=>x.pnl));
+  return {trades:t.length,winRate:t.length?t.filter(x=>x.pnl>0).length/t.length:null,net:+sum(t.map(x=>x.pnl)).toFixed(2),profitFactor:gl>0?+(gw/gl).toFixed(2):(gw>0?99:null)};};
+ return {train:w(-Infinity,a),validation:w(a,b),unseen:w(b,Infinity)};
+}
+export function sweep(series,fees,configs=grid(),{riskPct=0.02,maxAllocation=0.25}={}){
+ const results=configs.map(cfg=>{let trades=[];const cuts=[];
+  for(const [product,bars] of Object.entries(series)){if(bars.length<300)continue;const r=backtest(bars,{...DEFAULT_CONFIG,...cfg,...fees,riskPct,maxAllocation,entryOrder:'limit'},{startTime:bars[200].time});trades.push(...r.account.trades.map(t=>({...t,product})));}
+  const times=Object.values(series).flatMap(b=>b.slice(200).map(x=>x.time)).sort((x,y)=>x-y),a=times[Math.floor(times.length*.5)],b=times[Math.floor(times.length*.75)];
+  const s=score(trades,a,b);return {config:cfg,...s,passesEarlier:s.train.net>0&&s.validation.net>0,passesAll:s.train.net>0&&s.validation.net>0&&s.unseen.net>0};
+ });
+ results.sort((x,y)=>(y.passesAll-x.passesAll)||(y.passesEarlier-x.passesEarlier)||(y.unseen.net-x.unseen.net));
+ return results;
+}
+export async function loadHourly(products=HISTORY_PRODUCTS,dir='data/history'){
+ const out={};let source='data/history 1h (1 year)';
+ for(const p of products){const f=await readHistoryFile(historyFile(dir,p,'1h')).catch(()=>null);if(f?.candles?.length)out[p]=normalizeCandles(f.candles);}
+ if(Object.keys(out).length<products.length){source='data/market.json (about 32 days; 1-year hourly history not fetched yet)';const m=JSON.parse(await readFile('data/market.json','utf8'));for(const p of products)out[p]=normalizeCandles(m.products?.[p]?.candles??[]);}
+ return {series:out,source};
+}
+export async function run(){
+ const {series,source}=await loadHourly(),ft=JSON.parse(await readFile('data/fee-tier.json','utf8')),fees={feeRate:ft.takerFeeRate,makerFeeRate:ft.makerFeeRate,takerFeeRate:ft.takerFeeRate},t0=Date.now();
+ const results=sweep(series,fees),bars=Math.max(...Object.values(series).map(b=>b.length));
+ const report={at:new Date().toISOString(),source,barsPerCoin:bars,days:+(bars/24).toFixed(1),fees,windows:'train 50% / validation 25% / unseen newest 25%, by entry time',rulesTested:results.length,
+  passingAllWindows:results.filter(r=>r.passesAll).length,best:results[0]??null,top:results.slice(0,12),seconds:+((Date.now()-t0)/1000).toFixed(1)};
+ await writeFile('data/sweep.json',JSON.stringify(report,null,1)+'\n');
+ console.log(`Sweep: ${report.rulesTested} rules on ${report.days} days, ${report.passingAllWindows} positive in all three windows (${report.seconds}s).`);
+}
+if(process.argv[1]&&import.meta.url===pathToFileURL(process.argv[1]).href)await run();
