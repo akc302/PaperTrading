@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "generatedAt": "2026-11-23T05:21:42.520Z",
+  "generatedAt": "2026-11-23T06:36:43.064Z",
   "goal": 85000,
   "equity": 29865.26287940766,
   "startingEquity": 30000,
@@ -75,7 +75,7 @@
     },
     "researcher": {
       "role": "Claude every 5h: loss analysis, backtest, rule adoption",
-      "lastRunHoursAgo": 1.2,
+      "lastRunHoursAgo": 2.5,
       "healthy": true,
       "sweep": {
         "at": "2026-11-23T04:05:16.788Z",
@@ -99,13 +99,13 @@
         }
       },
       "latestNote": {
-        "at": "2026-11-23T04:07:23.649Z",
-        "tradesReviewed": 0,
-        "losses": 0,
-        "findings": 4,
+        "at": "2026-11-23T06:34:18.139Z",
+        "tradesReviewed": 2,
+        "losses": 1,
+        "findings": 3,
         "changes": 1,
         "adopted": false,
-        "nextIdea": "Add rule families built for bigger moves to the sweep: hourly donchian breakouts with an ATR trailing stop and no fixed target, multi-day holds (72-168h), and the dip-6h entry with a trailing exit. Keep only rules whose profit factor is above 1.1 in all three windows."
+        "nextIdea": "Stop searching for a long-only edge in the bear regime. Make capital preservation the main measure (main stays in cash until the daily trend turns), keep daytrader-range as the active evidence account, and add a regime detector to the sweep report (share of coins above daily EMA50) so the team switches to the validated trend rules the day the regime turns up."
       }
     },
     "verifier": {
@@ -133,7 +133,7 @@
         "id": "history",
         "label": "28+ days of forward paper trading with the research team",
         "pass": false,
-        "value": "2.0 days"
+        "value": "2.1 days"
       },
       {
         "id": "sample",
@@ -192,7 +192,7 @@
     "windowDays": 30,
     "label": "Estimated time to $85,000 at the trailing 30-day growth rate (not a promise)",
     "status": "insufficient-history",
-    "spanDays": 2.2234087962960754,
+    "spanDays": 2.275498425924668,
     "message": "Needs at least 7 days of equity history."
   },
   "scorecard": [
@@ -275,7 +275,7 @@
     {
       "id": "hourly-legacy",
       "label": "Previous hourly rules",
-      "equity": 30059.3932188255,
+      "equity": 30065.12176604682,
       "initial": 29975.046647868254,
       "netPnl": -152.29220271457623,
       "profitFactor": 0.1854276580606489,
@@ -289,12 +289,12 @@
       "takerFills": 3,
       "openPositions": 3,
       "pause": "normal",
-      "drawdown": 0.002101441245334623
+      "drawdown": 0.0038664601908913188
     },
     {
       "id": "lab-hourly",
       "label": "Lab hourly per-market rules",
-      "equity": 29870.478498169035,
+      "equity": 29867.85489974028,
       "initial": 29975.046647868254,
       "netPnl": -327.17225270176664,
       "profitFactor": 0,
@@ -308,7 +308,7 @@
       "takerFills": 3,
       "openPositions": 3,
       "pause": "normal",
-      "drawdown": 0.005723361516962955
+      "drawdown": 0.005810691307365556
     },
     {
       "id": "scout-daytrade",
@@ -351,21 +351,21 @@
     {
       "id": "daytrader-range",
       "label": "Day trader: buy 24h range low, sell near high, up to 50% per trade",
-      "equity": 29875.66239151464,
+      "equity": 29954.849758825425,
       "initial": 29865.26287940766,
-      "netPnl": -2.8266144347496125,
-      "profitFactor": 0,
+      "netPnl": 89.5868794177667,
+      "profitFactor": 32.69405714356033,
       "maxDrawdown": 0.0028632934014937513,
-      "winRate": 0,
-      "avgWin": null,
+      "winRate": 0.5,
+      "avgWin": 92.41349385251631,
       "avgLoss": -2.8266144347496125,
-      "closedTrades": 1,
-      "fees": 30.41927990785913,
-      "makerFills": 2,
+      "closedTrades": 2,
+      "fees": 57.46083356209864,
+      "makerFills": 4,
       "takerFills": 0,
-      "openPositions": 1,
+      "openPositions": 0,
       "pause": "normal",
-      "drawdown": 0.00026081246894771315
+      "drawdown": 0
     }
   ],
   "drawdownPause": {
@@ -378,7 +378,7 @@
   },
   "verdict": "needs-attention",
   "issues": [
-    "No new paper entry for 35h; current rules may be too strict for this market."
+    "No new paper entry for 37h; current rules may be too strict for this market."
   ],
   "dispatch": []
 }
