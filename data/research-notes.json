@@ -188,6 +188,25 @@
       "adopted": true,
       "nextIdea": "scout-dip6h will make no entries until coins close back above their daily EMA100 (none are today). Track its live trades from then on. Meanwhile, test the same dip rule on BTC/ETH only, and with an EMA50 daily filter, to see whether more trades keep the edge.",
       "status": "Challenger seeded via the daily-review rules step; the main account is unchanged."
+    },
+    {
+      "at": "2026-11-23T02:51:09.797Z",
+      "tradesReviewed": 0,
+      "losses": 0,
+      "findings": [
+        "Owner: trade actively at significant size; buy at support, sell at resistance; paper losses are acceptable while the researcher learns.",
+        "Gate-free simulation over 32 days, 8 coins: buy in the bottom 20-35% of the 12/24h range, sell at 60-80% of it, stop 0.5-2% under the low, maker 0.15% in and out (taker on stops). 48 variants averaged -0.5% to -0.7% per trade overall. The best on the newest 25% (24h range, entry 35%, exit 80%, 2% stop) made +0.25%/trade over 78 trades at 56% wins, but -0.62%/trade over the full period.",
+        "Full engine backtest of that variant (all gates and fees): 8-11 trades/day across 8 coins, 42-46% wins. Net per $10k account over 32 days: -4.9k at 25% allocation, -9.0k at 50%, -9.5k at 100%. In this downtrend most range lows break, so the setup has a negative edge.",
+        "Owner chose to run it as a full-size challenger (not the main account): up to 50% of equity per position, 100% total exposure, same 2% risk, 4-position and 12% daily-loss caps as main."
+      ],
+      "changes": [
+        "engine.js: new 'range' strategy (24h range low buy, near-high target, % stop, fee-width guard)",
+        "scripts/challengers.mjs: 'daytrader-range' challenger with owner-authorized size overrides (maxAllocation 0.5, maxExposure 1; only these two keys may be overridden, capped at 100%)",
+        "tests: range strategy behaviour and the override limits"
+      ],
+      "adopted": true,
+      "nextIdea": "Use daytrader-range's live trades (expect 5-10 a day) to fit entry filters: skip ranges whose low was set in the last 3h (still falling), require 2+ touches of the low, and only trade coins whose 24h range is at least 2.5% wide. Re-test each on the newest unseen data before changing the challenger.",
+      "status": "Seeded via the daily-review rules step; main account unchanged."
     }
   ]
 }

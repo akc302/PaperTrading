@@ -1,7 +1,7 @@
 /** Pure market analysis plus a virtual, long-only ledger. No account or order APIs. */
 export const DEFAULT_CONFIG = Object.freeze({strategy:'horizontal',lookback:48,pivotWindow:3,proximity:0.006,stopBuffer:0.004,rewardRisk:2,riskPct:0.01,feeRate:0.006,slippage:0.0005,maxAllocation:0.25,trendLookback:180,maxHoldHours:48,maxDailyLoss:0.04,maxOpenPositions:4,maxTotalRisk:0.03,stopAtrMultiplier:1.25});
 
-export const STRATEGIES = Object.freeze(['horizontal','trendline','aggressive','ema-trend','donchian','rsi-reversion','trend-follow','dip-6h']);
+export const STRATEGIES = Object.freeze(['horizontal','trendline','aggressive','ema-trend','donchian','rsi-reversion','trend-follow','dip-6h','range']);
 /** Trend-follow defaults: chandelier k, how many top-ranked coins may be held, 6h breakout length, ranking window (days). */
 export const TREND_DEFAULTS = Object.freeze({trailAtrMultiplier:3,trendTopN:2,trendBreakout:20,trendRankDays:30});
 /** Trend positions have no fixed target; this far-away safety target only satisfies the ledger's bracket invariant. */
@@ -23,6 +23,12 @@ const cfg = (c={}) => {
   if(!STRATEGIES.includes(x.strategy)||!Number.isInteger(x.trendLookback)||x.trendLookback<60||x.trendLookback>720)throw new Error('Invalid strategy or trendline window.');
   if(!finite(x.maxHoldHours)||x.maxHoldHours<0||x.maxHoldHours>720||!finite(x.maxDailyLoss)||x.maxDailyLoss<0||x.maxDailyLoss>0.5||!Number.isInteger(x.maxOpenPositions)||x.maxOpenPositions<1||x.maxOpenPositions>20||!positive(x.maxTotalRisk)||x.maxTotalRisk>0.2)throw new Error('Invalid portfolio risk limits.');
   if(x.regimeFilter!=null&&typeof x.regimeFilter!=='boolean')throw new Error('Invalid regime filter.');
+  if(x.rangeHours!=null&&(!Number.isInteger(x.rangeHours)||x.rangeHours<6||x.rangeHours>168))throw new Error('Invalid range window.');
+  if(x.rangeEntry!=null&&(!finite(x.rangeEntry)||x.rangeEntry<=0||x.rangeEntry>0.5))throw new Error('Invalid range entry zone.');
+  if(x.rangeExit!=null&&(!finite(x.rangeExit)||x.rangeExit<0.5||x.rangeExit>1))throw new Error('Invalid range exit level.');
+  if(x.rangeStopPct!=null&&(!finite(x.rangeStopPct)||x.rangeStopPct<0||x.rangeStopPct>0.1))throw new Error('Invalid range stop.');
+  if(x.rangeConfirm!=null&&typeof x.rangeConfirm!=='boolean')throw new Error('Invalid range confirmation flag.');
+  if(x.rangeMinWidth!=null&&(!finite(x.rangeMinWidth)||x.rangeMinWidth<0||x.rangeMinWidth>0.5))throw new Error('Invalid range width.');
   if(x.dipRsi!=null&&(!finite(x.dipRsi)||x.dipRsi<5||x.dipRsi>50))throw new Error('Invalid dip RSI threshold.');
   if(!positive(x.stopAtrMultiplier)||x.stopAtrMultiplier<.5||x.stopAtrMultiplier>4)throw new Error('Invalid stop ATR multiplier.');
   if(x.maxExposure!=null&&(!positive(x.maxExposure)||x.maxExposure>1))throw new Error('Invalid exposure cap.');
@@ -62,7 +68,7 @@ export function normalizeCandles(input){
 
 export function analyze(input,config={}){
   const c=cfg(config);
-  const indicator={'ema-trend':analyzeEmaTrend,donchian:analyzeDonchian,'rsi-reversion':analyzeRsiReversion,'trend-follow':analyzeTrendFollow,'dip-6h':analyzeDip6h}[c.strategy];
+  const indicator={'ema-trend':analyzeEmaTrend,donchian:analyzeDonchian,'rsi-reversion':analyzeRsiReversion,'trend-follow':analyzeTrendFollow,'dip-6h':analyzeDip6h,range:analyzeRange}[c.strategy];
   const result=indicator?indicator(input,c):c.strategy==='aggressive'?analyzeAggressive(input,c):c.strategy==='trendline'?analyzeTrendline(input,c):{...analyzeHorizontal(input,c),strategy:'horizontal',setup:'support-bounce',trend:'unconfirmed',trendlines:[]};
   const completed=normalizeCandles(input);result.pattern=patternConfirmation(completed,{asOf:(completed.at(-1)?.time??0)+3600});
   if(c.patternRequired===true&&result.signal==='BUY'&&!result.pattern.confirmed){result.signal='WAIT';result.reason='Research pattern filter: no completed-candle confirmation.';}
@@ -566,6 +572,22 @@ export function dipSignal(ctx,c={},price=null){
  if(!up){out.reason='Daily close is below its EMA100; no dip buying outside a daily uptrend.';return out;}
  if(!(r<k)){out.reason=`6h RSI ${r.toFixed(1)}; waiting for a dip below ${k}.`;return out;}
  out.signal='BUY';out.reason=`6h RSI ${r.toFixed(1)} below ${k} inside a daily uptrend; ATR stop and cost-aware target.`;return out;
+}
+/**
+ * Intraday range trade: buy in the bottom rangeEntry of the last rangeHours high-low range after a bullish hourly close,
+ * sell at rangeExit of the range (resting maker limit), stop stopAtrMultiplier x ATR below the range low.
+ * Skips ranges narrower than rangeMinWidth so the move can pay the round-trip fees.
+ */
+function analyzeRange(input,c){
+ const bars=normalizeCandles(input),base=indicatorBase(bars,'range','range-support-buy'),n=c.rangeHours??24;if(bars.length<n+15){base.reason=`Need ${n+15} completed hourly bars.`;return base;}
+ const win=bars.slice(-n),last=bars.at(-1),lo=Math.min(...win.map(b=>b.low)),hi=Math.max(...win.map(b=>b.high)),width=hi/lo-1;
+ base.support=lo;base.resistance=hi;base.atr=atrOf(bars);base.price=last.close;
+ base.stop=c.rangeStopPct!=null?lo*(1-c.rangeStopPct):lo-base.atr*(c.stopAtrMultiplier??0.5);base.target=lo+(hi-lo)*(c.rangeExit??0.85);base.trend=width>=(c.rangeMinWidth??0.015)?'ranging':'tight';
+ if(width<(c.rangeMinWidth??0.015)){base.reason=`24h range ${(width*100).toFixed(2)}% is too narrow to pay fees.`;return base;}
+ if(last.close>lo+(hi-lo)*(c.rangeEntry??0.3)){base.reason='Price is not in the lower part of the range.';return base;}
+ if(c.rangeConfirm===true&&last.close<=last.open){base.reason='In the buy zone; waiting for a bullish hourly close.';return base;}
+ if(base.target<=last.close*1.004){base.reason='Range target is too close to cover fees.';return base;}
+ base.signal='BUY';base.reason=`Range buy: ${(width*100).toFixed(1)}% 24h range, price in the bottom ${((c.rangeEntry??0.3)*100).toFixed(0)}%, target near the range high.`;return base;
 }
 function analyzeDip6h(input,c){
  const hourly=normalizeCandles(input),asOf=input?.asOf??((hourly.at(-1)?.time??0)+3600);
