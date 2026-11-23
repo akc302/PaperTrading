@@ -1,7 +1,7 @@
 /** Pure market analysis plus a virtual, long-only ledger. No account or order APIs. */
 export const DEFAULT_CONFIG = Object.freeze({strategy:'horizontal',lookback:48,pivotWindow:3,proximity:0.006,stopBuffer:0.004,rewardRisk:2,riskPct:0.01,feeRate:0.006,slippage:0.0005,maxAllocation:0.25,trendLookback:180,maxHoldHours:48,maxDailyLoss:0.04,maxOpenPositions:4,maxTotalRisk:0.03,stopAtrMultiplier:1.25});
 
-export const STRATEGIES = Object.freeze(['horizontal','trendline','aggressive','ema-trend','donchian','rsi-reversion','trend-follow']);
+export const STRATEGIES = Object.freeze(['horizontal','trendline','aggressive','ema-trend','donchian','rsi-reversion','trend-follow','dip-6h']);
 /** Trend-follow defaults: chandelier k, how many top-ranked coins may be held, 6h breakout length, ranking window (days). */
 export const TREND_DEFAULTS = Object.freeze({trailAtrMultiplier:3,trendTopN:2,trendBreakout:20,trendRankDays:30});
 /** Trend positions have no fixed target; this far-away safety target only satisfies the ledger's bracket invariant. */
@@ -23,6 +23,7 @@ const cfg = (c={}) => {
   if(!STRATEGIES.includes(x.strategy)||!Number.isInteger(x.trendLookback)||x.trendLookback<60||x.trendLookback>720)throw new Error('Invalid strategy or trendline window.');
   if(!finite(x.maxHoldHours)||x.maxHoldHours<0||x.maxHoldHours>720||!finite(x.maxDailyLoss)||x.maxDailyLoss<0||x.maxDailyLoss>0.5||!Number.isInteger(x.maxOpenPositions)||x.maxOpenPositions<1||x.maxOpenPositions>20||!positive(x.maxTotalRisk)||x.maxTotalRisk>0.2)throw new Error('Invalid portfolio risk limits.');
   if(x.regimeFilter!=null&&typeof x.regimeFilter!=='boolean')throw new Error('Invalid regime filter.');
+  if(x.dipRsi!=null&&(!finite(x.dipRsi)||x.dipRsi<5||x.dipRsi>50))throw new Error('Invalid dip RSI threshold.');
   if(!positive(x.stopAtrMultiplier)||x.stopAtrMultiplier<.5||x.stopAtrMultiplier>4)throw new Error('Invalid stop ATR multiplier.');
   if(x.maxExposure!=null&&(!positive(x.maxExposure)||x.maxExposure>1))throw new Error('Invalid exposure cap.');
   if(x.entryOrder!=null&&!['market','limit'].includes(x.entryOrder))throw new Error('Invalid entry order type.');
@@ -61,7 +62,7 @@ export function normalizeCandles(input){
 
 export function analyze(input,config={}){
   const c=cfg(config);
-  const indicator={'ema-trend':analyzeEmaTrend,donchian:analyzeDonchian,'rsi-reversion':analyzeRsiReversion,'trend-follow':analyzeTrendFollow}[c.strategy];
+  const indicator={'ema-trend':analyzeEmaTrend,donchian:analyzeDonchian,'rsi-reversion':analyzeRsiReversion,'trend-follow':analyzeTrendFollow,'dip-6h':analyzeDip6h}[c.strategy];
   const result=indicator?indicator(input,c):c.strategy==='aggressive'?analyzeAggressive(input,c):c.strategy==='trendline'?analyzeTrendline(input,c):{...analyzeHorizontal(input,c),strategy:'horizontal',setup:'support-bounce',trend:'unconfirmed',trendlines:[]};
   const completed=normalizeCandles(input);result.pattern=patternConfirmation(completed,{asOf:(completed.at(-1)?.time??0)+3600});
   if(c.patternRequired===true&&result.signal==='BUY'&&!result.pattern.confirmed){result.signal='WAIT';result.reason='Research pattern filter: no completed-candle confirmation.';}
@@ -267,7 +268,7 @@ export function closePaperTrade(account,id,price,time=Date.now()/1000,reason='ma
 }
 
 // Bounded history keeps replay linear; covers every strategy's deepest lookback.
-const historyWindow=c=>c.strategy==='trend-follow'?24*130:Math.max(320,c.lookback+10,c.trendLookback*4+8);
+const historyWindow=c=>c.strategy==='trend-follow'||c.strategy==='dip-6h'?24*130:Math.max(320,c.lookback+10,c.trendLookback*4+8);
 /** Pass completed candles only. Initial sync starts now; replay=true is for backtests. */
 export function processCandles(account,product,input,config={},options={}){
   const c=cfg(config),bars=normalizeCandles(input),{autoTrade=true,replay=false}=options;
@@ -291,7 +292,7 @@ export function processCandles(account,product,input,config={},options={}){
       else if((existing.maxHoldHours??c.maxHoldHours)>0&&bar.time>=existing.openedAt+(existing.maxHoldHours??c.maxHoldHours)*3600){closePaperTrade(account,existing.id,bar.open,bar.time,'time-exit',c);reason='Maximum paper holding period reached; exited at the next eligible open.';action='EXIT';}
     }
     // A signal can use only bars that ended before this bar began. Never its future high/low.
-    const window=bars.slice(Math.max(0,i-historyWindow(c)),i),signal=analyze(c.strategy==='trend-follow'?{candles:window,...(options.history??{}),asOf:bar.time}:window,c),daily=dayRisk(account,bar.time,c);
+    const window=bars.slice(Math.max(0,i-historyWindow(c)),i),signal=analyze(c.strategy==='trend-follow'||c.strategy==='dip-6h'?{candles:window,...(options.history??{}),asOf:bar.time}:window,c),daily=dayRisk(account,bar.time,c);
     if(c.strategy==='trend-follow'&&signal.signal==='BUY'){signal.stop=bar.open-(c.trailAtrMultiplier??TREND_DEFAULTS.trailAtrMultiplier)*signal.atr;signal.target=bar.open*TREND_SAFETY_TARGET;}
     if(!existing&&autoTrade&&!daily.blocked){
       const fill=executionAt(bar.open,signal.stop,signal.target,c);
@@ -442,7 +443,7 @@ export function processQuoteBatch(account,events,{time=Date.now()/1000,pause=nul
  for(const e of prepared){const stamp=Date.parse(e.quote.time)/1000;if(!positive(e.quote.price)||!Number.isFinite(stamp)||time-stamp>120||stamp-time>30||e.bars.length<24||e.bars.some(b=>b.time+3600>time)||e.bars.slice(-24).some((b,i,a)=>i>0&&b.time!==a[i-1].time+3600)||time-(e.bars.at(-1).time+3600)>3600)throw new Error('Fresh quotes and completed history required for all markets.');}
  const bucket=Math.floor(time/300);if((account.lastQuoteBucket??-1)>=bucket)return account;
  account.decisions??=[];account.lastEntries??={};account.lastExits??={};
- const trendy=e=>e.config.strategy==='trend-follow'||account.positions.some(p=>p.product===e.product&&p.trail);
+ const trendy=e=>e.config.strategy==='trend-follow'||e.config.strategy==='dip-6h'||account.positions.some(p=>p.product===e.product&&p.trail);
  for(const e of prepared)if(trendy(e))e.ctx=trendContext(e.bars,e.history,time);
  for(const e of prepared)dayRisk(account,time,e.config);
  for(const e of prepared)account.marks[e.product]=+e.quote.price;
@@ -466,7 +467,7 @@ export function processQuoteBatch(account,events,{time=Date.now()/1000,pause=nul
  account.orderLog.splice(300);
  const priority=['XRP-USD','SOL-USD','ETH-USD','BTC-USD','ADA-USD','DOGE-USD','LINK-USD','AVAX-USD'];
  const ordered=prepared.sort((a,b)=>(priority.indexOf(a.product)<0?99:priority.indexOf(a.product))-(priority.indexOf(b.product)<0?99:priority.indexOf(b.product))||a.product.localeCompare(b.product));
- for(const e of ordered)e.signal=e.config.strategy==='trend-follow'?{...trendSignal(e.ctx,e.config),pattern:patternConfirmation(e.bars,{asOf:time})}:analyze(e.bars,e.config);
+ for(const e of ordered)e.signal=e.config.strategy==='trend-follow'?{...trendSignal(e.ctx,e.config),pattern:patternConfirmation(e.bars,{asOf:time})}:e.config.strategy==='dip-6h'?{...dipSignal(e.ctx,e.config,+e.quote.price),pattern:patternConfirmation(e.bars,{asOf:time})}:analyze(e.bars,e.config);
  const leaders=rankTrend(ordered.filter(e=>e.config.strategy==='trend-follow').map(e=>({product:e.product,signal:e.signal})),ordered.find(e=>e.config.strategy==='trend-follow')?.config.trendTopN??TREND_DEFAULTS.trendTopN);
  for(const e of ordered){const signal=e.signal,price=+e.quote.price;
   if(e.config.strategy==='aggressive'&&signal.signal==='BUY'){signal.price=price;signal.stop=price-Math.max(price*.015,signal.atr*e.config.stopAtrMultiplier);const fill=executionAt(price,signal.stop,price,e.config);signal.target=(fill.entry*(1+e.config.feeRate)+fill.risk*e.config.rewardRisk)/((1-e.config.slippage)*(1-e.config.feeRate));}
@@ -548,6 +549,27 @@ export function updateTrailingStop(p,sixHour,time){
  p.trail.highestClose=hc;p.trail.atr=atr;p.trail.checkedAt=time;
  if(Number.isFinite(next)&&next>p.stop){p.stop=next;p.trail.raisedAt=time;return true;}
  return false;
+}
+/**
+ * 6h dip buy inside a daily uptrend: RSI(14) on completed 6h closes below dipRsi (default 25) while the last completed
+ * daily close is above its EMA100. ATR(14, 6h) stop x stopAtrMultiplier and a cost-aware rewardRisk target.
+ * Walk-forward on 2 years of 6h/1d history (research notes, 23 Nov): validation 5t/100%/+2.3R, unseen 5t/100%/+4.2R; small samples.
+ */
+export function dipSignal(ctx,c={},price=null){
+ const six=normalizeCandles(ctx?.sixHour??[]),daily=normalizeCandles(ctx?.daily??[]),last=six.at(-1);
+ const out={strategy:'dip-6h',setup:'6h-dip-in-daily-uptrend',trend:'unconfirmed',price:price??last?.close??null,support:null,resistance:null,atr:0,levels:[],trendlines:[],signal:'WAIT',stop:null,target:null,reason:'Need 30 completed 6h bars and 101 daily bars.'};
+ if(six.length<30||daily.length<101||!out.price)return out;
+ const r=rsiSeries(six.map(b=>b.close)).at(-1),e100=emaSeries(daily.map(b=>b.close),100).at(-1),up=daily.at(-1).close>e100,k=c.dipRsi??25;
+ out.trend=up?'bullish':'bearish';out.rsi6h=r;out.atr=atrOf(six);
+ const cc={...DEFAULT_CONFIG,...c};out.stop=out.price-Math.max(out.price*.004,out.atr*(cc.stopAtrMultiplier??2));
+ const fill=executionAt(out.price,out.stop,out.price,cc);out.target=(fill.entry*(1+cc.feeRate)+fill.risk*cc.rewardRisk)/((1-cc.slippage)*(1-cc.feeRate));
+ if(!up){out.reason='Daily close is below its EMA100; no dip buying outside a daily uptrend.';return out;}
+ if(!(r<k)){out.reason=`6h RSI ${r.toFixed(1)}; waiting for a dip below ${k}.`;return out;}
+ out.signal='BUY';out.reason=`6h RSI ${r.toFixed(1)} below ${k} inside a daily uptrend; ATR stop and cost-aware target.`;return out;
+}
+function analyzeDip6h(input,c){
+ const hourly=normalizeCandles(input),asOf=input?.asOf??((hourly.at(-1)?.time??0)+3600);
+ return dipSignal(trendContext(hourly,{sixHour:input?.sixHour,daily:input?.daily},asOf),c,hourly.at(-1)?.close??null);
 }
 function analyzeTrendFollow(input,c){
  const hourly=normalizeCandles(input),asOf=input?.asOf??((hourly.at(-1)?.time??0)+3600);

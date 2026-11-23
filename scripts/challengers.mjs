@@ -1,7 +1,7 @@
 /** Challenger paper accounts: alternative rule sets traded on the same quotes, fees and code path as the main account.
  * Each holds its own virtual ledger and drawdown pause. Rules may only change entry/exit keys, never risk caps. */
 import {DEFAULT_CONFIG,TREND_DEFAULTS,createAccount,markToMarket,processQuoteBatch} from '../engine.js';
-export const RULE_KEYS=Object.freeze(['strategy','patternRequired','regimeFilter','maxHoldHours','stopAtrMultiplier','rewardRisk','mlWeights','mlThreshold','trailAtrMultiplier','trendTopN','trendBreakout','trendRankDays','entryOrder','limitOffset','limitChecks','lookback','pivotWindow','proximity','stopBuffer','trendLookback']);
+export const RULE_KEYS=Object.freeze(['strategy','patternRequired','regimeFilter','dipRsi','maxHoldHours','stopAtrMultiplier','rewardRisk','mlWeights','mlThreshold','trailAtrMultiplier','trendTopN','trendBreakout','trendRankDays','entryOrder','limitOffset','limitChecks','lookback','pivotWindow','proximity','stopBuffer','trendLookback']);
 export const CAP_KEYS=Object.freeze(['riskPct','maxTotalRisk','maxAllocation','maxOpenPositions','maxDailyLoss','maxExposure']);
 export const pickRules=(c={})=>Object.fromEntries(Object.entries(c).filter(([k,v])=>RULE_KEYS.includes(k)&&v!==undefined));
 const trend=(k,n)=>({strategy:'trend-follow',...TREND_DEFAULTS,trailAtrMultiplier:k,trendTopN:n,maxHoldHours:0,patternRequired:false,entryOrder:'limit'});
@@ -17,6 +17,8 @@ export function seedChallengers(state){
   {id:'lab-hourly',label:'Lab hourly per-market rules',source:'strategy-lab',rules:hourly,productConfigs:structuredClone(hp)},
   // Always-on day-trade scout at 1/4 of main risk: keeps live trades and evidence flowing when the main trend rules sit out a downtrend.
   {id:'scout-daytrade',label:'Day-trade scout: support bounce (1.5% zone), 4h hold, 1/4 risk',source:'researcher',riskScale:0.25,rules:{strategy:'horizontal',maxHoldHours:4,stopAtrMultiplier:1.5,rewardRisk:1,proximity:0.015,patternRequired:false,regimeFilter:false,entryOrder:'limit',mlWeights:undefined,mlThreshold:undefined,trailAtrMultiplier:undefined},productConfigs:{}},
+  // 6h dip buy inside a daily uptrend (2-year walk-forward positive on small samples); 1/4 risk until live evidence builds.
+  {id:'scout-dip6h',label:'6h dip scout: RSI<25 in daily uptrend, 48h hold, 1/4 risk',source:'researcher',riskScale:0.25,rules:{strategy:'dip-6h',dipRsi:25,stopAtrMultiplier:2,rewardRisk:1,maxHoldHours:48,patternRequired:false,regimeFilter:false,entryOrder:'limit',mlWeights:undefined,mlThreshold:undefined,trailAtrMultiplier:undefined},productConfigs:{}},
  ];
 }
 export function freshAccount(state){const a=createAccount(Math.max(1,markToMarket(state.account).equity));Object.assign(a,{compactJournal:true,decisionLimit:300,equityLimit:2600,orderLogLimit:50});return a;}
