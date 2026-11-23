@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "generatedAt": "2026-11-23T00:21:54.189Z",
+  "generatedAt": "2026-11-23T00:33:20.803Z",
   "goal": 85000,
   "equity": 29865.26287940766,
   "startingEquity": 30000,
@@ -70,21 +70,21 @@
   "agents": {
     "trader": {
       "role": "5-minute paper trader",
-      "lastRunMinutesAgo": 1,
+      "lastRunMinutesAgo": 2,
       "healthy": true
     },
     "researcher": {
       "role": "Claude every 5h: loss analysis, backtest, rule adoption",
-      "lastRunHoursAgo": 3.9,
+      "lastRunHoursAgo": 4.1,
       "healthy": true,
       "latestNote": {
-        "at": "2026-11-22T20:28:43.538Z",
-        "tradesReviewed": 3,
-        "losses": 3,
-        "findings": 5,
-        "changes": 0,
-        "adopted": false,
-        "nextIdea": "Stop tuning long-only hourly entries in this downtrend; 4 different filters have now failed out of sample. Test instead (a) the scout and hourly challengers at a lower riskScale (0.25) so evidence costs less, and (b) a 6h-bar mean-reversion entry (RSI(14) < 30 on 6h with a 1d close above EMA200) using the 2-year history, so there are hundreds of out-of-sample trades instead of about 13."
+        "at": "2026-11-23T00:30:24.689Z",
+        "tradesReviewed": 0,
+        "losses": 0,
+        "findings": 3,
+        "changes": 3,
+        "adopted": true,
+        "nextIdea": "scout-dip6h will make no entries until coins close back above their daily EMA100 (none are today). Track its live trades from then on. Meanwhile, test the same dip rule on BTC/ETH only, and with an EMA50 daily filter, to see whether more trades keep the edge."
       }
     },
     "verifier": {
@@ -154,7 +154,7 @@
         "id": "uptime",
         "label": "Trader ran in 95%+ of hours over the last 7 days",
         "pass": false,
-        "value": "10%"
+        "value": "24%"
       },
       {
         "id": "integrity",
@@ -171,7 +171,7 @@
     "windowDays": 30,
     "label": "Estimated time to $85,000 at the trailing 30-day growth rate (not a promise)",
     "status": "insufficient-history",
-    "spanDays": 2.015210520832075,
+    "spanDays": 2.0231574421293206,
     "message": "Needs at least 7 days of equity history."
   },
   "scorecard": [
@@ -254,7 +254,7 @@
     {
       "id": "hourly-legacy",
       "label": "Previous hourly rules",
-      "equity": 29954.335517960808,
+      "equity": 29948.895119287536,
       "initial": 29975.046647868254,
       "netPnl": -152.29220271457623,
       "profitFactor": 0.1854276580606489,
@@ -268,12 +268,12 @@
       "takerFills": 3,
       "openPositions": 3,
       "pause": "normal",
-      "drawdown": 0.0033510309685658157
+      "drawdown": 0.0035320454239052834
     },
     {
       "id": "lab-hourly",
       "label": "Lab hourly per-market rules",
-      "equity": 29941.32128146812,
+      "equity": 29938.774098111928,
       "initial": 29975.046647868254,
       "netPnl": -186.9597025010642,
       "profitFactor": 0,
@@ -287,7 +287,7 @@
       "takerFills": 2,
       "openPositions": 3,
       "pause": "normal",
-      "drawdown": 0.0033652699167994182
+      "drawdown": 0.0034500561349094516
     },
     {
       "id": "scout-daytrade",
@@ -307,6 +307,25 @@
       "openPositions": 0,
       "pause": "normal",
       "drawdown": 0.0031483632612374635
+    },
+    {
+      "id": "scout-dip6h",
+      "label": "6h dip scout: RSI<25 in daily uptrend, 48h hold, 1/4 risk",
+      "equity": 29865.26287940766,
+      "initial": 29865.26287940766,
+      "netPnl": 0,
+      "profitFactor": null,
+      "maxDrawdown": 0,
+      "winRate": null,
+      "avgWin": null,
+      "avgLoss": null,
+      "closedTrades": 0,
+      "fees": 0,
+      "makerFills": 0,
+      "takerFills": 0,
+      "openPositions": 0,
+      "pause": "normal",
+      "drawdown": null
     }
   ],
   "drawdownPause": {
@@ -319,7 +338,7 @@
   },
   "verdict": "needs-attention",
   "issues": [
-    "No new paper entry for 30h; current rules may be too strict for this market."
+    "No new paper entry for 31h; current rules may be too strict for this market."
   ],
   "dispatch": []
 }
