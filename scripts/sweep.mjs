@@ -4,6 +4,8 @@
  * Writes data/sweep.json for the researcher; it never changes any account's rules. */
 import {readFile,writeFile} from 'node:fs/promises';
 import {pathToFileURL} from 'node:url';
+import {Worker,isMainThread,parentPort,workerData} from 'node:worker_threads';
+import {availableParallelism} from 'node:os';
 import {backtest,DEFAULT_CONFIG,normalizeCandles} from '../engine.js';
 import {HISTORY_PRODUCTS,historyFile,readHistoryFile} from './history.mjs';
 export function grid(){
@@ -35,12 +37,20 @@ export async function loadHourly(products=HISTORY_PRODUCTS,dir='data/history'){
  if(Object.keys(out).length<products.length){source='data/market.json (about 32 days; 1-year hourly history not fetched yet)';const m=JSON.parse(await readFile('data/market.json','utf8'));for(const p of products)out[p]=normalizeCandles(m.products?.[p]?.candles??[]);}
  return {series:out,source};
 }
+/** Runs the grid across worker threads (one per CPU, max 8); results are identical to a single-threaded sweep. */
+async function parallelSweep(series,fees,configs=grid()){
+ const n=Math.max(1,Math.min(8,availableParallelism(),configs.length));if(n===1)return sweep(series,fees,configs);
+ const chunks=Array.from({length:n},(_,i)=>configs.filter((_,j)=>j%n===i));
+ const parts=await Promise.all(chunks.map(chunk=>new Promise((resolve,reject)=>{const w=new Worker(new URL(import.meta.url),{workerData:{series,fees,chunk}});w.once('message',resolve);w.once('error',reject);})));
+ const results=parts.flat();results.sort((x,y)=>(y.passesAll-x.passesAll)||(y.passesEarlier-x.passesEarlier)||(y.unseen.net-x.unseen.net));return results;
+}
+if(!isMainThread&&workerData?.chunk){parentPort.postMessage(sweep(workerData.series,workerData.fees,workerData.chunk));}
 export async function run(){
  const {series,source}=await loadHourly(),ft=JSON.parse(await readFile('data/fee-tier.json','utf8')),fees={feeRate:ft.takerFeeRate,makerFeeRate:ft.makerFeeRate,takerFeeRate:ft.takerFeeRate},t0=Date.now();
- const results=sweep(series,fees),bars=Math.max(...Object.values(series).map(b=>b.length));
+ const results=await parallelSweep(series,fees),bars=Math.max(...Object.values(series).map(b=>b.length));
  const report={at:new Date().toISOString(),source,barsPerCoin:bars,days:+(bars/24).toFixed(1),fees,windows:'train 50% / validation 25% / unseen newest 25%, by entry time',rulesTested:results.length,
   passingAllWindows:results.filter(r=>r.passesAll).length,best:results[0]??null,top:results.slice(0,12),seconds:+((Date.now()-t0)/1000).toFixed(1)};
  await writeFile('data/sweep.json',JSON.stringify(report,null,1)+'\n');
  console.log(`Sweep: ${report.rulesTested} rules on ${report.days} days, ${report.passingAllWindows} positive in all three windows (${report.seconds}s).`);
 }
-if(process.argv[1]&&import.meta.url===pathToFileURL(process.argv[1]).href)await run();
+if(isMainThread&&process.argv[1]&&import.meta.url===pathToFileURL(process.argv[1]).href)await run();
