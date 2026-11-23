@@ -282002,6 +282002,49 @@
       "rulesVersion": 1,
       "lastError": null,
       "updatedAt": "2026-11-23T02:50:42.523Z"
+    },
+    {
+      "id": "daytrader-range",
+      "label": "Day trader: buy 24h range low, sell near high, up to 50% per trade",
+      "source": "researcher",
+      "caps": {
+        "maxAllocation": 0.5,
+        "maxExposure": 1
+      },
+      "rules": {
+        "strategy": "range",
+        "rangeHours": 24,
+        "rangeEntry": 0.35,
+        "rangeExit": 0.8,
+        "rangeStopPct": 0.02,
+        "rangeMinWidth": 0.015,
+        "rewardRisk": 0.3,
+        "maxHoldHours": 24,
+        "patternRequired": false,
+        "regimeFilter": false,
+        "entryOrder": "limit"
+      },
+      "productConfigs": {},
+      "account": {
+        "initial": 29865.26287940766,
+        "cash": 29865.26287940766,
+        "positions": [],
+        "trades": [],
+        "equityHistory": [],
+        "lastProcessed": {},
+        "marks": {},
+        "nextId": 1,
+        "decisions": [],
+        "dailyRisk": {},
+        "compactJournal": true,
+        "decisionLimit": 300,
+        "equityLimit": 2600,
+        "orderLogLimit": 50
+      },
+      "pause": {},
+      "startedAt": "2026-11-23T02:52:09.274Z",
+      "rulesSince": "2026-11-23T02:52:09.274Z",
+      "rulesVersion": 1
     }
   ],
   "promotion": {

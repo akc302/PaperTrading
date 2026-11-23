@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "generatedAt": "2026-11-23T02:11:40.003Z",
+  "generatedAt": "2026-11-23T02:52:11.559Z",
   "goal": 85000,
   "equity": 29865.26287940766,
   "startingEquity": 30000,
@@ -70,21 +70,21 @@
   "agents": {
     "trader": {
       "role": "5-minute paper trader",
-      "lastRunMinutesAgo": 1,
+      "lastRunMinutesAgo": 2,
       "healthy": true
     },
     "researcher": {
       "role": "Claude every 5h: loss analysis, backtest, rule adoption",
-      "lastRunHoursAgo": 1.2,
+      "lastRunHoursAgo": 1.9,
       "healthy": true,
       "latestNote": {
-        "at": "2026-11-23T00:30:24.689Z",
+        "at": "2026-11-23T02:51:09.797Z",
         "tradesReviewed": 0,
         "losses": 0,
-        "findings": 3,
+        "findings": 4,
         "changes": 3,
         "adopted": true,
-        "nextIdea": "scout-dip6h will make no entries until coins close back above their daily EMA100 (none are today). Track its live trades from then on. Meanwhile, test the same dip rule on BTC/ETH only, and with an EMA50 daily filter, to see whether more trades keep the edge."
+        "nextIdea": "Use daytrader-range's live trades (expect 5-10 a day) to fit entry filters: skip ranges whose low was set in the last 3h (still falling), require 2+ touches of the low, and only trade coins whose 24h range is at least 2.5% wide. Re-test each on the newest unseen data before changing the challenger."
       }
     },
     "verifier": {
@@ -171,7 +171,7 @@
     "windowDays": 30,
     "label": "Estimated time to $85,000 at the trailing 30-day growth rate (not a promise)",
     "status": "insufficient-history",
-    "spanDays": 2.09143521990765,
+    "spanDays": 2.1195782291668435,
     "message": "Needs at least 7 days of equity history."
   },
   "scorecard": [
@@ -254,11 +254,11 @@
     {
       "id": "hourly-legacy",
       "label": "Previous hourly rules",
-      "equity": 29792.349329526343,
+      "equity": 29706.166350601452,
       "initial": 29975.046647868254,
       "netPnl": -152.29220271457623,
       "profitFactor": 0.1854276580606489,
-      "maxDrawdown": 0.010036432590709632,
+      "maxDrawdown": 0.011608184416212404,
       "winRate": 0.3333333333333333,
       "avgWin": 34.66749978648798,
       "avgLoss": -93.4798512505321,
@@ -268,26 +268,26 @@
       "takerFills": 3,
       "openPositions": 3,
       "pause": "normal",
-      "drawdown": 0.008740680410254775
+      "drawdown": 0.011608184416212364
     },
     {
       "id": "lab-hourly",
       "label": "Lab hourly per-market rules",
-      "equity": 29778.0398484315,
+      "equity": 29677.820408030984,
       "initial": 29975.046647868254,
-      "netPnl": -186.9597025010642,
+      "netPnl": -327.17225270176664,
       "profitFactor": 0,
-      "maxDrawdown": 0.010036432590709632,
+      "maxDrawdown": 0.012136229601776658,
       "winRate": 0,
       "avgWin": null,
-      "avgLoss": -93.4798512505321,
-      "closedTrades": 2,
-      "fees": 50.08950069716283,
-      "makerFills": 2,
-      "takerFills": 2,
-      "openPositions": 3,
+      "avgLoss": -109.05741756725554,
+      "closedTrades": 3,
+      "fees": 74.4795847223142,
+      "makerFills": 3,
+      "takerFills": 3,
+      "openPositions": 2,
       "pause": "normal",
-      "drawdown": 0.008800298832599807
+      "drawdown": 0.012136229601776627
     },
     {
       "id": "scout-daytrade",
@@ -326,6 +326,25 @@
       "openPositions": 0,
       "pause": "normal",
       "drawdown": 0
+    },
+    {
+      "id": "daytrader-range",
+      "label": "Day trader: buy 24h range low, sell near high, up to 50% per trade",
+      "equity": 29865.26287940766,
+      "initial": 29865.26287940766,
+      "netPnl": 0,
+      "profitFactor": null,
+      "maxDrawdown": 0,
+      "winRate": null,
+      "avgWin": null,
+      "avgLoss": null,
+      "closedTrades": 0,
+      "fees": 0,
+      "makerFills": 0,
+      "takerFills": 0,
+      "openPositions": 0,
+      "pause": "normal",
+      "drawdown": null
     }
   ],
   "drawdownPause": {
@@ -338,7 +357,7 @@
   },
   "verdict": "needs-attention",
   "issues": [
-    "No new paper entry for 32h; current rules may be too strict for this market."
+    "No new paper entry for 33h; current rules may be too strict for this market."
   ],
   "dispatch": []
 }
