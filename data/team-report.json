@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "generatedAt": "2026-11-23T12:41:45.722Z",
+  "generatedAt": "2026-11-23T13:00:16.503Z",
   "goal": 85000,
   "equity": 29865.26287940766,
   "startingEquity": 30000,
@@ -70,12 +70,12 @@
   "agents": {
     "trader": {
       "role": "5-minute paper trader",
-      "lastRunMinutesAgo": 1,
+      "lastRunMinutesAgo": 5,
       "healthy": true
     },
     "researcher": {
       "role": "Claude every 5h: loss analysis, backtest, rule adoption",
-      "lastRunHoursAgo": 2.4,
+      "lastRunHoursAgo": 2.7,
       "healthy": true,
       "sweep": {
         "at": "2026-11-23T08:16:51.985Z",
@@ -193,7 +193,7 @@
     "windowDays": 30,
     "label": "Estimated time to $85,000 at the trailing 30-day growth rate (not a promise)",
     "status": "insufficient-history",
-    "spanDays": 2.5290014120356905,
+    "spanDays": 2.541857673611354,
     "message": "Needs at least 7 days of equity history."
   },
   "scorecard": [
@@ -276,7 +276,7 @@
     {
       "id": "hourly-legacy",
       "label": "Previous hourly rules",
-      "equity": 29983.31955362922,
+      "equity": 30007.784835557562,
       "initial": 29975.046647868254,
       "netPnl": -1.2141185008915727,
       "profitFactor": 0.9935059882710037,
@@ -290,26 +290,26 @@
       "takerFills": 4,
       "openPositions": 3,
       "pause": "normal",
-      "drawdown": 0.006576774423238341
+      "drawdown": 0.005766177743160017
     },
     {
       "id": "lab-hourly",
       "label": "Lab hourly per-market rules",
-      "equity": 29791.695471154162,
+      "equity": 29769.925967549054,
       "initial": 29975.046647868254,
-      "netPnl": -40.87238219109747,
-      "profitFactor": 0.8750738124838642,
+      "netPnl": -104.35564304179047,
+      "profitFactor": 0.7328704205584521,
       "maxDrawdown": 0.012136229601776658,
-      "winRate": 0.5,
+      "winRate": 0.42857142857142855,
       "avgWin": 95.43329017022306,
-      "avgLoss": -109.05741756725554,
-      "closedTrades": 6,
-      "fees": 134.90736904269227,
-      "makerFills": 6,
-      "takerFills": 6,
+      "avgLoss": -97.66387838811491,
+      "closedTrades": 7,
+      "fees": 159.31522164495044,
+      "makerFills": 7,
+      "takerFills": 7,
       "openPositions": 3,
       "pause": "normal",
-      "drawdown": 0.008345754167106367
+      "drawdown": 0.009070379615180757
     },
     {
       "id": "scout-daytrade",
