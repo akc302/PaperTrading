@@ -84,3 +84,17 @@ test('daytrader-range runs the range strategy with owner-authorized size overrid
  assert.equal(challengerConfig(state,{...ch,caps:{maxAllocation:9}},'XRP-USD').maxAllocation,1,'override clamped to 100%');
  assert.equal(challengerConfig(state,{...ch,caps:{riskPct:0.5}},'XRP-USD').riskPct,0.02,'risk per trade cannot be overridden');
 });
+
+test('losing challengers retire after 30 trades and stop entering; owner keepAlive and new rules are exempt',async()=>{
+ const {retireLosers,runChallengers:run}=await import('../scripts/challengers.mjs');
+ const T=1.8e9,trade=(pnl,i)=>({product:'BTC-USD',pnl,openedAt:T-90000+i,closedAt:T-1000});
+ const mk=(id,pnls,extra={})=>({id,rulesSince:new Date((T-100000)*1000).toISOString(),rules:{},account:{...createAccount(30000),trades:pnls.map(trade)},...extra});
+ const state={config:{...DEFAULT_CONFIG},account:createAccount(30000),challengers:[
+  mk('loser',Array.from({length:30},(_,i)=>i%5?-10:5)),mk('few',Array.from({length:10},()=>-10)),mk('winner',Array.from({length:30},(_,i)=>i%2?20:-10)),
+  mk('owner',Array.from({length:30},()=>-10),{keepAlive:true})]};
+ assert.deepEqual(retireLosers(state,T),['loser']);
+ const loser=state.challengers[0];assert.ok(loser.retired.reason.includes('30 trades'));assert.deepEqual(retireLosers(state,T),[],'already retired');
+ const before=JSON.stringify(loser.account);run(state,[{product:'BTC-USD',quote:{price:1,time:new Date(T*1000).toISOString()},bars:[{time:T-7200,open:1,high:1,low:1,close:1,volume:1}]}],T);
+ assert.equal(JSON.stringify(loser.account),before,'a retired challenger with no positions does not trade');
+ setChallengerRules(loser,{rules:{strategy:'horizontal'}},T+60,'new rules');assert.equal(loser.retired,undefined,'new rules un-retire it');
+});

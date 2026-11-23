@@ -4,13 +4,13 @@ import {readFile,writeFile,rename,rm} from 'node:fs/promises';
 import {pathToFileURL} from 'node:url';
 import {TREND_DEFAULTS} from '../engine.js';
 import {decryptState,encryptState} from './private-state.mjs';
-import {ensureChallengers} from './challengers.mjs';
+import {ensureChallengers,retireLosers} from './challengers.mjs';
 import {reviewChallengers} from './promotion.mjs';
 import {loadHistory} from './history.mjs';
 /** Daily review for one account: migrate once, seed challengers, then evaluate promotion. */
 export function dailyRules(state,{market,history,now}){
- const migrated=migrateToTrend(state,now),seeded=ensureChallengers(state,now),review=reviewChallengers(state,{market,history,now});
- return {migrated,seeded,promoted:review?.promoted??null,reviewed:!!review};
+ const migrated=migrateToTrend(state,now),seeded=ensureChallengers(state,now),retired=retireLosers(state,now),review=reviewChallengers(state,{market,history,now});
+ return {migrated,seeded,retired,promoted:review?.promoted??null,reviewed:!!review};
 }
 export const RULES_VERSION='trend-v1';
 export const MAIN_TREND=Object.freeze({strategy:'trend-follow',...TREND_DEFAULTS,maxHoldHours:0,patternRequired:false,entryOrder:'limit',limitOffset:0.0005,limitChecks:3});

@@ -207,6 +207,25 @@
       "adopted": true,
       "nextIdea": "Use daytrader-range's live trades (expect 5-10 a day) to fit entry filters: skip ranges whose low was set in the last 3h (still falling), require 2+ touches of the low, and only trade coins whose 24h range is at least 2.5% wide. Re-test each on the newest unseen data before changing the challenger.",
       "status": "Seeded via the daily-review rules step; main account unchanged."
+    },
+    {
+      "at": "2026-11-23T03:05:42.689Z",
+      "tradesReviewed": 0,
+      "losses": 0,
+      "findings": [
+        "Owner gave admin authority to speed up the research loop. Fees stay at Advanced 2 until the owner changes tier.",
+        "First automatic sweep (32 rules on the 33-day hourly feed): 0 rules are positive in all three windows. The best on the newest 25% is horizontal support bounce (0.6% zone, 8h hold, 1R): 4t +117.58 unseen, but negative in train and validation. Too little data, so the daily review now fetches 1 year of hourly candles."
+      ],
+      "changes": [
+        "Research every 3h and the daily review now restart themselves from the 5-minute trader when GitHub skips their timers (scripts/overdue.mjs)",
+        "1 year of hourly Coinbase candles in data/history/*-1h.json, refreshed daily and incrementally",
+        "scripts/sweep.mjs: a daily automatic backtest of 32 rules on 1-year hourly data, scored on train/validation/unseen after fees, written to data/sweep.json and summarised in the team report",
+        "Losing challengers retire after 30 trades with net < 0 and profit factor < 0.8 (owner-requested daytrader-range exempt); new rules un-retire them",
+        "learning.yml timeout 20 to 40 min to fit the history fetch and sweep"
+      ],
+      "adopted": true,
+      "nextIdea": "Once data/sweep.json comes from 1-year hourly data, promote any rule that is positive in all three windows into a challenger, and expand the grid around it.",
+      "status": "Merged; the daily review was dispatched to fetch the hourly year and run the first full sweep."
     }
   ]
 }
