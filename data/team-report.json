@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "generatedAt": "2026-11-24T04:50:30.481Z",
+  "generatedAt": "2026-11-24T06:01:38.887Z",
   "goal": 85000,
   "equity": 29765.56176817662,
   "startingEquity": 30000,
@@ -70,12 +70,12 @@
   "agents": {
     "trader": {
       "role": "5-minute paper trader",
-      "lastRunMinutesAgo": 5,
+      "lastRunMinutesAgo": 1,
       "healthy": true
     },
     "researcher": {
       "role": "Claude every 5h: loss analysis, backtest, rule adoption",
-      "lastRunHoursAgo": 0.3,
+      "lastRunHoursAgo": 1.5,
       "healthy": true,
       "sweep": {
         "at": "2026-11-24T01:23:49.767Z",
@@ -141,7 +141,7 @@
         "id": "history",
         "label": "28+ days of forward paper trading with the research team",
         "pass": false,
-        "value": "3.0 days"
+        "value": "3.1 days"
       },
       {
         "id": "sample",
@@ -200,7 +200,7 @@
     "windowDays": 30,
     "label": "Estimated time to $85,000 at the trailing 30-day growth rate (not a promise)",
     "status": "insufficient-history",
-    "spanDays": 3.2017416782401225,
+    "spanDays": 3.251144525463934,
     "message": "Needs at least 7 days of equity history."
   },
   "scorecard": [
@@ -283,7 +283,7 @@
     {
       "id": "hourly-legacy",
       "label": "Previous hourly rules",
-      "equity": 29601.567329546662,
+      "equity": 29635.1640805972,
       "initial": 29975.046647868254,
       "netPnl": -373.47931832159827,
       "profitFactor": 0.6282462369556265,
@@ -295,9 +295,9 @@
       "fees": 244.79933341393428,
       "makerFills": 14,
       "takerFills": 10,
-      "openPositions": 0,
+      "openPositions": 1,
       "pause": "normal",
-      "drawdown": 0.03453110397797077
+      "drawdown": 0.03343533030539525
     },
     {
       "id": "lab-hourly",
@@ -321,11 +321,11 @@
     {
       "id": "scout-daytrade",
       "label": "Day-trade scout: support bounce (1.5% zone), 4h hold, 1/4 risk",
-      "equity": 29119.182043974135,
+      "equity": 29153.86579848203,
       "initial": 29788.7180982152,
       "netPnl": -722.8169808409856,
       "profitFactor": 0.010319771834138198,
-      "maxDrawdown": 0.024538394439100684,
+      "maxDrawdown": 0.02528088972547483,
       "winRate": 0.09090909090909091,
       "avgWin": 7.537087341780762,
       "avgLoss": -73.03540681827664,
@@ -333,9 +333,9 @@
       "fees": 242.75241048331887,
       "makerFills": 11,
       "takerFills": 11,
-      "openPositions": 1,
+      "openPositions": 2,
       "pause": "normal",
-      "drawdown": 0.02247616201655822
+      "drawdown": 0.021311836838363463
     },
     {
       "id": "scout-dip6h",
@@ -359,7 +359,7 @@
     {
       "id": "daytrader-range",
       "label": "Day trader: buy 24h range low, sell near high, up to 50% per trade",
-      "equity": 29431.996867243368,
+      "equity": 29471.86273310776,
       "initial": 29865.26287940766,
       "netPnl": 89.5868794177667,
       "profitFactor": 32.69405714356033,
@@ -373,7 +373,7 @@
       "takerFills": 0,
       "openPositions": 3,
       "pause": "normal",
-      "drawdown": 0.018049816954614162
+      "drawdown": 0.0167197578879672
     }
   ],
   "drawdownPause": {
