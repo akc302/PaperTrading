@@ -1,17 +1,17 @@
 {
-  "at": "2026-11-24T07:14:57.383Z",
+  "at": "2026-11-24T09:15:26.556Z",
   "goal": 85000,
   "start": 30000,
-  "equity": 29624.85,
-  "remaining": 55375.15,
+  "equity": 29496.62,
+  "remaining": 55503.38,
   "progressPct": 0,
   "onTrack": false,
-  "verdict": "The main paper account (fake money) is at $29624.85, 0% of the way to $85,000, holding XRP, ADA and AVAX opened at 06:05 UTC with one trade closed today (-$99.70). Time exits now rest a maker sell first (PR #50), which cut a year of backtested fees by $3,400, but the rules still lose after fees, so the owner's choice of half size, a down-market pause, or the trend rules remains the main lever.",
-  "last24h": "Main: 1 closed (0 wins, -$99.70). Best challenger hourly-legacy: 9 closed (4 wins, -$221.19).",
+  "verdict": "The main paper account (fake money) is at $29496.62 (-1.7%), 0% of the way to $85,000: XRP (-$195.41) and ADA (-$173.75) hit their stops this morning, making 3 losing trades today (-$468.86), and AVAX is still open. The losses match the researcher's 1-year backtest of these rules (negative in every market regime), so the owner's choice between half size (12.5% allocation), a down-market pause, or the trend rules is the lever that matters; the 30-trade safety switch is at 3 of 30.",
+  "last24h": "Main: 3 closed (0 wins, -$468.86). Best challenger hourly-legacy: 9 closed (3 wins, -$442.07).",
   "readiness": "2/9",
   "fixed": [
-    "No faults: all jobs green, daily review done, research ran at 06:36 UTC, fees match the Advanced 2 tier",
-    "Maker time exits live for all paper accounts (PR #50); first live check when the scout LINK trade reaches its 4h limit at ~08:05 UTC"
+    "No faults: all jobs green, daily review done, research ran at 08:40 UTC, fees match the Advanced 2 tier",
+    "Maker time exit confirmed live (scout LINK filled maker at 0.15%)"
   ],
-  "nextStep": "Owner decides half size, a down-market pause, or the trend rules for the main paper account; the researcher tests faster or wider stops, now the largest cost."
+  "nextStep": "Owner decides half size (maxAllocation 12.5%), a down-market pause, or the trend rules for the main paper account; the researcher adds live stop slippage to backtests and tests a 6h squeeze breakout."
 }
