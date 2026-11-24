@@ -401,6 +401,23 @@
       ],
       "adopted": false,
       "nextIdea": "Both long-only dip families only work inside a daily uptrend, and there is none now. Next: test a cash-preserving regime gate for the main paper account (skip new hourly entries while the sweep regime is \"down\" and BTC 30d < -15%) on the 1y data, and measure how much of the main-rules 1y loss came from down-regime entries."
+    },
+    {
+      "at": "2026-11-24T04:32:41.044Z",
+      "tradesReviewed": 7,
+      "losses": 7,
+      "findings": [
+        "Main paper account: ADA-USD closed -$99.70 (time exit at 4h, -1.00% move, stop -2.28% and target +5.17% never touched, $33.27 fees, ma20-reclaim pattern). hourly-legacy and lab-hourly took the identical ADA trade (-$99.03, -$98.24). It was entered in a down regime (0 of 8 coins in a daily uptrend, BTC -24% over 30d).",
+        "scout-daytrade: 4 more quote-stops (XRP -$83.78, ADA -$68.43, DOGE -$119.41, LINK -$126.50), held 0.2-0.8h, stops 0.45-1.57% under entries against ~1.1% hourly ATR. It is now 11 trades, 1 win, -$722.82, PF 0.01; auto-retire triggers at 30 trades. Across all 15 live quote-stops, fills were a median 0.21% (mean 0.24%) below the stop price, because the 5-minute quote checks fire after the stop is crossed. That adds 15-50% to the planned loss on tight stops.",
+        "Regime test, main paper rules (aggressive + pattern + hourly regimeFilter, per-market lab configs) on 1y hourly after Advanced 2 fees: 3,105 trades, -$40,246 (PF 0.40-0.43 in every window). By market-wide daily regime at entry: down 1,850t -$28,192; mixed 660t -$7,638; up 595t -$4,416 (PF 0.52-0.80). The rules lose in every regime.",
+        "A gate that skips down-regime entries cuts the 1y loss to -$12,054 (train -$4,886, validation -$2,824, unseen -$4,345 vs -$6,923 ungated; PF 0.33/0.49/0.49). It reduces losses but does not create an edge. Gates on BTC 30d < -15% did less (unseen -$6,004).",
+        "Where the loss comes from: fees $31,591 of the $40,246 net loss (79%); gross before fees -$8,655. By exit: target 234t +$17,344; time-exit 1,797t gross +$10,550 but net -$7,816 after fees; stop 1,073t -$49,770. The hourly entry is roughly break-even before fees. Frequent small trades paying a 0.45% round trip (maker in, taker out) are what sink it."
+      ],
+      "changes": [
+        "No code change: the regime gate lowers the loss but stays negative on unseen data, so it is not adopted. The main paper rules are the owner's decision; this is a recommendation only."
+      ],
+      "adopted": false,
+      "nextIdea": "Exits, not entries: 58% of main-rule trades end in time exits that are gross-positive but pay the 0.30% taker fee. Test a maker-limit time exit (rest a sell at the last close and fall back to market one hour later) and a maker take-profit at +1x round-trip fee, then measure the net change on unseen data. Recommendation to the owner stays: run the main paper account at half size, or pause new entries while the regime is down (cuts the 1y loss about 70%), until a rule passes all three windows."
     }
   ]
 }
