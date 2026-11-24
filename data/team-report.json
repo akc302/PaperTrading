@@ -1,13 +1,13 @@
 {
   "version": 1,
-  "generatedAt": "2026-11-24T06:01:38.887Z",
+  "generatedAt": "2026-11-24T06:36:57.392Z",
   "goal": 85000,
-  "equity": 29765.56176817662,
+  "equity": 29624.846117255547,
   "startingEquity": 30000,
-  "progressToGoal": -0.00426251330587964,
-  "returnPct": -0.007814607727446006,
-  "drawdown": 0.009671020408971002,
-  "openPositions": 0,
+  "progressToGoal": -0.006820979686262779,
+  "returnPct": -0.012505129424815095,
+  "drawdown": 0.013373709197109403,
+  "openPositions": 3,
   "last24h": {
     "closedTrades": 1,
     "wins": 0,
@@ -53,7 +53,7 @@
     },
     "DOGE-USD": {
       "strategy": "aggressive",
-      "approach": "current",
+      "approach": "longer-hold",
       "decision": "keep"
     },
     "LINK-USD": {
@@ -64,7 +64,7 @@
     "AVAX-USD": {
       "strategy": "aggressive",
       "approach": "longer-hold",
-      "decision": "keep"
+      "decision": "adopt-improvement"
     }
   },
   "agents": {
@@ -75,7 +75,7 @@
     },
     "researcher": {
       "role": "Claude every 5h: loss analysis, backtest, rule adoption",
-      "lastRunHoursAgo": 1.5,
+      "lastRunHoursAgo": 0,
       "healthy": true,
       "sweep": {
         "at": "2026-11-24T01:23:49.767Z",
@@ -107,13 +107,13 @@
         }
       },
       "latestNote": {
-        "at": "2026-11-24T04:32:41.044Z",
-        "tradesReviewed": 7,
-        "losses": 7,
-        "findings": 5,
-        "changes": 1,
-        "adopted": false,
-        "nextIdea": "Exits, not entries: 58% of main-rule trades end in time exits that are gross-positive but pay the 0.30% taker fee. Test a maker-limit time exit (rest a sell at the last close and fall back to market one hour later) and a maker take-profit at +1x round-trip fee, then measure the net change on unseen data. Recommendation to the owner stays: run the main paper account at half size, or pause new entries while the regime is down (cuts the 1y loss about 70%), until a rule passes all three windows."
+        "at": "2026-11-24T06:34:12.214Z",
+        "tradesReviewed": 0,
+        "losses": 0,
+        "findings": 3,
+        "changes": 3,
+        "adopted": true,
+        "nextIdea": "The stop side is now the largest cost: 1,073 stops lost $49,770 in the 1y test, and live quote-stops fill a median 0.21% past the stop. Next: test a resting stop-limit simulation, i.e. 1-minute stop checks via the bid instead of the 5-minute last price, against a wider ATR-based stop with half size, and measure the unseen-window effect."
       }
     },
     "verifier": {
@@ -129,7 +129,7 @@
   },
   "integrity": {
     "ok": true,
-    "cashDifference": 3.637978807091713e-12,
+    "cashDifference": 5.4569682106375694e-12,
     "problems": []
   },
   "readiness": {
@@ -171,7 +171,7 @@
         "id": "drawdown",
         "label": "Max drawdown 10% or less over 28 days",
         "pass": true,
-        "value": "1.0%"
+        "value": "1.3%"
       },
       {
         "id": "validated",
@@ -196,22 +196,22 @@
   },
   "goalEstimate": {
     "goal": 85000,
-    "equity": 29765.56176817662,
+    "equity": 29624.846117255547,
     "windowDays": 30,
     "label": "Estimated time to $85,000 at the trailing 30-day growth rate (not a promise)",
     "status": "insufficient-history",
-    "spanDays": 3.251144525463934,
+    "spanDays": 3.2756642592587957,
     "message": "Needs at least 7 days of equity history."
   },
   "scorecard": [
     {
       "id": "main",
       "label": "Main: aggressive",
-      "equity": 29765.56176817662,
+      "equity": 29624.846117255547,
       "initial": 30000,
       "netPnl": -234.43823182338258,
       "profitFactor": 0,
-      "maxDrawdown": 0.009671020408971002,
+      "maxDrawdown": 0.013373709197109403,
       "winRate": 0,
       "avgWin": null,
       "avgLoss": -78.14607727446086,
@@ -219,9 +219,9 @@
       "fees": 92.07817834696272,
       "makerFills": 1,
       "takerFills": 5,
-      "openPositions": 0,
+      "openPositions": 3,
       "pause": "normal",
-      "drawdown": 0.008222477183482235
+      "drawdown": 0.012911070692280813
     },
     {
       "id": "trend-k2",
@@ -283,11 +283,11 @@
     {
       "id": "hourly-legacy",
       "label": "Previous hourly rules",
-      "equity": 29635.1640805972,
+      "equity": 29515.35938589364,
       "initial": 29975.046647868254,
       "netPnl": -373.47931832159827,
       "profitFactor": 0.6282462369556265,
-      "maxDrawdown": 0.035939495224360206,
+      "maxDrawdown": 0.03746576638502849,
       "winRate": 0.4166666666666667,
       "avgWin": 126.23246871520698,
       "avgLoss": -143.5202374139476,
@@ -295,18 +295,18 @@
       "fees": 244.79933341393428,
       "makerFills": 14,
       "takerFills": 10,
-      "openPositions": 1,
+      "openPositions": 3,
       "pause": "normal",
-      "drawdown": 0.03343533030539525
+      "drawdown": 0.037342816184301686
     },
     {
       "id": "lab-hourly",
       "label": "Lab hourly per-market rules",
-      "equity": 29328.8602116476,
+      "equity": 29190.20905204249,
       "initial": 29975.046647868254,
       "netPnl": -646.1864362206619,
       "profitFactor": 0.5363550241535826,
-      "maxDrawdown": 0.03922189648458538,
+      "maxDrawdown": 0.0428140990607884,
       "winRate": 0.3333333333333333,
       "avgWin": 149.5046251602895,
       "avgLoss": -139.37095620221095,
@@ -314,14 +314,14 @@
       "fees": 317.5659376724168,
       "makerFills": 17,
       "takerFills": 13,
-      "openPositions": 0,
+      "openPositions": 3,
       "pause": "normal",
-      "drawdown": 0.03781657699810537
+      "drawdown": 0.042365265436363986
     },
     {
       "id": "scout-daytrade",
       "label": "Day-trade scout: support bounce (1.5% zone), 4h hold, 1/4 risk",
-      "equity": 29153.86579848203,
+      "equity": 29056.93029590413,
       "initial": 29788.7180982152,
       "netPnl": -722.8169808409856,
       "profitFactor": 0.010319771834138198,
@@ -335,7 +335,7 @@
       "takerFills": 11,
       "openPositions": 2,
       "pause": "normal",
-      "drawdown": 0.021311836838363463
+      "drawdown": 0.0245659380137917
     },
     {
       "id": "scout-dip6h",
@@ -359,7 +359,7 @@
     {
       "id": "daytrader-range",
       "label": "Day trader: buy 24h range low, sell near high, up to 50% per trade",
-      "equity": 29471.86273310776,
+      "equity": 29359.789137243344,
       "initial": 29865.26287940766,
       "netPnl": 89.5868794177667,
       "profitFactor": 32.69405714356033,
@@ -373,12 +373,12 @@
       "takerFills": 0,
       "openPositions": 3,
       "pause": "normal",
-      "drawdown": 0.0167197578879672
+      "drawdown": 0.02045890914127879
     }
   ],
   "drawdownPause": {
     "state": "normal",
-    "drawdown": 0.008222477183482235,
+    "drawdown": 0.012911070692280813,
     "peak": 30012.337528729568,
     "sizeMultiplier": 1,
     "triggeredAt": null,
