@@ -17,6 +17,8 @@ export function grid(){
  // Let-winners-run breakouts (multi-day hold, wide target): tracked daily so a regime change shows up quickly.
  // 6h dip inside a daily uptrend (needs the stored 6h/daily history).
  for(const dipRsi of [25,30])for(const rewardRisk of [1,2])g.push({strategy:'dip-6h',dipRsi,stopAtrMultiplier:2,rewardRisk,maxHoldHours:48});
+ // Capitulation bounce (24 Nov): oversold 6h bar then a bullish 6h reversal close, with and without the daily uptrend filter.
+ for(const dipTrend of [false,true])for(const dipRsi of [25,30])for(const rewardRisk of [1,2])g.push({strategy:'dip-6h',dipConfirm:true,dipTrend,dipRsi,stopAtrMultiplier:2,rewardRisk,maxHoldHours:72});
  for(const rewardRisk of [3,5])g.push({strategy:'donchian',stopAtrMultiplier:3.5,rewardRisk,maxHoldHours:168});
  return g;
 }

@@ -24,3 +24,12 @@ test('scout-dip6h is a researcher challenger at 1/4 risk on the dip-6h strategy'
  const ch=seedChallengers(state).find(c=>c.id==='scout-dip6h');assert.ok(ch);assert.equal(ch.source,'researcher');
  const c=challengerConfig(state,ch,'BTC-USD');assert.equal(c.strategy,'dip-6h');assert.equal(c.dipRsi,25);assert.equal(c.maxHoldHours,48);assert.ok(Math.abs(c.riskPct-0.005)<1e-12);
 });
+
+test('dip-6h capitulation bounce needs an oversold bar then a bullish reversal close',()=>{
+ const drop=bars(60,S,i=>i<50?170:170-(i-49)*4),last=drop.at(-1);
+ const bounce=[...drop.slice(0,-1),{...last,open:last.close*0.97,low:last.close*0.96,close:last.close*1.04,high:last.close*1.05}];
+ assert.equal(dipSignal({sixHour:drop,daily:downDaily},{dipRsi:30,dipConfirm:true,dipTrend:false}).signal,'WAIT','no reversal close yet');
+ const b=dipSignal({sixHour:bounce,daily:downDaily},{dipRsi:30,dipConfirm:true,dipTrend:false});
+ assert.equal(b.signal,'BUY');assert.match(b.reason,/counter-trend/);assert.ok(b.stop<b.price&&b.target>b.price);
+ assert.equal(dipSignal({sixHour:bounce,daily:downDaily},{dipRsi:30,dipConfirm:true}).signal,'WAIT','trend filter stays on by default');
+});
