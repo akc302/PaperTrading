@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "generatedAt": "2026-11-24T04:06:55.062Z",
+  "generatedAt": "2026-11-24T04:32:06.670Z",
   "goal": 85000,
   "equity": 29765.56176817662,
   "startingEquity": 30000,
@@ -63,19 +63,19 @@
     },
     "AVAX-USD": {
       "strategy": "aggressive",
-      "approach": "longer-hold",
-      "decision": "keep"
+      "approach": "aggressive-day-hold+regime-block",
+      "decision": "adopt-improvement"
     }
   },
   "agents": {
     "trader": {
       "role": "5-minute paper trader",
-      "lastRunMinutesAgo": 1,
+      "lastRunMinutesAgo": 2,
       "healthy": true
     },
     "researcher": {
       "role": "Claude every 5h: loss analysis, backtest, rule adoption",
-      "lastRunHoursAgo": 1.7,
+      "lastRunHoursAgo": 0,
       "healthy": true,
       "sweep": {
         "at": "2026-11-24T01:23:49.767Z",
@@ -200,7 +200,7 @@
     "windowDays": 30,
     "label": "Estimated time to $85,000 at the trailing 30-day growth rate (not a promise)",
     "status": "insufficient-history",
-    "spanDays": 3.1714706250004197,
+    "spanDays": 3.188966087963846,
     "message": "Needs at least 7 days of equity history."
   },
   "scorecard": [
@@ -321,7 +321,7 @@
     {
       "id": "scout-daytrade",
       "label": "Day-trade scout: support bounce (1.5% zone), 4h hold, 1/4 risk",
-      "equity": 29056.55770983302,
+      "equity": 29098.307265927095,
       "initial": 29788.7180982152,
       "netPnl": -722.8169808409856,
       "profitFactor": 0.010319771834138198,
@@ -335,7 +335,7 @@
       "takerFills": 11,
       "openPositions": 1,
       "pause": "normal",
-      "drawdown": 0.024264789725352176
+      "drawdown": 0.023176923223475976
     },
     {
       "id": "scout-dip6h",
@@ -359,7 +359,7 @@
     {
       "id": "daytrader-range",
       "label": "Day trader: buy 24h range low, sell near high, up to 50% per trade",
-      "equity": 29296.734751642125,
+      "equity": 29392.183569076187,
       "initial": 29865.26287940766,
       "netPnl": 89.5868794177667,
       "profitFactor": 32.69405714356033,
@@ -373,7 +373,7 @@
       "takerFills": 0,
       "openPositions": 3,
       "pause": "normal",
-      "drawdown": 0.02256261504211221
+      "drawdown": 0.019378122186476054
     }
   ],
   "drawdownPause": {
