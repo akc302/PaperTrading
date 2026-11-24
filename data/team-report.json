@@ -1,30 +1,30 @@
 {
   "version": 1,
-  "generatedAt": "2026-11-24T12:38:45.570Z",
+  "generatedAt": "2026-11-24T13:51:46.237Z",
   "goal": 85000,
-  "equity": 29330.247440606796,
+  "equity": 29282.647920248248,
   "startingEquity": 30000,
-  "progressToGoal": -0.012177319261694622,
-  "returnPct": -0.022325085313106806,
-  "drawdown": 0.022844343099803315,
-  "openPositions": 1,
+  "progressToGoal": -0.013042765086395494,
+  "returnPct": -0.023911735991725074,
+  "drawdown": 0.0243129882096927,
+  "openPositions": 0,
   "last24h": {
-    "closedTrades": 3,
+    "closedTrades": 4,
     "wins": 0,
     "winRate": 0,
-    "netPnl": -468.86124345995984,
-    "grossFees": 99.07710233958868,
-    "rebatesCredited": 24.76927558489717
+    "netPnl": -582.6149591594126,
+    "grossFees": 112.28411752379291,
+    "rebatesCredited": 28.07102938094823
   },
   "allTime": {
-    "closedTrades": 5,
+    "closedTrades": 6,
     "wins": 0,
     "winRate": 0,
-    "netPnl": -603.598364052302,
-    "grossFees": 188.57431737623207,
-    "rebatesCredited": 47.14357934405802
+    "netPnl": -717.3520797517548,
+    "grossFees": 201.7813325604363,
+    "rebatesCredited": 50.44533314010908
   },
-  "losingStreak": 5,
+  "losingStreak": 6,
   "rulesInUse": {
     "BTC-USD": {
       "strategy": "aggressive",
@@ -70,12 +70,12 @@
   "agents": {
     "trader": {
       "role": "5-minute paper trader",
-      "lastRunMinutesAgo": 3,
+      "lastRunMinutesAgo": 1,
       "healthy": true
     },
     "researcher": {
       "role": "Claude every 5h: loss analysis, backtest, rule adoption",
-      "lastRunHoursAgo": 0,
+      "lastRunHoursAgo": 1.2,
       "healthy": true,
       "sweep": {
         "at": "2026-11-24T10:52:25.179Z",
@@ -143,13 +143,13 @@
         "id": "history",
         "label": "28+ days of forward paper trading with the research team",
         "pass": false,
-        "value": "3.3 days"
+        "value": "3.4 days"
       },
       {
         "id": "sample",
         "label": "150+ closed trades in the last 28 days",
         "pass": false,
-        "value": "5 trades"
+        "value": "6 trades"
       },
       {
         "id": "winrate",
@@ -161,19 +161,19 @@
         "id": "profit",
         "label": "Net profit after fees and rebates, profit factor 1.3+",
         "pass": false,
-        "value": "$-603.60, PF 0.00"
+        "value": "$-717.35, PF 0.00"
       },
       {
         "id": "weekly",
         "label": "Profitable in each of the last 4 weeks",
         "pass": false,
-        "value": "$-604 / $0 / $0 / $0"
+        "value": "$-717 / $0 / $0 / $0"
       },
       {
         "id": "drawdown",
         "label": "Max drawdown 10% or less over 28 days",
         "pass": true,
-        "value": "2.3%"
+        "value": "2.4%"
       },
       {
         "id": "validated",
@@ -198,32 +198,32 @@
   },
   "goalEstimate": {
     "goal": 85000,
-    "equity": 29330.247440606796,
+    "equity": 29282.647920248248,
     "windowDays": 30,
     "label": "Estimated time to $85,000 at the trailing 30-day growth rate (not a promise)",
     "status": "insufficient-history",
-    "spanDays": 3.526916319443672,
+    "spanDays": 3.5776184837961638,
     "message": "Needs at least 7 days of equity history."
   },
   "scorecard": [
     {
       "id": "main",
       "label": "Main: aggressive",
-      "equity": 29330.247440606796,
+      "equity": 29282.647920248248,
       "initial": 30000,
-      "netPnl": -603.598364052302,
+      "netPnl": -717.3520797517548,
       "profitFactor": 0,
-      "maxDrawdown": 0.022844343099803315,
+      "maxDrawdown": 0.0243129882096927,
       "winRate": 0,
       "avgWin": null,
-      "avgLoss": -120.71967281046041,
-      "closedTrades": 5,
-      "fees": 141.43073803217405,
-      "makerFills": 3,
-      "takerFills": 7,
-      "openPositions": 1,
+      "avgLoss": -119.5586799586258,
+      "closedTrades": 6,
+      "fees": 151.33599942032723,
+      "makerFills": 4,
+      "takerFills": 8,
+      "openPositions": 0,
       "pause": "normal",
-      "drawdown": 0.022726989774449757
+      "drawdown": 0.024312988209692743
     },
     {
       "id": "trend-k2",
@@ -285,40 +285,40 @@
     {
       "id": "hourly-legacy",
       "label": "Previous hourly rules",
-      "equity": 29240.268845606603,
+      "equity": 29141.27653853288,
       "initial": 29975.046647868254,
-      "netPnl": -499.2371644134952,
-      "profitFactor": 0.558353342437832,
-      "maxDrawdown": 0.04656692542106727,
-      "winRate": 0.35714285714285715,
+      "netPnl": -833.7701093353804,
+      "profitFactor": 0.4308474034564933,
+      "maxDrawdown": 0.049543702361760124,
+      "winRate": 0.3333333333333333,
       "avgWin": 126.23246871520698,
-      "avgLoss": -125.59994533217001,
-      "closedTrades": 14,
-      "fees": 271.2785819873055,
-      "makerFills": 17,
-      "takerFills": 11,
-      "openPositions": 1,
+      "avgLoss": -146.49324529114153,
+      "closedTrades": 15,
+      "fees": 295.48492535949225,
+      "makerFills": 18,
+      "takerFills": 12,
+      "openPositions": 0,
       "pause": "normal",
-      "drawdown": 0.04631502219218864
+      "drawdown": 0.04954370236176009
     },
     {
       "id": "lab-hourly",
       "label": "Lab hourly per-market rules",
-      "equity": 28899.932541447444,
+      "equity": 28853.031371242425,
       "initial": 29975.046647868254,
-      "netPnl": -1009.9304837269614,
-      "profitFactor": 0.42534444252103826,
-      "maxDrawdown": 0.052002134418369046,
-      "winRate": 0.29411764705882354,
+      "netPnl": -1122.0152766258366,
+      "profitFactor": 0.39984368592317404,
+      "maxDrawdown": 0.05342695595999387,
+      "winRate": 0.2777777777777778,
       "avgWin": 149.5046251602895,
-      "avgLoss": -146.45446746070073,
-      "closedTrades": 17,
-      "fees": 366.19442771630645,
-      "makerFills": 19,
-      "takerFills": 15,
-      "openPositions": 1,
+      "avgLoss": -143.8106463405603,
+      "closedTrades": 18,
+      "fees": 375.95436535415644,
+      "makerFills": 20,
+      "takerFills": 16,
+      "openPositions": 0,
       "pause": "normal",
-      "drawdown": 0.051888282852174394
+      "drawdown": 0.053426955959993916
     },
     {
       "id": "scout-daytrade",
@@ -361,7 +361,7 @@
     {
       "id": "daytrader-range",
       "label": "Day trader: buy 24h range low, sell near high, up to 50% per trade",
-      "equity": 29159.921750776288,
+      "equity": 29122.66924466416,
       "initial": 29865.26287940766,
       "netPnl": 89.5868794177667,
       "profitFactor": 32.69405714356033,
@@ -375,12 +375,12 @@
       "takerFills": 0,
       "openPositions": 3,
       "pause": "normal",
-      "drawdown": 0.02712715586648007
+      "drawdown": 0.028370024481909062
     }
   ],
   "drawdownPause": {
     "state": "normal",
-    "drawdown": 0.022726989774449757,
+    "drawdown": 0.024312988209692743,
     "peak": 30012.337528729568,
     "sizeMultiplier": 1,
     "triggeredAt": null,
