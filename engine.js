@@ -25,6 +25,7 @@ const cfg = (c={}) => {
   if(!STRATEGIES.includes(x.strategy)||!Number.isInteger(x.trendLookback)||x.trendLookback<60||x.trendLookback>720)throw new Error('Invalid strategy or trendline window.');
   if(!finite(x.maxHoldHours)||x.maxHoldHours<0||x.maxHoldHours>720||!finite(x.maxDailyLoss)||x.maxDailyLoss<0||x.maxDailyLoss>0.5||!Number.isInteger(x.maxOpenPositions)||x.maxOpenPositions<1||x.maxOpenPositions>20||!positive(x.maxTotalRisk)||x.maxTotalRisk>0.2)throw new Error('Invalid portfolio risk limits.');
   if(x.regimeFilter!=null&&typeof x.regimeFilter!=='boolean')throw new Error('Invalid regime filter.');
+  if(x.makerTimeExit!=null&&typeof x.makerTimeExit!=='boolean')throw new Error('Invalid maker time-exit setting.');
   if(x.rangeHours!=null&&(!Number.isInteger(x.rangeHours)||x.rangeHours<6||x.rangeHours>168))throw new Error('Invalid range window.');
   if(x.rangeEntry!=null&&(!finite(x.rangeEntry)||x.rangeEntry<=0||x.rangeEntry>0.5))throw new Error('Invalid range entry zone.');
   if(x.rangeExit!=null&&(!finite(x.rangeExit)||x.rangeExit<0.5||x.rangeExit>1))throw new Error('Invalid range exit level.');
@@ -260,12 +261,13 @@ export function openPaperTrade(account,{product,price,stop,target,time=Date.now(
   return account;
 }
 
-export function closePaperTrade(account,id,price,time=Date.now()/1000,reason='manual',config={}){
+export function closePaperTrade(account,id,price,time=Date.now()/1000,reason='manual',config={},{maker=false}={}){
   cfg(config);
   if(!positive(price)||!finite(time))throw new Error('Invalid closing price or time.');
   const index=account.positions.findIndex(p=>p.id===id);
   if(index<0)throw new Error('Paper position not found.');
-  const p=account.positions[index],restingTarget=reason==='target'&&p.feeProfile?.makerFeeRate!=null;
+  // Resting limit sells (targets, maker time exits) fill at the limit with maker fees and no slippage.
+  const p=account.positions[index],restingTarget=(reason==='target'||maker)&&p.feeProfile?.makerFeeRate!=null;
   const exit=restingTarget?+price:+price*(1-p.slippage);
   const exitFeeDetail=feeForFill(exit*p.quantity,restingTarget?'maker':'taker',{feeRate:p.feeRate,...p.feeProfile,...config},+time),exitFee=exitFeeDetail.gross;
   account.cash+=exit*p.quantity-exitFee+exitFeeDetail.rebateCredited;
@@ -297,7 +299,12 @@ export function processCandles(account,product,input,config={},options={}){
     if(existing&&bar.time>=existing.openedAt){
       if(bar.open<=existing.stop){closePaperTrade(account,existing.id,bar.open,bar.time,'stop',c);reason='Existing paper position closed at a stop gap.';action='EXIT';}
       else if(bar.open>=existing.target){closePaperTrade(account,existing.id,existing.target,bar.time,'target',c);reason='Existing paper position reached its target at the open.';action='EXIT';}
-      else if((existing.maxHoldHours??c.maxHoldHours)>0&&bar.time>=existing.openedAt+(existing.maxHoldHours??c.maxHoldHours)*3600){closePaperTrade(account,existing.id,bar.open,bar.time,'time-exit',c);reason='Maximum paper holding period reached; exited at the next eligible open.';action='EXIT';}
+      else if(existing.exitLimit){closePaperTrade(account,existing.id,bar.open,bar.time,'time-exit',c);reason='Maker time-exit limit did not fill within an hour; exited at market.';action='EXIT';}
+      else if((existing.maxHoldHours??c.maxHoldHours)>0&&bar.time>=existing.openedAt+(existing.maxHoldHours??c.maxHoldHours)*3600){
+       // Maker time exit: rest a sell at this bar's open; it fills only if the bar trades above it, else market at the next open.
+       if(c.makerTimeExit!==false&&existing.feeProfile?.makerFeeRate!=null){if(bar.high>bar.open*1.0001){closePaperTrade(account,existing.id,bar.open,bar.time,'time-exit',c,{maker:true});reason='Maximum holding period reached; resting maker sell filled at the open.';action='EXIT';}else existing.exitLimit={price:bar.open,at:bar.time};}
+       else{closePaperTrade(account,existing.id,bar.open,bar.time,'time-exit',c);reason='Maximum paper holding period reached; exited at the next eligible open.';action='EXIT';}
+      }
     }
     // A signal can use only bars that ended before this bar began. Never its future high/low.
     const window=bars.slice(Math.max(0,i-historyWindow(c)),i),signal=analyze(c.strategy==='trend-follow'||c.strategy==='dip-6h'?{candles:window,...(options.history??{}),asOf:bar.time}:window,c),daily=dayRisk(account,bar.time,c);
@@ -458,8 +465,14 @@ export function processQuoteBatch(account,events,{time=Date.now()/1000,pause=nul
  const exited=new Set();
  for(const e of prepared){const p=account.positions.find(p=>p.product===e.product);if(!p)continue;const price=+e.quote.price;
   if(p.trail&&e.ctx)updateTrailingStop(p,e.ctx.sixHour,time);
-  const reason=price<=p.stop?(p.trail?'trail-stop':'quote-stop'):price>=p.target?'target':(p.maxHoldHours??e.config.maxHoldHours)>0&&time>=p.openedAt+(p.maxHoldHours??e.config.maxHoldHours)*3600?'time-exit':null;
-  if(reason){closePaperTrade(account,p.id,reason==='target'?p.target:price,time,reason,e.config);exited.add(e.product);account.lastExits[e.product]=time;}
+  let reason=price<=p.stop?(p.trail?'trail-stop':'quote-stop'):price>=p.target?'target':(p.maxHoldHours??e.config.maxHoldHours)>0&&time>=p.openedAt+(p.maxHoldHours??e.config.maxHoldHours)*3600?'time-exit':null,maker=false,exitPrice=reason==='target'?p.target:price;
+  // Maker time exit: first rest a paper sell at the current quote; a later quote at or above it fills as maker, and after an hour it exits at market.
+  if(reason==='time-exit'&&e.config.makerTimeExit!==false&&p.feeProfile?.makerFeeRate!=null){
+   if(!p.exitLimit){p.exitLimit={price,at:time};reason=null;}
+   else if(price>=p.exitLimit.price){maker=true;exitPrice=p.exitLimit.price;}
+   else if(time<p.exitLimit.at+3600)reason=null;
+  }
+  if(reason){closePaperTrade(account,p.id,exitPrice,time,reason,e.config,{maker});exited.add(e.product);account.lastExits[e.product]=time;}
  }
  const gate=updateDrawdownPause(pause??account.pause??{},markToMarket(account).equity,time);if(pause)Object.assign(pause,gate);else account.pause=gate;
  // Resting paper limit orders from earlier checks: filled only when a later quote trades at or below the limit.

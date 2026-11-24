@@ -418,6 +418,23 @@
       ],
       "adopted": false,
       "nextIdea": "Exits, not entries: 58% of main-rule trades end in time exits that are gross-positive but pay the 0.30% taker fee. Test a maker-limit time exit (rest a sell at the last close and fall back to market one hour later) and a maker take-profit at +1x round-trip fee, then measure the net change on unseen data. Recommendation to the owner stays: run the main paper account at half size, or pause new entries while the regime is down (cuts the 1y loss about 70%), until a rule passes all three windows."
+    },
+    {
+      "at": "2026-11-24T06:34:12.214Z",
+      "tradesReviewed": 0,
+      "losses": 0,
+      "findings": [
+        "No trades closed in any account since 04:32Z. The main paper account opened XRP-USD, ADA-USD and AVAX-USD (still open).",
+        "Maker time exit, post-hoc on the main paper rules (1y hourly, Advanced 2 fees): a resting sell at the exit-bar open fills in 1,669 of 1,772 time exits (94%) when the bar trades above it; the rest exit at market on the next open. Time-exit net improves from -$7,981 to -$3,306 and the total from -$39,985 to -$35,310; train/validation/unseen -$24,475/-$8,256/-$7,255 become -$21,740/-$7,144/-$6,426 (PF 0.41 to 0.46). Bumping the limit 0.05-0.10% above the open filled less and did worse.",
+        "Built into the engine and re-run end-to-end: total -$40,246 to -$36,592 (+$3,654), fees $31,591 to $28,239, time exits -$7,816 to -$3,055 net. Train -$24,842 to -$22,089 and validation -$8,481 to -$7,500 improved; unseen is about flat (-$6,923 to -$7,002, PF 0.43 to 0.45), because a resting exit holds the slot up to an hour and changes later entries. It is an execution-cost cut, not an edge: the rules are still negative."
+      ],
+      "changes": [
+        "engine.js: makerTimeExit (default on, false opts out). Live: when a position reaches maxHold, rest a paper sell at the current quote; a later quote at or above it fills as maker (0.15%, no slippage), and after 1 hour it exits at market. Stops and targets keep priority while it rests. Backtest: fills at the exit-bar open if the bar trades above it, else market at the next open. The processBarBatch fallback path keeps market exits.",
+        "closePaperTrade takes {maker:true} for resting-limit exits; challengers RULE_KEYS accept makerTimeExit.",
+        "tests/maker-exit.test.js: 3 tests (live fill, 1-hour market fallback, stop priority, opt-out, validation, backtest) - 127 tests."
+      ],
+      "adopted": true,
+      "nextIdea": "The stop side is now the largest cost: 1,073 stops lost $49,770 in the 1y test, and live quote-stops fill a median 0.21% past the stop. Next: test a resting stop-limit simulation, i.e. 1-minute stop checks via the bid instead of the 5-minute last price, against a wider ATR-based stop with half size, and measure the unseen-window effect."
     }
   ]
 }
