@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "generatedAt": "2026-11-24T04:34:14.911Z",
+  "generatedAt": "2026-11-24T04:50:30.481Z",
   "goal": 85000,
   "equity": 29765.56176817662,
   "startingEquity": 30000,
@@ -70,12 +70,12 @@
   "agents": {
     "trader": {
       "role": "5-minute paper trader",
-      "lastRunMinutesAgo": 4,
+      "lastRunMinutesAgo": 5,
       "healthy": true
     },
     "researcher": {
       "role": "Claude every 5h: loss analysis, backtest, rule adoption",
-      "lastRunHoursAgo": 0,
+      "lastRunHoursAgo": 0.3,
       "healthy": true,
       "sweep": {
         "at": "2026-11-24T01:23:49.767Z",
@@ -200,7 +200,7 @@
     "windowDays": 30,
     "label": "Estimated time to $85,000 at the trailing 30-day growth rate (not a promise)",
     "status": "insufficient-history",
-    "spanDays": 3.190450358796451,
+    "spanDays": 3.2017416782401225,
     "message": "Needs at least 7 days of equity history."
   },
   "scorecard": [
@@ -321,7 +321,7 @@
     {
       "id": "scout-daytrade",
       "label": "Day-trade scout: support bounce (1.5% zone), 4h hold, 1/4 risk",
-      "equity": 29098.307265927095,
+      "equity": 29119.182043974135,
       "initial": 29788.7180982152,
       "netPnl": -722.8169808409856,
       "profitFactor": 0.010319771834138198,
@@ -335,7 +335,7 @@
       "takerFills": 11,
       "openPositions": 1,
       "pause": "normal",
-      "drawdown": 0.023176923223475976
+      "drawdown": 0.02247616201655822
     },
     {
       "id": "scout-dip6h",
@@ -359,7 +359,7 @@
     {
       "id": "daytrader-range",
       "label": "Day trader: buy 24h range low, sell near high, up to 50% per trade",
-      "equity": 29392.183569076187,
+      "equity": 29431.996867243368,
       "initial": 29865.26287940766,
       "netPnl": 89.5868794177667,
       "profitFactor": 32.69405714356033,
@@ -373,7 +373,7 @@
       "takerFills": 0,
       "openPositions": 3,
       "pause": "normal",
-      "drawdown": 0.019378122186476054
+      "drawdown": 0.018049816954614162
     }
   ],
   "drawdownPause": {
