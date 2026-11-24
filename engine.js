@@ -572,7 +572,14 @@ export function dipSignal(ctx,c={},price=null){
  out.trend=up?'bullish':'bearish';out.rsi6h=r;out.atr=atrOf(six);
  const cc={...DEFAULT_CONFIG,...c};out.stop=out.price-Math.max(out.price*.004,out.atr*(cc.stopAtrMultiplier??2));
  const fill=executionAt(out.price,out.stop,out.price,cc);out.target=(fill.entry*(1+cc.feeRate)+fill.risk*cc.rewardRisk)/((1-cc.slippage)*(1-cc.feeRate));
- if(!up){out.reason='Daily close is below its EMA100; no dip buying outside a daily uptrend.';return out;}
+ if(!up&&c.dipTrend!==false){out.reason='Daily close is below its EMA100; no dip buying outside a daily uptrend.';return out;}
+ if(c.dipConfirm===true){
+  // Capitulation-bounce variant: the bar before the last was oversold and the last completed 6h bar closed up, above the prior high's midpoint.
+  const prev=six.at(-2),rp=rsiSeries(six.slice(0,-1).map(b=>b.close)).at(-1);
+  if(!(rp<k)){out.reason=`Previous 6h RSI ${rp?.toFixed(1)}; waiting for an oversold bar below ${k}.`;return out;}
+  if(!(last.close>last.open&&last.close>(prev.high+prev.low)/2)){out.reason='Oversold; waiting for a bullish 6h reversal close.';return out;}
+  out.signal='BUY';out.reason=`6h RSI ${rp.toFixed(1)} below ${k} then a bullish 6h reversal close${up?' in a daily uptrend':' (counter-trend bounce)'}; ATR stop and cost-aware target.`;return out;
+ }
  if(!(r<k)){out.reason=`6h RSI ${r.toFixed(1)}; waiting for a dip below ${k}.`;return out;}
  out.signal='BUY';out.reason=`6h RSI ${r.toFixed(1)} below ${k} inside a daily uptrend; ATR stop and cost-aware target.`;return out;
 }
