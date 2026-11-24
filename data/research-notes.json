@@ -451,6 +451,23 @@
       ],
       "adopted": false,
       "nextIdea": "Two steps. (1) Add a stopSlippage cost (0.21%, measured from live quote-stops) to backtest stop exits, so the sweep and lab stop flattering stop-heavy rules. (2) New entry family for the grid: 6h volatility-contraction breakout (Bollinger width in the lowest 20% of 120 bars, then a 6h close above the upper band, 48-96h hold, maker exits), which needs no daily uptrend and fires rarely, so fees matter less."
+    },
+    {
+      "at": "2026-11-24T10:51:58.863Z",
+      "tradesReviewed": 7,
+      "losses": 7,
+      "findings": [
+        "Main paper account: XRP-USD -$195.41 and ADA-USD -$173.75, both quote-stops about 3h after the 06:05Z entries. Stops were 2.10%/1.84% below entry, 1.65x/1.34x the 1.27%/1.37% hourly ATR (not tight), and fills were 0.21%/0.17% past the stop. Both entries were ma20-reclaim signals in a down regime. hourly-legacy and lab-hourly took the same entries (-$69.81, -$192.54, -$171.20). scout-daytrade XRP -$162.52 (stop 1.33% = 0.9x ATR, filled 0.58% past it). hourly-legacy LINK -$55.95 was a maker time exit at -0.53%.",
+        "By entry pattern, main paper rules on 1y hourly after fees: ma20-reclaim 1,432 trades, train/validation/unseen -$9,457/-$4,739/-$3,359 (PF 0.41/0.29/0.31), the worst pattern and the one behind all of today's main losses. closing-high-breakout-20h 1,202 trades (PF 0.45/0.74/0.46), oversold-bounce 581 (PF 0.48/0.36/0.53). Every pattern loses in every window, so dropping ma20-reclaim would cut losses (about $17.5k/yr) but would not create an edge.",
+        "New family, 6h volatility-contraction breakout (Bollinger(20,2) width in the lowest 20% of 120 bars, then a close above the upper band), 8 variants, now with 0.21% live stop slippage. Without the trend filter: train -$4,048 to -$4,492 (PF 0.29-0.40), validation +$994 to +$1,952, unseen -$1,807 to -$1,984 (PF 0.06-0.22, 8-16% win rate). With the trend filter: 2 train trades and unseen -$1,135 to -$1,150 (PF 0.10-0.22). Rejected: breakouts in this market fail and reverse."
+      ],
+      "changes": [
+        "engine.js: dip-6h dipMode \"squeeze\" (6h Bollinger squeeze breakout) and a stopSlippage backtest cost on stop exits (validated 0-2%, default none).",
+        "scripts/sweep.mjs: STOP_SLIPPAGE 0.0021 (the live median) charged on every sweep stop, so stop-heavy rules are no longer flattered; 8 squeeze variants added to the grid for tracking (now 54 rules).",
+        "challengers RULE_KEYS accept dipMode; 2 new tests (129)."
+      ],
+      "adopted": false,
+      "nextIdea": "Every long-only entry family tested (hourly patterns, ranges, dips, bounces, squeezes) loses on unseen data in this down regime, and dip-6h only works in daily uptrends. Next: measure the cost of standing aside. Compare a cash-only main account (0 trades) with the rules over the last 30 and 90 days, and propose an entry gate that requires either the dip-6h signal or an \"up\" regime. The owner decides; the gate is a recommendation."
     }
   ]
 }
