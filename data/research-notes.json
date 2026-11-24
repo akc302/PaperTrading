@@ -498,6 +498,21 @@
       ],
       "adopted": false,
       "nextIdea": "Since no long-only edge exists in the current regime, use the waiting time to strengthen the one positive family: test dip-6h variants on all 2 years of 6h/1d history (not just the 1y hourly window), i.e. RSI 20-35, EMA100 vs EMA50 trend filter, ATR stop 1.5-3, to see whether the 5-trade record holds on a larger sample before recommending it as the main paper rules."
+    },
+    {
+      "at": "2026-11-24T16:30:16.388Z",
+      "tradesReviewed": 1,
+      "losses": 1,
+      "findings": [
+        "Only scout-daytrade SOL-USD closed (-$78.66, quote-stop after 0.1h). The main paper account has made no new entries since 06:05Z and is flat after 4 losses today.",
+        "dip-6h robustness on the full 2y 6h/1d history (standalone 6h simulator using the engine dipSignal: entry at the next 6h open as maker, stops 0.21% worse at taker, target maker, 48h time exit, $7,500 notional, Advanced 2 fees and rebate). RSI<25 is positive in both years for every stop/target variant: year 1 8-10 trades +$313 to +$755 (PF 1.52-1.83), year 2 5 trades +$1,807 to +$1,853. Over 2y: 13-15 trades, +$2,119 to +$2,608 (PF 3.6-4.5). RSI<20: 4 trades, all winners (+$1,299 to +$1,397).",
+        "Looser dips fail out of sample: RSI<30 loses in year 1 (-$760 to -$1,980, PF 0.63-0.79), and RSI<35 loses heavily in year 1 (-$6,224 to -$7,984). The edge is specific to deep 6h dips (RSI<25) inside a daily uptrend. It is rare (about 7 trades a year across 8 coins) and earns about $1,200/yr at $7,500 notional, so it is positive but far too slow alone to reach $85,000."
+      ],
+      "changes": [
+        "No code change: scout-dip6h already runs exactly this rule (RSI<25, 2xATR stop, 1R, 48h) at 1/4 risk. Recommendation strengthened for the owner: dip-6h RSI<25 is the only rule positive in both years of history, so it is the best candidate for the main paper rules (it stands aside in down markets). The owner decides."
+      ],
+      "adopted": false,
+      "nextIdea": "Raise the dip-6h trade count without loosening RSI: extend it to more liquid coins with 2y history (e.g. LTC, BCH, DOT, LINK already in) and test the same RSI<25 rule on 4h bars, keeping year-1/year-2 positivity as the bar."
     }
   ]
 }
