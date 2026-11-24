@@ -368,6 +368,20 @@
       "adopted": false,
       "nextIdea": "Break the main rules' 1-year result down per coin and per UTC entry hour. If 2-3 coins or a block of hours carry most of the loss, drop them from the main account's entries (keeping trade count high on the rest) and test that on unseen data.",
       "status": "Recorded; no rule change."
+    },
+    {
+      "at": "2026-11-24T00:29:38.962Z",
+      "tradesReviewed": 2,
+      "losses": 2,
+      "findings": [
+        "First main-account entry on the hourly rules: ADA-USD at 00:05Z (still open). scout-daytrade lost twice on ADA (quote-stops -99.37 after 0.5h, -40.75 after 0.1h).",
+        "1-year breakdown of the main account's current rules (8 coins, fees, first half | second half). Every coin loses in both halves: BTC -2,193|-1,749, ETH -2,927|-1,648, SOL -4,215|-2,427, XRP -3,137|-2,009, ADA -3,268|-2,415, DOGE -2,494|-2,201, LINK -3,171|-2,462, AVAX -3,503|-1,897. Every 4-hour UTC block loses in both halves too (worst 16-23 UTC in the first half). No coin or time window can be dropped to make it profitable.",
+        "By exit: targets 127t +11,106 | 113t +6,784; stops 564t -30,973 | 523t -19,536; time exits 937t -5,042 | 1,059t -4,056. Only about 7% of trades reach the 1.5R target while about 33% hit the stop, so the entry signal has no directional edge. Smaller targets (0.6R) and longer holds (24-168h) were already tested and also lose."
+      ],
+      "changes": [],
+      "adopted": false,
+      "nextIdea": "The hourly long-only entry family is exhausted (sweep, hold, target, regime, momentum, chase, confluence and per-coin/hour filters all failed out of sample). Two directions remain: (1) the daily-uptrend dip family (only positive family so far), live in scout-dip6h and the sweep, waiting for an up regime; (2) a recommendation to the owner to run the main paper account at half size until the regime signal turns 'mixed' or 'up'.",
+      "status": "Recorded; no rule change."
     }
   ]
 }
