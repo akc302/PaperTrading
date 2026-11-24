@@ -382,6 +382,25 @@
       "adopted": false,
       "nextIdea": "The hourly long-only entry family is exhausted (sweep, hold, target, regime, momentum, chase, confluence and per-coin/hour filters all failed out of sample). Two directions remain: (1) the daily-uptrend dip family (only positive family so far), live in scout-dip6h and the sweep, waiting for an up regime; (2) a recommendation to the owner to run the main paper account at half size until the regime signal turns 'mixed' or 'up'.",
       "status": "Recorded; no rule change."
+    },
+    {
+      "at": "2026-11-24T02:50:57.311Z",
+      "tradesReviewed": 4,
+      "losses": 2,
+      "findings": [
+        "Since 00:29Z: 4 challenger trades closed (main paper account: 0 closed, ADA still open). hourly-legacy LINK +$18.48 and scout-daytrade LINK +$7.54, AVAX -$10.86 were 4h time exits on moves of +0.19% to +0.59%; round-trip fees ($13.63-$33.42) took 64% or more of the gross on each.",
+        "scout-daytrade SOL -$87.47: quote-stop 0.65% below entry = 0.53x the 1.22% hourly ATR, filled at -0.86% (slippage past the stop). Scout stops on AVAX/LINK/SOL were 0.53-0.88x hourly ATR, inside normal noise; a min-stop filter already failed out of sample (23 Nov), so recorded, not changed.",
+        "Regime (sweep 01:23Z): down; 0 of 8 coins in a daily uptrend, BTC -5.6% 7d and -24.2% 30d. Sweep: 38 rules, 0 positive in all three windows.",
+        "dip-6h zero train/validation trades is real, not a bug: coins closed above the daily EMA100 almost only in Aug-Oct 2026 (unseen window); BTC/DOGE briefly in Apr-May with no 6h RSI<30 dips. The dip edge is therefore one regime of evidence only.",
+        "New family tested, capitulation bounce (oversold 6h bar then a bullish 6h reversal close, 72h hold), 8 variants on 1y hourly after fees. Without the trend filter: train -$854 to -$2,602 (PF 0.40-0.54), validation -$1,350 to -$1,564 (PF 0.22-0.40), unseen -$729 to +$830. Rejected: loses in both earlier windows. With the trend filter: unseen only, 4-7 trades, +$214 to +$496 (PF 5.3+), same small single-regime sample as dip-6h."
+      ],
+      "changes": [
+        "engine.js dipSignal: dipConfirm (oversold previous bar + bullish reversal close) and dipTrend:false (drop the EMA100 filter) options; defaults unchanged.",
+        "scripts/sweep.mjs: 8 capitulation-bounce variants added to the daily grid (now 46 rules) so the daily review keeps scoring them; scripts/challengers.mjs RULE_KEYS accept dipConfirm/dipTrend.",
+        "tests/dip6h.test.js: bounce test (125 tests)."
+      ],
+      "adopted": false,
+      "nextIdea": "Both long-only dip families only work inside a daily uptrend, and there is none now. Next: test a cash-preserving regime gate for the main paper account (skip new hourly entries while the sweep regime is \"down\" and BTC 30d < -15%) on the 1y data, and measure how much of the main-rules 1y loss came from down-regime entries."
     }
   ]
 }
