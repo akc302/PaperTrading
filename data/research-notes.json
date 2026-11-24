@@ -435,6 +435,22 @@
       ],
       "adopted": true,
       "nextIdea": "The stop side is now the largest cost: 1,073 stops lost $49,770 in the 1y test, and live quote-stops fill a median 0.21% past the stop. Next: test a resting stop-limit simulation, i.e. 1-minute stop checks via the bid instead of the 5-minute last price, against a wider ATR-based stop with half size, and measure the unseen-window effect."
+    },
+    {
+      "at": "2026-11-24T08:38:32.994Z",
+      "tradesReviewed": 1,
+      "losses": 1,
+      "findings": [
+        "scout-daytrade LINK-USD closed -$0.65: the first live maker time exit (PR #50). A sell rested at 9.043 at 08:10Z and filled at 08:15Z at 0.15%. The gross move was +0.22% (about +$21), and fees were $21.76; a market exit at 0.30% + slippage would have lost about $8. No main-account trade closed; main holds XRP, ADA and AVAX from 06:05Z.",
+        "Stop-width test, main paper rules on 1y hourly after fees (maker time exits on): base -$37,318 (train -$22,469, validation -$7,683, unseen -$7,166, PF 0.42). Stops x2: -$36,176 total but unseen -$7,914 (PF 0.39). Stops x0.7: unseen -$7,805. Wider stops cut stop exits 978 to 510 but turn them into larger losses and longer holds. Neither width helps on unseen data, so stop width is rejected as a lever.",
+        "Position size is capped by maxAllocation (25%), not by riskPct: halving riskPct to 1% changed nothing (-$37,240). Halving maxAllocation to 12.5% roughly halves the loss: -$21,651 total, unseen -$4,764 (same PF). Correction to the earlier recommendation: \"half size\" for the main paper account must mean maxAllocation 0.125 (with riskPct 0.01), not riskPct alone.",
+        "Backtests understate stop costs: charging the live-measured 0.21% stop slippage on every stop exit moves the base from -$37,318 to -$41,033 (unseen -$7,166 to -$7,933)."
+      ],
+      "changes": [
+        "No code change. Stop width (x0.7, x1.6, x2) was rejected on unseen data; the half-allocation number is recorded for the owner decision."
+      ],
+      "adopted": false,
+      "nextIdea": "Two steps. (1) Add a stopSlippage cost (0.21%, measured from live quote-stops) to backtest stop exits, so the sweep and lab stop flattering stop-heavy rules. (2) New entry family for the grid: 6h volatility-contraction breakout (Bollinger width in the lowest 20% of 120 bars, then a 6h close above the upper band, 48-96h hold, maker exits), which needs no daily uptrend and fires rarely, so fees matter less."
     }
   ]
 }
