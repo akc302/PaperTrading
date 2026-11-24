@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "generatedAt": "2026-11-24T17:41:52.937Z",
+  "generatedAt": "2026-11-24T18:32:12.929Z",
   "goal": 85000,
   "equity": 29282.647920248248,
   "startingEquity": 30000,
@@ -43,7 +43,7 @@
     },
     "XRP-USD": {
       "strategy": "aggressive",
-      "approach": "current",
+      "approach": "higher-reward",
       "decision": "keep"
     },
     "ADA-USD": {
@@ -75,7 +75,7 @@
     },
     "researcher": {
       "role": "Claude every 5h: loss analysis, backtest, rule adoption",
-      "lastRunHoursAgo": 1.2,
+      "lastRunHoursAgo": 0,
       "healthy": true,
       "sweep": {
         "at": "2026-11-24T10:52:25.179Z",
@@ -109,13 +109,13 @@
         }
       },
       "latestNote": {
-        "at": "2026-11-24T16:30:16.388Z",
-        "tradesReviewed": 1,
-        "losses": 1,
+        "at": "2026-11-24T18:29:29.971Z",
+        "tradesReviewed": 0,
+        "losses": 0,
         "findings": 3,
         "changes": 1,
         "adopted": false,
-        "nextIdea": "Raise the dip-6h trade count without loosening RSI: extend it to more liquid coins with 2y history (e.g. LTC, BCH, DOT, LINK already in) and test the same RSI<25 rule on 4h bars, keeping year-1/year-2 positivity as the bar."
+        "nextIdea": "Get more evidence for the 2h dip: raise the 1h history in scripts/history.mjs from 365 to 730 days (Coinbase allows it; the history budget needs checking) so the daily review can re-test 2h RSI<20/25 across two years. If it holds in both years, add a scout-dip2h challenger at 1/4 risk."
       }
     },
     "verifier": {
@@ -143,7 +143,7 @@
         "id": "history",
         "label": "28+ days of forward paper trading with the research team",
         "pass": false,
-        "value": "3.5 days"
+        "value": "3.6 days"
       },
       {
         "id": "sample",
@@ -202,7 +202,7 @@
     "windowDays": 30,
     "label": "Estimated time to $85,000 at the trailing 30-day growth rate (not a promise)",
     "status": "insufficient-history",
-    "spanDays": 3.7374182523152344,
+    "spanDays": 3.772371863424778,
     "message": "Needs at least 7 days of equity history."
   },
   "scorecard": [
@@ -361,7 +361,7 @@
     {
       "id": "daytrader-range",
       "label": "Day trader: buy 24h range low, sell near high, up to 50% per trade",
-      "equity": 29045.81111334733,
+      "equity": 29054.897410519443,
       "initial": 29865.26287940766,
       "netPnl": 89.5868794177667,
       "profitFactor": 32.69405714356033,
@@ -375,7 +375,7 @@
       "takerFills": 0,
       "openPositions": 3,
       "pause": "normal",
-      "drawdown": 0.030934269662265312
+      "drawdown": 0.03063112029691284
     }
   ],
   "drawdownPause": {
