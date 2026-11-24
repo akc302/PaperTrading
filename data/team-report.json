@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "generatedAt": "2026-11-24T00:22:08.301Z",
+  "generatedAt": "2026-11-24T00:58:47.748Z",
   "goal": 85000,
   "equity": 29879.68448610754,
   "startingEquity": 30000,
@@ -70,12 +70,12 @@
   "agents": {
     "trader": {
       "role": "5-minute paper trader",
-      "lastRunMinutesAgo": 2,
+      "lastRunMinutesAgo": 3,
       "healthy": true
     },
     "researcher": {
       "role": "Claude every 5h: loss analysis, backtest, rule adoption",
-      "lastRunHoursAgo": 0,
+      "lastRunHoursAgo": 0.6,
       "healthy": true,
       "sweep": {
         "at": "2026-11-23T17:17:43.630Z",
@@ -107,13 +107,13 @@
         }
       },
       "latestNote": {
-        "at": "2026-11-23T22:29:34.762Z",
-        "tradesReviewed": 1,
-        "losses": 1,
-        "findings": 2,
+        "at": "2026-11-24T00:29:38.962Z",
+        "tradesReviewed": 2,
+        "losses": 2,
+        "findings": 3,
         "changes": 0,
         "adopted": false,
-        "nextIdea": "Break the main rules' 1-year result down per coin and per UTC entry hour. If 2-3 coins or a block of hours carry most of the loss, drop them from the main account's entries (keeping trade count high on the rest) and test that on unseen data."
+        "nextIdea": "The hourly long-only entry family is exhausted (sweep, hold, target, regime, momentum, chase, confluence and per-coin/hour filters all failed out of sample). Two directions remain: (1) the daily-uptrend dip family (only positive family so far), live in scout-dip6h and the sweep, waiting for an up regime; (2) a recommendation to the owner to run the main paper account at half size until the regime signal turns 'mixed' or 'up'."
       }
     },
     "verifier": {
@@ -200,7 +200,7 @@
     "windowDays": 30,
     "label": "Estimated time to $85,000 at the trailing 30-day growth rate (not a promise)",
     "status": "insufficient-history",
-    "spanDays": 3.0153738541680353,
+    "spanDays": 3.040830416665585,
     "message": "Needs at least 7 days of equity history."
   },
   "scorecard": [
@@ -283,7 +283,7 @@
     {
       "id": "hourly-legacy",
       "label": "Previous hourly rules",
-      "equity": 29704.153638072832,
+      "equity": 29712.373556266044,
       "initial": 29975.046647868254,
       "netPnl": -292.92536480311037,
       "profitFactor": 0.6765440412548455,
@@ -297,7 +297,7 @@
       "takerFills": 8,
       "openPositions": 2,
       "pause": "normal",
-      "drawdown": 0.031185203778258175
+      "drawdown": 0.03091710732055908
     },
     {
       "id": "lab-hourly",
@@ -321,7 +321,7 @@
     {
       "id": "scout-daytrade",
       "label": "Day-trade scout: support bounce (1.5% zone), 4h hold, 1/4 risk",
-      "equity": 29533.394992187852,
+      "equity": 29555.905033477724,
       "initial": 29788.7180982152,
       "netPnl": -233.90077932338596,
       "profitFactor": 0,
@@ -335,7 +335,7 @@
       "takerFills": 4,
       "openPositions": 3,
       "pause": "normal",
-      "drawdown": 0.008571134386700763
+      "drawdown": 0.007815477791621506
     },
     {
       "id": "scout-dip6h",
@@ -359,11 +359,11 @@
     {
       "id": "daytrader-range",
       "label": "Day trader: buy 24h range low, sell near high, up to 50% per trade",
-      "equity": 29564.392710258748,
+      "equity": 29553.760531858185,
       "initial": 29865.26287940766,
       "netPnl": 89.5868794177667,
       "profitFactor": 32.69405714356033,
-      "maxDrawdown": 0.016123559551296428,
+      "maxDrawdown": 0.0161589389883093,
       "winRate": 0.5,
       "avgWin": 92.41349385251631,
       "avgLoss": -2.8266144347496125,
@@ -373,7 +373,7 @@
       "takerFills": 0,
       "openPositions": 3,
       "pause": "normal",
-      "drawdown": 0.013632647339184678
+      "drawdown": 0.01398737248996862
     }
   ],
   "drawdownPause": {
