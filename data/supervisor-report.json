@@ -1,16 +1,17 @@
 {
-  "at": "2026-11-24T05:14:55.515Z",
+  "at": "2026-11-24T07:14:57.383Z",
   "goal": 85000,
   "start": 30000,
-  "equity": 29765.56,
-  "remaining": 55234.44,
+  "equity": 29624.85,
+  "remaining": 55375.15,
   "progressPct": 0,
   "onTrack": false,
-  "verdict": "The main paper account (fake money) is at $29765.56, 0% of the way to $85,000, after its ADA trade closed -$99.70 on a 4-hour time exit; it holds no positions and is waiting for the next confirmed setup. The researcher found that these rules lost about $40,000 over a 1-year backtest in every market regime, 79% of it fees, so the owner's choice of half size, a down-market pause, or the trend rules is the main lever.",
-  "last24h": "Main: 1 closed (0 wins, -$99.70). Best challenger daytrader-range: 1 closed (1 wins, $92.41).",
+  "verdict": "The main paper account (fake money) is at $29624.85, 0% of the way to $85,000, holding XRP, ADA and AVAX opened at 06:05 UTC with one trade closed today (-$99.70). Time exits now rest a maker sell first (PR #50), which cut a year of backtested fees by $3,400, but the rules still lose after fees, so the owner's choice of half size, a down-market pause, or the trend rules remains the main lever.",
+  "last24h": "Main: 1 closed (0 wins, -$99.70). Best challenger hourly-legacy: 9 closed (4 wins, -$221.19).",
   "readiness": "2/9",
   "fixed": [
-    "No faults: all jobs green, daily review done, research ran at 04:34 UTC, fees match the Advanced 2 tier"
+    "No faults: all jobs green, daily review done, research ran at 06:36 UTC, fees match the Advanced 2 tier",
+    "Maker time exits live for all paper accounts (PR #50); first live check when the scout LINK trade reaches its 4h limit at ~08:05 UTC"
   ],
-  "nextStep": "Owner decides half size, a down-market pause, or the trend rules for the main paper account; the researcher tests maker-limit time exits to cut fees."
+  "nextStep": "Owner decides half size, a down-market pause, or the trend rules for the main paper account; the researcher tests faster or wider stops, now the largest cost."
 }
