@@ -8,6 +8,8 @@ import {Worker,isMainThread,parentPort,workerData} from 'node:worker_threads';
 import {availableParallelism} from 'node:os';
 import {backtest,DEFAULT_CONFIG,normalizeCandles} from '../engine.js';
 import {HISTORY_PRODUCTS,historyFile,readHistoryFile,loadHistory} from './history.mjs';
+// Live quote-stops filled a median 0.21% past the stop (research notes, 24 Nov); charge it on every backtest stop.
+export const STOP_SLIPPAGE=0.0021;
 export function grid(){
  const g=[];
  for(const maxHoldHours of [4,24])for(const stopAtrMultiplier of [1.5,2.5])for(const rewardRisk of [1,1.5])g.push({strategy:'aggressive',patternRequired:true,regimeFilter:true,maxHoldHours,stopAtrMultiplier,rewardRisk});
@@ -19,6 +21,8 @@ export function grid(){
  for(const dipRsi of [25,30])for(const rewardRisk of [1,2])g.push({strategy:'dip-6h',dipRsi,stopAtrMultiplier:2,rewardRisk,maxHoldHours:48});
  // Capitulation bounce (24 Nov): oversold 6h bar then a bullish 6h reversal close, with and without the daily uptrend filter.
  for(const dipTrend of [false,true])for(const dipRsi of [25,30])for(const rewardRisk of [1,2])g.push({strategy:'dip-6h',dipConfirm:true,dipTrend,dipRsi,stopAtrMultiplier:2,rewardRisk,maxHoldHours:72});
+ // 6h volatility-contraction (squeeze) breakout (24 Nov), with and without the daily uptrend filter.
+ for(const dipTrend of [false,true])for(const rewardRisk of [2,3])for(const maxHoldHours of [48,96])g.push({strategy:'dip-6h',dipMode:'squeeze',dipTrend,stopAtrMultiplier:2,rewardRisk,maxHoldHours});
  for(const rewardRisk of [3,5])g.push({strategy:'donchian',stopAtrMultiplier:3.5,rewardRisk,maxHoldHours:168});
  return g;
 }
@@ -30,7 +34,7 @@ export function score(trades,a,b){
 }
 export function sweep(series,fees,configs=grid(),{riskPct=0.02,maxAllocation=0.25,history={}}={}){
  const results=configs.map(cfg=>{let trades=[];const cuts=[];
-  for(const [product,bars] of Object.entries(series)){if(bars.length<300)continue;const r=backtest(bars,{...DEFAULT_CONFIG,...cfg,...fees,riskPct,maxAllocation,entryOrder:'limit'},{startTime:bars[200].time,history:history[product]});trades.push(...r.account.trades.map(t=>({...t,product})));}
+  for(const [product,bars] of Object.entries(series)){if(bars.length<300)continue;const r=backtest(bars,{...DEFAULT_CONFIG,...cfg,...fees,riskPct,maxAllocation,entryOrder:'limit',stopSlippage:STOP_SLIPPAGE},{startTime:bars[200].time,history:history[product]});trades.push(...r.account.trades.map(t=>({...t,product})));}
   const times=Object.values(series).flatMap(b=>b.slice(200).map(x=>x.time)).sort((x,y)=>x-y),a=times[Math.floor(times.length*.5)],b=times[Math.floor(times.length*.75)];
   const s=score(trades,a,b);return {config:cfg,...s,passesEarlier:s.train.net>0&&s.validation.net>0,passesAll:s.train.net>0&&s.validation.net>0&&s.unseen.net>0};
  });
