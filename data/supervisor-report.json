@@ -1,16 +1,16 @@
 {
-  "at": "2026-11-23T23:14:21.832Z",
+  "at": "2026-11-24T01:14:55.336Z",
   "goal": 85000,
   "start": 30000,
-  "equity": 29865.26,
-  "remaining": 55134.74,
+  "equity": 29879.68,
+  "remaining": 55120.32,
   "progressPct": 0,
   "onTrack": false,
-  "verdict": "The main paper account (fake money) is at $29865.26 (-0.4%) with no trades in the 6 hours since switching to the hourly rules: the pattern filter blocked most setups, and the lab's machine-learning filter skipped one LINK setup (26.2% vs a 27.6% bar) that the hourly-legacy challenger took. All jobs are healthy; the hourly challengers are down over 24h (lab-hourly -$360.99), the day trader is up, and the owner's half-size or trend-rules decision is still pending.",
+  "verdict": "The main paper account (fake money) made its first trade on the hourly rules (ADA-USD bought at 0.14832 with $7444 paper money) and is at $29879.68, still 0% of the way to $85,000. A 1-year breakdown shows these rules lose on every coin and at every hour, so the researcher recommends half size until the market regime turns up; the owner's decision is pending.",
   "last24h": "Main: 0 closed (0 wins, $0.00). Best challenger daytrader-range: 2 closed (1 wins, $89.59).",
   "readiness": "2/9",
   "fixed": [
-    "No faults; traced the missing main entries to the pattern filter and one lab-adopted ML filter block on LINK (working as designed)"
+    "No faults; first main-account entry on the new rules confirmed (maker fee, valid stop and target)"
   ],
-  "nextStep": "Owner decides half size or trend rules for the main paper account; the researcher breaks down 1-year losses by coin and hour to keep trades high on the least-bad markets."
+  "nextStep": "Owner decides half size or trend rules for the main paper account; the daily review (sweep and regime check) runs after 01:00 UTC."
 }
