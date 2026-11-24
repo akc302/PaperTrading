@@ -513,6 +513,21 @@
       ],
       "adopted": false,
       "nextIdea": "Raise the dip-6h trade count without loosening RSI: extend it to more liquid coins with 2y history (e.g. LTC, BCH, DOT, LINK already in) and test the same RSI<25 rule on 4h bars, keeping year-1/year-2 positivity as the bar."
+    },
+    {
+      "at": "2026-11-24T18:29:29.971Z",
+      "tradesReviewed": 0,
+      "losses": 0,
+      "findings": [
+        "No trades closed in any account since 16:30Z. The main paper account is flat with no entries since 06:05Z; the pattern filter has confirmed no setup.",
+        "dip rule on shorter bars over the 1y of hourly history (same simulator as the 2y test: dipSignal, daily EMA100 filter, next-bar maker entry, 0.21% stop slippage, $7,500 notional, 48h time exit). 6h RSI<25: 5 trades +$1,807-1,811. 4h RSI<25: 7 trades +$446-679 (PF 1.59-2.25); 4h RSI<20: 4 trades +$928. 2h RSI<20: 9 trades +$1,454-1,588 (PF 3.73-4.51); 2h RSI<25: 24-28 trades +$1,297-1,355 (PF 1.55-1.58).",
+        "Shorter bars find 2-5x more deep dips, but almost every trade falls in the Aug-Oct 2026 uptrend (the only daily-uptrend stretch in the 1y hourly window). There is only one regime of evidence, and the 1h history is too short to repeat the 2-year check, so none is adopted. The 6h RSI<25 rule stays the only one confirmed in both years."
+      ],
+      "changes": [
+        "No code change. 2h RSI<20 is recorded as the best candidate for more dip trades, pending more history."
+      ],
+      "adopted": false,
+      "nextIdea": "Get more evidence for the 2h dip: raise the 1h history in scripts/history.mjs from 365 to 730 days (Coinbase allows it; the history budget needs checking) so the daily review can re-test 2h RSI<20/25 across two years. If it holds in both years, add a scout-dip2h challenger at 1/4 risk."
     }
   ]
 }
