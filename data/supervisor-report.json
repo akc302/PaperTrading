@@ -1,17 +1,17 @@
 {
-  "at": "2026-11-24T15:16:31.567Z",
+  "at": "2026-11-24T17:14:54.589Z",
   "goal": 85000,
   "start": 30000,
   "equity": 29282.65,
   "remaining": 55717.35,
   "progressPct": 0,
   "onTrack": false,
-  "verdict": "The main paper account (fake money) is at $29,282.65 (-2.4%), 0% of the way to $85,000, with 4 losing trades today (-$582.61) and no positions open since 13:00 UTC. A 1-year test shows a pause after 3 losses in a row would have cut losses by about 85% but still loses, while standing aside or the dip-6h rules would have done better, so the owner's decision on the main paper rules is still the key step.",
+  "verdict": "The main paper account (fake money) is at $29,282.65 (-2.4%), 0% of the way to $85,000, with 4 losing trades today (-$582.61) and no new entries since 06:05 UTC because the pattern filter has confirmed no setup (288 of 288 checks in the last 3 hours). A 2-year test found that dip-6h with RSI below 25 is the only rule positive in both years, so it is the researcher's recommended main paper rule; the owner decides.",
   "last24h": "Main: 4 closed (0 wins, -$582.61). Best challenger scout-daytrade: 13 closed (1 wins, -$940.24).",
   "readiness": "2/9",
   "fixed": [
-    "Checked the equity drop since 13:19 UTC: earlier report used a team snapshot taken before the AVAX stop; cash now equals equity",
-    "No faults: all jobs green, daily review done, research ran at 14:32 UTC, fees match the Advanced 2 tier"
+    "No faults: all jobs green, daily review done, research ran at 16:32 UTC, fees match the Advanced 2 tier",
+    "Checked the 11-hour gap without entries: the pattern filter blocked every check (working as designed, not a bug)"
   ],
-  "nextStep": "Owner decides: switch the main paper account to the dip-6h rules, pause it until the market turns up, half size (12.5% allocation), or keep the current rules; the 30-trade safety switch is at 4 of 30; a 72-hour pause after 3 losses in a row is the fallback if the owner keeps these rules."
+  "nextStep": "Owner decides: switch the main paper account to dip-6h RSI<25 (recommended, positive in both years), pause it, half size (12.5% allocation), or keep the current rules; the researcher looks for more dip-6h trades (more coins, 4h bars)."
 }
