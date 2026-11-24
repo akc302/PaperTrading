@@ -483,6 +483,21 @@
       ],
       "adopted": false,
       "nextIdea": "If the owner keeps trading through the down regime: test a market-wide trailing kill switch for the main paper account (stop new entries after 3 consecutive losses or -2% in a day, resume after 24h) on the 1y data, to see if it cuts losing streaks without missing the dip-6h-style winners."
+    },
+    {
+      "at": "2026-11-24T14:30:26.105Z",
+      "tradesReviewed": 3,
+      "losses": 3,
+      "findings": [
+        "Main paper account: AVAX-USD -$113.75 (quote-stop after 7.1h, stop 3.35% below entry, filled at -3.46%). With XRP and ADA, all three 06:05Z ma20-reclaim entries hit their stops, so the main paper account is 0 for 4 today (-$582.61) and flat. hourly-legacy XRP -$334.53 (filled 0.72% past the stop) and lab-hourly AVAX -$112.08 took the same entries.",
+        "Kill-switch test, main paper rules on 1y hourly (fees, maker time exits, 0.21% stop slippage; trades merged in entry order): no switch 3,299 trades -$40,280 (unseen -$7,471, PF 0.39). 3 losses in a row -> 24h off: 1,325 trades -$16,738 (unseen -$2,647, PF 0.47). 3 losses -> 72h off: 669 trades -$6,175 (unseen -$1,438, PF 0.45). A -2% day trigger almost never fires at these sizes (-$40,691).",
+        "The switch cuts losses only by trading less; profit factor stays near 0.4 in every window, so it limits damage but is not an edge. Every result so far points the same way: fewer trades with these rules means smaller losses, and none of the long-only families earns money in the current down regime."
+      ],
+      "changes": [
+        "No code change. Recorded for the owner: if the main paper account keeps the hourly rules, a \"3 losses -> 72h off\" switch would have cut the 1y loss by about 85%. Standing aside or the dip-6h rules (positive record, idle in down markets) remain the stronger recommendation."
+      ],
+      "adopted": false,
+      "nextIdea": "Since no long-only edge exists in the current regime, use the waiting time to strengthen the one positive family: test dip-6h variants on all 2 years of 6h/1d history (not just the 1y hourly window), i.e. RSI 20-35, EMA100 vs EMA50 trend filter, ATR stop 1.5-3, to see whether the 5-trade record holds on a larger sample before recommending it as the main paper rules."
     }
   ]
 }
