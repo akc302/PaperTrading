@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "generatedAt": "2026-11-24T18:32:12.929Z",
+  "generatedAt": "2026-11-24T19:41:57.759Z",
   "goal": 85000,
   "equity": 29282.647920248248,
   "startingEquity": 30000,
@@ -75,7 +75,7 @@
     },
     "researcher": {
       "role": "Claude every 5h: loss analysis, backtest, rule adoption",
-      "lastRunHoursAgo": 0,
+      "lastRunHoursAgo": 1.2,
       "healthy": true,
       "sweep": {
         "at": "2026-11-24T10:52:25.179Z",
@@ -202,7 +202,7 @@
     "windowDays": 30,
     "label": "Estimated time to $85,000 at the trailing 30-day growth rate (not a promise)",
     "status": "insufficient-history",
-    "spanDays": 3.772371863424778,
+    "spanDays": 3.820807395834062,
     "message": "Needs at least 7 days of equity history."
   },
   "scorecard": [
@@ -361,21 +361,21 @@
     {
       "id": "daytrader-range",
       "label": "Day trader: buy 24h range low, sell near high, up to 50% per trade",
-      "equity": 29054.897410519443,
+      "equity": 28818.156512255817,
       "initial": 29865.26287940766,
-      "netPnl": 89.5868794177667,
-      "profitFactor": 32.69405714356033,
+      "netPnl": -826.8910738877763,
+      "profitFactor": 0.10052543748332979,
       "maxDrawdown": 0.042092688232267195,
-      "winRate": 0.5,
+      "winRate": 0.25,
       "avgWin": 92.41349385251631,
-      "avgLoss": -2.8266144347496125,
-      "closedTrades": 2,
-      "fees": 57.46083356209864,
-      "makerFills": 4,
-      "takerFills": 0,
+      "avgLoss": -306.4348559134309,
+      "closedTrades": 4,
+      "fees": 141.31374046188571,
+      "makerFills": 6,
+      "takerFills": 2,
       "openPositions": 3,
       "pause": "normal",
-      "drawdown": 0.03063112029691284
+      "drawdown": 0.037610642997656374
     }
   ],
   "drawdownPause": {
