@@ -397,7 +397,7 @@
       "changes": [
         "engine.js dipSignal: dipConfirm (oversold previous bar + bullish reversal close) and dipTrend:false (drop the EMA100 filter) options; defaults unchanged.",
         "scripts/sweep.mjs: 8 capitulation-bounce variants added to the daily grid (now 46 rules) so the daily review keeps scoring them; scripts/challengers.mjs RULE_KEYS accept dipConfirm/dipTrend.",
-        "tests/dip6h.test.js: bounce test (125 tests)."
+        "tests/dip6h.test.js: bounce test (124 tests)."
       ],
       "adopted": false,
       "nextIdea": "Both long-only dip families only work inside a daily uptrend, and there is none now. Next: test a cash-preserving regime gate for the main paper account (skip new hourly entries while the sweep regime is \"down\" and BTC 30d < -15%) on the 1y data, and measure how much of the main-rules 1y loss came from down-regime entries."
