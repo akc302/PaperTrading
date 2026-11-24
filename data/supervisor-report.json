@@ -1,16 +1,16 @@
 {
-  "at": "2026-11-24T03:14:37.561Z",
+  "at": "2026-11-24T05:14:55.515Z",
   "goal": 85000,
   "start": 30000,
-  "equity": 29834.01,
-  "remaining": 55165.99,
+  "equity": 29765.56,
+  "remaining": 55234.44,
   "progressPct": 0,
   "onTrack": false,
-  "verdict": "The main paper account (fake money) is at $29834.01, 0% of the way to $85,000, with one open trade (ADA-USD bought at 0.14832 with $7444 paper money) near its 4-hour time exit and none closed today. The market is in a down regime (no coins in a daily uptrend, BTC -24% in 30 days), the researcher rejected a new bounce strategy that lost in both earlier test windows, and the owner's half-size or trend-rules decision is still pending.",
-  "last24h": "Main: 0 closed (0 wins, $0.00). Best challenger daytrader-range: 2 closed (1 wins, $89.59).",
+  "verdict": "The main paper account (fake money) is at $29765.56, 0% of the way to $85,000, after its ADA trade closed -$99.70 on a 4-hour time exit; it holds no positions and is waiting for the next confirmed setup. The researcher found that these rules lost about $40,000 over a 1-year backtest in every market regime, 79% of it fees, so the owner's choice of half size, a down-market pause, or the trend rules is the main lever.",
+  "last24h": "Main: 1 closed (0 wins, -$99.70). Best challenger daytrader-range: 1 closed (1 wins, $92.41).",
   "readiness": "2/9",
   "fixed": [
-    "No faults: all jobs green, daily review and sweep done, fees match the Advanced 2 tier"
+    "No faults: all jobs green, daily review done, research ran at 04:34 UTC, fees match the Advanced 2 tier"
   ],
-  "nextStep": "Owner decides half size or trend rules for the main paper account; the researcher tests pausing new main entries while the regime is down."
+  "nextStep": "Owner decides half size, a down-market pause, or the trend rules for the main paper account; the researcher tests maker-limit time exits to cut fees."
 }
