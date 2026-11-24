@@ -33,3 +33,13 @@ test('dip-6h capitulation bounce needs an oversold bar then a bullish reversal c
  assert.equal(b.signal,'BUY');assert.match(b.reason,/counter-trend/);assert.ok(b.stop<b.price&&b.target>b.price);
  assert.equal(dipSignal({sixHour:bounce,daily:downDaily},{dipRsi:30,dipConfirm:true}).signal,'WAIT','trend filter stays on by default');
 });
+
+test('dip-6h squeeze mode buys a 6h close above the upper band after a volatility contraction',()=>{
+ const wave=i=>170+Math.sin(i/3)*6,flat=i=>170+Math.sin(i)*0.2;
+ const six=bars(200,S,i=>i<150?wave(i):i<199?flat(i):176);
+ const s=dipSignal({sixHour:six,daily:downDaily},{dipMode:'squeeze',dipTrend:false,stopAtrMultiplier:2,rewardRisk:2});
+ assert.equal(s.signal,'BUY');assert.equal(s.setup,'6h-squeeze-breakout');assert.ok(s.squeezeRank<=0.2);assert.ok(s.stop<s.price&&s.target>s.price);
+ assert.equal(dipSignal({sixHour:bars(200,S,wave),daily:downDaily},{dipMode:'squeeze',dipTrend:false}).signal,'WAIT','no contraction, no entry');
+ assert.equal(dipSignal({sixHour:six,daily:downDaily},{dipMode:'squeeze'}).signal,'WAIT','daily trend filter on by default');
+ assert.throws(()=>analyze([],{strategy:'dip-6h',dipMode:'pump'}),/dip-6h mode/);
+});

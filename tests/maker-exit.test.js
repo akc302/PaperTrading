@@ -42,3 +42,11 @@ test('backtest time exit fills maker at the open when the bar trades above it, e
  processCandles(b,'BTC-USD',[mk(0,100,100.1,99.9,100),mk(H,101,101,99,99.5),mk(2*H,99.6,100,99,99.8)],c);
  assert.equal(b.trades[0].exitLiquidity,'taker');assert.ok(b.trades[0].exit<99.6);
 });
+
+test('backtest stopSlippage fills stops below the stop price; default is none',()=>{
+ const H=3600,mk=(t,o,h,l,c)=>({time:t,open:o,high:h,low:l,close:c,volume:1}),c={...cfg,maxHoldHours:0};
+ const run=extra=>{const a=createAccount(30000);processCandles(a,'BTC-USD',[mk(0,100,100.1,99.9,100)],{...c,...extra});openPaperTrade(a,{product:'BTC-USD',price:100,stop:95,target:120,time:0,liquidity:'maker'},{...c,...extra});processCandles(a,'BTC-USD',[mk(0,100,100.1,99.9,100),mk(H,99,99.5,94,96)],{...c,...extra});return a.trades[0];};
+ const base=run({}),slip=run({stopSlippage:.0021});
+ assert.equal(base.reason,'stop');assert.ok(Math.abs(slip.exit-base.exit*(1-.0021))<1e-9);
+ assert.throws(()=>run({stopSlippage:.5}),/stop slippage/);
+});

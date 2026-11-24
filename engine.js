@@ -26,6 +26,8 @@ const cfg = (c={}) => {
   if(!finite(x.maxHoldHours)||x.maxHoldHours<0||x.maxHoldHours>720||!finite(x.maxDailyLoss)||x.maxDailyLoss<0||x.maxDailyLoss>0.5||!Number.isInteger(x.maxOpenPositions)||x.maxOpenPositions<1||x.maxOpenPositions>20||!positive(x.maxTotalRisk)||x.maxTotalRisk>0.2)throw new Error('Invalid portfolio risk limits.');
   if(x.regimeFilter!=null&&typeof x.regimeFilter!=='boolean')throw new Error('Invalid regime filter.');
   if(x.makerTimeExit!=null&&typeof x.makerTimeExit!=='boolean')throw new Error('Invalid maker time-exit setting.');
+  if(x.stopSlippage!=null&&(!finite(x.stopSlippage)||x.stopSlippage<0||x.stopSlippage>0.02))throw new Error('Invalid stop slippage.');
+  if(x.dipMode!=null&&!['dip','squeeze'].includes(x.dipMode))throw new Error('Invalid dip-6h mode.');
   if(x.rangeHours!=null&&(!Number.isInteger(x.rangeHours)||x.rangeHours<6||x.rangeHours>168))throw new Error('Invalid range window.');
   if(x.rangeEntry!=null&&(!finite(x.rangeEntry)||x.rangeEntry<=0||x.rangeEntry>0.5))throw new Error('Invalid range entry zone.');
   if(x.rangeExit!=null&&(!finite(x.rangeExit)||x.rangeExit<0.5||x.rangeExit>1))throw new Error('Invalid range exit level.');
@@ -297,7 +299,7 @@ export function processCandles(account,product,input,config={},options={}){
     // Chandelier trail: ratchet the stop from 6h bars that completed before this bar opened.
     if(existing?.trail)updateTrailingStop(existing,trendContext(bars.slice(Math.max(0,i-historyWindow(c)),i),options.history,bar.time).sixHour,bar.time);
     if(existing&&bar.time>=existing.openedAt){
-      if(bar.open<=existing.stop){closePaperTrade(account,existing.id,bar.open,bar.time,'stop',c);reason='Existing paper position closed at a stop gap.';action='EXIT';}
+      if(bar.open<=existing.stop){closePaperTrade(account,existing.id,bar.open*(1-(c.stopSlippage??0)),bar.time,'stop',c);reason='Existing paper position closed at a stop gap.';action='EXIT';}
       else if(bar.open>=existing.target){closePaperTrade(account,existing.id,existing.target,bar.time,'target',c);reason='Existing paper position reached its target at the open.';action='EXIT';}
       else if(existing.exitLimit){closePaperTrade(account,existing.id,bar.open,bar.time,'time-exit',c);reason='Maker time-exit limit did not fill within an hour; exited at market.';action='EXIT';}
       else if((existing.maxHoldHours??c.maxHoldHours)>0&&bar.time>=existing.openedAt+(existing.maxHoldHours??c.maxHoldHours)*3600){
@@ -324,7 +326,7 @@ export function processCandles(account,product,input,config={},options={}){
     const p=account.positions.find(p=>p.product===product);
     if(p&&bar.time>=p.openedAt){
       // If both exits were touched, choose stop first. Stop gaps fill at the worse open.
-      if(bar.low<=p.stop){closePaperTrade(account,p.id,Math.min(bar.open,p.stop),bar.time,p.trail?'trail-stop':'stop',c);reason='Paper stop triggered; stop takes priority when both exits are touched.';action=action==='BUY'?'BUY_EXIT':'EXIT';}
+      if(bar.low<=p.stop){closePaperTrade(account,p.id,Math.min(bar.open,p.stop)*(1-(c.stopSlippage??0)),bar.time,p.trail?'trail-stop':'stop',c);reason='Paper stop triggered; stop takes priority when both exits are touched.';action=action==='BUY'?'BUY_EXIT':'EXIT';}
       else if(bar.high>=p.target){closePaperTrade(account,p.id,p.target,bar.time,'target',c);reason='Paper take-profit target reached.';action=action==='BUY'?'BUY_EXIT':'EXIT';}
     }
     account.marks[product]=bar.close;account.lastProcessed[product]=bar.time;
@@ -586,6 +588,17 @@ export function dipSignal(ctx,c={},price=null){
  const cc={...DEFAULT_CONFIG,...c};out.stop=out.price-Math.max(out.price*.004,out.atr*(cc.stopAtrMultiplier??2));
  const fill=executionAt(out.price,out.stop,out.price,cc);out.target=(fill.entry*(1+cc.feeRate)+fill.risk*cc.rewardRisk)/((1-cc.slippage)*(1-cc.feeRate));
  if(!up&&c.dipTrend!==false){out.reason='Daily close is below its EMA100; no dip buying outside a daily uptrend.';return out;}
+ if(c.dipMode==='squeeze'){
+  // Volatility-contraction breakout: Bollinger(20,2) width on completed 6h closes was in the lowest 20% of the prior
+  // 120 bars on the previous bar, and the last completed 6h bar closed above the upper band.
+  const closes=six.map(b=>b.close),bb=i=>{if(i<19)return null;const w=closes.slice(i-19,i+1),m=w.reduce((s,v)=>s+v,0)/20,sd=Math.sqrt(w.reduce((s,v)=>s+(v-m)**2,0)/20);return {up:m+2*sd,width:4*sd/m};};
+  const n=six.length-1,cur=bb(n),prev=bb(n-1),hist=[];for(let i=Math.max(19,n-121);i<n-1;i++)hist.push(bb(i).width);
+  if(!cur||!prev||hist.length<60){out.reason='Need 140 completed 6h bars for the squeeze test.';return out;}
+  const rank=hist.filter(w=>w<prev.width).length/hist.length;out.squeezeRank=rank;
+  if(!(rank<=0.2)){out.reason=`6h Bollinger width at the ${(rank*100).toFixed(0)}th percentile; waiting for a squeeze (20th or lower).`;return out;}
+  if(!(last.close>cur.up)){out.reason='6h squeeze; waiting for a close above the upper band.';return out;}
+  out.setup='6h-squeeze-breakout';out.signal='BUY';out.reason=`6h squeeze breakout: width at the ${(rank*100).toFixed(0)}th percentile, close above the upper band${up?' in a daily uptrend':''}; ATR stop and cost-aware target.`;return out;
+ }
  if(c.dipConfirm===true){
   // Capitulation-bounce variant: the bar before the last was oversold and the last completed 6h bar closed up, above the prior high's midpoint.
   const prev=six.at(-2),rp=rsiSeries(six.slice(0,-1).map(b=>b.close)).at(-1);
