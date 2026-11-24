@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "generatedAt": "2026-11-24T20:37:18.558Z",
+  "generatedAt": "2026-11-24T21:20:00.035Z",
   "goal": 85000,
   "equity": 29282.647920248248,
   "startingEquity": 30000,
@@ -70,12 +70,12 @@
   "agents": {
     "trader": {
       "role": "5-minute paper trader",
-      "lastRunMinutesAgo": 2,
+      "lastRunMinutesAgo": 4,
       "healthy": true
     },
     "researcher": {
       "role": "Claude every 5h: loss analysis, backtest, rule adoption",
-      "lastRunHoursAgo": 0,
+      "lastRunHoursAgo": 0.7,
       "healthy": true,
       "sweep": {
         "at": "2026-11-24T10:52:25.179Z",
@@ -202,7 +202,7 @@
     "windowDays": 30,
     "label": "Estimated time to $85,000 at the trailing 30-day growth rate (not a promise)",
     "status": "insufficient-history",
-    "spanDays": 3.8592425694454597,
+    "spanDays": 3.888889293982475,
     "message": "Needs at least 7 days of equity history."
   },
   "scorecard": [
@@ -285,11 +285,11 @@
     {
       "id": "hourly-legacy",
       "label": "Previous hourly rules",
-      "equity": 29141.27653853288,
+      "equity": 29132.538585174603,
       "initial": 29975.046647868254,
       "netPnl": -833.7701093353804,
       "profitFactor": 0.4308474034564933,
-      "maxDrawdown": 0.049543702361760124,
+      "maxDrawdown": 0.04981021864661631,
       "winRate": 0.3333333333333333,
       "avgWin": 126.23246871520698,
       "avgLoss": -146.49324529114153,
@@ -297,7 +297,7 @@
       "fees": 295.48492535949225,
       "makerFills": 18,
       "takerFills": 12,
-      "openPositions": 0,
+      "openPositions": 1,
       "pause": "normal",
       "drawdown": 0.04954370236176009
     },
@@ -361,7 +361,7 @@
     {
       "id": "daytrader-range",
       "label": "Day trader: buy 24h range low, sell near high, up to 50% per trade",
-      "equity": 28680.185340733675,
+      "equity": 28796.746535766437,
       "initial": 29865.26287940766,
       "netPnl": -998.0876365698911,
       "profitFactor": 0.08474406057398565,
@@ -375,7 +375,7 @@
       "takerFills": 3,
       "openPositions": 3,
       "pause": "normal",
-      "drawdown": 0.043132772399389174
+      "drawdown": 0.03924389977838816
     }
   ],
   "drawdownPause": {
