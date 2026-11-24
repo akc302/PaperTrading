@@ -1,11 +1,11 @@
 {
   "version": 1,
-  "generatedAt": "2026-11-24T00:58:47.748Z",
+  "generatedAt": "2026-11-24T01:28:13.109Z",
   "goal": 85000,
-  "equity": 29879.68448610754,
+  "equity": 29960.49053282225,
   "startingEquity": 30000,
-  "progressToGoal": -0.0021875547980447167,
-  "returnPct": -0.0040105171297486475,
+  "progressToGoal": -0.000718353948686391,
+  "returnPct": -0.0013169822392583835,
   "drawdown": 0.008947045452893567,
   "openPositions": 1,
   "last24h": {
@@ -75,10 +75,10 @@
     },
     "researcher": {
       "role": "Claude every 5h: loss analysis, backtest, rule adoption",
-      "lastRunHoursAgo": 0.6,
+      "lastRunHoursAgo": 1.1,
       "healthy": true,
       "sweep": {
-        "at": "2026-11-23T17:17:43.630Z",
+        "at": "2026-11-24T01:23:49.767Z",
         "source": "data/history 1h (1 year)",
         "days": 364.8,
         "rulesTested": 38,
@@ -87,8 +87,8 @@
           "coinsInUptrend": [],
           "share": 0,
           "state": "down",
-          "btc7dPct": -6.36,
-          "btc30dPct": -24.56
+          "btc7dPct": -5.6,
+          "btc30dPct": -24.24
         },
         "best": {
           "config": {
@@ -141,7 +141,7 @@
         "id": "history",
         "label": "28+ days of forward paper trading with the research team",
         "pass": false,
-        "value": "2.8 days"
+        "value": "2.9 days"
       },
       {
         "id": "sample",
@@ -183,7 +183,7 @@
         "id": "uptime",
         "label": "Trader ran in 95%+ of hours over the last 7 days",
         "pass": false,
-        "value": "24%"
+        "value": "38%"
       },
       {
         "id": "integrity",
@@ -196,18 +196,18 @@
   },
   "goalEstimate": {
     "goal": 85000,
-    "equity": 29879.68448610754,
+    "equity": 29960.49053282225,
     "windowDays": 30,
     "label": "Estimated time to $85,000 at the trailing 30-day growth rate (not a promise)",
     "status": "insufficient-history",
-    "spanDays": 3.040830416665585,
+    "spanDays": 3.061262835647773,
     "message": "Needs at least 7 days of equity history."
   },
   "scorecard": [
     {
       "id": "main",
       "label": "Main: aggressive",
-      "equity": 29879.68448610754,
+      "equity": 29960.49053282225,
       "initial": 30000,
       "netPnl": -134.73712059234225,
       "profitFactor": 0,
@@ -221,7 +221,7 @@
       "takerFills": 4,
       "openPositions": 1,
       "pause": "normal",
-      "drawdown": 0.0044199503785748995
+      "drawdown": 0.0017275227515246572
     },
     {
       "id": "trend-k2",
@@ -283,7 +283,7 @@
     {
       "id": "hourly-legacy",
       "label": "Previous hourly rules",
-      "equity": 29712.373556266044,
+      "equity": 29871.54720302335,
       "initial": 29975.046647868254,
       "netPnl": -292.92536480311037,
       "profitFactor": 0.6765440412548455,
@@ -297,12 +297,12 @@
       "takerFills": 8,
       "openPositions": 2,
       "pause": "normal",
-      "drawdown": 0.03091710732055908
+      "drawdown": 0.025725584746780217
     },
     {
       "id": "lab-hourly",
       "label": "Lab hourly per-market rules",
-      "equity": 29441.30859300984,
+      "equity": 29520.929104351417,
       "initial": 29975.046647868254,
       "netPnl": -547.9480768369198,
       "profitFactor": 0.5770279758276646,
@@ -316,12 +316,12 @@
       "takerFills": 12,
       "openPositions": 1,
       "pause": "normal",
-      "drawdown": 0.034127515517046736
+      "drawdown": 0.03151542846044242
     },
     {
       "id": "scout-daytrade",
       "label": "Day-trade scout: support bounce (1.5% zone), 4h hold, 1/4 risk",
-      "equity": 29555.905033477724,
+      "equity": 29697.67059600503,
       "initial": 29788.7180982152,
       "netPnl": -233.90077932338596,
       "profitFactor": 0,
@@ -335,7 +335,7 @@
       "takerFills": 4,
       "openPositions": 3,
       "pause": "normal",
-      "drawdown": 0.007815477791621506
+      "drawdown": 0.0030564424393818568
     },
     {
       "id": "scout-dip6h",
@@ -359,7 +359,7 @@
     {
       "id": "daytrader-range",
       "label": "Day trader: buy 24h range low, sell near high, up to 50% per trade",
-      "equity": 29553.760531858185,
+      "equity": 29744.553439123334,
       "initial": 29865.26287940766,
       "netPnl": 89.5868794177667,
       "profitFactor": 32.69405714356033,
@@ -373,12 +373,12 @@
       "takerFills": 0,
       "openPositions": 3,
       "pause": "normal",
-      "drawdown": 0.01398737248996862
+      "drawdown": 0.007621880842975215
     }
   ],
   "drawdownPause": {
     "state": "normal",
-    "drawdown": 0.0044199503785748995,
+    "drawdown": 0.0017275227515246572,
     "peak": 30012.337528729568,
     "sizeMultiplier": 1,
     "triggeredAt": null,

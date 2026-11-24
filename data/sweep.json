@@ -1,5 +1,5 @@
 {
- "at": "2026-11-23T17:17:43.630Z",
+ "at": "2026-11-24T01:23:49.767Z",
  "source": "data/history 1h (1 year)",
  "barsPerCoin": 8755,
  "days": 364.8,
@@ -12,8 +12,8 @@
   "coinsInUptrend": [],
   "share": 0,
   "state": "down",
-  "btc7dPct": -6.36,
-  "btc30dPct": -24.56
+  "btc7dPct": -5.6,
+  "btc30dPct": -24.24
  },
  "windows": "train 50% / validation 25% / unseen newest 25%, by entry time",
  "rulesTested": 38,
@@ -222,34 +222,6 @@
   },
   {
    "config": {
-    "strategy": "horizontal",
-    "proximity": 0.015,
-    "maxHoldHours": 8,
-    "rewardRisk": 1.5
-   },
-   "train": {
-    "trades": 164,
-    "winRate": 0.21341463414634146,
-    "net": -2419.53,
-    "profitFactor": 0.4
-   },
-   "validation": {
-    "trades": 50,
-    "winRate": 0.18,
-    "net": -907,
-    "profitFactor": 0.29
-   },
-   "unseen": {
-    "trades": 79,
-    "winRate": 0.13924050632911392,
-    "net": -1349.06,
-    "profitFactor": 0.24
-   },
-   "passesEarlier": false,
-   "passesAll": false
-  },
-  {
-   "config": {
     "strategy": "rsi-reversion",
     "stopAtrMultiplier": 2.5,
     "rewardRisk": 1,
@@ -272,34 +244,6 @@
     "winRate": 0.28125,
     "net": -1378.06,
     "profitFactor": 0.48
-   },
-   "passesEarlier": false,
-   "passesAll": false
-  },
-  {
-   "config": {
-    "strategy": "horizontal",
-    "proximity": 0.006,
-    "maxHoldHours": 8,
-    "rewardRisk": 1.5
-   },
-   "train": {
-    "trades": 134,
-    "winRate": 0.208955223880597,
-    "net": -1949.95,
-    "profitFactor": 0.39
-   },
-   "validation": {
-    "trades": 40,
-    "winRate": 0.15,
-    "net": -829.45,
-    "profitFactor": 0.22
-   },
-   "unseen": {
-    "trades": 71,
-    "winRate": 0.11267605633802817,
-    "net": -1400.48,
-    "profitFactor": 0.2
    },
    "passesEarlier": false,
    "passesAll": false
@@ -334,6 +278,62 @@
   },
   {
    "config": {
+    "strategy": "horizontal",
+    "proximity": 0.015,
+    "maxHoldHours": 8,
+    "rewardRisk": 1.5
+   },
+   "train": {
+    "trades": 162,
+    "winRate": 0.21604938271604937,
+    "net": -2350.83,
+    "profitFactor": 0.41
+   },
+   "validation": {
+    "trades": 50,
+    "winRate": 0.18,
+    "net": -906.91,
+    "profitFactor": 0.29
+   },
+   "unseen": {
+    "trades": 86,
+    "winRate": 0.12790697674418605,
+    "net": -1466.84,
+    "profitFactor": 0.22
+   },
+   "passesEarlier": false,
+   "passesAll": false
+  },
+  {
+   "config": {
+    "strategy": "horizontal",
+    "proximity": 0.006,
+    "maxHoldHours": 8,
+    "rewardRisk": 1.5
+   },
+   "train": {
+    "trades": 132,
+    "winRate": 0.21212121212121213,
+    "net": -1881.22,
+    "profitFactor": 0.4
+   },
+   "validation": {
+    "trades": 40,
+    "winRate": 0.15,
+    "net": -829.59,
+    "profitFactor": 0.23
+   },
+   "unseen": {
+    "trades": 78,
+    "winRate": 0.10256410256410256,
+    "net": -1519.73,
+    "profitFactor": 0.18
+   },
+   "passesEarlier": false,
+   "passesAll": false
+  },
+  {
+   "config": {
     "strategy": "donchian",
     "stopAtrMultiplier": 2.5,
     "rewardRisk": 2,
@@ -354,8 +354,8 @@
    "unseen": {
     "trades": 185,
     "winRate": 0.31891891891891894,
-    "net": -2054.16,
-    "profitFactor": 0.68
+    "net": -2135.07,
+    "profitFactor": 0.67
    },
    "passesEarlier": false,
    "passesAll": false
@@ -368,26 +368,26 @@
     "rewardRisk": 1
    },
    "train": {
-    "trades": 287,
-    "winRate": 0.2264808362369338,
-    "net": -4669.2,
-    "profitFactor": 0.32
+    "trades": 285,
+    "winRate": 0.22807017543859648,
+    "net": -4603.46,
+    "profitFactor": 0.33
    },
    "validation": {
     "trades": 100,
     "winRate": 0.17,
-    "net": -1962.6,
+    "net": -1964.75,
     "profitFactor": 0.23
    },
    "unseen": {
-    "trades": 133,
-    "winRate": 0.18045112781954886,
-    "net": -2279.51,
+    "trades": 140,
+    "winRate": 0.17142857142857143,
+    "net": -2392.05,
     "profitFactor": 0.24
    },
    "passesEarlier": false,
    "passesAll": false
   }
  ],
- "seconds": 1038.8
+ "seconds": 1308.7
 }
