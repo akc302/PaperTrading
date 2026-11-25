@@ -542,6 +542,21 @@
       ],
       "adopted": true,
       "nextIdea": "After the next daily review fetches 2y of 1h data, re-run the 2h dip test year by year; if year 1 is negative, move the main paper account back to 6h bars."
+    },
+    {
+      "at": "2026-11-25T06:23:16.071Z",
+      "tradesReviewed": 0,
+      "losses": 0,
+      "findings": [
+        "2y of 1h history now available (17,510 bars, PR #73 backfill).",
+        "2h dip, year 1 vs year 2: RSI<25 2xATR 53t -$1,901 (PF 0.77) vs 28t +$1,355; RSI<20 15t -$2,558 (PF 0.23) vs 9t +$1,454. The 2h rule failed out of sample in year 1.",
+        "6h dip RSI<25 stays positive in both years: 10t +$547 (PF 1.60) and 5t +$1,811; 2y 15t +$2,358 (PF 3.59)."
+      ],
+      "changes": [
+        "Main paper account moved back from 2h to 6h dip bars (backToDip6h, caps unchanged)."
+      ],
+      "adopted": true,
+      "nextIdea": "Find more 6h-dip trades by adding coins with 2y history; keep sr-scalper collecting trades for the ML entry filter."
     }
   ]
 }

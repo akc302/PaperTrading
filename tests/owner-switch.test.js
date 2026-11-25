@@ -33,3 +33,10 @@ test('dip2h switch sets 2h dip bars on the main paper account once, caps unchang
  const up=bars(150,86400,i=>100+i*0.5),two=bars(60,S,i=>i<50?170:170-(i-49)*4);
  assert.equal(dipSignal({twoHour:two,sixHour:[],daily:up},{dipRsi:25,dipBarHours:2,stopAtrMultiplier:2,rewardRisk:1}).signal,'BUY');
 });
+
+test('researcher moves the main paper account back to 6h dip bars once',async()=>{
+ const m=await import('../scripts/rules.mjs');
+ const state={rulesVersion:m.OWNER_DIP2_VERSION,config:{...DEFAULT_CONFIG,strategy:'dip-6h',dipRsi:25,dipBarHours:2,riskPct:0.02,maxAllocation:0.25},productConfigs:{},account:createAccount(30000),challengers:[]};
+ assert.equal(m.backToDip6h(state,1.9e9),true);assert.equal(state.config.dipBarHours,undefined);assert.equal(state.config.riskPct,0.02);assert.equal(state.rulesVersion,m.DIP6_BACK_VERSION);
+ assert.equal(m.backToDip6h(state,1.9e9+1),false);assert.equal(m.ownerSwitchToDip2h(state,1.9e9+1),false);assert.equal(m.ownerSwitchToDip(state,1.9e9+1),false);assert.equal(ownerSwitchToHourly(state,1.9e9+1),false);
+});
