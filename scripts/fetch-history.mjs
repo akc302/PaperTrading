@@ -21,6 +21,8 @@ export async function refreshSeries(product,label,stored,now,options={}){
  const g=GRANULARITIES[label],first=Math.floor((now-DAYS_BY_LABEL[label]*86400)/g)*g,end=Math.floor(now/g)*g;
  const have=normalizeCandles(stored??[]).filter(b=>b.time>=first&&b.time+g<=now);
  let start=have.length?have.at(-1).time+g:first;const rows=[...have];
+ // Backfill older bars when the window grows (e.g. 1h from 365 to 730 days).
+ if(have.length&&have[0].time>first+g){let s0=first;while(s0<have[0].time){const stop=Math.min(s0+300*g,have[0].time);rows.push(...normalizeCandles(await fetchPage(product,g,s0,stop-1,options)));s0=stop;}}
  while(start<end){const stop=Math.min(start+300*g,end);rows.push(...normalizeCandles(await fetchPage(product,g,start,stop-1,options)));start=stop;}
  return normalizeCandles(rows).filter(b=>b.time>=first&&b.time+g<=now);
 }

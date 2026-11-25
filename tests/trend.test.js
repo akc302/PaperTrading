@@ -73,3 +73,9 @@ test('portfolio replay counts losses before the first entry attempt toward the d
  const days=Object.keys(r.account.dailyRisk);assert.ok(days.length>=80,'every replay day registers its opening equity');
  assert.ok(r.closedTrades<days.length,'days are registered without entry attempts');
 });
+test('history fetch backfills older bars when the window grows',async()=>{
+ const fetcher=async u=>{const g=+u.searchParams.get('granularity'),s=Date.parse(u.searchParams.get('start'))/1000,e=Date.parse(u.searchParams.get('end'))/1000,rows=[];for(let t=s;t<=e;t+=g)rows.push([t,9,11,10,10.5,1]);return {ok:true,status:200,json:async()=>rows};};
+ const now=T0+800*DAY+100,full=await refreshSeries('BTC-USD','6h',[],now,{fetcher,delay:0}),half=full.slice(full.length/2);
+ const grown=await refreshSeries('BTC-USD','6h',compact('BTC-USD','6h',half,'x').candles,now,{fetcher,delay:0});
+ assert.equal(grown.length,full.length);assert.equal(grown[0].time,full[0].time);
+});
