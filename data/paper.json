@@ -435333,7 +435333,7 @@
     },
     {
       "id": "owner-sr",
-      "label": "Owner style: buy XRP/BTC/ETH/SOL near support, sell at resistance (+1.5-3%), hold up to 3 days, about 28% per trade",
+      "label": "Owner style: buy near support, sell at resistance (about +1.8%), all 8 coins, 24h hold, about 28% per trade",
       "source": "researcher",
       "keepAlive": true,
       "caps": {
@@ -435341,22 +435341,16 @@
       },
       "rules": {
         "strategy": "horizontal",
-        "proximity": 0.015,
-        "rewardRisk": 2,
-        "maxHoldHours": 72,
-        "lookback": 168,
-        "stopBuffer": 0.015,
+        "proximity": 0.025,
+        "rewardRisk": 0.8,
+        "maxHoldHours": 24,
+        "lookback": 72,
+        "stopBuffer": 0.006,
         "patternRequired": false,
         "regimeFilter": false,
         "entryOrder": "limit"
       },
       "productConfigs": {},
-      "products": [
-        "XRP-USD",
-        "BTC-USD",
-        "ETH-USD",
-        "SOL-USD"
-      ],
       "account": {
         "initial": 29282.647920248248,
         "cash": 29282.647920248248,
@@ -435560,10 +435554,28 @@
         }
       },
       "startedAt": "2026-11-25T15:13:23.081Z",
-      "rulesSince": "2026-11-25T15:13:23.081Z",
-      "rulesVersion": 1,
+      "rulesSince": "2026-11-25T15:24:53.105Z",
+      "rulesVersion": 2,
       "lastError": null,
-      "updatedAt": "2026-11-25T15:20:53.459Z"
+      "updatedAt": "2026-11-25T15:20:53.459Z",
+      "rulesHistory": [
+        {
+          "at": "2026-11-25T15:24:53.105Z",
+          "reason": "researcher seed rules updated",
+          "rules": {
+            "strategy": "horizontal",
+            "proximity": 0.015,
+            "rewardRisk": 2,
+            "maxHoldHours": 72,
+            "lookback": 168,
+            "stopBuffer": 0.015,
+            "patternRequired": false,
+            "regimeFilter": false,
+            "entryOrder": "limit"
+          },
+          "productConfigs": {}
+        }
+      ]
     }
   ],
   "promotion": {

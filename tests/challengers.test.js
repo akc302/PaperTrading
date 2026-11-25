@@ -102,6 +102,6 @@ test('losing challengers retire after 30 trades and stop entering; owner keepAli
 test('owner-sr challenger trades only its own coins at about 28% per trade',async()=>{
  const {seedChallengers,challengerConfig}=await import('../scripts/challengers.mjs');const {DEFAULT_CONFIG,createAccount}=await import('../engine.js');
  const state={config:{...DEFAULT_CONFIG,riskPct:0.02,maxAllocation:0.25},account:createAccount(30000)};
- const ch=seedChallengers(state).find(c=>c.id==='owner-sr');assert.deepEqual(ch.products,['XRP-USD','BTC-USD','ETH-USD','SOL-USD']);
+ const ch=seedChallengers(state).find(c=>c.id==='owner-sr');assert.equal(ch.products,undefined);
  assert.equal(challengerConfig(state,ch,'XRP-USD').maxAllocation,0.28);assert.equal(challengerConfig(state,ch,'XRP-USD').strategy,'horizontal');
 });
