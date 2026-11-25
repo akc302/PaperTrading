@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "generatedAt": "2026-11-25T05:42:13.636Z",
+  "generatedAt": "2026-11-25T06:56:52.967Z",
   "goal": 85000,
   "equity": 29282.647920248248,
   "startingEquity": 30000,
@@ -70,12 +70,12 @@
   "agents": {
     "trader": {
       "role": "5-minute paper trader",
-      "lastRunMinutesAgo": 2,
+      "lastRunMinutesAgo": 1,
       "healthy": true
     },
     "researcher": {
       "role": "Claude every 5h: loss analysis, backtest, rule adoption",
-      "lastRunHoursAgo": 0,
+      "lastRunHoursAgo": 1.3,
       "healthy": true,
       "sweep": {
         "at": "2026-11-25T05:39:06.755Z",
@@ -109,13 +109,13 @@
         }
       },
       "latestNote": {
-        "at": "2026-11-25T00:27:49.916Z",
-        "tradesReviewed": 3,
-        "losses": 3,
-        "findings": 2,
+        "at": "2026-11-25T06:23:16.071Z",
+        "tradesReviewed": 0,
+        "losses": 0,
+        "findings": 3,
         "changes": 1,
         "adopted": true,
-        "nextIdea": "After the next daily review fetches 2y of 1h data, re-run the 2h dip test year by year; if year 1 is negative, move the main paper account back to 6h bars."
+        "nextIdea": "Find more 6h-dip trades by adding coins with 2y history; keep sr-scalper collecting trades for the ML entry filter."
       }
     },
     "verifier": {
@@ -143,7 +143,7 @@
         "id": "history",
         "label": "28+ days of forward paper trading with the research team",
         "pass": false,
-        "value": "4.0 days"
+        "value": "4.1 days"
       },
       {
         "id": "sample",
@@ -202,7 +202,7 @@
     "windowDays": 30,
     "label": "Estimated time to $85,000 at the trailing 30-day growth rate (not a promise)",
     "status": "insufficient-history",
-    "spanDays": 4.237657824073125,
+    "spanDays": 4.289501932870459,
     "message": "Needs at least 7 days of equity history."
   },
   "scorecard": [
@@ -361,7 +361,7 @@
     {
       "id": "daytrader-range",
       "label": "Day trader: buy 24h range low, sell near high, up to 50% per trade",
-      "equity": 28456.678686461633,
+      "equity": 28567.91762171475,
       "initial": 29865.26287940766,
       "netPnl": -998.0876365698911,
       "profitFactor": 0.08474406057398565,
@@ -375,26 +375,26 @@
       "takerFills": 3,
       "openPositions": 3,
       "pause": "normal",
-      "drawdown": 0.05058970442694577
+      "drawdown": 0.046878400252571506
     },
     {
       "id": "sr-scalper",
       "label": "Support/resistance scalper: buy within 1.5% of support, 1h hold, about 100 trades a day for ML training, 1/4 risk",
-      "equity": 29258.037449229585,
+      "equity": 29280.003550597525,
       "initial": 29282.647920248248,
-      "netPnl": 0,
-      "profitFactor": null,
+      "netPnl": 3.2472869949862124,
+      "profitFactor": "no losses",
       "maxDrawdown": 0.0008672953280918565,
-      "winRate": null,
-      "avgWin": null,
+      "winRate": 1,
+      "avgWin": 3.2472869949862124,
       "avgLoss": null,
-      "closedTrades": 0,
-      "fees": 0,
-      "makerFills": 0,
+      "closedTrades": 1,
+      "fees": 16.444375907544654,
+      "makerFills": 2,
       "takerFills": 0,
       "openPositions": 1,
       "pause": "normal",
-      "drawdown": 0.0008672953280918216
+      "drawdown": 0.0004821758453569247
     }
   ],
   "drawdownPause": {
@@ -405,7 +405,9 @@
     "triggeredAt": null,
     "clearedAt": null
   },
-  "verdict": "on-track",
-  "issues": [],
+  "verdict": "needs-attention",
+  "issues": [
+    "No new paper entry for 25h; current rules may be too strict for this market."
+  ],
   "dispatch": []
 }
