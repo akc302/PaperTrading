@@ -328486,76 +328486,7 @@
   },
   "lastMarketAt": "2026-11-25T00:00:24.696Z",
   "errors": [],
-  "productConfigs": {
-    "BTC-USD": {
-      "patternRequired": true,
-      "strategy": "aggressive",
-      "maxHoldHours": 24,
-      "stopAtrMultiplier": 2.5,
-      "rewardRisk": 1.5,
-      "regimeFilter": true
-    },
-    "ETH-USD": {
-      "patternRequired": true,
-      "strategy": "aggressive",
-      "maxHoldHours": 24,
-      "stopAtrMultiplier": 2.5,
-      "rewardRisk": 1.5
-    },
-    "SOL-USD": {
-      "patternRequired": true,
-      "strategy": "aggressive",
-      "maxHoldHours": 4,
-      "stopAtrMultiplier": 1.5,
-      "rewardRisk": 1.5,
-      "regimeFilter": true
-    },
-    "XRP-USD": {
-      "patternRequired": true,
-      "strategy": "aggressive",
-      "maxHoldHours": 24,
-      "stopAtrMultiplier": 1.5,
-      "rewardRisk": 1.5
-    },
-    "ADA-USD": {
-      "patternRequired": true,
-      "maxHoldHours": 4,
-      "regimeFilter": true
-    },
-    "DOGE-USD": {
-      "patternRequired": true,
-      "strategy": "aggressive",
-      "maxHoldHours": 24,
-      "stopAtrMultiplier": 1.5,
-      "rewardRisk": 1.5
-    },
-    "LINK-USD": {
-      "patternRequired": true,
-      "strategy": "aggressive",
-      "maxHoldHours": 4,
-      "stopAtrMultiplier": 2.5,
-      "rewardRisk": 1.5,
-      "regimeFilter": true,
-      "mlWeights": [
-        -0.9195630817753783,
-        0.08478841343899164,
-        0.04342098314087288,
-        -0.18322489810449663,
-        -0.14935906081742104,
-        0.03932079738782237,
-        -0.06267728344577955
-      ],
-      "mlThreshold": 0.2760071503935817
-    },
-    "AVAX-USD": {
-      "patternRequired": true,
-      "strategy": "aggressive",
-      "maxHoldHours": 4,
-      "stopAtrMultiplier": 1.5,
-      "rewardRisk": 1.5,
-      "regimeFilter": true
-    }
-  },
+  "productConfigs": {},
   "lastRunAt": "2026-11-25T00:00:24.696Z",
   "executionMode": "quotes",
   "evidence": {
@@ -342676,7 +342607,7 @@
   },
   "rulesHistory": [
     {
-      "at": "2026-11-25T00:04:42.658Z",
+      "at": "2026-11-25T00:05:27.207Z",
       "event": "owner-switch-to-dip6h",
       "reason": "Owner asked for a new main strategy; dip-6h RSI<25 is the only rule positive in both years.",
       "previous": {
