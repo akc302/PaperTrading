@@ -557,6 +557,20 @@
       ],
       "adopted": true,
       "nextIdea": "Find more 6h-dip trades by adding coins with 2y history; keep sr-scalper collecting trades for the ML entry filter."
+    },
+    {
+      "at": "2026-11-25T10:28:52.840Z",
+      "tradesReviewed": 6,
+      "losses": 5,
+      "findings": [
+        "sr-scalper first 6 trades: 1 win, -$348.42. 4 losses were quote-stops with stops only 0.12-1.22% below entry (support minus a 0.4% buffer), inside the ~1.1% hourly ATR, and fills landed 0.25-0.66% past the stop. Two 1h time exits were maker fills near break-even (+$3.25, -$5.22).",
+        "Main paper account: no entries (6h dip rule waits for a daily uptrend)."
+      ],
+      "changes": [
+        "sr-scalper stopBuffer 0.004 -> 0.012 so stops sit outside normal hourly noise; risk-based sizing makes positions smaller."
+      ],
+      "adopted": true,
+      "nextIdea": "After about 50 sr-scalper trades, fit the ML entry filter (logistic regression on trend, RSI, volume, distance to support) and compare it with a small decision tree on held-out trades."
     }
   ]
 }
