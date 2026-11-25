@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "generatedAt": "2026-11-25T15:44:23.434Z",
+  "generatedAt": "2026-11-25T17:18:15.693Z",
   "goal": 85000,
   "equity": 29282.647920248248,
   "startingEquity": 30000,
@@ -70,12 +70,12 @@
   "agents": {
     "trader": {
       "role": "5-minute paper trader",
-      "lastRunMinutesAgo": 4,
+      "lastRunMinutesAgo": 1,
       "healthy": true
     },
     "researcher": {
       "role": "Claude every 5h: loss analysis, backtest, rule adoption",
-      "lastRunHoursAgo": 0,
+      "lastRunHoursAgo": 1.6,
       "healthy": true,
       "sweep": {
         "at": "2026-11-25T10:14:46.871Z",
@@ -202,7 +202,7 @@
     "windowDays": 30,
     "label": "Estimated time to $85,000 at the trailing 30-day growth rate (not a promise)",
     "status": "insufficient-history",
-    "spanDays": 4.655826782407584,
+    "spanDays": 4.721014965278683,
     "message": "Needs at least 7 days of equity history."
   },
   "scorecard": [
@@ -285,7 +285,7 @@
     {
       "id": "hourly-legacy",
       "label": "Previous hourly rules",
-      "equity": 28725.890873651915,
+      "equity": 29129.534835274106,
       "initial": 29975.046647868254,
       "netPnl": -1259.9425956144082,
       "profitFactor": 0.3337532098278095,
@@ -299,12 +299,12 @@
       "takerFills": 15,
       "openPositions": 3,
       "pause": "normal",
-      "drawdown": 0.0630916991563657
+      "drawdown": 0.04992666347853014
     },
     {
       "id": "lab-hourly",
       "label": "Lab hourly per-market rules",
-      "equity": 28403.40385177869,
+      "equity": 28779.547166595374,
       "initial": 29975.046647868254,
       "netPnl": -1465.8029432901544,
       "profitFactor": 0.3377374604855432,
@@ -318,7 +318,7 @@
       "takerFills": 19,
       "openPositions": 3,
       "pause": "normal",
-      "drawdown": 0.06817775577394836
+      "drawdown": 0.05583773098001299
     },
     {
       "id": "scout-daytrade",
@@ -361,7 +361,7 @@
     {
       "id": "daytrader-range",
       "label": "Day trader: buy 24h range low, sell near high, up to 50% per trade",
-      "equity": 27853.00058621328,
+      "equity": 28491.018686712872,
       "initial": 29865.26287940766,
       "netPnl": -2043.3151839853322,
       "profitFactor": 0.04327024064970328,
@@ -375,7 +375,7 @@
       "takerFills": 6,
       "openPositions": 3,
       "pause": "normal",
-      "drawdown": 0.07073043166720672
+      "drawdown": 0.04944400678078942
     },
     {
       "id": "sr-scalper",
@@ -426,7 +426,7 @@
   },
   "verdict": "needs-attention",
   "issues": [
-    "No new paper entry for 34h; current rules may be too strict for this market."
+    "No new paper entry for 35h; current rules may be too strict for this market."
   ],
   "dispatch": []
 }
