@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "generatedAt": "2026-11-25T10:18:33.095Z",
+  "generatedAt": "2026-11-25T11:31:49.827Z",
   "goal": 85000,
   "equity": 29282.647920248248,
   "startingEquity": 30000,
@@ -70,12 +70,12 @@
   "agents": {
     "trader": {
       "role": "5-minute paper trader",
-      "lastRunMinutesAgo": 3,
+      "lastRunMinutesAgo": 1,
       "healthy": true
     },
     "researcher": {
       "role": "Claude every 5h: loss analysis, backtest, rule adoption",
-      "lastRunHoursAgo": 0,
+      "lastRunHoursAgo": 1.2,
       "healthy": true,
       "sweep": {
         "at": "2026-11-25T10:14:46.871Z",
@@ -109,13 +109,13 @@
         }
       },
       "latestNote": {
-        "at": "2026-11-25T06:23:16.071Z",
-        "tradesReviewed": 0,
-        "losses": 0,
-        "findings": 3,
+        "at": "2026-11-25T10:28:52.840Z",
+        "tradesReviewed": 6,
+        "losses": 5,
+        "findings": 2,
         "changes": 1,
         "adopted": true,
-        "nextIdea": "Find more 6h-dip trades by adding coins with 2y history; keep sr-scalper collecting trades for the ML entry filter."
+        "nextIdea": "After about 50 sr-scalper trades, fit the ML entry filter (logistic regression on trend, RSI, volume, distance to support) and compare it with a small decision tree on held-out trades."
       }
     },
     "verifier": {
@@ -143,7 +143,7 @@
         "id": "history",
         "label": "28+ days of forward paper trading with the research team",
         "pass": false,
-        "value": "4.2 days"
+        "value": "4.3 days"
       },
       {
         "id": "sample",
@@ -202,7 +202,7 @@
     "windowDays": 30,
     "label": "Estimated time to $85,000 at the trailing 30-day growth rate (not a promise)",
     "status": "insufficient-history",
-    "spanDays": 4.429549710648479,
+    "spanDays": 4.480437812498874,
     "message": "Needs at least 7 days of equity history."
   },
   "scorecard": [
@@ -285,11 +285,11 @@
     {
       "id": "hourly-legacy",
       "label": "Previous hourly rules",
-      "equity": 29003.71700262554,
+      "equity": 28935.907221284833,
       "initial": 29975.046647868254,
       "netPnl": -930.5364770197108,
       "profitFactor": 0.4041511303282304,
-      "maxDrawdown": 0.054621757793555305,
+      "maxDrawdown": 0.0562419182296192,
       "winRate": 0.3125,
       "avgWin": 126.23246871520698,
       "avgLoss": -141.9726200541587,
@@ -299,16 +299,16 @@
       "takerFills": 13,
       "openPositions": 1,
       "pause": "normal",
-      "drawdown": 0.05403027065023036
+      "drawdown": 0.056241918229619214
     },
     {
       "id": "lab-hourly",
       "label": "Lab hourly per-market rules",
-      "equity": 28812.50713600667,
+      "equity": 28745.14439734137,
       "initial": 29975.046647868254,
       "netPnl": -1122.0152766258366,
       "profitFactor": 0.39984368592317404,
-      "maxDrawdown": 0.05534745591077259,
+      "maxDrawdown": 0.05696637266750736,
       "winRate": 0.2777777777777778,
       "avgWin": 149.5046251602895,
       "avgLoss": -143.8106463405603,
@@ -318,7 +318,7 @@
       "takerFills": 16,
       "openPositions": 1,
       "pause": "normal",
-      "drawdown": 0.05475642280910753
+      "drawdown": 0.05696637266750737
     },
     {
       "id": "scout-daytrade",
@@ -361,11 +361,11 @@
     {
       "id": "daytrader-range",
       "label": "Day trader: buy 24h range low, sell near high, up to 50% per trade",
-      "equity": 28280.4497851348,
+      "equity": 28122.104156941597,
       "initial": 29865.26287940766,
       "netPnl": -998.0876365698911,
       "profitFactor": 0.08474406057398565,
-      "maxDrawdown": 0.06012600844141874,
+      "maxDrawdown": 0.06175223349306463,
       "winRate": 0.2,
       "avgWin": 92.41349385251631,
       "avgLoss": -272.62528260560185,
@@ -375,7 +375,7 @@
       "takerFills": 3,
       "openPositions": 3,
       "pause": "normal",
-      "drawdown": 0.05646929196211459
+      "drawdown": 0.06175223349306458
     },
     {
       "id": "sr-scalper",
@@ -407,7 +407,7 @@
   },
   "verdict": "needs-attention",
   "issues": [
-    "No new paper entry for 28h; current rules may be too strict for this market."
+    "No new paper entry for 29h; current rules may be too strict for this market."
   ],
   "dispatch": []
 }
