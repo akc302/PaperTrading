@@ -193,7 +193,9 @@ function analyzeHorizontal(input,config={}){
   base.stop=base.support*(1-c.stopBuffer);
   const {entry,risk}=executionAt(price,base.stop,price,c);
   // Target compensates for estimated round-trip costs before the requested reward/risk.
-  base.target=(entry*(1+c.feeRate)+risk*c.rewardRisk)/((1-c.slippage)*(1-c.feeRate));
+  // Limit entries and resting targets both fill as maker, so price those legs at the maker rate when it is known.
+  const fr=c.entryOrder==='limit'&&Number.isFinite(c.makerFeeRate)?c.makerFeeRate:c.feeRate;
+  base.target=(entry*(1+fr)+risk*c.rewardRisk)/((1-c.slippage)*(1-fr));
   if(last.low>base.support*(1+c.proximity)||price>base.support*(1+2*c.proximity)){base.reason='Price is away from the support entry zone.';return base;}
   if(last.close<=last.open||last.close<=bars.at(-2).close){base.reason='Support is nearby; waiting for a bullish candle confirmation.';return base;}
   if(base.target>base.resistance){base.reason='Resistance leaves too little reward after estimated fees and slippage.';return base;}
