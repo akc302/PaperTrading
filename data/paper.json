@@ -426814,6 +426814,7 @@
         "rewardRisk": 0.5,
         "maxHoldHours": 1,
         "lookback": 96,
+        "stopBuffer": 0.012,
         "patternRequired": false,
         "regimeFilter": false,
         "entryOrder": "limit"
@@ -433331,11 +433332,26 @@
         }
       },
       "startedAt": "2026-11-25T03:40:50.192Z",
-      "rulesSince": "2026-11-25T04:29:13.273Z",
-      "rulesVersion": 2,
+      "rulesSince": "2026-11-25T10:28:52.729Z",
+      "rulesVersion": 3,
       "lastError": null,
       "updatedAt": "2026-11-25T10:25:48.103Z",
       "rulesHistory": [
+        {
+          "at": "2026-11-25T10:28:52.729Z",
+          "reason": "researcher seed rules updated",
+          "rules": {
+            "strategy": "horizontal",
+            "proximity": 0.02,
+            "rewardRisk": 0.5,
+            "maxHoldHours": 1,
+            "lookback": 96,
+            "patternRequired": false,
+            "regimeFilter": false,
+            "entryOrder": "limit"
+          },
+          "productConfigs": {}
+        },
         {
           "at": "2026-11-25T04:29:13.273Z",
           "reason": "researcher seed rules updated",
