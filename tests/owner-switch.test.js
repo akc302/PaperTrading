@@ -22,3 +22,14 @@ test('owner switch moves the main paper account to the dip-6h rules once, keepin
  assert.deepEqual(state.productConfigs,{});assert.equal(state.rulesVersion,OWNER_DIP_VERSION);
  assert.equal(ownerSwitchToDip(state,1.9e9+60),false);assert.equal(ownerSwitchToHourly(state,1.9e9+60),false,'never reverts to hourly');
 });
+
+test('dip2h switch sets 2h dip bars on the main paper account once, caps unchanged',async()=>{
+ const {ownerSwitchToDip2h,OWNER_DIP_VERSION,OWNER_DIP2_VERSION}=await import('../scripts/rules.mjs');
+ const state={rulesVersion:OWNER_DIP_VERSION,config:{...DEFAULT_CONFIG,strategy:'dip-6h',dipRsi:25,riskPct:0.02,maxAllocation:0.25},productConfigs:{},account:createAccount(30000),challengers:[]};
+ assert.equal(ownerSwitchToDip2h(state,1.9e9),true);assert.equal(state.config.dipBarHours,2);assert.equal(state.config.riskPct,0.02);assert.equal(state.rulesVersion,OWNER_DIP2_VERSION);
+ assert.equal(ownerSwitchToDip2h(state,1.9e9+1),false);assert.equal(ownerSwitchToHourly(state,1.9e9+1),false);
+ const {dipSignal,analyze}=await import('../engine.js');assert.throws(()=>analyze([],{strategy:'dip-6h',dipBarHours:3}),/dip bar size/);
+ const S=7200,t0=1_700_006_400,bars=(n,step,f)=>Array.from({length:n},(_,i)=>{const c=f(i);return {time:t0+i*step,open:c,high:c*1.01,low:c*0.99,close:c,volume:1};});
+ const up=bars(150,86400,i=>100+i*0.5),two=bars(60,S,i=>i<50?170:170-(i-49)*4);
+ assert.equal(dipSignal({twoHour:two,sixHour:[],daily:up},{dipRsi:25,dipBarHours:2,stopAtrMultiplier:2,rewardRisk:1}).signal,'BUY');
+});

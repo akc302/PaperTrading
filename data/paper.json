@@ -32,7 +32,8 @@
     "dipRsi": 25,
     "patternRequired": false,
     "regimeFilter": false,
-    "entryOrder": "limit"
+    "entryOrder": "limit",
+    "dipBarHours": 2
   },
   "account": {
     "initial": 30000,
@@ -342584,6 +342585,11 @@
   },
   "rulesHistory": [
     {
+      "at": "2026-11-25T00:10:16.142Z",
+      "event": "owner-switch-to-dip2h",
+      "reason": "Owner asked for more daily trades; dip rule moved to 2h bars."
+    },
+    {
       "at": "2026-11-25T00:05:27.207Z",
       "event": "owner-switch-to-dip6h",
       "reason": "Owner asked for a new main strategy; dip-6h RSI<25 is the only rule positive in both years.",
@@ -342870,7 +342876,7 @@
     },
     "archivedAt": "2026-11-21T18:29:47.177Z"
   },
-  "rulesVersion": "owner-dip6h-v1",
+  "rulesVersion": "owner-dip2h-v1",
   "challengers": [
     {
       "id": "trend-k2",
