@@ -435294,6 +435294,53 @@
           "productConfigs": {}
         }
       ]
+    },
+    {
+      "id": "owner-sr",
+      "label": "Owner style: buy XRP/BTC/ETH/SOL near support, sell at resistance (+1.5-3%), hold up to 3 days, about 28% per trade",
+      "source": "researcher",
+      "keepAlive": true,
+      "caps": {
+        "maxAllocation": 0.28
+      },
+      "rules": {
+        "strategy": "horizontal",
+        "proximity": 0.015,
+        "rewardRisk": 2,
+        "maxHoldHours": 72,
+        "lookback": 168,
+        "stopBuffer": 0.015,
+        "patternRequired": false,
+        "regimeFilter": false,
+        "entryOrder": "limit"
+      },
+      "productConfigs": {},
+      "products": [
+        "XRP-USD",
+        "BTC-USD",
+        "ETH-USD",
+        "SOL-USD"
+      ],
+      "account": {
+        "initial": 29282.647920248248,
+        "cash": 29282.647920248248,
+        "positions": [],
+        "trades": [],
+        "equityHistory": [],
+        "lastProcessed": {},
+        "marks": {},
+        "nextId": 1,
+        "decisions": [],
+        "dailyRisk": {},
+        "compactJournal": true,
+        "decisionLimit": 300,
+        "equityLimit": 2600,
+        "orderLogLimit": 50
+      },
+      "pause": {},
+      "startedAt": "2026-11-25T15:13:23.081Z",
+      "rulesSince": "2026-11-25T15:13:23.081Z",
+      "rulesVersion": 1
     }
   ],
   "promotion": {

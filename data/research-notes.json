@@ -571,6 +571,19 @@
       ],
       "adopted": true,
       "nextIdea": "After about 50 sr-scalper trades, fit the ML entry filter (logistic regression on trend, RSI, volume, distance to support) and compare it with a small decision tree on held-out trades."
+    },
+    {
+      "at": "2026-11-25T15:13:23.194Z",
+      "tradesReviewed": 2,
+      "losses": 0,
+      "findings": [
+        "Owner XRP trades: Nov 20-23 bought 0.9521, sold 0.9800 (+2.93%, about $8.3k position, +$230.17 net); Nov 25 bought 0.9104, sold 0.9260 (+1.71%, about $8.5k, +$119.49 net). Style: buy near support, sell at the next resistance 1.7-2.9% higher, hold hours to days, about 28% of the account per trade. Targets are 4-7x the round-trip fee, unlike our 0.5-1% scalps."
+      ],
+      "changes": [
+        "New owner-sr challenger: horizontal S/R on XRP/BTC/ETH/SOL, 1.5% support proximity, 7-day levels, 2R target, 1.5% stop buffer, 72h hold, 28% allocation, never retired."
+      ],
+      "adopted": true,
+      "nextIdea": "Compare owner-sr with sr-scalper after 20 trades each; the better one becomes the template for the ML filter."
     }
   ]
 }
