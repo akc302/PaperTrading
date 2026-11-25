@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "generatedAt": "2026-11-24T23:56:44.149Z",
+  "generatedAt": "2026-11-25T00:47:03.240Z",
   "goal": 85000,
   "equity": 29282.647920248248,
   "startingEquity": 30000,
@@ -27,55 +27,55 @@
   "losingStreak": 6,
   "rulesInUse": {
     "BTC-USD": {
-      "strategy": "aggressive",
-      "approach": "wider-stop",
-      "decision": "keep"
-    },
-    "ETH-USD": {
-      "strategy": "aggressive",
+      "strategy": "dip-6h",
       "approach": "aggressive-day-hold+regime-block",
       "decision": "keep"
     },
+    "ETH-USD": {
+      "strategy": "dip-6h",
+      "approach": "aggressive-day-hold+ml-filter",
+      "decision": "keep"
+    },
     "SOL-USD": {
-      "strategy": "aggressive",
-      "approach": "current",
+      "strategy": "dip-6h",
+      "approach": "aggressive-day-hold+regime-block",
       "decision": "keep"
     },
     "XRP-USD": {
-      "strategy": "aggressive",
-      "approach": "current",
+      "strategy": "dip-6h",
+      "approach": "aggressive-day-hold+regime-block",
       "decision": "keep"
     },
     "ADA-USD": {
-      "strategy": "aggressive",
-      "approach": "current",
+      "strategy": "dip-6h",
+      "approach": "aggressive-day-hold+regime-block",
       "decision": "keep"
     },
     "DOGE-USD": {
-      "strategy": "aggressive",
-      "approach": "current",
+      "strategy": "dip-6h",
+      "approach": "aggressive-day-hold+regime-block",
       "decision": "keep"
     },
     "LINK-USD": {
-      "strategy": "aggressive",
-      "approach": "current",
+      "strategy": "dip-6h",
+      "approach": "aggressive-day-hold+regime-block",
       "decision": "keep"
     },
     "AVAX-USD": {
-      "strategy": "aggressive",
-      "approach": "current",
+      "strategy": "dip-6h",
+      "approach": "aggressive-day-hold+regime-block",
       "decision": "keep"
     }
   },
   "agents": {
     "trader": {
       "role": "5-minute paper trader",
-      "lastRunMinutesAgo": 1,
+      "lastRunMinutesAgo": 2,
       "healthy": true
     },
     "researcher": {
       "role": "Claude every 5h: loss analysis, backtest, rule adoption",
-      "lastRunHoursAgo": 1.2,
+      "lastRunHoursAgo": 0,
       "healthy": true,
       "sweep": {
         "at": "2026-11-24T10:52:25.179Z",
@@ -109,13 +109,13 @@
         }
       },
       "latestNote": {
-        "at": "2026-11-24T18:29:29.971Z",
-        "tradesReviewed": 0,
-        "losses": 0,
-        "findings": 3,
+        "at": "2026-11-25T00:27:49.916Z",
+        "tradesReviewed": 3,
+        "losses": 3,
+        "findings": 2,
         "changes": 1,
-        "adopted": false,
-        "nextIdea": "Get more evidence for the 2h dip: raise the 1h history in scripts/history.mjs from 365 to 730 days (Coinbase allows it; the history budget needs checking) so the daily review can re-test 2h RSI<20/25 across two years. If it holds in both years, add a scout-dip2h challenger at 1/4 risk."
+        "adopted": true,
+        "nextIdea": "After the next daily review fetches 2y of 1h data, re-run the 2h dip test year by year; if year 1 is negative, move the main paper account back to 6h bars."
       }
     },
     "verifier": {
@@ -202,13 +202,13 @@
     "windowDays": 30,
     "label": "Estimated time to $85,000 at the trailing 30-day growth rate (not a promise)",
     "status": "insufficient-history",
-    "spanDays": 3.9977332060177018,
+    "spanDays": 4.032676388889,
     "message": "Needs at least 7 days of equity history."
   },
   "scorecard": [
     {
       "id": "main",
-      "label": "Main: aggressive",
+      "label": "Main: dip-6h",
       "equity": 29282.647920248248,
       "initial": 30000,
       "netPnl": -717.3520797517548,
@@ -285,7 +285,7 @@
     {
       "id": "hourly-legacy",
       "label": "Previous hourly rules",
-      "equity": 29180.839330440078,
+      "equity": 29178.73929803723,
       "initial": 29975.046647868254,
       "netPnl": -833.7701093353804,
       "profitFactor": 0.4308474034564933,
@@ -299,7 +299,7 @@
       "takerFills": 12,
       "openPositions": 1,
       "pause": "normal",
-      "drawdown": 0.048253343489847667
+      "drawdown": 0.04832183702409254
     },
     {
       "id": "lab-hourly",
@@ -361,7 +361,7 @@
     {
       "id": "daytrader-range",
       "label": "Day trader: buy 24h range low, sell near high, up to 50% per trade",
-      "equity": 28911.24521807735,
+      "equity": 28843.487977847453,
       "initial": 29865.26287940766,
       "netPnl": -998.0876365698911,
       "profitFactor": 0.08474406057398565,
@@ -375,7 +375,7 @@
       "takerFills": 3,
       "openPositions": 3,
       "pause": "normal",
-      "drawdown": 0.035423839503144317
+      "drawdown": 0.037684448416175576
     }
   ],
   "drawdownPause": {
