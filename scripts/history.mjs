@@ -7,7 +7,7 @@ export const HISTORY_PRODUCTS=Object.freeze(['BTC-USD','ETH-USD','SOL-USD','XRP-
 export const GRANULARITIES=Object.freeze({'6h':21600,'1d':86400,'1h':3600});
 export const HISTORY_DAYS=730;
 // Hourly candles are kept for one year: enough for hundreds of out-of-sample trades in the automatic rule sweep.
-export const DAYS_BY_LABEL=Object.freeze({'6h':730,'1d':730,'1h':365});
+export const DAYS_BY_LABEL=Object.freeze({'6h':730,'1d':730,'1h':730});
 export const historyFile=(dir,product,label)=>path.join(dir,`${product}-${label}.json`);
 /** Rows are [time, low, high, open, close, volume], the Coinbase candle order normalizeCandles already accepts. */
 export function compact(product,label,bars,fetchedAt){

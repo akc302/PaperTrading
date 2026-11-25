@@ -528,6 +528,20 @@
       ],
       "adopted": false,
       "nextIdea": "Get more evidence for the 2h dip: raise the 1h history in scripts/history.mjs from 365 to 730 days (Coinbase allows it; the history budget needs checking) so the daily review can re-test 2h RSI<20/25 across two years. If it holds in both years, add a scout-dip2h challenger at 1/4 risk."
+    },
+    {
+      "at": "2026-11-25T00:27:49.916Z",
+      "tradesReviewed": 3,
+      "losses": 3,
+      "findings": [
+        "Owner changed the main paper strategy (25 Nov): main now trades dip-6h RSI<25 on 2h bars (PR #64, #65). It is in cash: every coin closes below its daily EMA100, so no dip buys are allowed.",
+        "Since 18:29Z only daytrader-range closed: BTC -$418.78, ETH -$497.70, XRP -$171.20, all 25h time exits in the falling market (moves -2.7% to -4.0%)."
+      ],
+      "changes": [
+        "scripts/history.mjs: 1h history 365 -> 730 days (about +3.4 MB, total about 8.4 MB of the 12 MB budget), so the daily review can test the 2h dip rule on two years."
+      ],
+      "adopted": true,
+      "nextIdea": "After the next daily review fetches 2y of 1h data, re-run the 2h dip test year by year; if year 1 is negative, move the main paper account back to 6h bars."
     }
   ]
 }
