@@ -51,7 +51,7 @@ export function regimeFrom(dailyByProduct){
 }
 export async function loadHourly(products=HISTORY_PRODUCTS,dir='data/history'){
  const out={};let source='data/history 1h (1 year)';
- for(const p of products){const f=await readHistoryFile(historyFile(dir,p,'1h')).catch(()=>null);if(f?.candles?.length)out[p]=normalizeCandles(f.candles).slice(-24*365); // sweep stays on the newest year (60-min job budget); 2y kept on disk for research}
+ for(const p of products){const f=await readHistoryFile(historyFile(dir,p,'1h')).catch(()=>null);if(f?.candles?.length)out[p]=normalizeCandles(f.candles).slice(-24*365);} // sweep uses the newest year (60-min job budget); 2y kept on disk for research
  if(Object.keys(out).length<products.length){source='data/market.json (about 32 days; 1-year hourly history not fetched yet)';const m=JSON.parse(await readFile('data/market.json','utf8'));for(const p of products)out[p]=normalizeCandles(m.products?.[p]?.candles??[]);}
  return {series:out,source};
 }
