@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "generatedAt": "2026-11-25T23:11:37.487Z",
+  "generatedAt": "2026-11-25T23:40:28.398Z",
   "goal": 85000,
   "equity": 29282.647920248248,
   "startingEquity": 30000,
@@ -70,12 +70,12 @@
   "agents": {
     "trader": {
       "role": "5-minute paper trader",
-      "lastRunMinutesAgo": 1,
+      "lastRunMinutesAgo": 5,
       "healthy": true
     },
     "researcher": {
       "role": "Claude every 5h: loss analysis, backtest, rule adoption",
-      "lastRunHoursAgo": 1.2,
+      "lastRunHoursAgo": 1.7,
       "healthy": true,
       "sweep": {
         "at": "2026-11-25T10:14:46.871Z",
@@ -202,7 +202,7 @@
     "windowDays": 30,
     "label": "Estimated time to $85,000 at the trailing 30-day growth rate (not a promise)",
     "status": "insufficient-history",
-    "spanDays": 4.966406099536904,
+    "spanDays": 4.9864397916666885,
     "message": "Needs at least 7 days of equity history."
   },
   "scorecard": [
@@ -285,7 +285,7 @@
     {
       "id": "hourly-legacy",
       "label": "Previous hourly rules",
-      "equity": 29356.643941807768,
+      "equity": 29359.119917860156,
       "initial": 29975.046647868254,
       "netPnl": -679.3765429670811,
       "profitFactor": 0.640751536898892,
@@ -299,12 +299,12 @@
       "takerFills": 15,
       "openPositions": 3,
       "pause": "normal",
-      "drawdown": 0.04251939426468876
+      "drawdown": 0.04243863915333723
     },
     {
       "id": "lab-hourly",
       "label": "Lab hourly per-market rules",
-      "equity": 29066.04672419752,
+      "equity": 29098.178672297698,
       "initial": 29975.046647868254,
       "netPnl": -1061.6006064686837,
       "profitFactor": 0.5203595975786848,
@@ -318,12 +318,12 @@
       "takerFills": 19,
       "openPositions": 3,
       "pause": "normal",
-      "drawdown": 0.046438622967193366
+      "drawdown": 0.045384479451637705
     },
     {
       "id": "scout-daytrade",
       "label": "Day-trade scout: support bounce (1.5% zone), 4h hold, 1/4 risk",
-      "equity": 28668.952448664226,
+      "equity": 28661.4156885181,
       "initial": 29788.7180982152,
       "netPnl": -1108.0843100373675,
       "profitFactor": 0.006755954447886278,
@@ -337,7 +337,7 @@
       "takerFills": 15,
       "openPositions": 2,
       "pause": "normal",
-      "drawdown": 0.03759025970365826
+      "drawdown": 0.03784326690327244
     },
     {
       "id": "scout-dip6h",
@@ -399,7 +399,7 @@
     {
       "id": "owner-sr",
       "label": "Owner style: buy near support, sell at resistance (about +1.8%), all 8 coins, 24h hold, about 28% per trade",
-      "equity": 29280.1501474889,
+      "equity": 29263.248056183642,
       "initial": 29282.647920248248,
       "netPnl": -14.674907405186625,
       "profitFactor": 0,
@@ -413,7 +413,7 @@
       "takerFills": 1,
       "openPositions": 2,
       "pause": "normal",
-      "drawdown": 0.002885292572828324
+      "drawdown": 0.0034608812819659773
     }
   ],
   "drawdownPause": {
@@ -426,7 +426,7 @@
   },
   "verdict": "needs-attention",
   "issues": [
-    "No new paper entry for 41h; current rules may be too strict for this market."
+    "No new paper entry for 42h; current rules may be too strict for this market."
   ],
   "dispatch": []
 }
