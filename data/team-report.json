@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "generatedAt": "2026-11-25T05:39:42.863Z",
+  "generatedAt": "2026-11-25T05:42:13.636Z",
   "goal": 85000,
   "equity": 29282.647920248248,
   "startingEquity": 30000,
@@ -70,12 +70,12 @@
   "agents": {
     "trader": {
       "role": "5-minute paper trader",
-      "lastRunMinutesAgo": 4,
+      "lastRunMinutesAgo": 2,
       "healthy": true
     },
     "researcher": {
       "role": "Claude every 5h: loss analysis, backtest, rule adoption",
-      "lastRunHoursAgo": 2.5,
+      "lastRunHoursAgo": 0,
       "healthy": true,
       "sweep": {
         "at": "2026-11-25T05:39:06.755Z",
@@ -202,7 +202,7 @@
     "windowDays": 30,
     "label": "Estimated time to $85,000 at the trailing 30-day growth rate (not a promise)",
     "status": "insufficient-history",
-    "spanDays": 4.235912766202732,
+    "spanDays": 4.237657824073125,
     "message": "Needs at least 7 days of equity history."
   },
   "scorecard": [
@@ -361,11 +361,11 @@
     {
       "id": "daytrader-range",
       "label": "Day trader: buy 24h range low, sell near high, up to 50% per trade",
-      "equity": 28479.829150950998,
+      "equity": 28456.678686461633,
       "initial": 29865.26287940766,
       "netPnl": -998.0876365698911,
       "profitFactor": 0.08474406057398565,
-      "maxDrawdown": 0.050113921702547054,
+      "maxDrawdown": 0.05058970442694578,
       "winRate": 0.2,
       "avgWin": 92.41349385251631,
       "avgLoss": -272.62528260560185,
@@ -375,16 +375,16 @@
       "takerFills": 3,
       "openPositions": 3,
       "pause": "normal",
-      "drawdown": 0.04981732724352006
+      "drawdown": 0.05058970442694577
     },
     {
       "id": "sr-scalper",
       "label": "Support/resistance scalper: buy within 1.5% of support, 1h hold, about 100 trades a day for ML training, 1/4 risk",
-      "equity": 29264.72097191992,
+      "equity": 29258.037449229585,
       "initial": 29282.647920248248,
       "netPnl": 0,
       "profitFactor": null,
-      "maxDrawdown": 0.000684706837967314,
+      "maxDrawdown": 0.0008672953280918565,
       "winRate": null,
       "avgWin": null,
       "avgLoss": null,
@@ -394,7 +394,7 @@
       "takerFills": 0,
       "openPositions": 1,
       "pause": "normal",
-      "drawdown": 0.0006390597154360966
+      "drawdown": 0.0008672953280918216
     }
   ],
   "drawdownPause": {
