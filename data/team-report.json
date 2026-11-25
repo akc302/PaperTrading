@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "generatedAt": "2026-11-25T14:27:20.640Z",
+  "generatedAt": "2026-11-25T14:32:53.750Z",
   "goal": 85000,
   "equity": 29282.647920248248,
   "startingEquity": 30000,
@@ -75,7 +75,7 @@
     },
     "researcher": {
       "role": "Claude every 5h: loss analysis, backtest, rule adoption",
-      "lastRunHoursAgo": 0,
+      "lastRunHoursAgo": 0.1,
       "healthy": true,
       "sweep": {
         "at": "2026-11-25T10:14:46.871Z",
@@ -202,7 +202,7 @@
     "windowDays": 30,
     "label": "Estimated time to $85,000 at the trailing 30-day growth rate (not a promise)",
     "status": "insufficient-history",
-    "spanDays": 4.602322222223436,
+    "spanDays": 4.606177662037037,
     "message": "Needs at least 7 days of equity history."
   },
   "scorecard": [
@@ -285,7 +285,7 @@
     {
       "id": "hourly-legacy",
       "label": "Previous hourly rules",
-      "equity": 28681.330120621715,
+      "equity": 28652.622772445276,
       "initial": 29975.046647868254,
       "netPnl": -1259.9425956144082,
       "profitFactor": 0.3337532098278095,
@@ -299,12 +299,12 @@
       "takerFills": 15,
       "openPositions": 3,
       "pause": "normal",
-      "drawdown": 0.06454506885652467
+      "drawdown": 0.06548137237866825
     },
     {
       "id": "lab-hourly",
       "label": "Lab hourly per-market rules",
-      "equity": 28584.113546461416,
+      "equity": 28579.934727052707,
       "initial": 29975.046647868254,
       "netPnl": -1257.9894394191015,
       "profitFactor": 0.3727342021012176,
@@ -318,7 +318,7 @@
       "takerFills": 17,
       "openPositions": 3,
       "pause": "normal",
-      "drawdown": 0.062249265156014255
+      "drawdown": 0.06238635847412355
     },
     {
       "id": "scout-daytrade",
@@ -361,7 +361,7 @@
     {
       "id": "daytrader-range",
       "label": "Day trader: buy 24h range low, sell near high, up to 50% per trade",
-      "equity": 27913.720522046307,
+      "equity": 27857.85516155445,
       "initial": 29865.26287940766,
       "netPnl": -1890.988220740577,
       "profitFactor": 0.046593432471381875,
@@ -375,7 +375,7 @@
       "takerFills": 5,
       "openPositions": 3,
       "pause": "normal",
-      "drawdown": 0.06870461084455959
+      "drawdown": 0.07056846674289752
     },
     {
       "id": "sr-scalper",
