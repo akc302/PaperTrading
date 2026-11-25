@@ -424755,10 +424755,10 @@
       "riskScale": 0.25,
       "rules": {
         "strategy": "horizontal",
-        "proximity": 0.015,
-        "rewardRisk": 1,
+        "proximity": 0.02,
+        "rewardRisk": 0.5,
         "maxHoldHours": 1,
-        "lookback": 48,
+        "lookback": 96,
         "patternRequired": false,
         "regimeFilter": false,
         "entryOrder": "limit"
@@ -426227,10 +426227,27 @@
         }
       },
       "startedAt": "2026-11-25T03:40:50.192Z",
-      "rulesSince": "2026-11-25T03:40:50.192Z",
-      "rulesVersion": 1,
+      "rulesSince": "2026-11-25T04:29:13.273Z",
+      "rulesVersion": 2,
       "lastError": null,
-      "updatedAt": "2026-11-25T04:25:52.285Z"
+      "updatedAt": "2026-11-25T04:25:52.285Z",
+      "rulesHistory": [
+        {
+          "at": "2026-11-25T04:29:13.273Z",
+          "reason": "researcher seed rules updated",
+          "rules": {
+            "strategy": "horizontal",
+            "proximity": 0.015,
+            "rewardRisk": 1,
+            "maxHoldHours": 1,
+            "lookback": 48,
+            "patternRequired": false,
+            "regimeFilter": false,
+            "entryOrder": "limit"
+          },
+          "productConfigs": {}
+        }
+      ]
     }
   ],
   "promotion": {
