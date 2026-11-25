@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "generatedAt": "2026-11-25T14:32:53.750Z",
+  "generatedAt": "2026-11-25T15:44:23.434Z",
   "goal": 85000,
   "equity": 29282.647920248248,
   "startingEquity": 30000,
@@ -58,24 +58,24 @@
     },
     "LINK-USD": {
       "strategy": "dip-6h",
-      "approach": "aggressive-day-hold+regime-block",
+      "approach": "aggressive-day-hold+regime-block+ml-filter",
       "decision": "keep"
     },
     "AVAX-USD": {
       "strategy": "dip-6h",
-      "approach": "aggressive-day-hold+ml-filter",
+      "approach": "horizontal-support",
       "decision": "keep"
     }
   },
   "agents": {
     "trader": {
       "role": "5-minute paper trader",
-      "lastRunMinutesAgo": 2,
+      "lastRunMinutesAgo": 4,
       "healthy": true
     },
     "researcher": {
       "role": "Claude every 5h: loss analysis, backtest, rule adoption",
-      "lastRunHoursAgo": 0.1,
+      "lastRunHoursAgo": 0,
       "healthy": true,
       "sweep": {
         "at": "2026-11-25T10:14:46.871Z",
@@ -109,13 +109,13 @@
         }
       },
       "latestNote": {
-        "at": "2026-11-25T10:28:52.840Z",
-        "tradesReviewed": 6,
-        "losses": 5,
-        "findings": 2,
+        "at": "2026-11-25T15:13:23.194Z",
+        "tradesReviewed": 2,
+        "losses": 0,
+        "findings": 1,
         "changes": 1,
         "adopted": true,
-        "nextIdea": "After about 50 sr-scalper trades, fit the ML entry filter (logistic regression on trend, RSI, volume, distance to support) and compare it with a small decision tree on held-out trades."
+        "nextIdea": "Compare owner-sr with sr-scalper after 20 trades each; the better one becomes the template for the ML filter."
       }
     },
     "verifier": {
@@ -143,7 +143,7 @@
         "id": "history",
         "label": "28+ days of forward paper trading with the research team",
         "pass": false,
-        "value": "4.4 days"
+        "value": "4.5 days"
       },
       {
         "id": "sample",
@@ -202,7 +202,7 @@
     "windowDays": 30,
     "label": "Estimated time to $85,000 at the trailing 30-day growth rate (not a promise)",
     "status": "insufficient-history",
-    "spanDays": 4.606177662037037,
+    "spanDays": 4.655826782407584,
     "message": "Needs at least 7 days of equity history."
   },
   "scorecard": [
@@ -285,11 +285,11 @@
     {
       "id": "hourly-legacy",
       "label": "Previous hourly rules",
-      "equity": 28652.622772445276,
+      "equity": 28725.890873651915,
       "initial": 29975.046647868254,
       "netPnl": -1259.9425956144082,
       "profitFactor": 0.3337532098278095,
-      "maxDrawdown": 0.06753169170256594,
+      "maxDrawdown": 0.07201090400349852,
       "winRate": 0.2777777777777778,
       "avgWin": 126.23246871520698,
       "avgLoss": -145.46961070695718,
@@ -299,26 +299,26 @@
       "takerFills": 15,
       "openPositions": 3,
       "pause": "normal",
-      "drawdown": 0.06548137237866825
+      "drawdown": 0.0630916991563657
     },
     {
       "id": "lab-hourly",
       "label": "Lab hourly per-market rules",
-      "equity": 28579.934727052707,
+      "equity": 28403.40385177869,
       "initial": 29975.046647868254,
-      "netPnl": -1257.9894394191015,
-      "profitFactor": 0.3727342021012176,
-      "maxDrawdown": 0.06476821862926181,
-      "winRate": 0.2631578947368421,
+      "netPnl": -1465.8029432901544,
+      "profitFactor": 0.3377374604855432,
+      "maxDrawdown": 0.07173795187731005,
+      "winRate": 0.23809523809523808,
       "avgWin": 149.5046251602895,
-      "avgLoss": -143.2508975157535,
-      "closedTrades": 19,
-      "fees": 399.9743979925001,
-      "makerFills": 21,
-      "takerFills": 17,
+      "avgLoss": -138.3328793182251,
+      "closedTrades": 21,
+      "fees": 433.81759928906496,
+      "makerFills": 23,
+      "takerFills": 19,
       "openPositions": 3,
       "pause": "normal",
-      "drawdown": 0.06238635847412355
+      "drawdown": 0.06817775577394836
     },
     {
       "id": "scout-daytrade",
@@ -361,21 +361,21 @@
     {
       "id": "daytrader-range",
       "label": "Day trader: buy 24h range low, sell near high, up to 50% per trade",
-      "equity": 27857.85516155445,
+      "equity": 27853.00058621328,
       "initial": 29865.26287940766,
-      "netPnl": -1890.988220740577,
-      "profitFactor": 0.046593432471381875,
-      "maxDrawdown": 0.07571426819872905,
-      "winRate": 0.14285714285714285,
+      "netPnl": -2043.3151839853322,
+      "profitFactor": 0.04327024064970328,
+      "maxDrawdown": 0.0823373488813251,
+      "winRate": 0.125,
       "avgWin": 92.41349385251631,
-      "avgLoss": -330.5669524321822,
-      "closedTrades": 7,
-      "fees": 236.95869220194894,
-      "makerFills": 9,
-      "takerFills": 5,
+      "avgLoss": -305.10409683397836,
+      "closedTrades": 8,
+      "fees": 251.34324018873733,
+      "makerFills": 10,
+      "takerFills": 6,
       "openPositions": 3,
       "pause": "normal",
-      "drawdown": 0.07056846674289752
+      "drawdown": 0.07073043166720672
     },
     {
       "id": "sr-scalper",
@@ -395,6 +395,25 @@
       "openPositions": 0,
       "pause": "normal",
       "drawdown": 0.012285370775815818
+    },
+    {
+      "id": "owner-sr",
+      "label": "Owner style: buy near support, sell at resistance (about +1.8%), all 8 coins, 24h hold, about 28% per trade",
+      "equity": 29282.647920248248,
+      "initial": 29282.647920248248,
+      "netPnl": 0,
+      "profitFactor": null,
+      "maxDrawdown": 0,
+      "winRate": null,
+      "avgWin": null,
+      "avgLoss": null,
+      "closedTrades": 0,
+      "fees": 0,
+      "makerFills": 0,
+      "takerFills": 0,
+      "openPositions": 0,
+      "pause": "normal",
+      "drawdown": 0
     }
   ],
   "drawdownPause": {
@@ -407,7 +426,7 @@
   },
   "verdict": "needs-attention",
   "issues": [
-    "No new paper entry for 32h; current rules may be too strict for this market."
+    "No new paper entry for 34h; current rules may be too strict for this market."
   ],
   "dispatch": []
 }
