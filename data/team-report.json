@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "generatedAt": "2026-11-25T12:22:32.199Z",
+  "generatedAt": "2026-11-25T13:32:04.540Z",
   "goal": 85000,
   "equity": 29282.647920248248,
   "startingEquity": 30000,
@@ -9,12 +9,12 @@
   "drawdown": 0.0243129882096927,
   "openPositions": 0,
   "last24h": {
-    "closedTrades": 1,
+    "closedTrades": 0,
     "wins": 0,
-    "winRate": 0,
-    "netPnl": -113.75371569945275,
-    "grossFees": 13.207015184204238,
-    "rebatesCredited": 3.3017537960510595
+    "winRate": null,
+    "netPnl": 0,
+    "grossFees": 0,
+    "rebatesCredited": 0
   },
   "allTime": {
     "closedTrades": 6,
@@ -75,7 +75,7 @@
     },
     "researcher": {
       "role": "Claude every 5h: loss analysis, backtest, rule adoption",
-      "lastRunHoursAgo": 0,
+      "lastRunHoursAgo": 1.2,
       "healthy": true,
       "sweep": {
         "at": "2026-11-25T10:14:46.871Z",
@@ -143,7 +143,7 @@
         "id": "history",
         "label": "28+ days of forward paper trading with the research team",
         "pass": false,
-        "value": "4.3 days"
+        "value": "4.4 days"
       },
       {
         "id": "sample",
@@ -202,7 +202,7 @@
     "windowDays": 30,
     "label": "Estimated time to $85,000 at the trailing 30-day growth rate (not a promise)",
     "status": "insufficient-history",
-    "spanDays": 4.51565045138752,
+    "spanDays": 4.563941435184744,
     "message": "Needs at least 7 days of equity history."
   },
   "scorecard": [
@@ -285,11 +285,11 @@
     {
       "id": "hourly-legacy",
       "label": "Previous hourly rules",
-      "equity": 28942.21510792118,
+      "equity": 28853.650121419243,
       "initial": 29975.046647868254,
       "netPnl": -930.5364770197108,
       "profitFactor": 0.4041511303282304,
-      "maxDrawdown": 0.056267635061937694,
+      "maxDrawdown": 0.05892477182696692,
       "winRate": 0.3125,
       "avgWin": 126.23246871520698,
       "avgLoss": -141.9726200541587,
@@ -297,28 +297,28 @@
       "fees": 319.83640070455755,
       "makerFills": 19,
       "takerFills": 13,
-      "openPositions": 1,
+      "openPositions": 3,
       "pause": "normal",
-      "drawdown": 0.05603618357107132
+      "drawdown": 0.05892477182696687
     },
     {
       "id": "lab-hourly",
       "label": "Lab hourly per-market rules",
-      "equity": 28751.410698612563,
+      "equity": 28672.772081808384,
       "initial": 29975.046647868254,
-      "netPnl": -1122.0152766258366,
-      "profitFactor": 0.39984368592317404,
-      "maxDrawdown": 0.05699206975888409,
-      "winRate": 0.2777777777777778,
+      "netPnl": -1257.9894394191015,
+      "profitFactor": 0.3727342021012176,
+      "maxDrawdown": 0.0589124477490513,
+      "winRate": 0.2631578947368421,
       "avgWin": 149.5046251602895,
-      "avgLoss": -143.8106463405603,
-      "closedTrades": 18,
-      "fees": 375.95436535415644,
-      "makerFills": 20,
-      "takerFills": 16,
-      "openPositions": 1,
+      "avgLoss": -143.2508975157535,
+      "closedTrades": 19,
+      "fees": 399.9743979925001,
+      "makerFills": 21,
+      "takerFills": 17,
+      "openPositions": 3,
       "pause": "normal",
-      "drawdown": 0.0567607959364933
+      "drawdown": 0.058651756748415274
     },
     {
       "id": "scout-daytrade",
@@ -361,7 +361,7 @@
     {
       "id": "daytrader-range",
       "label": "Day trader: buy 24h range low, sell near high, up to 50% per trade",
-      "equity": 28181.66295201836,
+      "equity": 28149.606328146816,
       "initial": 29865.26287940766,
       "netPnl": -998.0876365698911,
       "profitFactor": 0.08474406057398565,
@@ -375,7 +375,7 @@
       "takerFills": 3,
       "openPositions": 3,
       "pause": "normal",
-      "drawdown": 0.05976515222258927
+      "drawdown": 0.06083466877019095
     },
     {
       "id": "sr-scalper",
@@ -407,7 +407,7 @@
   },
   "verdict": "needs-attention",
   "issues": [
-    "No new paper entry for 30h; current rules may be too strict for this market."
+    "No new paper entry for 31h; current rules may be too strict for this market."
   ],
   "dispatch": []
 }
