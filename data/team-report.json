@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "generatedAt": "2026-11-25T03:12:08.000Z",
+  "generatedAt": "2026-11-25T04:34:15.109Z",
   "goal": 85000,
   "equity": 29282.647920248248,
   "startingEquity": 30000,
@@ -9,12 +9,12 @@
   "drawdown": 0.0243129882096927,
   "openPositions": 0,
   "last24h": {
-    "closedTrades": 4,
+    "closedTrades": 3,
     "wins": 0,
     "winRate": 0,
-    "netPnl": -582.6149591594126,
-    "grossFees": 112.28411752379291,
-    "rebatesCredited": 28.07102938094823
+    "netPnl": -482.91384792837226,
+    "grossFees": 79.01042809781934,
+    "rebatesCredited": 19.752607024454836
   },
   "allTime": {
     "closedTrades": 6,
@@ -70,25 +70,25 @@
   "agents": {
     "trader": {
       "role": "5-minute paper trader",
-      "lastRunMinutesAgo": 2,
+      "lastRunMinutesAgo": 4,
       "healthy": true
     },
     "researcher": {
       "role": "Claude every 5h: loss analysis, backtest, rule adoption",
-      "lastRunHoursAgo": 0,
+      "lastRunHoursAgo": 1.4,
       "healthy": true,
       "sweep": {
-        "at": "2026-11-24T10:52:25.179Z",
+        "at": "2026-11-25T04:23:24.636Z",
         "source": "data/history 1h (1 year)",
-        "days": 364.8,
-        "rulesTested": 46,
+        "days": 365,
+        "rulesTested": 54,
         "passingAllWindows": 0,
         "regime": {
           "coinsInUptrend": [],
           "share": 0,
           "state": "down",
-          "btc7dPct": -5.6,
-          "btc30dPct": -24.24
+          "btc7dPct": -7.91,
+          "btc30dPct": -25.37
         },
         "best": {
           "config": {
@@ -103,8 +103,8 @@
           "unseen": {
             "trades": 24,
             "winRate": 0.6666666666666666,
-            "net": 877.46,
-            "profitFactor": 1.96
+            "net": 847.05,
+            "profitFactor": 1.9
           }
         }
       },
@@ -143,7 +143,7 @@
         "id": "history",
         "label": "28+ days of forward paper trading with the research team",
         "pass": false,
-        "value": "3.9 days"
+        "value": "4.0 days"
       },
       {
         "id": "sample",
@@ -185,7 +185,7 @@
         "id": "uptime",
         "label": "Trader ran in 95%+ of hours over the last 7 days",
         "pass": false,
-        "value": "38%"
+        "value": "54%"
       },
       {
         "id": "integrity",
@@ -202,7 +202,7 @@
     "windowDays": 30,
     "label": "Estimated time to $85,000 at the trailing 30-day growth rate (not a promise)",
     "status": "insufficient-history",
-    "spanDays": 4.133425925925926,
+    "spanDays": 4.190452650462587,
     "message": "Needs at least 7 days of equity history."
   },
   "scorecard": [
@@ -361,7 +361,7 @@
     {
       "id": "daytrader-range",
       "label": "Day trader: buy 24h range low, sell near high, up to 50% per trade",
-      "equity": 28636.976559673567,
+      "equity": 28592.387618748657,
       "initial": 29865.26287940766,
       "netPnl": -998.0876365698911,
       "profitFactor": 0.08474406057398565,
@@ -375,7 +375,26 @@
       "takerFills": 3,
       "openPositions": 3,
       "pause": "normal",
-      "drawdown": 0.044574362335081275
+      "drawdown": 0.04606199903538777
+    },
+    {
+      "id": "sr-scalper",
+      "label": "Support/resistance scalper: buy within 1.5% of support, 1h hold, about 100 trades a day for ML training, 1/4 risk",
+      "equity": 29282.647920248248,
+      "initial": 29282.647920248248,
+      "netPnl": 0,
+      "profitFactor": null,
+      "maxDrawdown": 0,
+      "winRate": null,
+      "avgWin": null,
+      "avgLoss": null,
+      "closedTrades": 0,
+      "fees": 0,
+      "makerFills": 0,
+      "takerFills": 0,
+      "openPositions": 0,
+      "pause": "normal",
+      "drawdown": 0
     }
   ],
   "drawdownPause": {
