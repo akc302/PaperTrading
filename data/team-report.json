@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "generatedAt": "2026-11-25T04:35:20.132Z",
+  "generatedAt": "2026-11-25T05:39:42.863Z",
   "goal": 85000,
   "equity": 29282.647920248248,
   "startingEquity": 30000,
@@ -70,15 +70,15 @@
   "agents": {
     "trader": {
       "role": "5-minute paper trader",
-      "lastRunMinutesAgo": 5,
+      "lastRunMinutesAgo": 4,
       "healthy": true
     },
     "researcher": {
       "role": "Claude every 5h: loss analysis, backtest, rule adoption",
-      "lastRunHoursAgo": 1.4,
+      "lastRunHoursAgo": 2.5,
       "healthy": true,
       "sweep": {
-        "at": "2026-11-25T04:23:24.636Z",
+        "at": "2026-11-25T05:39:06.755Z",
         "source": "data/history 1h (1 year)",
         "days": 365,
         "rulesTested": 54,
@@ -202,7 +202,7 @@
     "windowDays": 30,
     "label": "Estimated time to $85,000 at the trailing 30-day growth rate (not a promise)",
     "status": "insufficient-history",
-    "spanDays": 4.191205231481129,
+    "spanDays": 4.235912766202732,
     "message": "Needs at least 7 days of equity history."
   },
   "scorecard": [
@@ -361,11 +361,11 @@
     {
       "id": "daytrader-range",
       "label": "Day trader: buy 24h range low, sell near high, up to 50% per trade",
-      "equity": 28592.387618748657,
+      "equity": 28479.829150950998,
       "initial": 29865.26287940766,
       "netPnl": -998.0876365698911,
       "profitFactor": 0.08474406057398565,
-      "maxDrawdown": 0.04983442891082861,
+      "maxDrawdown": 0.050113921702547054,
       "winRate": 0.2,
       "avgWin": 92.41349385251631,
       "avgLoss": -272.62528260560185,
@@ -375,16 +375,16 @@
       "takerFills": 3,
       "openPositions": 3,
       "pause": "normal",
-      "drawdown": 0.04606199903538777
+      "drawdown": 0.04981732724352006
     },
     {
       "id": "sr-scalper",
       "label": "Support/resistance scalper: buy within 1.5% of support, 1h hold, about 100 trades a day for ML training, 1/4 risk",
-      "equity": 29282.647920248248,
+      "equity": 29264.72097191992,
       "initial": 29282.647920248248,
       "netPnl": 0,
       "profitFactor": null,
-      "maxDrawdown": 0,
+      "maxDrawdown": 0.000684706837967314,
       "winRate": null,
       "avgWin": null,
       "avgLoss": null,
@@ -392,9 +392,9 @@
       "fees": 0,
       "makerFills": 0,
       "takerFills": 0,
-      "openPositions": 0,
+      "openPositions": 1,
       "pause": "normal",
-      "drawdown": 0
+      "drawdown": 0.0006390597154360966
     }
   ],
   "drawdownPause": {
