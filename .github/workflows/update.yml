@@ -74,4 +74,4 @@ jobs:
           if [ "$running" = 0 ] && [ "$queued" = 0 ]; then for phase in $(node scripts/overdue.mjs); do gh workflow run learning.yml -f phase=$phase || true; break; done; fi
           wait=$(( 300 - $(date +%s) % 300 ))
           sleep "$wait"
-          gh workflow run update.yml
+          for i in 1 2 3 4 5; do gh workflow run update.yml && break; echo "dispatch failed (attempt $i), retrying"; sleep $((i*15)); done
