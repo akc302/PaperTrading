@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "generatedAt": "2026-11-25T13:32:04.540Z",
+  "generatedAt": "2026-11-25T14:27:20.640Z",
   "goal": 85000,
   "equity": 29282.647920248248,
   "startingEquity": 30000,
@@ -58,7 +58,7 @@
     },
     "LINK-USD": {
       "strategy": "dip-6h",
-      "approach": "aggressive-day-hold+regime-block+ml-filter",
+      "approach": "aggressive-day-hold+regime-block",
       "decision": "keep"
     },
     "AVAX-USD": {
@@ -75,7 +75,7 @@
     },
     "researcher": {
       "role": "Claude every 5h: loss analysis, backtest, rule adoption",
-      "lastRunHoursAgo": 1.2,
+      "lastRunHoursAgo": 0,
       "healthy": true,
       "sweep": {
         "at": "2026-11-25T10:14:46.871Z",
@@ -202,7 +202,7 @@
     "windowDays": 30,
     "label": "Estimated time to $85,000 at the trailing 30-day growth rate (not a promise)",
     "status": "insufficient-history",
-    "spanDays": 4.563941435184744,
+    "spanDays": 4.602322222223436,
     "message": "Needs at least 7 days of equity history."
   },
   "scorecard": [
@@ -285,30 +285,30 @@
     {
       "id": "hourly-legacy",
       "label": "Previous hourly rules",
-      "equity": 28853.650121419243,
+      "equity": 28681.330120621715,
       "initial": 29975.046647868254,
-      "netPnl": -930.5364770197108,
-      "profitFactor": 0.4041511303282304,
-      "maxDrawdown": 0.05892477182696692,
-      "winRate": 0.3125,
+      "netPnl": -1259.9425956144082,
+      "profitFactor": 0.3337532098278095,
+      "maxDrawdown": 0.06753169170256594,
+      "winRate": 0.2777777777777778,
       "avgWin": 126.23246871520698,
-      "avgLoss": -141.9726200541587,
-      "closedTrades": 16,
-      "fees": 319.83640070455755,
-      "makerFills": 19,
-      "takerFills": 13,
+      "avgLoss": -145.46961070695718,
+      "closedTrades": 18,
+      "fees": 367.978874012664,
+      "makerFills": 21,
+      "takerFills": 15,
       "openPositions": 3,
       "pause": "normal",
-      "drawdown": 0.05892477182696687
+      "drawdown": 0.06454506885652467
     },
     {
       "id": "lab-hourly",
       "label": "Lab hourly per-market rules",
-      "equity": 28672.772081808384,
+      "equity": 28584.113546461416,
       "initial": 29975.046647868254,
       "netPnl": -1257.9894394191015,
       "profitFactor": 0.3727342021012176,
-      "maxDrawdown": 0.0589124477490513,
+      "maxDrawdown": 0.06476821862926181,
       "winRate": 0.2631578947368421,
       "avgWin": 149.5046251602895,
       "avgLoss": -143.2508975157535,
@@ -318,7 +318,7 @@
       "takerFills": 17,
       "openPositions": 3,
       "pause": "normal",
-      "drawdown": 0.058651756748415274
+      "drawdown": 0.062249265156014255
     },
     {
       "id": "scout-daytrade",
@@ -361,21 +361,21 @@
     {
       "id": "daytrader-range",
       "label": "Day trader: buy 24h range low, sell near high, up to 50% per trade",
-      "equity": 28149.606328146816,
+      "equity": 27913.720522046307,
       "initial": 29865.26287940766,
-      "netPnl": -998.0876365698911,
-      "profitFactor": 0.08474406057398565,
-      "maxDrawdown": 0.06186974966026947,
-      "winRate": 0.2,
+      "netPnl": -1890.988220740577,
+      "profitFactor": 0.046593432471381875,
+      "maxDrawdown": 0.07571426819872905,
+      "winRate": 0.14285714285714285,
       "avgWin": 92.41349385251631,
-      "avgLoss": -272.62528260560185,
-      "closedTrades": 5,
-      "fees": 156.19119752851287,
-      "makerFills": 7,
-      "takerFills": 3,
+      "avgLoss": -330.5669524321822,
+      "closedTrades": 7,
+      "fees": 236.95869220194894,
+      "makerFills": 9,
+      "takerFills": 5,
       "openPositions": 3,
       "pause": "normal",
-      "drawdown": 0.06083466877019095
+      "drawdown": 0.06870461084455959
     },
     {
       "id": "sr-scalper",
@@ -407,7 +407,7 @@
   },
   "verdict": "needs-attention",
   "issues": [
-    "No new paper entry for 31h; current rules may be too strict for this market."
+    "No new paper entry for 32h; current rules may be too strict for this market."
   ],
   "dispatch": []
 }
