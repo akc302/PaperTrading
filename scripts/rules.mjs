@@ -9,7 +9,7 @@ import {reviewChallengers} from './promotion.mjs';
 import {loadHistory} from './history.mjs';
 /** Daily review for one account: migrate once, seed challengers, then evaluate promotion. */
 export function dailyRules(state,{market,history,now}){
- const migrated=migrateToTrend(state,now),ownerSwitch=ownerSwitchToHourly(state,now),seeded=ensureChallengers(state,now),retired=retireLosers(state,now),review=reviewChallengers(state,{market,history,now});
+ const migrated=migrateToTrend(state,now),ownerSwitch=ownerSwitchToHourly(state,now)||ownerSwitchToDip(state,now),seeded=ensureChallengers(state,now),retired=retireLosers(state,now),review=reviewChallengers(state,{market,history,now});
  return {migrated,ownerSwitch,seeded,retired,promoted:review?.promoted??null,reviewed:!!review};
 }
 export const RULES_VERSION='trend-v1';
@@ -20,7 +20,7 @@ export const OWNER_HOURLY_VERSION='owner-hourly-v1';
  * Copies only entry/exit rules (limit entries kept for maker fees); risk caps are unchanged and checked. The challenger
  * keeps its own ledger, the trend rules stay alive in the trend challengers, and the strategy lab tunes the main rules per market from here on. */
 export function ownerSwitchToHourly(state,now=Date.now()/1000){
- if(state.rulesVersion===OWNER_HOURLY_VERSION)return false;
+ if(state.rulesVersion===OWNER_HOURLY_VERSION||state.rulesVersion===OWNER_DIP_VERSION)return false;
  const src=(state.challengers??[]).find(c=>c.id==='hourly-legacy');if(!src)return false;
  const at=new Date(now*1000).toISOString(),before=CAPS.map(k=>state.config?.[k]);
  state.rulesHistory=[{at,event:'owner-switch-to-hourly',reason:'Owner asked the main paper account to trade the hourly-legacy rules daily.',previous:{config:{...state.config},productConfigs:structuredClone(state.productConfigs??{})}},...(state.rulesHistory??[])].slice(0,200);
@@ -28,6 +28,21 @@ export function ownerSwitchToHourly(state,now=Date.now()/1000){
  for(const k of RULE_KEYS)if(next[k]===undefined)delete next[k];
  if(JSON.stringify(CAPS.map(k=>next[k]))!==JSON.stringify(before))throw Error('Risk cap mutation refused');
  state.config=next;state.productConfigs=structuredClone(src.productConfigs??{});state.rulesVersion=OWNER_HOURLY_VERSION;
+ return true;
+}
+export const OWNER_DIP_VERSION='owner-dip6h-v1';
+/** Owner request (25 Nov 2026): change the main PAPER strategy. Researcher evidence: dip-6h RSI<25 is the only rule positive in
+ * both years of 2y history; the hourly rules lost in every regime. Rules copied from scout-dip6h at the main account's own risk caps
+ * (unchanged and checked); the hourly rules keep trading daily in the hourly-legacy/lab-hourly challengers for continuous learning. */
+export function ownerSwitchToDip(state,now=Date.now()/1000){
+ if(state.rulesVersion===OWNER_DIP_VERSION)return false;
+ const src=(state.challengers??[]).find(c=>c.id==='scout-dip6h');if(!src)return false;
+ const at=new Date(now*1000).toISOString(),before=CAPS.map(k=>state.config?.[k]);
+ state.rulesHistory=[{at,event:'owner-switch-to-dip6h',reason:'Owner asked for a new main strategy; dip-6h RSI<25 is the only rule positive in both years.',previous:{config:{...state.config},productConfigs:structuredClone(state.productConfigs??{})}},...(state.rulesHistory??[])].slice(0,200);
+ const next={...state.config};for(const k of RULE_KEYS)delete next[k];Object.assign(next,structuredClone(src.rules),{entryOrder:'limit'});
+ for(const k of RULE_KEYS)if(next[k]===undefined)delete next[k];
+ if(JSON.stringify(CAPS.map(k=>next[k]))!==JSON.stringify(before))throw Error('Risk cap mutation refused');
+ state.config=next;state.productConfigs={};state.rulesVersion=OWNER_DIP_VERSION;
  return true;
 }
 export function migrateToTrend(state,now=Date.now()/1000){
