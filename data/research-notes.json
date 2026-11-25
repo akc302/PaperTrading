@@ -584,6 +584,19 @@
       ],
       "adopted": true,
       "nextIdea": "Compare owner-sr with sr-scalper after 20 trades each; the better one becomes the template for the ML filter."
+    },
+    {
+      "at": "2026-11-25T20:29:22.086Z",
+      "tradesReviewed": 0,
+      "losses": 0,
+      "findings": [
+        "owner-sr made 0 entries in 5h: 140 of 256 checks were rejected by the fee check (too little room to resistance), 107 had no confirmed support. The horizontal fee check priced both legs at the 0.30% taker rate although owner-sr enters with maker limits and exits at a resting maker target (0.15%)."
+      ],
+      "changes": [
+        "engine.js horizontal: with entryOrder limit, the target cost check uses makerFeeRate (the actual fill fee). Affects horizontal-strategy accounts only (owner-sr, sr-scalper); the main paper account trades dip-6h."
+      ],
+      "adopted": true,
+      "nextIdea": "Report owner-sr and sr-scalper wins/losses at 21:26Z; review every loss."
     }
   ]
 }
