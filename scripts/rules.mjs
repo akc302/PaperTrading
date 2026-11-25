@@ -9,7 +9,7 @@ import {reviewChallengers} from './promotion.mjs';
 import {loadHistory} from './history.mjs';
 /** Daily review for one account: migrate once, seed challengers, then evaluate promotion. */
 export function dailyRules(state,{market,history,now}){
- const migrated=migrateToTrend(state,now),ownerSwitch=ownerSwitchToHourly(state,now)||ownerSwitchToDip(state,now),seeded=ensureChallengers(state,now),retired=retireLosers(state,now),review=reviewChallengers(state,{market,history,now});
+ const migrated=migrateToTrend(state,now),ownerSwitch=ownerSwitchToHourly(state,now)||ownerSwitchToDip2h(state,now),seeded=ensureChallengers(state,now),retired=retireLosers(state,now),review=reviewChallengers(state,{market,history,now});
  return {migrated,ownerSwitch,seeded,retired,promoted:review?.promoted??null,reviewed:!!review};
 }
 export const RULES_VERSION='trend-v1';
@@ -20,7 +20,7 @@ export const OWNER_HOURLY_VERSION='owner-hourly-v1';
  * Copies only entry/exit rules (limit entries kept for maker fees); risk caps are unchanged and checked. The challenger
  * keeps its own ledger, the trend rules stay alive in the trend challengers, and the strategy lab tunes the main rules per market from here on. */
 export function ownerSwitchToHourly(state,now=Date.now()/1000){
- if(state.rulesVersion===OWNER_HOURLY_VERSION||state.rulesVersion===OWNER_DIP_VERSION)return false;
+ if(state.rulesVersion===OWNER_HOURLY_VERSION||state.rulesVersion===OWNER_DIP_VERSION||state.rulesVersion===OWNER_DIP2_VERSION)return false;
  const src=(state.challengers??[]).find(c=>c.id==='hourly-legacy');if(!src)return false;
  const at=new Date(now*1000).toISOString(),before=CAPS.map(k=>state.config?.[k]);
  state.rulesHistory=[{at,event:'owner-switch-to-hourly',reason:'Owner asked the main paper account to trade the hourly-legacy rules daily.',previous:{config:{...state.config},productConfigs:structuredClone(state.productConfigs??{})}},...(state.rulesHistory??[])].slice(0,200);
@@ -35,7 +35,7 @@ export const OWNER_DIP_VERSION='owner-dip6h-v1';
  * both years of 2y history; the hourly rules lost in every regime. Rules copied from scout-dip6h at the main account's own risk caps
  * (unchanged and checked); the hourly rules keep trading daily in the hourly-legacy/lab-hourly challengers for continuous learning. */
 export function ownerSwitchToDip(state,now=Date.now()/1000){
- if(state.rulesVersion===OWNER_DIP_VERSION)return false;
+ if(state.rulesVersion===OWNER_DIP_VERSION||state.rulesVersion===OWNER_DIP2_VERSION)return false;
  const src=(state.challengers??[]).find(c=>c.id==='scout-dip6h');if(!src)return false;
  const at=new Date(now*1000).toISOString(),before=CAPS.map(k=>state.config?.[k]);
  state.rulesHistory=[{at,event:'owner-switch-to-dip6h',reason:'Owner asked for a new main strategy; dip-6h RSI<25 is the only rule positive in both years.',previous:{config:{...state.config},productConfigs:structuredClone(state.productConfigs??{})}},...(state.rulesHistory??[])].slice(0,200);
@@ -44,6 +44,18 @@ export function ownerSwitchToDip(state,now=Date.now()/1000){
  if(JSON.stringify(CAPS.map(k=>next[k]))!==JSON.stringify(before))throw Error('Risk cap mutation refused');
  state.config=next;state.productConfigs={};state.rulesVersion=OWNER_DIP_VERSION;
  return true;
+}
+export const OWNER_DIP2_VERSION='owner-dip2h-v1';
+/** Owner request (25 Nov 2026): more trades. Same dip rule on 2h bars (RSI<25, daily EMA100 uptrend): 24-28 trades/yr in the
+ * 1y hourly test (+.3k, PF 1.55) vs about 7 on 6h bars. Risk caps unchanged. */
+export function ownerSwitchToDip2h(state,now=Date.now()/1000){
+ if(state.rulesVersion===OWNER_DIP2_VERSION)return false;
+ if(state.rulesVersion!==OWNER_DIP_VERSION)ownerSwitchToDip(state,now);
+ if(state.rulesVersion!==OWNER_DIP_VERSION)return false;
+ const before=CAPS.map(k=>state.config?.[k]);state.config={...state.config,dipBarHours:2};
+ if(JSON.stringify(CAPS.map(k=>state.config[k]))!==JSON.stringify(before))throw Error('Risk cap mutation refused');
+ state.rulesHistory=[{at:new Date(now*1000).toISOString(),event:'owner-switch-to-dip2h',reason:'Owner asked for more daily trades; dip rule moved to 2h bars.'},...(state.rulesHistory??[])].slice(0,200);
+ state.rulesVersion=OWNER_DIP2_VERSION;return true;
 }
 export function migrateToTrend(state,now=Date.now()/1000){
  if(state.rulesVersion)return false; // any later version means this one-time migration already happened

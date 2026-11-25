@@ -27,6 +27,7 @@ const cfg = (c={}) => {
   if(x.regimeFilter!=null&&typeof x.regimeFilter!=='boolean')throw new Error('Invalid regime filter.');
   if(x.makerTimeExit!=null&&typeof x.makerTimeExit!=='boolean')throw new Error('Invalid maker time-exit setting.');
   if(x.stopSlippage!=null&&(!finite(x.stopSlippage)||x.stopSlippage<0||x.stopSlippage>0.02))throw new Error('Invalid stop slippage.');
+  if(x.dipBarHours!=null&&![2,6].includes(x.dipBarHours))throw new Error('Invalid dip bar size.');
   if(x.dipMode!=null&&!['dip','squeeze'].includes(x.dipMode))throw new Error('Invalid dip-6h mode.');
   if(x.rangeHours!=null&&(!Number.isInteger(x.rangeHours)||x.rangeHours<6||x.rangeHours>168))throw new Error('Invalid range window.');
   if(x.rangeEntry!=null&&(!finite(x.rangeEntry)||x.rangeEntry<=0||x.rangeEntry>0.5))throw new Error('Invalid range entry zone.');
@@ -535,7 +536,7 @@ const SIX_HOURS=21600,ONE_DAY=86400;
 export function trendContext(hourly,history={},asOf){
  const h=normalizeCandles(hourly);asOf??=(h.at(-1)?.time??0)+3600;
  const merge=(stored,hours,span)=>normalizeCandles([...normalizeCandles(stored??[]),...aggregateCandles(h,hours)]).filter(b=>b.time+span<=asOf);
- return {sixHour:merge(history?.sixHour,6,SIX_HOURS),daily:merge(history?.daily,24,ONE_DAY)};
+ return {sixHour:merge(history?.sixHour,6,SIX_HOURS),twoHour:aggregateCandles(h,2).filter(b=>b.time+7200<=asOf),daily:merge(history?.daily,24,ONE_DAY)};
 }
 /** Precomputed series so a two-year replay and the live check evaluate the identical rule. */
 export function prepareTrend({sixHour=[],daily=[]}={}){
@@ -580,7 +581,7 @@ export function updateTrailingStop(p,sixHour,time){
  * Walk-forward on 2 years of 6h/1d history (research notes, 23 Nov): validation 5t/100%/+2.3R, unseen 5t/100%/+4.2R; small samples.
  */
 export function dipSignal(ctx,c={},price=null){
- const six=normalizeCandles(ctx?.sixHour??[]),daily=normalizeCandles(ctx?.daily??[]),last=six.at(-1);
+ const six=normalizeCandles((c.dipBarHours===2?ctx?.twoHour:ctx?.sixHour)??[]),daily=normalizeCandles(ctx?.daily??[]),last=six.at(-1);
  const out={strategy:'dip-6h',setup:'6h-dip-in-daily-uptrend',trend:'unconfirmed',price:price??last?.close??null,support:null,resistance:null,atr:0,levels:[],trendlines:[],signal:'WAIT',stop:null,target:null,reason:'Need 30 completed 6h bars and 101 daily bars.'};
  if(six.length<30||daily.length<101||!out.price)return out;
  const r=rsiSeries(six.map(b=>b.close)).at(-1),e100=emaSeries(daily.map(b=>b.close),100).at(-1),up=daily.at(-1).close>e100,k=c.dipRsi??25;
