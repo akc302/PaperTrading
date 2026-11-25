@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "generatedAt": "2026-11-25T06:56:52.967Z",
+  "generatedAt": "2026-11-25T07:47:14.687Z",
   "goal": 85000,
   "equity": 29282.647920248248,
   "startingEquity": 30000,
@@ -58,7 +58,7 @@
     },
     "LINK-USD": {
       "strategy": "dip-6h",
-      "approach": "aggressive-day-hold+regime-block",
+      "approach": "aggressive-day-hold+regime-block+ml-filter",
       "decision": "keep"
     },
     "AVAX-USD": {
@@ -70,12 +70,12 @@
   "agents": {
     "trader": {
       "role": "5-minute paper trader",
-      "lastRunMinutesAgo": 1,
+      "lastRunMinutesAgo": 2,
       "healthy": true
     },
     "researcher": {
       "role": "Claude every 5h: loss analysis, backtest, rule adoption",
-      "lastRunHoursAgo": 1.3,
+      "lastRunHoursAgo": 0,
       "healthy": true,
       "sweep": {
         "at": "2026-11-25T05:39:06.755Z",
@@ -202,7 +202,7 @@
     "windowDays": 30,
     "label": "Estimated time to $85,000 at the trailing 30-day growth rate (not a promise)",
     "status": "insufficient-history",
-    "spanDays": 4.289501932870459,
+    "spanDays": 4.324475543981901,
     "message": "Needs at least 7 days of equity history."
   },
   "scorecard": [
@@ -361,11 +361,11 @@
     {
       "id": "daytrader-range",
       "label": "Day trader: buy 24h range low, sell near high, up to 50% per trade",
-      "equity": 28567.91762171475,
+      "equity": 28323.42411736415,
       "initial": 29865.26287940766,
       "netPnl": -998.0876365698911,
       "profitFactor": 0.08474406057398565,
-      "maxDrawdown": 0.05058970442694578,
+      "maxDrawdown": 0.05627086524134389,
       "winRate": 0.2,
       "avgWin": 92.41349385251631,
       "avgLoss": -272.62528260560185,
@@ -375,26 +375,26 @@
       "takerFills": 3,
       "openPositions": 3,
       "pause": "normal",
-      "drawdown": 0.046878400252571506
+      "drawdown": 0.055035524026177174
     },
     {
       "id": "sr-scalper",
       "label": "Support/resistance scalper: buy within 1.5% of support, 1h hold, about 100 trades a day for ML training, 1/4 risk",
-      "equity": 29280.003550597525,
+      "equity": 29031.102601462,
       "initial": 29282.647920248248,
-      "netPnl": 3.2472869949862124,
-      "profitFactor": "no losses",
-      "maxDrawdown": 0.0008672953280918565,
-      "winRate": 1,
+      "netPnl": -227.9361389195842,
+      "profitFactor": 0.014046365919787812,
+      "maxDrawdown": 0.00897879145129617,
+      "winRate": 0.3333333333333333,
       "avgWin": 3.2472869949862124,
-      "avgLoss": null,
-      "closedTrades": 1,
-      "fees": 16.444375907544654,
-      "makerFills": 2,
-      "takerFills": 0,
+      "avgLoss": -115.59171295728521,
+      "closedTrades": 3,
+      "fees": 65.28223595963301,
+      "makerFills": 4,
+      "takerFills": 2,
       "openPositions": 1,
       "pause": "normal",
-      "drawdown": 0.0004821758453569247
+      "drawdown": 0.008978791451296209
     }
   ],
   "drawdownPause": {
@@ -407,7 +407,7 @@
   },
   "verdict": "needs-attention",
   "issues": [
-    "No new paper entry for 25h; current rules may be too strict for this market."
+    "No new paper entry for 26h; current rules may be too strict for this market."
   ],
   "dispatch": []
 }
