@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "generatedAt": "2026-11-26T00:02:15.174Z",
+  "generatedAt": "2026-11-26T02:29:47.380Z",
   "goal": 85000,
   "equity": 29282.647920248248,
   "startingEquity": 30000,
@@ -70,15 +70,15 @@
   "agents": {
     "trader": {
       "role": "5-minute paper trader",
-      "lastRunMinutesAgo": 2,
+      "lastRunMinutesAgo": 4,
       "healthy": true
     },
     "researcher": {
       "role": "Claude every 5h: loss analysis, backtest, rule adoption",
-      "lastRunHoursAgo": 0,
-      "healthy": true,
+      "lastRunHoursAgo": 2.5,
+      "healthy": false,
       "sweep": {
-        "at": "2026-11-25T10:14:46.871Z",
+        "at": "2026-11-26T02:20:26.180Z",
         "source": "data/history 1h (1 year)",
         "days": 365,
         "rulesTested": 54,
@@ -87,8 +87,8 @@
           "coinsInUptrend": [],
           "share": 0,
           "state": "down",
-          "btc7dPct": -7.91,
-          "btc30dPct": -25.37
+          "btc7dPct": -4.13,
+          "btc30dPct": -24.53
         },
         "best": {
           "config": {
@@ -143,7 +143,7 @@
         "id": "history",
         "label": "28+ days of forward paper trading with the research team",
         "pass": false,
-        "value": "4.8 days"
+        "value": "4.9 days"
       },
       {
         "id": "sample",
@@ -185,7 +185,7 @@
         "id": "uptime",
         "label": "Trader ran in 95%+ of hours over the last 7 days",
         "pass": false,
-        "value": "54%"
+        "value": "65%"
       },
       {
         "id": "integrity",
@@ -202,7 +202,7 @@
     "windowDays": 30,
     "label": "Estimated time to $85,000 at the trailing 30-day growth rate (not a promise)",
     "status": "insufficient-history",
-    "spanDays": 5.001564513889176,
+    "spanDays": 5.104020601853176,
     "message": "Needs at least 7 days of equity history."
   },
   "scorecard": [
@@ -285,7 +285,7 @@
     {
       "id": "hourly-legacy",
       "label": "Previous hourly rules",
-      "equity": 29407.426571501393,
+      "equity": 29632.7875102419,
       "initial": 29975.046647868254,
       "netPnl": -679.3765429670811,
       "profitFactor": 0.640751536898892,
@@ -299,12 +299,12 @@
       "takerFills": 15,
       "openPositions": 3,
       "pause": "normal",
-      "drawdown": 0.04086309516128073
+      "drawdown": 0.03351284325366943
     },
     {
       "id": "lab-hourly",
       "label": "Lab hourly per-market rules",
-      "equity": 29122.662781500756,
+      "equity": 29372.787061132556,
       "initial": 29975.046647868254,
       "netPnl": -1061.6006064686837,
       "profitFactor": 0.5203595975786848,
@@ -318,26 +318,26 @@
       "takerFills": 19,
       "openPositions": 3,
       "pause": "normal",
-      "drawdown": 0.04458123637188116
+      "drawdown": 0.03637548156875281
     },
     {
       "id": "scout-daytrade",
       "label": "Day-trade scout: support bounce (1.5% zone), 4h hold, 1/4 risk",
-      "equity": 28683.23655948649,
+      "equity": 28739.897169711287,
       "initial": 29788.7180982152,
-      "netPnl": -1108.0843100373675,
-      "profitFactor": 0.006755954447886278,
+      "netPnl": -1048.820928503914,
+      "profitFactor": 0.059877364338980756,
       "maxDrawdown": 0.03824452079434491,
-      "winRate": 0.0625,
-      "avgWin": 7.537087341780762,
+      "winRate": 0.16666666666666666,
+      "avgWin": 22.266822958411364,
       "avgLoss": -74.37475982527654,
-      "closedTrades": 16,
-      "fees": 355.6531249179039,
-      "makerFills": 17,
+      "closedTrades": 18,
+      "fees": 378.4203497381252,
+      "makerFills": 21,
       "takerFills": 15,
-      "openPositions": 2,
+      "openPositions": 0,
       "pause": "normal",
-      "drawdown": 0.0371107455877715
+      "drawdown": 0.03520866272411882
     },
     {
       "id": "scout-dip6h",
@@ -380,40 +380,40 @@
     {
       "id": "sr-scalper",
       "label": "Support/resistance scalper: buy within 1.5% of support, 1h hold, about 100 trades a day for ML training, 1/4 risk",
-      "equity": 28793.95204386044,
+      "equity": 28788.781954389004,
       "initial": 29282.647920248248,
-      "netPnl": -488.69587638780746,
-      "profitFactor": 0.0066009393700211146,
-      "maxDrawdown": 0.0170742894221676,
-      "winRate": 0.1111111111111111,
+      "netPnl": -493.8659658592448,
+      "profitFactor": 0.006532288118133148,
+      "maxDrawdown": 0.017570668366827406,
+      "winRate": 0.1,
       "avgWin": 3.2472869949862124,
-      "avgLoss": -61.49289542284921,
-      "closedTrades": 9,
-      "fees": 183.22990775738816,
-      "makerFills": 13,
+      "avgLoss": -55.234805872692334,
+      "closedTrades": 10,
+      "fees": 194.4027585078213,
+      "makerFills": 15,
       "takerFills": 5,
       "openPositions": 0,
       "pause": "normal",
-      "drawdown": 0.0170742894221676
+      "drawdown": 0.017250778354972796
     },
     {
       "id": "owner-sr",
       "label": "Owner style: buy near support, sell at resistance (about +1.8%), all 8 coins, 24h hold, about 28% per trade",
-      "equity": 29308.547023378833,
+      "equity": 29539.588455973048,
       "initial": 29282.647920248248,
-      "netPnl": -14.674907405186625,
-      "profitFactor": 0,
+      "netPnl": 119.99061810667233,
+      "profitFactor": 9.176584341803988,
       "maxDrawdown": 0.004068470575384247,
-      "winRate": 0,
-      "avgWin": null,
+      "winRate": 0.5,
+      "avgWin": 134.66552551185896,
       "avgLoss": -14.674907405186625,
-      "closedTrades": 1,
-      "fees": 3.968767919701518,
-      "makerFills": 1,
+      "closedTrades": 2,
+      "fees": 22.534042090537376,
+      "makerFills": 3,
       "takerFills": 1,
-      "openPositions": 2,
+      "openPositions": 1,
       "pause": "normal",
-      "drawdown": 0.0019182571426065165
+      "drawdown": 0.00015764186807798453
     }
   ],
   "drawdownPause": {
@@ -426,7 +426,8 @@
   },
   "verdict": "needs-attention",
   "issues": [
-    "No new paper entry for 42h; current rules may be too strict for this market."
+    "No new paper entry for 44h; current rules may be too strict for this market.",
+    "Researcher (agent 2) has not written data/research-notes.json for 6h; expected every 5h."
   ],
   "dispatch": []
 }

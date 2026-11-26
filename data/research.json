@@ -1,92 +1,32 @@
 {
   "version": 1,
-  "reviewDate": "2026-11-25",
-  "reviewedAt": "2026-11-25T04:31:52.105Z",
+  "reviewDate": "2026-11-26",
+  "reviewedAt": "2026-11-26T02:26:57.686Z",
   "cadence": "once daily",
   "executionCoverage": {
     "hoursObserved": 24,
-    "complete": true,
+    "complete": false,
     "note": "Missing or sparse execution checks must not be mistaken for a profitable or losing strategy."
   },
   "outcomes": {
-    "periodStart": "2026-11-24T00:00:00.000Z",
-    "periodEnd": "2026-11-25T00:00:00.000Z",
-    "closedTrades": 4,
+    "periodStart": "2026-11-25T00:00:00.000Z",
+    "periodEnd": "2026-11-26T00:00:00.000Z",
+    "closedTrades": 0,
     "wins": 0,
-    "losses": 4,
+    "losses": 0,
     "flats": 0,
-    "winRate": 0,
-    "netPnl": -582.6149591594126,
-    "grossFees": 112.28411752379291,
-    "rebatesCredited": 28.07102938094823,
+    "winRate": null,
+    "netPnl": 0,
+    "grossFees": 0,
+    "rebatesCredited": 0,
     "pendingRebates": 0,
-    "expectancy": -145.65373978985315,
-    "profitFactor": 0,
-    "maxDrawdown": 0.022624549882833595,
-    "byMarket": {
-      "ADA-USD": {
-        "trades": 2,
-        "wins": 0,
-        "losses": 2,
-        "netPnl": -273.45481113013506,
-        "grossFees": 66.20325679097442,
-        "rebatesCredited": 16.550814197743605
-      },
-      "XRP-USD": {
-        "trades": 1,
-        "wins": 0,
-        "losses": 1,
-        "netPnl": -195.40643232982478,
-        "grossFees": 32.873845548614256,
-        "rebatesCredited": 8.218461387153564
-      },
-      "AVAX-USD": {
-        "trades": 1,
-        "wins": 0,
-        "losses": 1,
-        "netPnl": -113.75371569945275,
-        "grossFees": 13.207015184204238,
-        "rebatesCredited": 3.3017537960510595
-      }
-    },
-    "bySetup": {
-      "aggressive-exploration": {
-        "trades": 4,
-        "wins": 0,
-        "losses": 4,
-        "netPnl": -582.6149591594126,
-        "grossFees": 112.28411752379291,
-        "rebatesCredited": 28.07102938094823
-      }
-    },
-    "byExit": {
-      "time-exit": {
-        "trades": 1,
-        "wins": 0,
-        "losses": 1,
-        "netPnl": -99.70111123104034,
-        "grossFees": 33.27368942597357,
-        "rebatesCredited": 8.318422356493393
-      },
-      "quote-stop": {
-        "trades": 3,
-        "wins": 0,
-        "losses": 3,
-        "netPnl": -482.91384792837226,
-        "grossFees": 79.01042809781934,
-        "rebatesCredited": 19.752607024454836
-      }
-    },
-    "byPattern": {
-      "confirmed": {
-        "trades": 4,
-        "wins": 0,
-        "losses": 4,
-        "netPnl": -582.6149591594126,
-        "grossFees": 112.28411752379291,
-        "rebatesCredited": 28.07102938094823
-      }
-    },
+    "expectancy": null,
+    "profitFactor": null,
+    "maxDrawdown": 0,
+    "byMarket": {},
+    "bySetup": {},
+    "byExit": {},
+    "byPattern": {},
     "note": "Completed simulated trade outcomes after modeled costs. Virtual snapshot rebalances excluded. Null ratios mean insufficient denominator, not an infinite edge."
   },
   "patternResearch": {
@@ -94,25 +34,27 @@
       "version": 1,
       "mode": "shadow",
       "timeframe": "1h",
-      "asOf": 1795579200,
-      "candles": 847,
+      "asOf": 1795658400,
+      "candles": 869,
       "confirmation": {
         "version": 1,
         "timeframe": "1h",
-        "asOf": 1795579200,
+        "asOf": 1795658400,
         "mode": "observe",
-        "confirmed": false,
-        "matches": [],
+        "confirmed": true,
+        "matches": [
+          "closing-high-breakout-20h"
+        ],
         "context": [],
         "status": "evaluated",
-        "volumeRatio": 0.5672908369775852,
-        "reason": "No completed-candle entry confirmation; context alone is insufficient.",
+        "volumeRatio": 0.4535889603901666,
+        "reason": "Completed hourly candle matches an explicit entry rule.",
         "levels": {
-          "closingHigh20": 60412.79,
-          "ma20": 59782.46549999999
+          "closingHigh20": 60433.78,
+          "ma20": 59304.2125
         },
-        "rsi": 37.532429468380954,
-        "previousRsi": 33.97589431669908
+        "rsi": 67.92665559458953,
+        "previousRsi": 64.35918433951048
       },
       "status": "insufficient-trades",
       "recommendation": "Observe only; keep the current entry rules.",
@@ -136,8 +78,8 @@
         }
       },
       "holdout": {
-        "start": 1794661200,
-        "end": 1795579200,
+        "start": 1794718800,
+        "end": 1795658400,
         "baseline": {
           "returnPct": 0,
           "netPnl": 0,
@@ -161,31 +103,33 @@
         "costs": "existing account fee, rebate and slippage configuration",
         "risk": "identical risk caps and targets in both arms"
       },
-      "splitTime": 1794661200
+      "splitTime": 1794718800
     },
     "ETH-USD": {
       "version": 1,
       "mode": "shadow",
       "timeframe": "1h",
-      "asOf": 1795579200,
-      "candles": 847,
+      "asOf": 1795658400,
+      "candles": 869,
       "confirmation": {
         "version": 1,
         "timeframe": "1h",
-        "asOf": 1795579200,
+        "asOf": 1795658400,
         "mode": "observe",
-        "confirmed": false,
-        "matches": [],
+        "confirmed": true,
+        "matches": [
+          "closing-high-breakout-20h"
+        ],
         "context": [],
         "status": "evaluated",
-        "volumeRatio": 0.6131441403272829,
-        "reason": "No completed-candle entry confirmation; context alone is insufficient.",
+        "volumeRatio": 0.23316625748996148,
+        "reason": "Completed hourly candle matches an explicit entry rule.",
         "levels": {
-          "closingHigh20": 1702.57,
-          "ma20": 1678.2694999999999
+          "closingHigh20": 1695.11,
+          "ma20": 1663.1145000000004
         },
-        "rsi": 37.024077037282424,
-        "previousRsi": 31.45470157063339
+        "rsi": 65.2968105422095,
+        "previousRsi": 63.261020050385596
       },
       "status": "insufficient-trades",
       "recommendation": "Observe only; keep the current entry rules.",
@@ -209,8 +153,8 @@
         }
       },
       "holdout": {
-        "start": 1794661200,
-        "end": 1795579200,
+        "start": 1794718800,
+        "end": 1795658400,
         "baseline": {
           "returnPct": 0,
           "netPnl": 0,
@@ -234,31 +178,33 @@
         "costs": "existing account fee, rebate and slippage configuration",
         "risk": "identical risk caps and targets in both arms"
       },
-      "splitTime": 1794661200
+      "splitTime": 1794718800
     },
     "SOL-USD": {
       "version": 1,
       "mode": "shadow",
       "timeframe": "1h",
-      "asOf": 1795579200,
-      "candles": 847,
+      "asOf": 1795658400,
+      "candles": 869,
       "confirmation": {
         "version": 1,
         "timeframe": "1h",
-        "asOf": 1795579200,
+        "asOf": 1795658400,
         "mode": "observe",
-        "confirmed": false,
-        "matches": [],
+        "confirmed": true,
+        "matches": [
+          "closing-high-breakout-20h"
+        ],
         "context": [],
         "status": "evaluated",
-        "volumeRatio": 0.6865248076020558,
-        "reason": "No completed-candle entry confirmation; context alone is insufficient.",
+        "volumeRatio": 0.4166389811479129,
+        "reason": "Completed hourly candle matches an explicit entry rule.",
         "levels": {
-          "closingHigh20": 71.42,
-          "ma20": 69.65950000000001
+          "closingHigh20": 70.73,
+          "ma20": 68.88399999999999
         },
-        "rsi": 39.546611148735295,
-        "previousRsi": 32.538337937941876
+        "rsi": 68.03862772229627,
+        "previousRsi": 65.97629139968959
       },
       "status": "insufficient-trades",
       "recommendation": "Observe only; keep the current entry rules.",
@@ -282,8 +228,8 @@
         }
       },
       "holdout": {
-        "start": 1794661200,
-        "end": 1795579200,
+        "start": 1794718800,
+        "end": 1795658400,
         "baseline": {
           "returnPct": 0,
           "netPnl": 0,
@@ -307,31 +253,33 @@
         "costs": "existing account fee, rebate and slippage configuration",
         "risk": "identical risk caps and targets in both arms"
       },
-      "splitTime": 1794661200
+      "splitTime": 1794718800
     },
     "XRP-USD": {
       "version": 1,
       "mode": "shadow",
       "timeframe": "1h",
-      "asOf": 1795579200,
-      "candles": 846,
+      "asOf": 1795658400,
+      "candles": 868,
       "confirmation": {
         "version": 1,
         "timeframe": "1h",
-        "asOf": 1795579200,
+        "asOf": 1795658400,
         "mode": "observe",
-        "confirmed": false,
-        "matches": [],
+        "confirmed": true,
+        "matches": [
+          "closing-high-breakout-20h"
+        ],
         "context": [],
         "status": "evaluated",
-        "volumeRatio": 0.5532975034302029,
-        "reason": "No completed-candle entry confirmation; context alone is insufficient.",
+        "volumeRatio": 0.7075636878766921,
+        "reason": "Completed hourly candle matches an explicit entry rule.",
         "levels": {
-          "closingHigh20": 0.9428,
-          "ma20": 0.9221199999999998
+          "closingHigh20": 0.9413,
+          "ma20": 0.9216799999999999
         },
-        "rsi": 44.86065103092824,
-        "previousRsi": 42.09062076634762
+        "rsi": 69.95691561600906,
+        "previousRsi": 63.98850606758177
       },
       "status": "insufficient-trades",
       "recommendation": "Observe only; keep the current entry rules.",
@@ -355,8 +303,8 @@
         }
       },
       "holdout": {
-        "start": 1794664800,
-        "end": 1795579200,
+        "start": 1794718800,
+        "end": 1795658400,
         "baseline": {
           "returnPct": 0,
           "netPnl": 0,
@@ -380,31 +328,33 @@
         "costs": "existing account fee, rebate and slippage configuration",
         "risk": "identical risk caps and targets in both arms"
       },
-      "splitTime": 1794664800
+      "splitTime": 1794718800
     },
     "ADA-USD": {
       "version": 1,
       "mode": "shadow",
       "timeframe": "1h",
-      "asOf": 1795579200,
-      "candles": 846,
+      "asOf": 1795658400,
+      "candles": 868,
       "confirmation": {
         "version": 1,
         "timeframe": "1h",
-        "asOf": 1795579200,
+        "asOf": 1795658400,
         "mode": "observe",
-        "confirmed": false,
-        "matches": [],
+        "confirmed": true,
+        "matches": [
+          "closing-high-breakout-20h"
+        ],
         "context": [],
         "status": "evaluated",
-        "volumeRatio": 0.31499189476136735,
-        "reason": "No completed-candle entry confirmation; context alone is insufficient.",
+        "volumeRatio": 0.3225018695396965,
+        "reason": "Completed hourly candle matches an explicit entry rule.",
         "levels": {
-          "closingHigh20": 0.14764,
-          "ma20": 0.144463
+          "closingHigh20": 0.14705,
+          "ma20": 0.1428965
         },
-        "rsi": 40.522775538580404,
-        "previousRsi": 35.66989646110126
+        "rsi": 65.42938332882366,
+        "previousRsi": 62.46661897474382
       },
       "status": "insufficient-trades",
       "recommendation": "Observe only; keep the current entry rules.",
@@ -428,8 +378,8 @@
         }
       },
       "holdout": {
-        "start": 1794664800,
-        "end": 1795579200,
+        "start": 1794718800,
+        "end": 1795658400,
         "baseline": {
           "returnPct": 0,
           "netPnl": 0,
@@ -453,31 +403,33 @@
         "costs": "existing account fee, rebate and slippage configuration",
         "risk": "identical risk caps and targets in both arms"
       },
-      "splitTime": 1794664800
+      "splitTime": 1794718800
     },
     "DOGE-USD": {
       "version": 1,
       "mode": "shadow",
       "timeframe": "1h",
-      "asOf": 1795579200,
-      "candles": 846,
+      "asOf": 1795658400,
+      "candles": 868,
       "confirmation": {
         "version": 1,
         "timeframe": "1h",
-        "asOf": 1795579200,
+        "asOf": 1795658400,
         "mode": "observe",
-        "confirmed": false,
-        "matches": [],
+        "confirmed": true,
+        "matches": [
+          "closing-high-breakout-20h"
+        ],
         "context": [],
         "status": "evaluated",
-        "volumeRatio": 0.5935885940610268,
-        "reason": "No completed-candle entry confirmation; context alone is insufficient.",
+        "volumeRatio": 0.3507424927166127,
+        "reason": "Completed hourly candle matches an explicit entry rule.",
         "levels": {
-          "closingHigh20": 0.05613,
-          "ma20": 0.055165
+          "closingHigh20": 0.05631,
+          "ma20": 0.054698999999999984
         },
-        "rsi": 35.48593043337203,
-        "previousRsi": 35.90135446726737
+        "rsi": 72.02849111625036,
+        "previousRsi": 69.15796017541456
       },
       "status": "insufficient-trades",
       "recommendation": "Observe only; keep the current entry rules.",
@@ -501,8 +453,8 @@
         }
       },
       "holdout": {
-        "start": 1794664800,
-        "end": 1795579200,
+        "start": 1794718800,
+        "end": 1795658400,
         "baseline": {
           "returnPct": 0,
           "netPnl": 0,
@@ -526,31 +478,33 @@
         "costs": "existing account fee, rebate and slippage configuration",
         "risk": "identical risk caps and targets in both arms"
       },
-      "splitTime": 1794664800
+      "splitTime": 1794718800
     },
     "LINK-USD": {
       "version": 1,
       "mode": "shadow",
       "timeframe": "1h",
-      "asOf": 1795579200,
-      "candles": 846,
+      "asOf": 1795658400,
+      "candles": 868,
       "confirmation": {
         "version": 1,
         "timeframe": "1h",
-        "asOf": 1795579200,
+        "asOf": 1795658400,
         "mode": "observe",
-        "confirmed": false,
-        "matches": [],
+        "confirmed": true,
+        "matches": [
+          "closing-high-breakout-20h"
+        ],
         "context": [],
         "status": "evaluated",
-        "volumeRatio": 0.2309368612852095,
-        "reason": "No completed-candle entry confirmation; context alone is insufficient.",
+        "volumeRatio": 0.47381491334501563,
+        "reason": "Completed hourly candle matches an explicit entry rule.",
         "levels": {
-          "closingHigh20": 9.053,
-          "ma20": 8.8591
+          "closingHigh20": 9.105,
+          "ma20": 8.8285
         },
-        "rsi": 43.53899591930341,
-        "previousRsi": 37.34074012754834
+        "rsi": 70.2720552021338,
+        "previousRsi": 66.1212320252897
       },
       "status": "insufficient-trades",
       "recommendation": "Observe only; keep the current entry rules.",
@@ -574,8 +528,8 @@
         }
       },
       "holdout": {
-        "start": 1794664800,
-        "end": 1795579200,
+        "start": 1794718800,
+        "end": 1795658400,
         "baseline": {
           "returnPct": 0,
           "netPnl": 0,
@@ -599,31 +553,33 @@
         "costs": "existing account fee, rebate and slippage configuration",
         "risk": "identical risk caps and targets in both arms"
       },
-      "splitTime": 1794664800
+      "splitTime": 1794718800
     },
     "AVAX-USD": {
       "version": 1,
       "mode": "shadow",
       "timeframe": "1h",
-      "asOf": 1795579200,
-      "candles": 846,
+      "asOf": 1795658400,
+      "candles": 868,
       "confirmation": {
         "version": 1,
         "timeframe": "1h",
-        "asOf": 1795579200,
+        "asOf": 1795658400,
         "mode": "observe",
-        "confirmed": false,
-        "matches": [],
+        "confirmed": true,
+        "matches": [
+          "closing-high-breakout-20h"
+        ],
         "context": [],
         "status": "evaluated",
-        "volumeRatio": 0.5321784675548424,
-        "reason": "No completed-candle entry confirmation; context alone is insufficient.",
+        "volumeRatio": 0.16555384579442103,
+        "reason": "Completed hourly candle matches an explicit entry rule.",
         "levels": {
-          "closingHigh20": 6.746,
-          "ma20": 6.588050000000001
+          "closingHigh20": 6.632,
+          "ma20": 6.496899999999999
         },
-        "rsi": 39.4323113207728,
-        "previousRsi": 32.60903405120929
+        "rsi": 66.94313040302023,
+        "previousRsi": 63.20772696881054
       },
       "status": "insufficient-trades",
       "recommendation": "Observe only; keep the current entry rules.",
@@ -647,8 +603,8 @@
         }
       },
       "holdout": {
-        "start": 1794664800,
-        "end": 1795579200,
+        "start": 1794718800,
+        "end": 1795658400,
         "baseline": {
           "returnPct": 0,
           "netPnl": 0,
@@ -672,7 +628,7 @@
         "costs": "existing account fee, rebate and slippage configuration",
         "risk": "identical risk caps and targets in both arms"
       },
-      "splitTime": 1794664800
+      "splitTime": 1794718800
     }
   },
   "tradeModel": {
@@ -740,6 +696,704 @@
     "Historical validation does not guarantee future profit."
   ],
   "history": [
+    {
+      "version": 1,
+      "reviewDate": "2026-11-26",
+      "reviewedAt": "2026-11-26T02:26:57.686Z",
+      "cadence": "once daily",
+      "executionCoverage": {
+        "hoursObserved": 24,
+        "complete": false,
+        "note": "Missing or sparse execution checks must not be mistaken for a profitable or losing strategy."
+      },
+      "outcomes": {
+        "periodStart": "2026-11-25T00:00:00.000Z",
+        "periodEnd": "2026-11-26T00:00:00.000Z",
+        "closedTrades": 0,
+        "wins": 0,
+        "losses": 0,
+        "flats": 0,
+        "winRate": null,
+        "netPnl": 0,
+        "grossFees": 0,
+        "rebatesCredited": 0,
+        "pendingRebates": 0,
+        "expectancy": null,
+        "profitFactor": null,
+        "maxDrawdown": 0,
+        "byMarket": {},
+        "bySetup": {},
+        "byExit": {},
+        "byPattern": {},
+        "note": "Completed simulated trade outcomes after modeled costs. Virtual snapshot rebalances excluded. Null ratios mean insufficient denominator, not an infinite edge."
+      },
+      "patternResearch": {
+        "BTC-USD": {
+          "version": 1,
+          "mode": "shadow",
+          "timeframe": "1h",
+          "asOf": 1795658400,
+          "candles": 869,
+          "confirmation": {
+            "version": 1,
+            "timeframe": "1h",
+            "asOf": 1795658400,
+            "mode": "observe",
+            "confirmed": true,
+            "matches": [
+              "closing-high-breakout-20h"
+            ],
+            "context": [],
+            "status": "evaluated",
+            "volumeRatio": 0.4535889603901666,
+            "reason": "Completed hourly candle matches an explicit entry rule.",
+            "levels": {
+              "closingHigh20": 60433.78,
+              "ma20": 59304.2125
+            },
+            "rsi": 67.92665559458953,
+            "previousRsi": 64.35918433951048
+          },
+          "status": "insufficient-trades",
+          "recommendation": "Observe only; keep the current entry rules.",
+          "warning": "Hourly candle replay is an approximation of five-minute quote execution, not a forecast. No NYSE opening-range rule is applied to 24/7 crypto.",
+          "training": {
+            "baseline": {
+              "returnPct": 0,
+              "netPnl": 0,
+              "drawdown": 0,
+              "closedTrades": 0,
+              "winRate": 0,
+              "totalFees": 0
+            },
+            "filtered": {
+              "returnPct": 0,
+              "netPnl": 0,
+              "drawdown": 0,
+              "closedTrades": 0,
+              "winRate": 0,
+              "totalFees": 0
+            }
+          },
+          "holdout": {
+            "start": 1794718800,
+            "end": 1795658400,
+            "baseline": {
+              "returnPct": 0,
+              "netPnl": 0,
+              "drawdown": 0,
+              "closedTrades": 0,
+              "winRate": 0,
+              "totalFees": 0
+            },
+            "filtered": {
+              "returnPct": 0,
+              "netPnl": 0,
+              "drawdown": 0,
+              "closedTrades": 0,
+              "winRate": 0,
+              "totalFees": 0
+            }
+          },
+          "reason": "Fewer than five closes in at least one comparison sample.",
+          "assumptions": {
+            "execution": "next hourly open, adverse slippage; stop first if ambiguous",
+            "costs": "existing account fee, rebate and slippage configuration",
+            "risk": "identical risk caps and targets in both arms"
+          },
+          "splitTime": 1794718800
+        },
+        "ETH-USD": {
+          "version": 1,
+          "mode": "shadow",
+          "timeframe": "1h",
+          "asOf": 1795658400,
+          "candles": 869,
+          "confirmation": {
+            "version": 1,
+            "timeframe": "1h",
+            "asOf": 1795658400,
+            "mode": "observe",
+            "confirmed": true,
+            "matches": [
+              "closing-high-breakout-20h"
+            ],
+            "context": [],
+            "status": "evaluated",
+            "volumeRatio": 0.23316625748996148,
+            "reason": "Completed hourly candle matches an explicit entry rule.",
+            "levels": {
+              "closingHigh20": 1695.11,
+              "ma20": 1663.1145000000004
+            },
+            "rsi": 65.2968105422095,
+            "previousRsi": 63.261020050385596
+          },
+          "status": "insufficient-trades",
+          "recommendation": "Observe only; keep the current entry rules.",
+          "warning": "Hourly candle replay is an approximation of five-minute quote execution, not a forecast. No NYSE opening-range rule is applied to 24/7 crypto.",
+          "training": {
+            "baseline": {
+              "returnPct": 0,
+              "netPnl": 0,
+              "drawdown": 0,
+              "closedTrades": 0,
+              "winRate": 0,
+              "totalFees": 0
+            },
+            "filtered": {
+              "returnPct": 0,
+              "netPnl": 0,
+              "drawdown": 0,
+              "closedTrades": 0,
+              "winRate": 0,
+              "totalFees": 0
+            }
+          },
+          "holdout": {
+            "start": 1794718800,
+            "end": 1795658400,
+            "baseline": {
+              "returnPct": 0,
+              "netPnl": 0,
+              "drawdown": 0,
+              "closedTrades": 0,
+              "winRate": 0,
+              "totalFees": 0
+            },
+            "filtered": {
+              "returnPct": 0,
+              "netPnl": 0,
+              "drawdown": 0,
+              "closedTrades": 0,
+              "winRate": 0,
+              "totalFees": 0
+            }
+          },
+          "reason": "Fewer than five closes in at least one comparison sample.",
+          "assumptions": {
+            "execution": "next hourly open, adverse slippage; stop first if ambiguous",
+            "costs": "existing account fee, rebate and slippage configuration",
+            "risk": "identical risk caps and targets in both arms"
+          },
+          "splitTime": 1794718800
+        },
+        "SOL-USD": {
+          "version": 1,
+          "mode": "shadow",
+          "timeframe": "1h",
+          "asOf": 1795658400,
+          "candles": 869,
+          "confirmation": {
+            "version": 1,
+            "timeframe": "1h",
+            "asOf": 1795658400,
+            "mode": "observe",
+            "confirmed": true,
+            "matches": [
+              "closing-high-breakout-20h"
+            ],
+            "context": [],
+            "status": "evaluated",
+            "volumeRatio": 0.4166389811479129,
+            "reason": "Completed hourly candle matches an explicit entry rule.",
+            "levels": {
+              "closingHigh20": 70.73,
+              "ma20": 68.88399999999999
+            },
+            "rsi": 68.03862772229627,
+            "previousRsi": 65.97629139968959
+          },
+          "status": "insufficient-trades",
+          "recommendation": "Observe only; keep the current entry rules.",
+          "warning": "Hourly candle replay is an approximation of five-minute quote execution, not a forecast. No NYSE opening-range rule is applied to 24/7 crypto.",
+          "training": {
+            "baseline": {
+              "returnPct": 0,
+              "netPnl": 0,
+              "drawdown": 0,
+              "closedTrades": 0,
+              "winRate": 0,
+              "totalFees": 0
+            },
+            "filtered": {
+              "returnPct": 0,
+              "netPnl": 0,
+              "drawdown": 0,
+              "closedTrades": 0,
+              "winRate": 0,
+              "totalFees": 0
+            }
+          },
+          "holdout": {
+            "start": 1794718800,
+            "end": 1795658400,
+            "baseline": {
+              "returnPct": 0,
+              "netPnl": 0,
+              "drawdown": 0,
+              "closedTrades": 0,
+              "winRate": 0,
+              "totalFees": 0
+            },
+            "filtered": {
+              "returnPct": 0,
+              "netPnl": 0,
+              "drawdown": 0,
+              "closedTrades": 0,
+              "winRate": 0,
+              "totalFees": 0
+            }
+          },
+          "reason": "Fewer than five closes in at least one comparison sample.",
+          "assumptions": {
+            "execution": "next hourly open, adverse slippage; stop first if ambiguous",
+            "costs": "existing account fee, rebate and slippage configuration",
+            "risk": "identical risk caps and targets in both arms"
+          },
+          "splitTime": 1794718800
+        },
+        "XRP-USD": {
+          "version": 1,
+          "mode": "shadow",
+          "timeframe": "1h",
+          "asOf": 1795658400,
+          "candles": 868,
+          "confirmation": {
+            "version": 1,
+            "timeframe": "1h",
+            "asOf": 1795658400,
+            "mode": "observe",
+            "confirmed": true,
+            "matches": [
+              "closing-high-breakout-20h"
+            ],
+            "context": [],
+            "status": "evaluated",
+            "volumeRatio": 0.7075636878766921,
+            "reason": "Completed hourly candle matches an explicit entry rule.",
+            "levels": {
+              "closingHigh20": 0.9413,
+              "ma20": 0.9216799999999999
+            },
+            "rsi": 69.95691561600906,
+            "previousRsi": 63.98850606758177
+          },
+          "status": "insufficient-trades",
+          "recommendation": "Observe only; keep the current entry rules.",
+          "warning": "Hourly candle replay is an approximation of five-minute quote execution, not a forecast. No NYSE opening-range rule is applied to 24/7 crypto.",
+          "training": {
+            "baseline": {
+              "returnPct": 0,
+              "netPnl": 0,
+              "drawdown": 0,
+              "closedTrades": 0,
+              "winRate": 0,
+              "totalFees": 0
+            },
+            "filtered": {
+              "returnPct": 0,
+              "netPnl": 0,
+              "drawdown": 0,
+              "closedTrades": 0,
+              "winRate": 0,
+              "totalFees": 0
+            }
+          },
+          "holdout": {
+            "start": 1794718800,
+            "end": 1795658400,
+            "baseline": {
+              "returnPct": 0,
+              "netPnl": 0,
+              "drawdown": 0,
+              "closedTrades": 0,
+              "winRate": 0,
+              "totalFees": 0
+            },
+            "filtered": {
+              "returnPct": 0,
+              "netPnl": 0,
+              "drawdown": 0,
+              "closedTrades": 0,
+              "winRate": 0,
+              "totalFees": 0
+            }
+          },
+          "reason": "Fewer than five closes in at least one comparison sample.",
+          "assumptions": {
+            "execution": "next hourly open, adverse slippage; stop first if ambiguous",
+            "costs": "existing account fee, rebate and slippage configuration",
+            "risk": "identical risk caps and targets in both arms"
+          },
+          "splitTime": 1794718800
+        },
+        "ADA-USD": {
+          "version": 1,
+          "mode": "shadow",
+          "timeframe": "1h",
+          "asOf": 1795658400,
+          "candles": 868,
+          "confirmation": {
+            "version": 1,
+            "timeframe": "1h",
+            "asOf": 1795658400,
+            "mode": "observe",
+            "confirmed": true,
+            "matches": [
+              "closing-high-breakout-20h"
+            ],
+            "context": [],
+            "status": "evaluated",
+            "volumeRatio": 0.3225018695396965,
+            "reason": "Completed hourly candle matches an explicit entry rule.",
+            "levels": {
+              "closingHigh20": 0.14705,
+              "ma20": 0.1428965
+            },
+            "rsi": 65.42938332882366,
+            "previousRsi": 62.46661897474382
+          },
+          "status": "insufficient-trades",
+          "recommendation": "Observe only; keep the current entry rules.",
+          "warning": "Hourly candle replay is an approximation of five-minute quote execution, not a forecast. No NYSE opening-range rule is applied to 24/7 crypto.",
+          "training": {
+            "baseline": {
+              "returnPct": 0,
+              "netPnl": 0,
+              "drawdown": 0,
+              "closedTrades": 0,
+              "winRate": 0,
+              "totalFees": 0
+            },
+            "filtered": {
+              "returnPct": 0,
+              "netPnl": 0,
+              "drawdown": 0,
+              "closedTrades": 0,
+              "winRate": 0,
+              "totalFees": 0
+            }
+          },
+          "holdout": {
+            "start": 1794718800,
+            "end": 1795658400,
+            "baseline": {
+              "returnPct": 0,
+              "netPnl": 0,
+              "drawdown": 0,
+              "closedTrades": 0,
+              "winRate": 0,
+              "totalFees": 0
+            },
+            "filtered": {
+              "returnPct": 0,
+              "netPnl": 0,
+              "drawdown": 0,
+              "closedTrades": 0,
+              "winRate": 0,
+              "totalFees": 0
+            }
+          },
+          "reason": "Fewer than five closes in at least one comparison sample.",
+          "assumptions": {
+            "execution": "next hourly open, adverse slippage; stop first if ambiguous",
+            "costs": "existing account fee, rebate and slippage configuration",
+            "risk": "identical risk caps and targets in both arms"
+          },
+          "splitTime": 1794718800
+        },
+        "DOGE-USD": {
+          "version": 1,
+          "mode": "shadow",
+          "timeframe": "1h",
+          "asOf": 1795658400,
+          "candles": 868,
+          "confirmation": {
+            "version": 1,
+            "timeframe": "1h",
+            "asOf": 1795658400,
+            "mode": "observe",
+            "confirmed": true,
+            "matches": [
+              "closing-high-breakout-20h"
+            ],
+            "context": [],
+            "status": "evaluated",
+            "volumeRatio": 0.3507424927166127,
+            "reason": "Completed hourly candle matches an explicit entry rule.",
+            "levels": {
+              "closingHigh20": 0.05631,
+              "ma20": 0.054698999999999984
+            },
+            "rsi": 72.02849111625036,
+            "previousRsi": 69.15796017541456
+          },
+          "status": "insufficient-trades",
+          "recommendation": "Observe only; keep the current entry rules.",
+          "warning": "Hourly candle replay is an approximation of five-minute quote execution, not a forecast. No NYSE opening-range rule is applied to 24/7 crypto.",
+          "training": {
+            "baseline": {
+              "returnPct": 0,
+              "netPnl": 0,
+              "drawdown": 0,
+              "closedTrades": 0,
+              "winRate": 0,
+              "totalFees": 0
+            },
+            "filtered": {
+              "returnPct": 0,
+              "netPnl": 0,
+              "drawdown": 0,
+              "closedTrades": 0,
+              "winRate": 0,
+              "totalFees": 0
+            }
+          },
+          "holdout": {
+            "start": 1794718800,
+            "end": 1795658400,
+            "baseline": {
+              "returnPct": 0,
+              "netPnl": 0,
+              "drawdown": 0,
+              "closedTrades": 0,
+              "winRate": 0,
+              "totalFees": 0
+            },
+            "filtered": {
+              "returnPct": 0,
+              "netPnl": 0,
+              "drawdown": 0,
+              "closedTrades": 0,
+              "winRate": 0,
+              "totalFees": 0
+            }
+          },
+          "reason": "Fewer than five closes in at least one comparison sample.",
+          "assumptions": {
+            "execution": "next hourly open, adverse slippage; stop first if ambiguous",
+            "costs": "existing account fee, rebate and slippage configuration",
+            "risk": "identical risk caps and targets in both arms"
+          },
+          "splitTime": 1794718800
+        },
+        "LINK-USD": {
+          "version": 1,
+          "mode": "shadow",
+          "timeframe": "1h",
+          "asOf": 1795658400,
+          "candles": 868,
+          "confirmation": {
+            "version": 1,
+            "timeframe": "1h",
+            "asOf": 1795658400,
+            "mode": "observe",
+            "confirmed": true,
+            "matches": [
+              "closing-high-breakout-20h"
+            ],
+            "context": [],
+            "status": "evaluated",
+            "volumeRatio": 0.47381491334501563,
+            "reason": "Completed hourly candle matches an explicit entry rule.",
+            "levels": {
+              "closingHigh20": 9.105,
+              "ma20": 8.8285
+            },
+            "rsi": 70.2720552021338,
+            "previousRsi": 66.1212320252897
+          },
+          "status": "insufficient-trades",
+          "recommendation": "Observe only; keep the current entry rules.",
+          "warning": "Hourly candle replay is an approximation of five-minute quote execution, not a forecast. No NYSE opening-range rule is applied to 24/7 crypto.",
+          "training": {
+            "baseline": {
+              "returnPct": 0,
+              "netPnl": 0,
+              "drawdown": 0,
+              "closedTrades": 0,
+              "winRate": 0,
+              "totalFees": 0
+            },
+            "filtered": {
+              "returnPct": 0,
+              "netPnl": 0,
+              "drawdown": 0,
+              "closedTrades": 0,
+              "winRate": 0,
+              "totalFees": 0
+            }
+          },
+          "holdout": {
+            "start": 1794718800,
+            "end": 1795658400,
+            "baseline": {
+              "returnPct": 0,
+              "netPnl": 0,
+              "drawdown": 0,
+              "closedTrades": 0,
+              "winRate": 0,
+              "totalFees": 0
+            },
+            "filtered": {
+              "returnPct": 0,
+              "netPnl": 0,
+              "drawdown": 0,
+              "closedTrades": 0,
+              "winRate": 0,
+              "totalFees": 0
+            }
+          },
+          "reason": "Fewer than five closes in at least one comparison sample.",
+          "assumptions": {
+            "execution": "next hourly open, adverse slippage; stop first if ambiguous",
+            "costs": "existing account fee, rebate and slippage configuration",
+            "risk": "identical risk caps and targets in both arms"
+          },
+          "splitTime": 1794718800
+        },
+        "AVAX-USD": {
+          "version": 1,
+          "mode": "shadow",
+          "timeframe": "1h",
+          "asOf": 1795658400,
+          "candles": 868,
+          "confirmation": {
+            "version": 1,
+            "timeframe": "1h",
+            "asOf": 1795658400,
+            "mode": "observe",
+            "confirmed": true,
+            "matches": [
+              "closing-high-breakout-20h"
+            ],
+            "context": [],
+            "status": "evaluated",
+            "volumeRatio": 0.16555384579442103,
+            "reason": "Completed hourly candle matches an explicit entry rule.",
+            "levels": {
+              "closingHigh20": 6.632,
+              "ma20": 6.496899999999999
+            },
+            "rsi": 66.94313040302023,
+            "previousRsi": 63.20772696881054
+          },
+          "status": "insufficient-trades",
+          "recommendation": "Observe only; keep the current entry rules.",
+          "warning": "Hourly candle replay is an approximation of five-minute quote execution, not a forecast. No NYSE opening-range rule is applied to 24/7 crypto.",
+          "training": {
+            "baseline": {
+              "returnPct": 0,
+              "netPnl": 0,
+              "drawdown": 0,
+              "closedTrades": 0,
+              "winRate": 0,
+              "totalFees": 0
+            },
+            "filtered": {
+              "returnPct": 0,
+              "netPnl": 0,
+              "drawdown": 0,
+              "closedTrades": 0,
+              "winRate": 0,
+              "totalFees": 0
+            }
+          },
+          "holdout": {
+            "start": 1794718800,
+            "end": 1795658400,
+            "baseline": {
+              "returnPct": 0,
+              "netPnl": 0,
+              "drawdown": 0,
+              "closedTrades": 0,
+              "winRate": 0,
+              "totalFees": 0
+            },
+            "filtered": {
+              "returnPct": 0,
+              "netPnl": 0,
+              "drawdown": 0,
+              "closedTrades": 0,
+              "winRate": 0,
+              "totalFees": 0
+            }
+          },
+          "reason": "Fewer than five closes in at least one comparison sample.",
+          "assumptions": {
+            "execution": "next hourly open, adverse slippage; stop first if ambiguous",
+            "costs": "existing account fee, rebate and slippage configuration",
+            "risk": "identical risk caps and targets in both arms"
+          },
+          "splitTime": 1794718800
+        }
+      },
+      "tradeModel": {
+        "status": "collecting-data",
+        "mode": "shadow",
+        "label": "Positive realized paper P&L after gross fees and credited rebates",
+        "eligibleClosedTrades": 6,
+        "minimumRequired": 100,
+        "reason": "Need more closed trades with frozen entry-time features."
+      },
+      "proposals": [
+        {
+          "product": "BTC-USD",
+          "status": "insufficient-executed-evidence",
+          "eligibleClosedTrades": 0,
+          "reason": "Need complete daily execution sampling coverage, a fresh heartbeat, 100 eligible completed trades overall and 30 for this market, including at least five wins and five losses. Parameters retained."
+        },
+        {
+          "product": "ETH-USD",
+          "status": "insufficient-executed-evidence",
+          "eligibleClosedTrades": 0,
+          "reason": "Need complete daily execution sampling coverage, a fresh heartbeat, 100 eligible completed trades overall and 30 for this market, including at least five wins and five losses. Parameters retained."
+        },
+        {
+          "product": "SOL-USD",
+          "status": "insufficient-executed-evidence",
+          "eligibleClosedTrades": 0,
+          "reason": "Need complete daily execution sampling coverage, a fresh heartbeat, 100 eligible completed trades overall and 30 for this market, including at least five wins and five losses. Parameters retained."
+        },
+        {
+          "product": "XRP-USD",
+          "status": "insufficient-executed-evidence",
+          "eligibleClosedTrades": 2,
+          "reason": "Need complete daily execution sampling coverage, a fresh heartbeat, 100 eligible completed trades overall and 30 for this market, including at least five wins and five losses. Parameters retained."
+        },
+        {
+          "product": "ADA-USD",
+          "status": "insufficient-executed-evidence",
+          "eligibleClosedTrades": 3,
+          "reason": "Need complete daily execution sampling coverage, a fresh heartbeat, 100 eligible completed trades overall and 30 for this market, including at least five wins and five losses. Parameters retained."
+        },
+        {
+          "product": "DOGE-USD",
+          "status": "insufficient-executed-evidence",
+          "eligibleClosedTrades": 0,
+          "reason": "Need complete daily execution sampling coverage, a fresh heartbeat, 100 eligible completed trades overall and 30 for this market, including at least five wins and five losses. Parameters retained."
+        },
+        {
+          "product": "LINK-USD",
+          "status": "insufficient-executed-evidence",
+          "eligibleClosedTrades": 0,
+          "reason": "Need complete daily execution sampling coverage, a fresh heartbeat, 100 eligible completed trades overall and 30 for this market, including at least five wins and five losses. Parameters retained."
+        },
+        {
+          "product": "AVAX-USD",
+          "status": "insufficient-executed-evidence",
+          "eligibleClosedTrades": 1,
+          "reason": "Need complete daily execution sampling coverage, a fresh heartbeat, 100 eligible completed trades overall and 30 for this market, including at least five wins and five losses. Parameters retained."
+        }
+      ],
+      "notes": [
+        "Reviewing evidence does not place/close trades or alter existing positions.",
+        "Risk caps stay fixed. Insufficient evidence retains parameters.",
+        "Market-label shadow ML and executed-trade-outcome ML are distinct models.",
+        "Historical validation does not guarantee future profit."
+      ]
+    },
     {
       "version": 1,
       "reviewDate": "2026-11-25",
