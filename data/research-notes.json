@@ -655,6 +655,20 @@
       ],
       "adopted": false,
       "nextIdea": "Multi-touch support filter (owner-sr-touch2) once owner-sr has 10+ trades."
+    },
+    {
+      "at": "2026-11-26T12:29:13.779Z",
+      "tradesReviewed": 2,
+      "losses": 2,
+      "findings": [
+        "owner-sr-quick closed BTC -$77.6 and SOL -$12.0, both quote-stops within 1.6h. Stops sat only 0.43% (BTC) and 0.51% (SOL) below entry, inside normal hourly noise; targets were 1.2% above. owner-sr-quick is 0 for 4.",
+        "Main and other owner-sr variants: no closes this window."
+      ],
+      "changes": [
+        "owner-sr-quick stopBuffer 0.005 -> 0.01 (stop 1% below support instead of 0.5%), to stop noise-outs."
+      ],
+      "adopted": false,
+      "nextIdea": "Compare stop distance vs 1h ATR across all S/R losses; if most stops are under 1 ATR, set stopBuffer from ATR instead of a fixed percent."
     }
   ]
 }
