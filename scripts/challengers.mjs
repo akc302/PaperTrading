@@ -81,3 +81,18 @@ export function runChallengers(state,events,time){
   }catch(error){ch.lastError=error.message;}
  }
 }
+export const OWNER_SR_VERSION='owner-sr-main-v1';
+/** Owner request (26 Nov 2026): the main PAPER account trades the owner-sr rules (buy near support, sell at resistance,
+ * all coins) right away. Copies only entry/exit rules from the owner-sr seed; risk caps unchanged and checked. */
+export function ownerSwitchToSR(state,now=Date.now()/1000){
+ if(!state.rulesVersion||state.rulesVersion===OWNER_SR_VERSION||!state.config)return false;
+ const seed=seedChallengers(state).find(c=>c.id==='owner-sr');if(!seed)return false;
+ const CAPS=['riskPct','maxTotalRisk','maxAllocation','maxOpenPositions','maxDailyLoss'],before=CAPS.map(k=>state.config?.[k]),next={...state.config};
+ for(const k of RULE_KEYS)delete next[k];
+ for(const [k,v] of Object.entries(seed.rules))if(v!==undefined)next[k]=v;
+ for(const k of CAPS)if(before[CAPS.indexOf(k)]===undefined)delete next[k];else next[k]=before[CAPS.indexOf(k)];
+ if(JSON.stringify(CAPS.map(k=>next[k]))!==JSON.stringify(before))throw Error('Risk cap mutation refused');
+ state.rulesHistory=[{at:new Date(now*1000).toISOString(),event:'owner-switch-to-sr',reason:'Owner request: main account trades the owner-sr support/resistance rules.',previous:{rulesVersion:state.rulesVersion,config:state.config,productConfigs:state.productConfigs}},...(state.rulesHistory??[])].slice(0,200);
+ state.config=next;state.productConfigs=Object.fromEntries(Object.entries(state.productConfigs??{}).map(([p,c])=>[p,Object.fromEntries(Object.entries(c).filter(([k])=>!RULE_KEYS.includes(k)))]));
+ state.rulesVersion=OWNER_SR_VERSION;return true;
+}

@@ -4,12 +4,12 @@ import {readFile,writeFile,rename,rm} from 'node:fs/promises';
 import {pathToFileURL} from 'node:url';
 import {TREND_DEFAULTS} from '../engine.js';
 import {decryptState,encryptState} from './private-state.mjs';
-import {ensureChallengers,retireLosers,RULE_KEYS} from './challengers.mjs';
+import {ensureChallengers,retireLosers,RULE_KEYS,ownerSwitchToSR} from './challengers.mjs';
 import {reviewChallengers} from './promotion.mjs';
 import {loadHistory} from './history.mjs';
 /** Daily review for one account: migrate once, seed challengers, then evaluate promotion. */
 export function dailyRules(state,{market,history,now}){
- const migrated=migrateToTrend(state,now),ownerSwitch=ownerSwitchToHourly(state,now)||ownerSwitchToDip2h(state,now)||backToDip6h(state,now),seeded=ensureChallengers(state,now),retired=retireLosers(state,now),review=reviewChallengers(state,{market,history,now});
+ const migrated=migrateToTrend(state,now),ownerSwitch=ownerSwitchToSR(state,now),seeded=ensureChallengers(state,now),retired=retireLosers(state,now),review=reviewChallengers(state,{market,history,now});
  return {migrated,ownerSwitch,seeded,retired,promoted:review?.promoted??null,reviewed:!!review};
 }
 export const RULES_VERSION='trend-v1';
@@ -86,3 +86,4 @@ export async function run(){
  }catch{console.error('Private rule update failed; ciphertext unchanged.');process.exitCode=1;}
 }
 if(process.argv[1]&&import.meta.url===pathToFileURL(process.argv[1]).href)await run();
+export {OWNER_SR_VERSION,ownerSwitchToSR} from './challengers.mjs';
