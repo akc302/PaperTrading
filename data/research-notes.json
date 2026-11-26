@@ -684,6 +684,21 @@
       ],
       "adopted": false,
       "nextIdea": "If sr-scalper v2 stays negative after 10 trades, move it to a 12h hold. ATR-based stop sizing still queued."
+    },
+    {
+      "at": "2026-11-26T16:28:46.964Z",
+      "tradesReviewed": 2,
+      "losses": 2,
+      "findings": [
+        "Closed since 14:27Z: owner-sr-quick ETH -$95.9 (stop 0.65% below entry) and AVAX -$167.8 (stop 1.01%), both quote-stops about 15:03Z. Both entries (08:15Z, 10:45Z) were made before the 12:30Z stop-buffer change, so they say nothing yet about the new 1% buffer.",
+        "owner-sr-quick is 0 for 6 (-$353.4 today). Its losses are large because it trades about 28% of equity per position.",
+        "Main still holds LINK from 05:01Z; it exits by 05:01Z tomorrow at the latest."
+      ],
+      "changes": [
+        "None: the latest change (owner-sr-quick 1% stop) has no trades of its own yet."
+      ],
+      "adopted": false,
+      "nextIdea": "If owner-sr-quick loses its next 3 trades on the new stop, cut its size to riskScale 0.25 and test an entry that needs a bullish 1h close off support."
     }
   ]
 }
