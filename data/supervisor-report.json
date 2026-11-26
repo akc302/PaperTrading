@@ -1,17 +1,19 @@
 {
-  "at": "2026-11-25T01:14:30.715Z",
+  "at": "2026-11-26T05:15:01.517Z",
   "goal": 85000,
   "start": 30000,
-  "equity": 29282.65,
-  "remaining": 55717.35,
+  "equity": 29274.44,
+  "remaining": 55725.56,
   "progressPct": 0,
   "onTrack": false,
-  "verdict": "The main paper account (fake money) is at $29282.65 (-2.4%), 0% of the way to $85,000. At the owner's request it switched to the dip rule on 2-hour bars (the only rule that was positive in backtests), and it stays in cash until the daily trend turns up; the hourly challengers keep trading daily for learning.",
-  "last24h": "Main: 4 closed (0 wins, -$582.61). Best challenger hourly-legacy: 5 closed (1 wins, -$540.84).",
+  "verdict": "The main paper account (fake money) is at $29,274.44 (-2.4%), 0% of the way to $85,000. At the owner's request it switched at 05:01 UTC today to the owner support/resistance rules on all 8 coins and opened its first trade (LINK); it is not on track yet.",
+  "last24h": "Main: 0 closed (0 wins, $0.00); open: LINK-USD. Best challenger owner-sr: 2 closed (1 wins, $119.99).",
   "readiness": "2/9",
   "fixed": [
-    "Main paper strategy switched to dip 2h RSI<25 (PR #64, #65), risk caps unchanged",
-    "1h history extended to 2 years for the next test (PR #66)"
+    "Main paper rules switched to owner-sr support/resistance (#80, risk caps unchanged)",
+    "Dashboard: all-accounts trades panel on Overview and Trade journal (#80, #82)",
+    "Dashboard cache-busting so browsers load new code (#81)",
+    "Supervisor report refreshed (was stale since 25 Nov)"
   ],
-  "nextStep": "Daily review fetches 2y of hourly data; the researcher re-tests the 2h dip year by year and falls back to 6h bars if year 1 loses."
+  "nextStep": "Track the main account on the new rules; if it loses 10 in a row, or profit factor < 0.8 after 20 trades, switch to the best challenger."
 }
