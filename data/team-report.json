@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "generatedAt": "2026-11-26T02:29:47.380Z",
+  "generatedAt": "2026-11-26T02:31:06.245Z",
   "goal": 85000,
   "equity": 29282.647920248248,
   "startingEquity": 30000,
@@ -70,7 +70,7 @@
   "agents": {
     "trader": {
       "role": "5-minute paper trader",
-      "lastRunMinutesAgo": 4,
+      "lastRunMinutesAgo": 1,
       "healthy": true
     },
     "researcher": {
@@ -202,7 +202,7 @@
     "windowDays": 30,
     "label": "Estimated time to $85,000 at the trailing 30-day growth rate (not a promise)",
     "status": "insufficient-history",
-    "spanDays": 5.104020601853176,
+    "spanDays": 5.104933391202379,
     "message": "Needs at least 7 days of equity history."
   },
   "scorecard": [
@@ -285,7 +285,7 @@
     {
       "id": "hourly-legacy",
       "label": "Previous hourly rules",
-      "equity": 29632.7875102419,
+      "equity": 29605.77757350964,
       "initial": 29975.046647868254,
       "netPnl": -679.3765429670811,
       "profitFactor": 0.640751536898892,
@@ -299,12 +299,12 @@
       "takerFills": 15,
       "openPositions": 3,
       "pause": "normal",
-      "drawdown": 0.03351284325366943
+      "drawdown": 0.03439378491152856
     },
     {
       "id": "lab-hourly",
       "label": "Lab hourly per-market rules",
-      "equity": 29372.787061132556,
+      "equity": 29339.96838443501,
       "initial": 29975.046647868254,
       "netPnl": -1061.6006064686837,
       "profitFactor": 0.5203595975786848,
@@ -318,7 +318,7 @@
       "takerFills": 19,
       "openPositions": 3,
       "pause": "normal",
-      "drawdown": 0.03637548156875281
+      "drawdown": 0.03745215439051819
     },
     {
       "id": "scout-daytrade",
@@ -380,7 +380,7 @@
     {
       "id": "sr-scalper",
       "label": "Support/resistance scalper: buy within 1.5% of support, 1h hold, about 100 trades a day for ML training, 1/4 risk",
-      "equity": 28788.781954389004,
+      "equity": 28778.42808919745,
       "initial": 29282.647920248248,
       "netPnl": -493.8659658592448,
       "profitFactor": 0.006532288118133148,
@@ -392,14 +392,14 @@
       "fees": 194.4027585078213,
       "makerFills": 15,
       "takerFills": 5,
-      "openPositions": 0,
+      "openPositions": 1,
       "pause": "normal",
       "drawdown": 0.017250778354972796
     },
     {
       "id": "owner-sr",
       "label": "Owner style: buy near support, sell at resistance (about +1.8%), all 8 coins, 24h hold, about 28% per trade",
-      "equity": 29539.588455973048,
+      "equity": 29508.9114753897,
       "initial": 29282.647920248248,
       "netPnl": 119.99061810667233,
       "profitFactor": 9.176584341803988,
@@ -411,9 +411,9 @@
       "fees": 22.534042090537376,
       "makerFills": 3,
       "takerFills": 1,
-      "openPositions": 1,
+      "openPositions": 2,
       "pause": "normal",
-      "drawdown": 0.00015764186807798453
+      "drawdown": 0.0007487988733705375
     }
   ],
   "drawdownPause": {
