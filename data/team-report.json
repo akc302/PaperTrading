@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "generatedAt": "2026-11-26T02:37:26.324Z",
+  "generatedAt": "2026-11-26T02:54:02.659Z",
   "goal": 85000,
   "equity": 29282.647920248248,
   "startingEquity": 30000,
@@ -58,7 +58,7 @@
     },
     "LINK-USD": {
       "strategy": "dip-6h",
-      "approach": "aggressive-day-hold+regime-block",
+      "approach": "aggressive-day-hold+regime-block+ml-filter",
       "decision": "keep"
     },
     "AVAX-USD": {
@@ -70,7 +70,7 @@
   "agents": {
     "trader": {
       "role": "5-minute paper trader",
-      "lastRunMinutesAgo": 2,
+      "lastRunMinutesAgo": 3,
       "healthy": true
     },
     "researcher": {
@@ -202,7 +202,7 @@
     "windowDays": 30,
     "label": "Estimated time to $85,000 at the trailing 30-day growth rate (not a promise)",
     "status": "insufficient-history",
-    "spanDays": 5.109332453702335,
+    "spanDays": 5.120864108795369,
     "message": "Needs at least 7 days of equity history."
   },
   "scorecard": [
@@ -285,7 +285,7 @@
     {
       "id": "hourly-legacy",
       "label": "Previous hourly rules",
-      "equity": 29609.770621993426,
+      "equity": 29625.755737373594,
       "initial": 29975.046647868254,
       "netPnl": -679.3765429670811,
       "profitFactor": 0.640751536898892,
@@ -299,12 +299,12 @@
       "takerFills": 15,
       "openPositions": 3,
       "pause": "normal",
-      "drawdown": 0.034263549776730295
+      "drawdown": 0.033742187798593726
     },
     {
       "id": "lab-hourly",
       "label": "Lab hourly per-market rules",
-      "equity": 29352.07006288924,
+      "equity": 29373.709037137814,
       "initial": 29975.046647868254,
       "netPnl": -1061.6006064686837,
       "profitFactor": 0.5203595975786848,
@@ -318,7 +318,7 @@
       "takerFills": 19,
       "openPositions": 3,
       "pause": "normal",
-      "drawdown": 0.037055138130249854
+      "drawdown": 0.03634523456896277
     },
     {
       "id": "scout-daytrade",
@@ -380,11 +380,11 @@
     {
       "id": "sr-scalper",
       "label": "Support/resistance scalper: buy within 1.5% of support, 1h hold, about 100 trades a day for ML training, 1/4 risk",
-      "equity": 28767.194738854934,
+      "equity": 28756.663472908825,
       "initial": 29282.647920248248,
       "netPnl": -493.8659658592448,
       "profitFactor": 0.006532288118133148,
-      "maxDrawdown": 0.017987691062749053,
+      "maxDrawdown": 0.01834719197626017,
       "winRate": 0.1,
       "avgWin": 3.2472869949862124,
       "avgLoss": -55.234805872692334,
@@ -394,12 +394,12 @@
       "takerFills": 5,
       "openPositions": 1,
       "pause": "normal",
-      "drawdown": 0.017987691062749
+      "drawdown": 0.018347191976260113
     },
     {
       "id": "owner-sr",
       "label": "Owner style: buy near support, sell at resistance (about +1.8%), all 8 coins, 24h hold, about 28% per trade",
-      "equity": 29496.90625106883,
+      "equity": 29489.28995491589,
       "initial": 29282.647920248248,
       "netPnl": 119.99061810667233,
       "profitFactor": 9.176584341803988,
@@ -413,7 +413,7 @@
       "takerFills": 1,
       "openPositions": 2,
       "pause": "normal",
-      "drawdown": 0.0016023294426968926
+      "drawdown": 0.0018601223201142325
     }
   ],
   "drawdownPause": {
