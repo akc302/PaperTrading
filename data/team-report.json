@@ -1,11 +1,11 @@
 {
   "version": 1,
-  "generatedAt": "2026-11-26T17:27:12.508Z",
+  "generatedAt": "2026-11-26T18:36:59.133Z",
   "goal": 85000,
-  "equity": 29252.770862313948,
+  "equity": 29297.8670446339,
   "startingEquity": 30000,
-  "progressToGoal": -0.013585984321564585,
-  "returnPct": -0.024907637922868403,
+  "progressToGoal": -0.012766053733929122,
+  "returnPct": -0.023404431845536724,
   "drawdown": 0.028260934625866214,
   "openPositions": 1,
   "last24h": {
@@ -70,12 +70,12 @@
   "agents": {
     "trader": {
       "role": "5-minute paper trader",
-      "lastRunMinutesAgo": 2,
+      "lastRunMinutesAgo": 1,
       "healthy": true
     },
     "researcher": {
       "role": "Claude every 5h: loss analysis, backtest, rule adoption",
-      "lastRunHoursAgo": 0,
+      "lastRunHoursAgo": 1.2,
       "healthy": true,
       "sweep": {
         "at": "2026-11-26T10:01:53.382Z",
@@ -109,13 +109,13 @@
         }
       },
       "latestNote": {
-        "at": "2026-11-26T16:28:46.964Z",
-        "tradesReviewed": 2,
-        "losses": 2,
-        "findings": 3,
+        "at": "2026-11-26T18:28:20.196Z",
+        "tradesReviewed": 1,
+        "losses": 1,
+        "findings": 1,
         "changes": 1,
         "adopted": false,
-        "nextIdea": "If owner-sr-quick loses its next 3 trades on the new stop, cut its size to riskScale 0.25 and test an entry that needs a bullish 1h close off support."
+        "nextIdea": "Daily review tomorrow: compare all variants on today plus tomorrow; owner-sr-quick size cut if it loses 3 more."
       }
     },
     "verifier": {
@@ -143,7 +143,7 @@
         "id": "history",
         "label": "28+ days of forward paper trading with the research team",
         "pass": false,
-        "value": "5.5 days"
+        "value": "5.6 days"
       },
       {
         "id": "sample",
@@ -198,18 +198,18 @@
   },
   "goalEstimate": {
     "goal": 85000,
-    "equity": 29252.770862313948,
+    "equity": 29297.8670446339,
     "windowDays": 30,
     "label": "Estimated time to $85,000 at the trailing 30-day growth rate (not a promise)",
     "status": "insufficient-history",
-    "spanDays": 5.72722810185066,
+    "spanDays": 5.7756844097210305,
     "message": "Needs at least 7 days of equity history."
   },
   "scorecard": [
     {
       "id": "main",
       "label": "Main: horizontal",
-      "equity": 29252.770862313948,
+      "equity": 29297.8670446339,
       "initial": 30000,
       "netPnl": -717.3520797517548,
       "profitFactor": 0,
@@ -223,7 +223,7 @@
       "takerFills": 8,
       "openPositions": 1,
       "pause": "normal",
-      "drawdown": 0.025308480743578166
+      "drawdown": 0.023805892607056567
     },
     {
       "id": "trend-k2",
@@ -285,40 +285,40 @@
     {
       "id": "hourly-legacy",
       "label": "Previous hourly rules",
-      "equity": 29403.292282841154,
+      "equity": 29427.261918673703,
       "initial": 29975.046647868254,
-      "netPnl": -707.8005000928515,
-      "profitFactor": 0.6401021788789423,
+      "netPnl": -614.4800209265948,
+      "profitFactor": 0.6875531726455516,
       "maxDrawdown": 0.07201090400349852,
-      "winRate": 0.4,
-      "avgWin": 125.8870200741347,
+      "winRate": 0.4230769230769231,
+      "avgWin": 122.92642544614579,
       "avgLoss": -131.11138005561324,
-      "closedTrades": 25,
-      "fees": 480.91405027880194,
-      "makerFills": 34,
+      "closedTrades": 26,
+      "fees": 497.4244799878499,
+      "makerFills": 36,
       "takerFills": 16,
-      "openPositions": 3,
+      "openPositions": 2,
       "pause": "normal",
-      "drawdown": 0.04099793691017195
+      "drawdown": 0.04021615608121554
     },
     {
       "id": "lab-hourly",
       "label": "Lab hourly per-market rules",
-      "equity": 29187.449119253164,
+      "equity": 29227.439674217676,
       "initial": 29975.046647868254,
-      "netPnl": -814.4034076492471,
-      "profitFactor": 0.6320454455300857,
+      "netPnl": -855.418763861072,
+      "profitFactor": 0.6205460476130249,
       "maxDrawdown": 0.07173795187731005,
-      "winRate": 0.3333333333333333,
+      "winRate": 0.32,
       "avgWin": 174.86533268029433,
-      "avgLoss": -138.3328793182251,
-      "closedTrades": 24,
-      "fees": 473.1169841342019,
-      "makerFills": 29,
+      "avgLoss": -132.6083191354957,
+      "closedTrades": 25,
+      "fees": 489.3524918259858,
+      "makerFills": 31,
       "takerFills": 19,
-      "openPositions": 3,
+      "openPositions": 2,
       "pause": "normal",
-      "drawdown": 0.04245580975207641
+      "drawdown": 0.041143851197061765
     },
     {
       "id": "scout-daytrade",
@@ -399,7 +399,7 @@
     {
       "id": "owner-sr",
       "label": "Owner style: buy near support, sell at resistance (about +1.8%), all 8 coins, 24h hold, about 28% per trade",
-      "equity": 29480.32872386275,
+      "equity": 29572.038455531485,
       "initial": 29282.647920248248,
       "netPnl": 119.99061810667233,
       "profitFactor": 9.176584341803988,
@@ -413,7 +413,7 @@
       "takerFills": 1,
       "openPositions": 3,
       "pause": "normal",
-      "drawdown": 0.003475780031518827
+      "drawdown": 0.0003757138934933346
     },
     {
       "id": "owner-sr-quick",
@@ -437,7 +437,7 @@
     {
       "id": "owner-sr-swing",
       "label": "Owner style, swing: within 3.5% of support, bigger target, 48h hold",
-      "equity": 29243.866711137263,
+      "equity": 29294.298247633502,
       "initial": 29292.32891698057,
       "netPnl": 0,
       "profitFactor": null,
@@ -451,12 +451,12 @@
       "takerFills": 0,
       "openPositions": 1,
       "pause": "normal",
-      "drawdown": 0.00196269438605845
+      "drawdown": 0.00024156238597627944
     },
     {
       "id": "owner-sr-trend",
       "label": "Owner style with market filter: only buys support when the coin is not in a downtrend",
-      "equity": 29243.866711137263,
+      "equity": 29294.298247633502,
       "initial": 29292.32891698057,
       "netPnl": 0,
       "profitFactor": null,
@@ -470,12 +470,12 @@
       "takerFills": 0,
       "openPositions": 1,
       "pause": "normal",
-      "drawdown": 0.00196269438605845
+      "drawdown": 0.00024156238597627944
     }
   ],
   "drawdownPause": {
     "state": "normal",
-    "drawdown": 0.025308480743578166,
+    "drawdown": 0.023805892607056567,
     "peak": 30012.337528729568,
     "sizeMultiplier": 1,
     "triggeredAt": null,
