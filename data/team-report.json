@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "generatedAt": "2026-11-26T04:06:44.593Z",
+  "generatedAt": "2026-11-26T04:57:01.489Z",
   "goal": 85000,
   "equity": 29282.647920248248,
   "startingEquity": 30000,
@@ -58,7 +58,7 @@
     },
     "LINK-USD": {
       "strategy": "dip-6h",
-      "approach": "aggressive-day-hold+regime-block+ml-filter",
+      "approach": "aggressive-day-hold+regime-block",
       "decision": "keep"
     },
     "AVAX-USD": {
@@ -70,13 +70,13 @@
   "agents": {
     "trader": {
       "role": "5-minute paper trader",
-      "lastRunMinutesAgo": 1,
+      "lastRunMinutesAgo": 2,
       "healthy": true
     },
     "researcher": {
       "role": "Claude every 5h: loss analysis, backtest, rule adoption",
-      "lastRunHoursAgo": 1.2,
-      "healthy": false,
+      "lastRunHoursAgo": 0,
+      "healthy": true,
       "sweep": {
         "at": "2026-11-26T02:20:26.180Z",
         "source": "data/history 1h (1 year)",
@@ -109,13 +109,13 @@
         }
       },
       "latestNote": {
-        "at": "2026-11-25T20:29:22.086Z",
-        "tradesReviewed": 0,
-        "losses": 0,
-        "findings": 1,
+        "at": "2026-11-26T04:29:17.187Z",
+        "tradesReviewed": 8,
+        "losses": 7,
+        "findings": 3,
         "changes": 1,
-        "adopted": true,
-        "nextIdea": "Report owner-sr and sr-scalper wins/losses at 21:26Z; review every loss."
+        "adopted": false,
+        "nextIdea": "If sr-scalper reaches 25 trades with PF < 0.5, change its hold from 1h to 4h and require a bullish 1h close off support before entry; compare on the next 25 trades."
       }
     },
     "verifier": {
@@ -202,7 +202,7 @@
     "windowDays": 30,
     "label": "Estimated time to $85,000 at the trailing 30-day growth rate (not a promise)",
     "status": "insufficient-history",
-    "spanDays": 5.171349456017768,
+    "spanDays": 5.206267233797246,
     "message": "Needs at least 7 days of equity history."
   },
   "scorecard": [
@@ -285,7 +285,7 @@
     {
       "id": "hourly-legacy",
       "label": "Previous hourly rules",
-      "equity": 29596.54537506771,
+      "equity": 29569.07052531241,
       "initial": 29975.046647868254,
       "netPnl": -632.2347384490963,
       "profitFactor": 0.6656797170019833,
@@ -299,12 +299,12 @@
       "takerFills": 15,
       "openPositions": 3,
       "pause": "normal",
-      "drawdown": 0.03469489736068887
+      "drawdown": 0.03559100237318069
     },
     {
       "id": "lab-hourly",
       "label": "Lab hourly per-market rules",
-      "equity": 29397.756394481217,
+      "equity": 29362.619636517524,
       "initial": 29975.046647868254,
       "netPnl": -1061.6006064686837,
       "profitFactor": 0.5203595975786848,
@@ -318,7 +318,7 @@
       "takerFills": 19,
       "openPositions": 3,
       "pause": "normal",
-      "drawdown": 0.03555631988097785
+      "drawdown": 0.036709041323499836
     },
     {
       "id": "scout-daytrade",
@@ -380,7 +380,7 @@
     {
       "id": "sr-scalper",
       "label": "Support/resistance scalper: buy within 1.5% of support, 1h hold, about 100 trades a day for ML training, 1/4 risk",
-      "equity": 28728.45737804542,
+      "equity": 28716.170029347035,
       "initial": 29282.647920248248,
       "netPnl": -554.1905422028287,
       "profitFactor": 0.005825379665494258,
@@ -392,14 +392,14 @@
       "fees": 220.86039469969995,
       "makerFills": 19,
       "takerFills": 5,
-      "openPositions": 0,
+      "openPositions": 1,
       "pause": "normal",
       "drawdown": 0.01931005028046262
     },
     {
       "id": "owner-sr",
       "label": "Owner style: buy near support, sell at resistance (about +1.8%), all 8 coins, 24h hold, about 28% per trade",
-      "equity": 29516.45119202565,
+      "equity": 29510.031758090394,
       "initial": 29282.647920248248,
       "netPnl": 119.99061810667233,
       "profitFactor": 9.176584341803988,
@@ -413,7 +413,7 @@
       "takerFills": 1,
       "openPositions": 3,
       "pause": "normal",
-      "drawdown": 0.0009407813007876742
+      "drawdown": 0.0012660813797107373
     }
   ],
   "drawdownPause": {
@@ -426,8 +426,7 @@
   },
   "verdict": "needs-attention",
   "issues": [
-    "No new paper entry for 46h; current rules may be too strict for this market.",
-    "Researcher (agent 2) has not written data/research-notes.json for 8h; expected every 5h."
+    "No new paper entry for 47h; current rules may be too strict for this market."
   ],
   "dispatch": []
 }
