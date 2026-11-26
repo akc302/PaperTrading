@@ -30,6 +30,7 @@ jobs:
           node-version: '22'
       - run: npm test
       - name: Trade, record timer evidence, and save (replays on newest main if another job pushed first)
+        timeout-minutes: 15
         env:
           PAPER_STATE_KEY: ${{ secrets.PAPER_STATE_KEY }}
           PAPER_JOB_MODE: trade
@@ -49,6 +50,7 @@ jobs:
         with:
           path: dist
       - name: Wait for uploaded Pages artifact to be visible
+        timeout-minutes: 10
         env:
           GH_TOKEN: ${{ github.token }}
           GH_REPO: ${{ github.repository }}
