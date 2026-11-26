@@ -22,3 +22,6 @@ await mkdir('dist/scripts',{recursive:true});
 await cp('scripts/private-state.mjs','dist/scripts/private-state.mjs');
 await writeFile('dist/.nojekyll','');
 console.log('Static Pages build ready. Explicit public-data whitelist and encrypted envelope checked.');
+// Cache-bust module URLs so browsers load each new deploy's code (data fetches already carry a query string).
+{const v=Date.now().toString(36),mods=['app.js','engine.js','private-ui.js','scripts/private-state.mjs'];
+ for(const f of ['index.html','app.js','private-ui.js']){let s=await readFile(`dist/${f}`,'utf8');for(const m of mods)s=s.split(`'./${m}'`).join(`'./${m}?v=${v}'`);await writeFile(`dist/${f}`,s);}}
