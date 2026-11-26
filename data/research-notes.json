@@ -669,6 +669,21 @@
       ],
       "adopted": false,
       "nextIdea": "Compare stop distance vs 1h ATR across all S/R losses; if most stops are under 1 ATR, set stopBuffer from ATR instead of a fixed percent."
+    },
+    {
+      "at": "2026-11-26T14:28:14.272Z",
+      "tradesReviewed": 4,
+      "losses": 3,
+      "findings": [
+        "Closed since 12:27Z: lab-hourly AVAX +$247.2 (24h time exit, held through a slow rise); LINK lost at the 4h time exit in hourly-legacy (-$19.6), scout-daytrade (-$19.5) and sr-scalper v2 (-$15.1). LINK has drifted sideways all day; 4h holds exit before any move.",
+        "The one win today came from the longest hold (24h). Short holds (1-4h) keep losing small amounts to fees on sideways coins.",
+        "Main still holds LINK from 05:01Z (24h max hold); owner-sr variants: no closes."
+      ],
+      "changes": [
+        "None this run: evidence points the same way as the sr-scalper v2 change (longer holds); waiting for its trades before changing again."
+      ],
+      "adopted": false,
+      "nextIdea": "If sr-scalper v2 stays negative after 10 trades, move it to a 12h hold. ATR-based stop sizing still queued."
     }
   ]
 }
