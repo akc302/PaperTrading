@@ -6,7 +6,7 @@ import { DEFAULT_CONFIG, normalizeCandles, createAccount, processBarBatch, proce
 import {trainShadow,featuresAt} from './learning.mjs';
 import { encryptState, decryptState } from './private-state.mjs';
 import { loadHistory } from './history.mjs';
-import { runChallengers } from './challengers.mjs';
+import { runChallengers, ownerSwitchToSR } from './challengers.mjs';
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const DATA = path.join(ROOT, 'data');
@@ -98,6 +98,7 @@ const productConfig = (state, product) => ({ ...DEFAULT_CONFIG, ...state.config,
 
 /** Preflight the whole enabled universe before any shared-ledger mutation. */
 async function processAccount(state) {
+  ownerSwitchToSR(state);
   if(state.executionMode==='quotes'){
     const enabled=[...new Set(state.products)],problems=[];
     if(enabled.some(p=>!PRODUCTS.includes(p)||!refreshed.has(p)))return {ready:false,problems:[{product:null,message:'Live paper checks paused: all enabled feeds must be current.',time:stamp}],processed:0,markets:[]};
