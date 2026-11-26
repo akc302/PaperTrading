@@ -612,6 +612,21 @@
       ],
       "adopted": false,
       "nextIdea": "If sr-scalper reaches 25 trades with PF < 0.5, change its hold from 1h to 4h and require a bullish 1h close off support before entry; compare on the next 25 trades."
+    },
+    {
+      "at": "2026-11-26T06:28:42.292Z",
+      "tradesReviewed": 0,
+      "losses": 0,
+      "findings": [
+        "No trades closed in any account since 04:27Z. Main (owner-sr rules since 05:01Z) holds LINK; owner-sr holds SOL, LINK, ADA; owner-sr-swing and owner-sr-trend each opened LINK; owner-sr-quick has no entry yet.",
+        "Checked fees on target exits: they already fill as resting maker limits at 0.15% (e.g. owner-sr DOGE target). The planned maker-target change is not needed.",
+        "Owner next-candle range idea tested on 1y of 1h bars, 8 coins, 18 settings (buy at predicted low, sell at predicted high, 1-4h hold, fees after rebate): 120-160 trades/day, best win rate 34.6%, best average -0.375% per trade. Hourly range capture (about 0.2%) is smaller than round-trip fees (0.23-0.34%). Rejected."
+      ],
+      "changes": [
+        "No code change: no new closed trades to learn from, and the maker-target change was already in place."
+      ],
+      "adopted": false,
+      "nextIdea": "Multi-touch support filter: only buy support levels touched 2+ times in the lookback with a 24h move above -3%; add as owner-sr-touch2 variant once owner-sr has 10+ trades to compare."
     }
   ]
 }
