@@ -627,6 +627,21 @@
       ],
       "adopted": false,
       "nextIdea": "Multi-touch support filter: only buy support levels touched 2+ times in the lookback with a 24h move above -3%; add as owner-sr-touch2 variant once owner-sr has 10+ trades to compare."
+    },
+    {
+      "at": "2026-11-26T08:29:13.826Z",
+      "tradesReviewed": 2,
+      "losses": 2,
+      "findings": [
+        "Closed since 06:27Z: hourly-legacy SOL -$55.9 (time exit after 5h), sr-scalper LINK -$69.0 (time exit after 2.1h). No wins.",
+        "sr-scalper lifetime: 18 trades, 1 win. 17 of 18 losses ended at the 1h time exit: the 0.5R target is rarely reached in 1h, so fees plus drift decide each trade.",
+        "Main account (owner-sr rules) still holds LINK from 05:01Z; no closes yet. owner-sr variants: no closes this window."
+      ],
+      "changes": [
+        "sr-scalper v2: proximity 0.02 -> 0.012 (buy closer to support), rewardRisk 0.5 -> 0.8, maxHoldHours 1 -> 4. Ledger kept; rules restart at the next daily review sync."
+      ],
+      "adopted": false,
+      "nextIdea": "Judge sr-scalper v2 on its next 15 trades vs the old 1h version (1/18 wins). Then the multi-touch support filter (owner-sr-touch2) once owner-sr has 10+ trades."
     }
   ]
 }
