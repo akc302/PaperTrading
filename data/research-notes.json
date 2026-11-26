@@ -597,6 +597,21 @@
       ],
       "adopted": true,
       "nextIdea": "Report owner-sr and sr-scalper wins/losses at 21:26Z; review every loss."
+    },
+    {
+      "at": "2026-11-26T04:29:17.187Z",
+      "tradesReviewed": 8,
+      "losses": 7,
+      "findings": [
+        "sr-scalper closed 6 more, all losers, all at the 1h time exit (-$205.79). Lifetime 16 trades, 1 win. A 1h hold rarely reaches even a 0.5R target, so fees plus drift decide the result.",
+        "owner-sr closed 2: DOGE hit target +$134.67, ADA stopped -$14.67 (net +$120). SOL, LINK, ADA still open. Too few trades to judge.",
+        "Main account: no trades; dip-6h waiting for a daily uptrend."
+      ],
+      "changes": [
+        "No code change this run; sample still small for owner-sr."
+      ],
+      "adopted": false,
+      "nextIdea": "If sr-scalper reaches 25 trades with PF < 0.5, change its hold from 1h to 4h and require a bullish 1h close off support before entry; compare on the next 25 trades."
     }
   ]
 }
