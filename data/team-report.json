@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "generatedAt": "2026-11-26T02:31:06.245Z",
+  "generatedAt": "2026-11-26T02:37:26.324Z",
   "goal": 85000,
   "equity": 29282.647920248248,
   "startingEquity": 30000,
@@ -43,7 +43,7 @@
     },
     "XRP-USD": {
       "strategy": "dip-6h",
-      "approach": "aggressive-day-hold+ml-filter",
+      "approach": "aggressive-day-hold+regime-block",
       "decision": "keep"
     },
     "ADA-USD": {
@@ -70,12 +70,12 @@
   "agents": {
     "trader": {
       "role": "5-minute paper trader",
-      "lastRunMinutesAgo": 1,
+      "lastRunMinutesAgo": 2,
       "healthy": true
     },
     "researcher": {
       "role": "Claude every 5h: loss analysis, backtest, rule adoption",
-      "lastRunHoursAgo": 2.5,
+      "lastRunHoursAgo": 0,
       "healthy": false,
       "sweep": {
         "at": "2026-11-26T02:20:26.180Z",
@@ -202,7 +202,7 @@
     "windowDays": 30,
     "label": "Estimated time to $85,000 at the trailing 30-day growth rate (not a promise)",
     "status": "insufficient-history",
-    "spanDays": 5.104933391202379,
+    "spanDays": 5.109332453702335,
     "message": "Needs at least 7 days of equity history."
   },
   "scorecard": [
@@ -285,7 +285,7 @@
     {
       "id": "hourly-legacy",
       "label": "Previous hourly rules",
-      "equity": 29605.77757350964,
+      "equity": 29609.770621993426,
       "initial": 29975.046647868254,
       "netPnl": -679.3765429670811,
       "profitFactor": 0.640751536898892,
@@ -299,12 +299,12 @@
       "takerFills": 15,
       "openPositions": 3,
       "pause": "normal",
-      "drawdown": 0.03439378491152856
+      "drawdown": 0.034263549776730295
     },
     {
       "id": "lab-hourly",
       "label": "Lab hourly per-market rules",
-      "equity": 29339.96838443501,
+      "equity": 29352.07006288924,
       "initial": 29975.046647868254,
       "netPnl": -1061.6006064686837,
       "profitFactor": 0.5203595975786848,
@@ -318,7 +318,7 @@
       "takerFills": 19,
       "openPositions": 3,
       "pause": "normal",
-      "drawdown": 0.03745215439051819
+      "drawdown": 0.037055138130249854
     },
     {
       "id": "scout-daytrade",
@@ -380,11 +380,11 @@
     {
       "id": "sr-scalper",
       "label": "Support/resistance scalper: buy within 1.5% of support, 1h hold, about 100 trades a day for ML training, 1/4 risk",
-      "equity": 28778.42808919745,
+      "equity": 28767.194738854934,
       "initial": 29282.647920248248,
       "netPnl": -493.8659658592448,
       "profitFactor": 0.006532288118133148,
-      "maxDrawdown": 0.017570668366827406,
+      "maxDrawdown": 0.017987691062749053,
       "winRate": 0.1,
       "avgWin": 3.2472869949862124,
       "avgLoss": -55.234805872692334,
@@ -394,12 +394,12 @@
       "takerFills": 5,
       "openPositions": 1,
       "pause": "normal",
-      "drawdown": 0.017250778354972796
+      "drawdown": 0.017987691062749
     },
     {
       "id": "owner-sr",
       "label": "Owner style: buy near support, sell at resistance (about +1.8%), all 8 coins, 24h hold, about 28% per trade",
-      "equity": 29508.9114753897,
+      "equity": 29496.90625106883,
       "initial": 29282.647920248248,
       "netPnl": 119.99061810667233,
       "profitFactor": 9.176584341803988,
@@ -413,7 +413,7 @@
       "takerFills": 1,
       "openPositions": 2,
       "pause": "normal",
-      "drawdown": 0.0007487988733705375
+      "drawdown": 0.0016023294426968926
     }
   ],
   "drawdownPause": {
@@ -426,7 +426,7 @@
   },
   "verdict": "needs-attention",
   "issues": [
-    "No new paper entry for 44h; current rules may be too strict for this market.",
+    "No new paper entry for 45h; current rules may be too strict for this market.",
     "Researcher (agent 2) has not written data/research-notes.json for 6h; expected every 5h."
   ],
   "dispatch": []
