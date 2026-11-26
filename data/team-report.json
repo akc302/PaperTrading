@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "generatedAt": "2026-11-26T08:11:53.632Z",
+  "generatedAt": "2026-11-26T08:30:47.090Z",
   "goal": 85000,
   "equity": 29214.795129833987,
   "startingEquity": 30000,
@@ -70,12 +70,12 @@
   "agents": {
     "trader": {
       "role": "5-minute paper trader",
-      "lastRunMinutesAgo": 1,
+      "lastRunMinutesAgo": 5,
       "healthy": true
     },
     "researcher": {
       "role": "Claude every 5h: loss analysis, backtest, rule adoption",
-      "lastRunHoursAgo": 1.2,
+      "lastRunHoursAgo": 1.5,
       "healthy": true,
       "sweep": {
         "at": "2026-11-26T02:20:26.180Z",
@@ -109,13 +109,13 @@
         }
       },
       "latestNote": {
-        "at": "2026-11-26T06:28:42.292Z",
-        "tradesReviewed": 0,
-        "losses": 0,
+        "at": "2026-11-26T08:29:13.826Z",
+        "tradesReviewed": 2,
+        "losses": 2,
         "findings": 3,
         "changes": 1,
         "adopted": false,
-        "nextIdea": "Multi-touch support filter: only buy support levels touched 2+ times in the lookback with a 24h move above -3%; add as owner-sr-touch2 variant once owner-sr has 10+ trades to compare."
+        "nextIdea": "Judge sr-scalper v2 on its next 15 trades vs the old 1h version (1/18 wins). Then the multi-touch support filter (owner-sr-touch2) once owner-sr has 10+ trades."
       }
     },
     "verifier": {
@@ -143,7 +143,7 @@
         "id": "history",
         "label": "28+ days of forward paper trading with the research team",
         "pass": false,
-        "value": "5.1 days"
+        "value": "5.2 days"
       },
       {
         "id": "sample",
@@ -202,7 +202,7 @@
     "windowDays": 30,
     "label": "Estimated time to $85,000 at the trailing 30-day growth rate (not a promise)",
     "status": "insufficient-history",
-    "spanDays": 5.3415929629626095,
+    "spanDays": 5.354711689813821,
     "message": "Needs at least 7 days of equity history."
   },
   "scorecard": [
@@ -285,26 +285,26 @@
     {
       "id": "hourly-legacy",
       "label": "Previous hourly rules",
-      "equity": 29497.60112137744,
+      "equity": 29486.83398573319,
       "initial": 29975.046647868254,
-      "netPnl": -632.2347384490963,
-      "profitFactor": 0.6656797170019833,
+      "netPnl": -688.1528877204496,
+      "profitFactor": 0.6465615165025548,
       "maxDrawdown": 0.07201090400349852,
-      "winRate": 0.43478260869565216,
+      "winRate": 0.4166666666666667,
       "avgWin": 125.8870200741347,
-      "avgLoss": -145.46961070695718,
-      "closedTrades": 23,
-      "fees": 440.31423581501747,
-      "makerFills": 31,
-      "takerFills": 15,
-      "openPositions": 3,
+      "avgLoss": -139.07307774727118,
+      "closedTrades": 24,
+      "fees": 464.6862761846723,
+      "makerFills": 32,
+      "takerFills": 16,
+      "openPositions": 2,
       "pause": "normal",
-      "drawdown": 0.037922010246793425
+      "drawdown": 0.03827318538721913
     },
     {
       "id": "lab-hourly",
       "label": "Lab hourly per-market rules",
-      "equity": 29249.75616167976,
+      "equity": 29256.75646554755,
       "initial": 29975.046647868254,
       "netPnl": -1061.6006064686837,
       "profitFactor": 0.5203595975786848,
@@ -318,7 +318,7 @@
       "takerFills": 19,
       "openPositions": 3,
       "pause": "normal",
-      "drawdown": 0.0404117206559943
+      "drawdown": 0.04018206371436894
     },
     {
       "id": "scout-daytrade",
@@ -399,7 +399,7 @@
     {
       "id": "owner-sr",
       "label": "Owner style: buy near support, sell at resistance (about +1.8%), all 8 coins, 24h hold, about 28% per trade",
-      "equity": 29415.148508439815,
+      "equity": 29416.3941057904,
       "initial": 29282.647920248248,
       "netPnl": 119.99061810667233,
       "profitFactor": 9.176584341803988,
@@ -413,16 +413,16 @@
       "takerFills": 1,
       "openPositions": 3,
       "pause": "normal",
-      "drawdown": 0.005107025023943668
+      "drawdown": 0.005064895845048323
     },
     {
       "id": "owner-sr-quick",
       "label": "Owner style, quick: within 1.5% of support, about +1.2% target, 12h hold",
-      "equity": 29292.32891698057,
+      "equity": 29288.45339182174,
       "initial": 29292.32891698057,
       "netPnl": 0,
       "profitFactor": null,
-      "maxDrawdown": 0,
+      "maxDrawdown": 0.0003140578265204521,
       "winRate": null,
       "avgWin": null,
       "avgLoss": null,
@@ -430,9 +430,9 @@
       "fees": 0,
       "makerFills": 0,
       "takerFills": 0,
-      "openPositions": 0,
+      "openPositions": 1,
       "pause": "normal",
-      "drawdown": 0
+      "drawdown": 0.00013230512226647395
     },
     {
       "id": "owner-sr-swing",
