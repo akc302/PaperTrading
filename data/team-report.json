@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "generatedAt": "2026-11-27T06:06:54.762Z",
+  "generatedAt": "2026-11-27T07:02:01.095Z",
   "goal": 85000,
   "equity": 29419.166496950034,
   "startingEquity": 30000,
@@ -70,12 +70,12 @@
   "agents": {
     "trader": {
       "role": "5-minute paper trader",
-      "lastRunMinutesAgo": 6,
+      "lastRunMinutesAgo": 1,
       "healthy": true
     },
     "researcher": {
       "role": "Claude every 5h: loss analysis, backtest, rule adoption",
-      "lastRunHoursAgo": 1.2,
+      "lastRunHoursAgo": 0,
       "healthy": true,
       "sweep": {
         "at": "2026-11-27T02:11:15.060Z",
@@ -109,13 +109,13 @@
         }
       },
       "latestNote": {
-        "at": "2026-11-27T04:28:10.636Z",
+        "at": "2026-11-27T06:28:48.718Z",
         "tradesReviewed": 2,
         "losses": 0,
         "findings": 2,
         "changes": 1,
         "adopted": false,
-        "nextIdea": "Track main entry frequency: if it makes no entry for 12h while owner-sr variants do, compare main vs owner-sr entry checks (pattern confirmation, fees) for a difference."
+        "nextIdea": "If main stays flat past 12h, compare its entry decisions with the hourly rules that keep finding entries and log which check blocks it."
       }
     },
     "verifier": {
@@ -202,7 +202,7 @@
     "windowDays": 30,
     "label": "Estimated time to $85,000 at the trailing 30-day growth rate (not a promise)",
     "status": "insufficient-history",
-    "spanDays": 6.2548004861120825,
+    "spanDays": 6.293068229166998,
     "message": "Needs at least 7 days of equity history."
   },
   "scorecard": [
@@ -285,7 +285,7 @@
     {
       "id": "hourly-legacy",
       "label": "Previous hourly rules",
-      "equity": 29734.713742293527,
+      "equity": 29605.60050669776,
       "initial": 29975.046647868254,
       "netPnl": -426.2056797570874,
       "profitFactor": 0.7871636096040053,
@@ -299,12 +299,12 @@
       "takerFills": 16,
       "openPositions": 3,
       "pause": "normal",
-      "drawdown": 0.030208676847101157
+      "drawdown": 0.03439956002801092
     },
     {
       "id": "lab-hourly",
       "label": "Lab hourly per-market rules",
-      "equity": 29290.0875655209,
+      "equity": 29227.406909761004,
       "initial": 29975.046647868254,
       "netPnl": -865.5803428112342,
       "profitFactor": 0.6494468380846175,
@@ -318,7 +318,7 @@
       "takerFills": 21,
       "openPositions": 3,
       "pause": "normal",
-      "drawdown": 0.039194976135320414
+      "drawdown": 0.041144926091102874
     },
     {
       "id": "scout-daytrade",
@@ -380,7 +380,7 @@
     {
       "id": "sr-scalper",
       "label": "Support/resistance scalper v2: within 1.2% of support, 0.8R target, 4h hold (1h hold lost 17 of 18), 1/4 risk",
-      "equity": 28802.942146733894,
+      "equity": 28787.575985890082,
       "initial": 29282.647920248248,
       "netPnl": -584.6089938605315,
       "profitFactor": 0.08873772059936667,
@@ -394,7 +394,7 @@
       "takerFills": 6,
       "openPositions": 3,
       "pause": "normal",
-      "drawdown": 0.016934125295811175
+      "drawdown": 0.017291945939121423
     },
     {
       "id": "owner-sr",
@@ -437,7 +437,7 @@
     {
       "id": "owner-sr-swing",
       "label": "Owner style, swing: within 3.5% of support, bigger target, 48h hold",
-      "equity": 29485.711557977633,
+      "equity": 29423.730046363286,
       "initial": 29292.32891698057,
       "netPnl": 62.3047098025514,
       "profitFactor": 1.3721606703254055,
@@ -451,7 +451,7 @@
       "takerFills": 1,
       "openPositions": 3,
       "pause": "normal",
-      "drawdown": 0.0007726851555606151
+      "drawdown": 0.0030222265616687283
     },
     {
       "id": "owner-sr-trend",
@@ -483,8 +483,7 @@
   },
   "verdict": "needs-attention",
   "issues": [
-    "1 trader error(s): Live paper check rejected: fresh complete quotes required for the whole account.",
-    "No new paper entry for 25h; current rules may be too strict for this market."
+    "No new paper entry for 26h; current rules may be too strict for this market."
   ],
   "dispatch": []
 }
