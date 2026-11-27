@@ -14,61 +14,61 @@
   "horizonHours": 4,
   "label": "Future four-hour close exceeds modeled round-trip taker costs plus 0.1% slippage buffer",
   "feeRate": 0.006,
-  "splitTime": 1794718800,
-  "trainSamples": 4635,
-  "holdoutSamples": 2056,
-  "latestTrainingLabel": 1794715200,
-  "earliestHoldoutFeature": 1794718800,
+  "splitTime": 1794780000,
+  "trainSamples": 4771,
+  "holdoutSamples": 2112,
+  "latestTrainingLabel": 1794776400,
+  "earliestHoldoutFeature": 1794780000,
   "weights": [
-    -1.7292809024873983,
-    0.005784626021552908,
-    -0.04359563400216422,
-    -0.020739707740155305,
-    -0.5512828852422988,
-    0.029514205338973556,
-    -0.2654834461087694
+    -1.7000689969046932,
+    -0.0032099421286412946,
+    -0.05966809045544369,
+    -0.041250481900712364,
+    -0.5340065414674126,
+    0.023665867149654136,
+    -0.26462374372384423
   ],
   "holdout": {
-    "brier": 0.1271629830430969,
-    "baselineBrier": 0.1302718167540665,
-    "accuracy": 0.8535992217898832,
+    "brier": 0.11790734625442444,
+    "baselineBrier": 0.12040311411460601,
+    "accuracy": 0.8645833333333334,
     "beatsConstantBaseline": true
   },
   "predictions": {
     "BTC-USD": {
-      "time": 1795654800,
-      "probability": 0.09907860352121828
+      "time": 1795741200,
+      "probability": 0.1318222506058213
     },
     "ETH-USD": {
-      "time": 1795654800,
-      "probability": 0.09631057418523137
+      "time": 1795741200,
+      "probability": 0.12718124648367118
     },
     "SOL-USD": {
-      "time": 1795654800,
-      "probability": 0.0899113706753473
+      "time": 1795741200,
+      "probability": 0.12522246244366128
     },
     "XRP-USD": {
-      "time": 1795654800,
-      "probability": 0.09476008115156108
+      "time": 1795741200,
+      "probability": 0.129667031908761
     },
     "ADA-USD": {
-      "time": 1795654800,
-      "probability": 0.08741479999066505
+      "time": 1795741200,
+      "probability": 0.12161098607031
     },
     "DOGE-USD": {
-      "time": 1795654800,
-      "probability": 0.09133278567743523
+      "time": 1795741200,
+      "probability": 0.129876053962065
     },
     "LINK-USD": {
-      "time": 1795654800,
-      "probability": 0.08830281484299286
+      "time": 1795741200,
+      "probability": 0.11745716378013957
     },
     "AVAX-USD": {
-      "time": 1795654800,
-      "probability": 0.09551150453444215
+      "time": 1795741200,
+      "probability": 0.1270031894224503
     }
   },
   "warning": "Historical candle labels, not real wins. Overlapping samples and market changes limit validity. Shadow-only; does not control trades or promise profits.",
-  "trainedOnDate": "2026-11-26",
-  "updatedAt": "2026-11-26T02:26:57.686Z"
+  "trainedOnDate": "2026-11-27",
+  "updatedAt": "2026-11-27T02:16:54.194Z"
 }
