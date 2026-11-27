@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "generatedAt": "2026-11-27T04:06:45.427Z",
+  "generatedAt": "2026-11-27T04:57:01.472Z",
   "goal": 85000,
   "equity": 29419.166496950034,
   "startingEquity": 30000,
@@ -43,7 +43,7 @@
     },
     "XRP-USD": {
       "strategy": "horizontal",
-      "approach": "aggressive-day-hold+ml-filter",
+      "approach": "aggressive-day-hold+regime-block",
       "decision": "keep"
     },
     "ADA-USD": {
@@ -75,7 +75,7 @@
     },
     "researcher": {
       "role": "Claude every 5h: loss analysis, backtest, rule adoption",
-      "lastRunHoursAgo": 1.2,
+      "lastRunHoursAgo": 0,
       "healthy": true,
       "sweep": {
         "at": "2026-11-27T02:11:15.060Z",
@@ -109,13 +109,13 @@
         }
       },
       "latestNote": {
-        "at": "2026-11-27T02:28:59.743Z",
-        "tradesReviewed": 3,
+        "at": "2026-11-27T04:28:10.636Z",
+        "tradesReviewed": 2,
         "losses": 0,
-        "findings": 3,
+        "findings": 2,
         "changes": 1,
         "adopted": false,
-        "nextIdea": "Keep main on owner-sr rules; at 20 main trades apply the switch rule. Consider moving owner-sr-quick to a 24h hold if it keeps losing."
+        "nextIdea": "Track main entry frequency: if it makes no entry for 12h while owner-sr variants do, compare main vs owner-sr entry checks (pattern confirmation, fees) for a difference."
       }
     },
     "verifier": {
@@ -202,7 +202,7 @@
     "windowDays": 30,
     "label": "Estimated time to $85,000 at the trailing 30-day growth rate (not a promise)",
     "status": "insufficient-history",
-    "spanDays": 6.1713591087968265,
+    "spanDays": 6.2062670370356905,
     "message": "Needs at least 7 days of equity history."
   },
   "scorecard": [
@@ -285,7 +285,7 @@
     {
       "id": "hourly-legacy",
       "label": "Previous hourly rules",
-      "equity": 29600.710215276344,
+      "equity": 29642.192262142573,
       "initial": 29975.046647868254,
       "netPnl": -557.9445028841353,
       "profitFactor": 0.7213765567300084,
@@ -299,12 +299,12 @@
       "takerFills": 16,
       "openPositions": 3,
       "pause": "normal",
-      "drawdown": 0.034559059158827066
+      "drawdown": 0.033206102893139855
     },
     {
       "id": "lab-hourly",
       "label": "Lab hourly per-market rules",
-      "equity": 29172.120792832306,
+      "equity": 29215.878558740253,
       "initial": 29975.046647868254,
       "netPnl": -994.299915996384,
       "profitFactor": 0.5973164336048877,
@@ -318,7 +318,7 @@
       "takerFills": 21,
       "openPositions": 3,
       "pause": "normal",
-      "drawdown": 0.042958681717713
+      "drawdown": 0.04152313336430302
     },
     {
       "id": "scout-daytrade",
@@ -380,7 +380,7 @@
     {
       "id": "sr-scalper",
       "label": "Support/resistance scalper v2: within 1.2% of support, 0.8R target, 4h hold (1h hold lost 17 of 18), 1/4 risk",
-      "equity": 28633.04909446641,
+      "equity": 28657.57480256366,
       "initial": 29282.647920248248,
       "netPnl": -584.6089938605315,
       "profitFactor": 0.08873772059936667,
@@ -394,7 +394,7 @@
       "takerFills": 6,
       "openPositions": 3,
       "pause": "normal",
-      "drawdown": 0.021475452804502693
+      "drawdown": 0.021729735697972097
     },
     {
       "id": "owner-sr",
@@ -437,7 +437,7 @@
     {
       "id": "owner-sr-swing",
       "label": "Owner style, swing: within 3.5% of support, bigger target, 48h hold",
-      "equity": 29306.289838590594,
+      "equity": 29351.64999558639,
       "initial": 29292.32891698057,
       "netPnl": 62.3047098025514,
       "profitFactor": 1.3721606703254055,
@@ -451,7 +451,7 @@
       "takerFills": 1,
       "openPositions": 3,
       "pause": "normal",
-      "drawdown": 0.0036534337761091606
+      "drawdown": 0.00226595694451992
     },
     {
       "id": "owner-sr-trend",
