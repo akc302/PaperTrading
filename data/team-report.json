@@ -1,13 +1,13 @@
 {
   "version": 1,
-  "generatedAt": "2026-11-27T10:58:40.413Z",
+  "generatedAt": "2026-11-27T12:11:43.313Z",
   "goal": 85000,
-  "equity": 29419.166496950034,
+  "equity": 29390.762892830582,
   "startingEquity": 30000,
-  "progressToGoal": -0.010560609146363012,
-  "returnPct": -0.019361116768332187,
+  "progressToGoal": -0.011077038312171234,
+  "returnPct": -0.020307903572313928,
   "drawdown": 0.028260934625866214,
-  "openPositions": 0,
+  "openPositions": 1,
   "last24h": {
     "closedTrades": 1,
     "wins": 1,
@@ -70,12 +70,12 @@
   "agents": {
     "trader": {
       "role": "5-minute paper trader",
-      "lastRunMinutesAgo": 3,
+      "lastRunMinutesAgo": 1,
       "healthy": true
     },
     "researcher": {
       "role": "Claude every 5h: loss analysis, backtest, rule adoption",
-      "lastRunHoursAgo": 0.7,
+      "lastRunHoursAgo": 1.9,
       "healthy": true,
       "sweep": {
         "at": "2026-11-27T10:11:18.536Z",
@@ -198,18 +198,18 @@
   },
   "goalEstimate": {
     "goal": 85000,
-    "equity": 29419.166496950034,
+    "equity": 29390.762892830582,
     "windowDays": 30,
     "label": "Estimated time to $85,000 at the trailing 30-day growth rate (not a promise)",
     "status": "insufficient-history",
-    "spanDays": 6.4574121875012365,
+    "spanDays": 6.5081401967588395,
     "message": "Needs at least 7 days of equity history."
   },
   "scorecard": [
     {
       "id": "main",
       "label": "Main: horizontal",
-      "equity": 29419.166496950034,
+      "equity": 29390.762892830582,
       "initial": 30000,
       "netPnl": -580.8335030499659,
       "profitFactor": 0.19030902754060763,
@@ -221,9 +221,9 @@
       "fees": 167.93047439023718,
       "makerFills": 6,
       "takerFills": 8,
-      "openPositions": 0,
+      "openPositions": 1,
       "pause": "normal",
-      "drawdown": 0.01976423966349561
+      "drawdown": 0.020710637260559217
     },
     {
       "id": "trend-k2",
@@ -285,7 +285,7 @@
     {
       "id": "hourly-legacy",
       "label": "Previous hourly rules",
-      "equity": 29555.914822843217,
+      "equity": 29516.2233002093,
       "initial": 29975.046647868254,
       "netPnl": -559.0293063917484,
       "profitFactor": 0.7381997250681486,
@@ -299,12 +299,12 @@
       "takerFills": 17,
       "openPositions": 2,
       "pause": "normal",
-      "drawdown": 0.03602008173232163
+      "drawdown": 0.03731463921680145
     },
     {
       "id": "lab-hourly",
       "label": "Lab hourly per-market rules",
-      "equity": 29250.07967891496,
+      "equity": 29187.628651933235,
       "initial": 29975.046647868254,
       "netPnl": -879.9621237668891,
       "profitFactor": 0.6456860352360133,
@@ -318,7 +318,7 @@
       "takerFills": 22,
       "openPositions": 3,
       "pause": "normal",
-      "drawdown": 0.0404011071197532
+      "drawdown": 0.042449919875436004
     },
     {
       "id": "scout-daytrade",
@@ -380,7 +380,7 @@
     {
       "id": "sr-scalper",
       "label": "Support/resistance scalper v2: within 1.2% of support, 0.8R target, 4h hold (1h hold lost 17 of 18), 1/4 risk",
-      "equity": 28852.713337539768,
+      "equity": 28769.942559472183,
       "initial": 29282.647920248248,
       "netPnl": -406.32661243750056,
       "profitFactor": 0.36663630063948566,
@@ -394,12 +394,12 @@
       "takerFills": 6,
       "openPositions": 3,
       "pause": "normal",
-      "drawdown": 0.015068382547826609
+      "drawdown": 0.017893889992002143
     },
     {
       "id": "owner-sr",
       "label": "Owner style: buy near support, sell at resistance (about +1.8%), all 8 coins, 24h hold, about 28% per trade",
-      "equity": 29649.732960699897,
+      "equity": 29617.671604011477,
       "initial": 29282.647920248248,
       "netPnl": 367.0850404516525,
       "profitFactor": 26.014470641355587,
@@ -411,18 +411,18 @@
       "fees": 62.48680177003479,
       "makerFills": 9,
       "takerFills": 1,
-      "openPositions": 0,
+      "openPositions": 1,
       "pause": "normal",
-      "drawdown": 0.000029418322753382853
+      "drawdown": 0.0014214531113139195
     },
     {
       "id": "owner-sr-quick",
       "label": "Owner style, quick: within 1.5% of support, about +1.2% target, 12h hold",
-      "equity": 28938.977048989836,
+      "equity": 28907.684259048172,
       "initial": 29292.32891698057,
       "netPnl": -353.35186799073233,
       "profitFactor": 0,
-      "maxDrawdown": 0.013883784065527944,
+      "maxDrawdown": 0.015049124204404813,
       "winRate": 0,
       "avgWin": null,
       "avgLoss": -88.33796699768308,
@@ -430,14 +430,14 @@
       "fees": 86.1243715228671,
       "makerFills": 4,
       "takerFills": 4,
-      "openPositions": 0,
+      "openPositions": 1,
       "pause": "normal",
-      "drawdown": 0.013883784065527927
+      "drawdown": 0.014950108129128004
     },
     {
       "id": "owner-sr-swing",
       "label": "Owner style, swing: within 3.5% of support, bigger target, 48h hold",
-      "equity": 29443.147168438783,
+      "equity": 29415.15757952316,
       "initial": 29292.32891698057,
       "netPnl": 62.3047098025514,
       "profitFactor": 1.3721606703254055,
@@ -451,12 +451,12 @@
       "takerFills": 1,
       "openPositions": 3,
       "pause": "normal",
-      "drawdown": 0.003303256929147569
+      "drawdown": 0.0042507484439813226
     },
     {
       "id": "owner-sr-trend",
       "label": "Owner style with market filter: only buys support when the coin is not in a downtrend",
-      "equity": 29430.850561907922,
+      "equity": 29399.025890881043,
       "initial": 29292.32891698057,
       "netPnl": 138.5216449273544,
       "profitFactor": "no losses",
@@ -468,22 +468,20 @@
       "fees": 18.575704825249108,
       "makerFills": 2,
       "takerFills": 0,
-      "openPositions": 0,
+      "openPositions": 1,
       "pause": "normal",
-      "drawdown": 0
+      "drawdown": 0.0014214531113141415
     }
   ],
   "drawdownPause": {
     "state": "normal",
-    "drawdown": 0.01976423966349561,
+    "drawdown": 0.020710637260559217,
     "peak": 30012.337528729568,
     "sizeMultiplier": 1,
     "triggeredAt": null,
     "clearedAt": null
   },
-  "verdict": "needs-attention",
-  "issues": [
-    "No new paper entry for 30h; current rules may be too strict for this market."
-  ],
+  "verdict": "on-track",
+  "issues": [],
   "dispatch": []
 }
