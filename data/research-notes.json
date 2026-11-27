@@ -840,6 +840,20 @@
       ],
       "adopted": false,
       "nextIdea": "Breakout-retest variant still queued; review ETH outcome across main and owner-sr variants when it closes."
+    },
+    {
+      "at": "2026-11-27T14:28:49.506Z",
+      "tradesReviewed": 8,
+      "losses": 7,
+      "findings": [
+        "8 closes since 12:27Z, 7 losses (-$521 total, one win). ETH broke support: main -$66.0, owner-sr -$74.5, owner-sr-trend -$74.0 (all quote-stops after 2.3h, same entry); lab-hourly XRP -$137.2 (stop); sr-scalper three 4-5h time exits (ETH -$81.9, XRP -$45.4, SOL -$42.4). Only win: hourly-legacy ETH +$57.8 (24h hold).",
+        "The main account is now 1 win, 1 loss on owner-sr rules (+$70.5 net). Owner-sr family is 7 wins from 10 trades. The ETH loss was a clean support break with the stop doing its job (loss about 0.5x the earlier LINK win)."
+      ],
+      "changes": [
+        "None: one support-break event; stops limited the loss as designed."
+      ],
+      "adopted": false,
+      "nextIdea": "Track whether stops sit inside 1h ATR across the owner-sr losses; if 3+ stop-outs reverse to target within 24h, widen stopBuffer on a variant first."
     }
   ]
 }
