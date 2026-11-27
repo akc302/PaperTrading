@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "generatedAt": "2026-11-27T08:16:52.901Z",
+  "generatedAt": "2026-11-27T10:12:04.750Z",
   "goal": 85000,
   "equity": 29419.166496950034,
   "startingEquity": 30000,
@@ -75,10 +75,10 @@
     },
     "researcher": {
       "role": "Claude every 5h: loss analysis, backtest, rule adoption",
-      "lastRunHoursAgo": 1.3,
+      "lastRunHoursAgo": 3.2,
       "healthy": true,
       "sweep": {
-        "at": "2026-11-27T02:11:15.060Z",
+        "at": "2026-11-27T10:11:18.536Z",
         "source": "data/history 1h (1 year)",
         "days": 365,
         "rulesTested": 54,
@@ -109,13 +109,13 @@
         }
       },
       "latestNote": {
-        "at": "2026-11-27T06:28:48.718Z",
-        "tradesReviewed": 2,
+        "at": "2026-11-27T08:28:41.811Z",
+        "tradesReviewed": 3,
         "losses": 0,
         "findings": 2,
         "changes": 1,
         "adopted": false,
-        "nextIdea": "If main stays flat past 12h, compare its entry decisions with the hourly rules that keep finding entries and log which check blocks it."
+        "nextIdea": "Add a breakout-retest variant for rallies: buy when price pulls back to a broken resistance (now support), so the owner style keeps trading when price is above its old range."
       }
     },
     "verifier": {
@@ -202,7 +202,7 @@
     "windowDays": 30,
     "label": "Estimated time to $85,000 at the trailing 30-day growth rate (not a promise)",
     "status": "insufficient-history",
-    "spanDays": 6.345056724537302,
+    "spanDays": 6.425054976851852,
     "message": "Needs at least 7 days of equity history."
   },
   "scorecard": [
@@ -285,7 +285,7 @@
     {
       "id": "hourly-legacy",
       "label": "Previous hourly rules",
-      "equity": 29653.105745424262,
+      "equity": 29589.225591553484,
       "initial": 29975.046647868254,
       "netPnl": -426.2056797570874,
       "profitFactor": 0.7871636096040053,
@@ -299,12 +299,12 @@
       "takerFills": 16,
       "openPositions": 3,
       "pause": "normal",
-      "drawdown": 0.032850154556404054
+      "drawdown": 0.03493363550687978
     },
     {
       "id": "lab-hourly",
       "label": "Lab hourly per-market rules",
-      "equity": 29301.188271143183,
+      "equity": 29295.107166744856,
       "initial": 29975.046647868254,
       "netPnl": -865.5803428112342,
       "profitFactor": 0.6494468380846175,
@@ -318,7 +318,7 @@
       "takerFills": 21,
       "openPositions": 3,
       "pause": "normal",
-      "drawdown": 0.03872440233613439
+      "drawdown": 0.038923903366975265
     },
     {
       "id": "scout-daytrade",
@@ -380,21 +380,21 @@
     {
       "id": "sr-scalper",
       "label": "Support/resistance scalper v2: within 1.2% of support, 0.8R target, 4h hold (1h hold lost 17 of 18), 1/4 risk",
-      "equity": 28893.42571769695,
+      "equity": 28849.95914184387,
       "initial": 29282.647920248248,
-      "netPnl": -438.74962144838685,
-      "profitFactor": 0.31609676839387635,
+      "netPnl": -406.32661243750056,
+      "profitFactor": 0.36663630063948566,
       "maxDrawdown": 0.025037182862973597,
-      "winRate": 0.23529411764705882,
-      "avgWin": 50.69698864712524,
+      "winRate": 0.2777777777777778,
+      "avgWin": 47.042192719877455,
       "avgLoss": -49.349044310529834,
-      "closedTrades": 17,
-      "fees": 292.17063235131866,
-      "makerFills": 28,
+      "closedTrades": 18,
+      "fees": 303.43547926744327,
+      "makerFills": 30,
       "takerFills": 6,
-      "openPositions": 2,
+      "openPositions": 3,
       "pause": "normal",
-      "drawdown": 0.013678603015848556
+      "drawdown": 0.015162401241659906
     },
     {
       "id": "owner-sr",
@@ -437,7 +437,7 @@
     {
       "id": "owner-sr-swing",
       "label": "Owner style, swing: within 3.5% of support, bigger target, 48h hold",
-      "equity": 29463.078509851603,
+      "equity": 29412.010304321255,
       "initial": 29292.32891698057,
       "netPnl": 62.3047098025514,
       "profitFactor": 1.3721606703254055,
@@ -451,7 +451,7 @@
       "takerFills": 1,
       "openPositions": 3,
       "pause": "normal",
-      "drawdown": 0.0016889644818783855
+      "drawdown": 0.004357288649256885
     },
     {
       "id": "owner-sr-trend",
@@ -483,7 +483,7 @@
   },
   "verdict": "needs-attention",
   "issues": [
-    "No new paper entry for 27h; current rules may be too strict for this market."
+    "No new paper entry for 29h; current rules may be too strict for this market."
   ],
   "dispatch": []
 }
