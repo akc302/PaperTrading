@@ -785,6 +785,20 @@
       ],
       "adopted": false,
       "nextIdea": "Track main entry frequency: if it makes no entry for 12h while owner-sr variants do, compare main vs owner-sr entry checks (pattern confirmation, fees) for a difference."
+    },
+    {
+      "at": "2026-11-27T06:28:48.718Z",
+      "tradesReviewed": 2,
+      "losses": 0,
+      "findings": [
+        "2 closes since 04:27Z, both wins: ADA bounced, hourly-legacy +$131.7 and lab-hourly +$128.7 at their 4h time exits.",
+        "Main still flat since its LINK win at about 02:10Z (about 4h); owner-sr also flat. No main/owner-sr support entries met the fee-adjusted target check in that time."
+      ],
+      "changes": [
+        "None."
+      ],
+      "adopted": false,
+      "nextIdea": "If main stays flat past 12h, compare its entry decisions with the hourly rules that keep finding entries and log which check blocks it."
     }
   ]
 }
