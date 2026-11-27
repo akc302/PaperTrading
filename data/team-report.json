@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "generatedAt": "2026-11-27T10:17:10.392Z",
+  "generatedAt": "2026-11-27T10:58:40.413Z",
   "goal": 85000,
   "equity": 29419.166496950034,
   "startingEquity": 30000,
@@ -70,12 +70,12 @@
   "agents": {
     "trader": {
       "role": "5-minute paper trader",
-      "lastRunMinutesAgo": 2,
+      "lastRunMinutesAgo": 3,
       "healthy": true
     },
     "researcher": {
       "role": "Claude every 5h: loss analysis, backtest, rule adoption",
-      "lastRunHoursAgo": 0,
+      "lastRunHoursAgo": 0.7,
       "healthy": true,
       "sweep": {
         "at": "2026-11-27T10:11:18.536Z",
@@ -109,13 +109,13 @@
         }
       },
       "latestNote": {
-        "at": "2026-11-27T08:28:41.811Z",
-        "tradesReviewed": 3,
+        "at": "2026-11-27T10:28:45.802Z",
+        "tradesReviewed": 0,
         "losses": 0,
-        "findings": 2,
+        "findings": 1,
         "changes": 1,
         "adopted": false,
-        "nextIdea": "Add a breakout-retest variant for rallies: buy when price pulls back to a broken resistance (now support), so the owner style keeps trading when price is above its old range."
+        "nextIdea": "Breakout-retest variant still next. If main is flat at 12h, test lookback 72 -> 24 on a challenger so the S/R levels follow price faster in a rally."
       }
     },
     "verifier": {
@@ -143,7 +143,7 @@
         "id": "history",
         "label": "28+ days of forward paper trading with the research team",
         "pass": false,
-        "value": "6.2 days"
+        "value": "6.3 days"
       },
       {
         "id": "sample",
@@ -202,7 +202,7 @@
     "windowDays": 30,
     "label": "Estimated time to $85,000 at the trailing 30-day growth rate (not a promise)",
     "status": "insufficient-history",
-    "spanDays": 6.428592499999536,
+    "spanDays": 6.4574121875012365,
     "message": "Needs at least 7 days of equity history."
   },
   "scorecard": [
@@ -285,40 +285,40 @@
     {
       "id": "hourly-legacy",
       "label": "Previous hourly rules",
-      "equity": 29562.68821244537,
+      "equity": 29555.914822843217,
       "initial": 29975.046647868254,
-      "netPnl": -426.2056797570874,
-      "profitFactor": 0.7871636096040053,
+      "netPnl": -559.0293063917484,
+      "profitFactor": 0.7381997250681486,
       "maxDrawdown": 0.07201090400349852,
-      "winRate": 0.43333333333333335,
+      "winRate": 0.41935483870967744,
       "avgWin": 121.25370127192424,
-      "avgLoss": -117.79434095835897,
-      "closedTrades": 30,
-      "fees": 544.3220923971742,
-      "makerFills": 44,
-      "takerFills": 16,
-      "openPositions": 3,
+      "avgLoss": -118.62930127370909,
+      "closedTrades": 31,
+      "fees": 568.6954443615499,
+      "makerFills": 45,
+      "takerFills": 17,
+      "openPositions": 2,
       "pause": "normal",
-      "drawdown": 0.03579916447788323
+      "drawdown": 0.03602008173232163
     },
     {
       "id": "lab-hourly",
       "label": "Lab hourly per-market rules",
-      "equity": 29264.851335697524,
+      "equity": 29250.07967891496,
       "initial": 29975.046647868254,
-      "netPnl": -865.5803428112342,
-      "profitFactor": 0.6494468380846175,
+      "netPnl": -879.9621237668891,
+      "profitFactor": 0.6456860352360133,
       "maxDrawdown": 0.07173795187731005,
-      "winRate": 0.36666666666666664,
+      "winRate": 0.3548387096774194,
       "avgWin": 145.78217250479744,
-      "avgLoss": -129.9570652823161,
-      "closedTrades": 30,
-      "fees": 577.3532978964512,
-      "makerFills": 39,
-      "takerFills": 21,
+      "avgLoss": -124.17830106598305,
+      "closedTrades": 31,
+      "fees": 601.48023589921,
+      "makerFills": 40,
+      "takerFills": 22,
       "openPositions": 3,
       "pause": "normal",
-      "drawdown": 0.039916497653722516
+      "drawdown": 0.0404011071197532
     },
     {
       "id": "scout-daytrade",
@@ -380,7 +380,7 @@
     {
       "id": "sr-scalper",
       "label": "Support/resistance scalper v2: within 1.2% of support, 0.8R target, 4h hold (1h hold lost 17 of 18), 1/4 risk",
-      "equity": 28825.081534015375,
+      "equity": 28852.713337539768,
       "initial": 29282.647920248248,
       "netPnl": -406.32661243750056,
       "profitFactor": 0.36663630063948566,
@@ -394,7 +394,7 @@
       "takerFills": 6,
       "openPositions": 3,
       "pause": "normal",
-      "drawdown": 0.016011636536455542
+      "drawdown": 0.015068382547826609
     },
     {
       "id": "owner-sr",
@@ -437,7 +437,7 @@
     {
       "id": "owner-sr-swing",
       "label": "Owner style, swing: within 3.5% of support, bigger target, 48h hold",
-      "equity": 29383.864094731616,
+      "equity": 29443.147168438783,
       "initial": 29292.32891698057,
       "netPnl": 62.3047098025514,
       "profitFactor": 1.3721606703254055,
@@ -451,7 +451,7 @@
       "takerFills": 1,
       "openPositions": 3,
       "pause": "normal",
-      "drawdown": 0.0053100820197242715
+      "drawdown": 0.003303256929147569
     },
     {
       "id": "owner-sr-trend",
@@ -483,7 +483,7 @@
   },
   "verdict": "needs-attention",
   "issues": [
-    "No new paper entry for 29h; current rules may be too strict for this market."
+    "No new paper entry for 30h; current rules may be too strict for this market."
   ],
   "dispatch": []
 }
