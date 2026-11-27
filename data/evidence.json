@@ -1,7 +1,7 @@
 {
   "version": 1,
   "cadence": "hourly collection; daily review",
-  "lastCollectedAt": "2026-11-27T12:11:41.232Z",
+  "lastCollectedAt": "2026-11-27T13:31:47.007Z",
   "hourly": [
     {
       "periodStart": "2026-11-20T03:00:00.000Z",
@@ -5365,22 +5365,47 @@
       "observedChecks": 11,
       "largestCheckGapSeconds": 596.8830001354218,
       "evidenceComplete": true
+    },
+    {
+      "periodStart": "2026-11-27T12:00:00.000Z",
+      "periodEnd": "2026-11-27T13:00:00.000Z",
+      "closedTrades": 0,
+      "wins": 0,
+      "losses": 0,
+      "flats": 0,
+      "winRate": null,
+      "netPnl": 0,
+      "grossFees": 0,
+      "rebatesCredited": 0,
+      "pendingRebates": 0,
+      "expectancy": null,
+      "profitFactor": null,
+      "maxDrawdown": 0.0006120501167091065,
+      "byMarket": {},
+      "bySetup": {},
+      "byExit": {},
+      "byPattern": {},
+      "note": "Completed simulated trade outcomes after modeled costs. Virtual snapshot rebalances excluded. Null ratios mean insufficient denominator, not an infinite edge.",
+      "tradeHeartbeat": "2026-11-27T13:30:33.796Z",
+      "observedChecks": 12,
+      "largestCheckGapSeconds": 308.80400013923645,
+      "evidenceComplete": true
     }
   ],
   "allTime": {
     "periodStart": "1970-01-01T00:00:00.000Z",
-    "periodEnd": "2026-11-27T12:11:41.232Z",
-    "closedTrades": 7,
+    "periodEnd": "2026-11-27T13:31:47.007Z",
+    "closedTrades": 8,
     "wins": 1,
-    "losses": 6,
+    "losses": 7,
     "flats": 0,
-    "winRate": 0.14285714285714285,
-    "netPnl": -580.8335030499659,
-    "grossFees": 223.90729918698293,
-    "rebatesCredited": 55.97682479674573,
+    "winRate": 0.125,
+    "netPnl": -646.8593939767806,
+    "grossFees": 256.78075639318445,
+    "rebatesCredited": 64.19518909829611,
     "pendingRebates": 0,
-    "expectancy": -82.9762147214237,
-    "profitFactor": 0.19030902754060763,
+    "expectancy": -80.85742424709757,
+    "profitFactor": 0.17426910356380737,
     "maxDrawdown": 0.028260934625866214,
     "byMarket": {
       "ADA-USD": {
@@ -5414,6 +5439,14 @@
         "netPnl": 136.51857670178887,
         "grossFees": 22.12596662654662,
         "rebatesCredited": 5.531491656636655
+      },
+      "ETH-USD": {
+        "trades": 1,
+        "wins": 0,
+        "losses": 1,
+        "netPnl": -66.02589092681465,
+        "grossFees": 32.8734572062015,
+        "rebatesCredited": 8.218364301550375
       }
     },
     "bySetup": {
@@ -5426,12 +5459,12 @@
         "rebatesCredited": 50.44533314010908
       },
       "support-bounce": {
-        "trades": 1,
+        "trades": 2,
         "wins": 1,
-        "losses": 0,
-        "netPnl": 136.51857670178887,
-        "grossFees": 22.12596662654662,
-        "rebatesCredited": 5.531491656636655
+        "losses": 1,
+        "netPnl": 70.49268577497422,
+        "grossFees": 54.99942383274812,
+        "rebatesCredited": 13.74985595818703
       }
     },
     "byExit": {
@@ -5444,12 +5477,12 @@
         "rebatesCredited": 30.69272611565424
       },
       "quote-stop": {
-        "trades": 3,
+        "trades": 4,
         "wins": 0,
-        "losses": 3,
-        "netPnl": -482.91384792837226,
-        "grossFees": 79.01042809781934,
-        "rebatesCredited": 19.752607024454836
+        "losses": 4,
+        "netPnl": -548.9397388551869,
+        "grossFees": 111.88388530402085,
+        "rebatesCredited": 27.970971326005213
       },
       "target": {
         "trades": 1,
@@ -5468,6 +5501,14 @@
         "netPnl": -580.8335030499659,
         "grossFees": 223.90729918698293,
         "rebatesCredited": 55.97682479674573
+      },
+      "not-confirmed": {
+        "trades": 1,
+        "wins": 0,
+        "losses": 1,
+        "netPnl": -66.02589092681465,
+        "grossFees": 32.8734572062015,
+        "rebatesCredited": 8.218364301550375
       }
     },
     "note": "Completed simulated trade outcomes after modeled costs. Virtual snapshot rebalances excluded. Null ratios mean insufficient denominator, not an infinite edge."
