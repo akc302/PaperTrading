@@ -826,6 +826,20 @@
       ],
       "adopted": false,
       "nextIdea": "Breakout-retest variant still next. If main is flat at 12h, test lookback 72 -> 24 on a challenger so the S/R levels follow price faster in a rally."
+    },
+    {
+      "at": "2026-11-27T12:28:04.876Z",
+      "tradesReviewed": 2,
+      "losses": 2,
+      "findings": [
+        "2 closes since 10:27Z, both losses at the 4-5h time exit: hourly-legacy LINK -$132.8, lab-hourly SOL -$14.4. The hourly rule sets keep losing on short time exits after a fall, as on 26 Nov.",
+        "Main opened ETH about 11:00Z on the owner-sr rules (owner-sr and owner-sr-trend took the same ETH entry). No owner-sr-family closes this window."
+      ],
+      "changes": [
+        "None."
+      ],
+      "adopted": false,
+      "nextIdea": "Breakout-retest variant still queued; review ETH outcome across main and owner-sr variants when it closes."
     }
   ]
 }
