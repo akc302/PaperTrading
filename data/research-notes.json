@@ -799,6 +799,20 @@
       ],
       "adopted": false,
       "nextIdea": "If main stays flat past 12h, compare its entry decisions with the hourly rules that keep finding entries and log which check blocks it."
+    },
+    {
+      "at": "2026-11-27T08:28:41.811Z",
+      "tradesReviewed": 3,
+      "losses": 0,
+      "findings": [
+        "3 closes since 06:27Z, all sr-scalper v2 wins: XRP +$128.4 (target, 3.5h), SOL +$32.4 and DOGE +$17.4 (4h time exits). sr-scalper v2 (4h hold, 1.2% zone) is now 4 wins from 5 trades, vs 1 from 18 on the 1h version.",
+        "Main and owner-sr have been flat about 6h. The main decision log says \"waiting for confirmed support below price and resistance above\" on all 8 coins: prices rallied above the 72h levels, so there is no support/resistance pair to trade. Not a bug."
+      ],
+      "changes": [
+        "None."
+      ],
+      "adopted": false,
+      "nextIdea": "Add a breakout-retest variant for rallies: buy when price pulls back to a broken resistance (now support), so the owner style keeps trading when price is above its old range."
     }
   ]
 }
