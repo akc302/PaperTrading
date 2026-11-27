@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "generatedAt": "2026-11-27T13:31:49.792Z",
+  "generatedAt": "2026-11-27T14:27:17.500Z",
   "goal": 85000,
   "equity": 29353.14060602322,
   "startingEquity": 30000,
@@ -33,7 +33,7 @@
     },
     "ETH-USD": {
       "strategy": "horizontal",
-      "approach": "aggressive-day-hold+regime-block",
+      "approach": "aggressive-day-hold+ml-filter",
       "decision": "keep"
     },
     "SOL-USD": {
@@ -58,24 +58,24 @@
     },
     "LINK-USD": {
       "strategy": "horizontal",
-      "approach": "aggressive-day-hold+regime-block",
+      "approach": "aggressive-day-hold+regime-block+ml-filter",
       "decision": "keep"
     },
     "AVAX-USD": {
       "strategy": "horizontal",
-      "approach": "aggressive-day-hold+regime-block",
+      "approach": "aggressive-day-hold+ml-filter",
       "decision": "keep"
     }
   },
   "agents": {
     "trader": {
       "role": "5-minute paper trader",
-      "lastRunMinutesAgo": 1,
+      "lastRunMinutesAgo": 2,
       "healthy": true
     },
     "researcher": {
       "role": "Claude every 5h: loss analysis, backtest, rule adoption",
-      "lastRunHoursAgo": 1.2,
+      "lastRunHoursAgo": 0,
       "healthy": true,
       "sweep": {
         "at": "2026-11-27T10:11:18.536Z",
@@ -202,7 +202,7 @@
     "windowDays": 30,
     "label": "Estimated time to $85,000 at the trailing 30-day growth rate (not a promise)",
     "status": "insufficient-history",
-    "spanDays": 6.563770740741381,
+    "spanDays": 6.60228587962963,
     "message": "Needs at least 7 days of equity history."
   },
   "scorecard": [
@@ -285,40 +285,40 @@
     {
       "id": "hourly-legacy",
       "label": "Previous hourly rules",
-      "equity": 29498.593858494252,
+      "equity": 29500.023947887275,
       "initial": 29975.046647868254,
-      "netPnl": -559.0293063917484,
-      "profitFactor": 0.7381997250681486,
+      "netPnl": -501.2260965934861,
+      "profitFactor": 0.7652696765789267,
       "maxDrawdown": 0.07201090400349852,
-      "winRate": 0.41935483870967744,
-      "avgWin": 121.25370127192424,
+      "winRate": 0.4375,
+      "avgWin": 116.72152330951982,
       "avgLoss": -118.62930127370909,
-      "closedTrades": 31,
-      "fees": 568.6954443615499,
-      "makerFills": 45,
+      "closedTrades": 32,
+      "fees": 584.9844060884806,
+      "makerFills": 47,
       "takerFills": 17,
-      "openPositions": 2,
+      "openPositions": 1,
       "pause": "normal",
-      "drawdown": 0.037889631663675205
+      "drawdown": 0.0378429886325099
     },
     {
       "id": "lab-hourly",
       "label": "Lab hourly per-market rules",
-      "equity": 29140.29922114034,
+      "equity": 29111.90016791734,
       "initial": 29975.046647868254,
-      "netPnl": -879.9621237668891,
-      "profitFactor": 0.6456860352360133,
+      "netPnl": -1017.1443423354724,
+      "profitFactor": 0.6118878086592376,
       "maxDrawdown": 0.07173795187731005,
-      "winRate": 0.3548387096774194,
+      "winRate": 0.34375,
       "avgWin": 145.78217250479744,
-      "avgLoss": -124.17830106598305,
-      "closedTrades": 31,
-      "fees": 601.48023589921,
-      "makerFills": 40,
-      "takerFills": 22,
-      "openPositions": 3,
+      "avgLoss": -124.79753523277354,
+      "closedTrades": 32,
+      "fees": 625.3177678420067,
+      "makerFills": 41,
+      "takerFills": 23,
+      "openPositions": 2,
       "pause": "normal",
-      "drawdown": 0.04400264280433297
+      "drawdown": 0.044934322318740616
     },
     {
       "id": "scout-daytrade",
@@ -418,7 +418,7 @@
     {
       "id": "owner-sr-quick",
       "label": "Owner style, quick: within 1.5% of support, about +1.2% target, 12h hold",
-      "equity": 28896.717332092776,
+      "equity": 28908.809072069238,
       "initial": 29292.32891698057,
       "netPnl": -353.35186799073233,
       "profitFactor": 0,
@@ -432,12 +432,12 @@
       "takerFills": 4,
       "openPositions": 1,
       "pause": "normal",
-      "drawdown": 0.0153238139616243
+      "drawdown": 0.014911779325795016
     },
     {
       "id": "owner-sr-swing",
       "label": "Owner style, swing: within 3.5% of support, bigger target, 48h hold",
-      "equity": 29359.757438728753,
+      "equity": 29325.209449202892,
       "initial": 29292.32891698057,
       "netPnl": 62.3047098025514,
       "profitFactor": 1.3721606703254055,
@@ -451,7 +451,7 @@
       "takerFills": 1,
       "openPositions": 3,
       "pause": "normal",
-      "drawdown": 0.006126130161145049
+      "drawdown": 0.007295633830133985
     },
     {
       "id": "owner-sr-trend",
