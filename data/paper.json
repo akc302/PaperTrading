@@ -335066,8 +335066,8 @@
   "strategyLab": {
     "version": 2,
     "experiment": "rolling-v2",
-    "inputHash": "367b4ed1a80bdae45d38c336a949ac625fdfcfc3f05f91097cbd24ad652a300a",
-    "updatedAt": "2026-11-27T02:22:04.190Z",
+    "inputHash": "7bbdfbdf7f1e3488753c62c8a7bfb14851d7d968eb2df1336eea15686b991583",
+    "updatedAt": "2026-11-27T02:56:10.041Z",
     "mode": "rolling-adoption",
     "trend": {
       "experiment": "trend-2y-v1",
@@ -335246,7 +335246,7 @@
     },
     "outcomes": {
       "periodStart": "1970-01-01T00:00:00.000Z",
-      "periodEnd": "2026-11-27T02:22:04.190Z",
+      "periodEnd": "2026-11-27T02:56:10.041Z",
       "closedTrades": 7,
       "wins": 1,
       "losses": 6,
@@ -335393,14 +335393,14 @@
             "id": "aggressive-day-hold+regime-block",
             "folds": [
               {
-                "returnPct": -0.0050268898614851424,
-                "drawdown": 0.012564263248844175,
-                "closedTrades": 8,
-                "winRate": 0.375,
-                "netPnl": -50.26889861484899,
-                "grossFees": 100.87169571939478,
-                "rebatesCredited": 25.217923929848695,
-                "expectancy": -6.283612326856124
+                "returnPct": -0.010116084722367122,
+                "drawdown": 0.012543440730324821,
+                "closedTrades": 9,
+                "winRate": 0.3333333333333333,
+                "netPnl": -101.16084722367052,
+                "grossFees": 115.27031755661955,
+                "rebatesCredited": 28.817579389154886,
+                "expectancy": -11.24009413596339
               },
               {
                 "returnPct": -0.01929005316041639,
@@ -335420,27 +335420,27 @@
             "id": "aggressive-day-hold",
             "folds": [
               {
-                "returnPct": -0.009418157793521276,
-                "drawdown": 0.01431834179334769,
+                "returnPct": -0.009402324526628581,
+                "drawdown": 0.01429389560088526,
                 "closedTrades": 9,
                 "winRate": 0.3333333333333333,
-                "netPnl": -94.18157793521179,
-                "grossFees": 115.30733833554577,
-                "rebatesCredited": 28.82683458388644,
-                "expectancy": -10.464619770579088
+                "netPnl": -94.02324526628432,
+                "grossFees": 115.31647586047566,
+                "rebatesCredited": 28.829118965118916,
+                "expectancy": -10.447027251809368
               },
               {
-                "returnPct": -0.05172675980292588,
+                "returnPct": -0.05172573425083756,
                 "drawdown": 0.055898258260564035,
                 "closedTrades": 14,
                 "winRate": 0.14285714285714285,
-                "netPnl": -517.267598029262,
-                "grossFees": 188.32608318481138,
-                "rebatesCredited": 47.081520796202845,
-                "expectancy": -36.94768557351871
+                "netPnl": -517.2573425083784,
+                "grossFees": 188.32611394573402,
+                "rebatesCredited": 47.081528486433506,
+                "expectancy": -36.94695303631274
               }
             ],
-            "score": -0.10762501806348992,
+            "score": -0.10762399251140159,
             "eligible": true
           },
           {
@@ -335636,14 +335636,14 @@
             "id": "rsi-reversion",
             "folds": [
               {
-                "returnPct": 0.008314763883858904,
-                "drawdown": 0.0026270160327582187,
-                "closedTrades": 3,
-                "winRate": 0.6666666666666666,
-                "netPnl": 83.14763883859058,
-                "grossFees": 33.93469909880301,
-                "rebatesCredited": 8.483674774700752,
-                "expectancy": 27.715879612863528
+                "returnPct": 0.010057455647531424,
+                "drawdown": 0.002291876195905206,
+                "closedTrades": 2,
+                "winRate": 1,
+                "netPnl": 100.57455647531258,
+                "grossFees": 22.618681248815996,
+                "rebatesCredited": 5.654670312203999,
+                "expectancy": 50.28727823765629
               },
               {
                 "returnPct": 0,
@@ -335717,14 +335717,14 @@
             "id": "ema-trend-pullback",
             "folds": [
               {
-                "returnPct": -0.002457150259957598,
-                "drawdown": 0.005284098388205479,
+                "returnPct": -0.0024074995142558692,
+                "drawdown": 0.005208025521303325,
                 "closedTrades": 3,
                 "winRate": 0.3333333333333333,
-                "netPnl": -24.571502599576398,
-                "grossFees": 41.03811529203616,
-                "rebatesCredited": 10.25952882300904,
-                "expectancy": -8.190500866525467
+                "netPnl": -24.074995142560226,
+                "grossFees": 41.038910636242925,
+                "rebatesCredited": 10.259727659060731,
+                "expectancy": -8.02499838085341
               },
               {
                 "returnPct": 0,
@@ -335737,21 +335737,21 @@
                 "expectancy": null
               }
             ],
-            "score": -0.007741248648163077,
+            "score": -0.007615525035559194,
             "eligible": false
           },
           {
             "id": "donchian-breakout",
             "folds": [
               {
-                "returnPct": -0.009132872274744295,
-                "drawdown": 0.010045965999021623,
+                "returnPct": -0.00909080587462995,
+                "drawdown": 0.010009143308553526,
                 "closedTrades": 2,
                 "winRate": 0,
-                "netPnl": -91.32872274744247,
-                "grossFees": 29.66128076115062,
-                "rebatesCredited": 7.415320190287655,
-                "expectancy": -45.664361373721235
+                "netPnl": -90.90805874629962,
+                "grossFees": 29.662699945584187,
+                "rebatesCredited": 7.415674986396047,
+                "expectancy": -45.45402937314981
               },
               {
                 "returnPct": 0,
@@ -335764,20 +335764,20 @@
                 "expectancy": null
               }
             ],
-            "score": -0.019178838273765916,
+            "score": -0.019099949183183477,
             "eligible": false
           }
         ],
         "finalTest": {
           "candidate": {
-            "returnPct": -0.0044842013261819375,
-            "drawdown": 0.017571340719074173,
-            "closedTrades": 5,
-            "winRate": 0.4,
-            "netPnl": -44.84201326182112,
-            "grossFees": 59.33487322863055,
-            "rebatesCredited": 14.833718307157637,
-            "expectancy": -8.968402652364224
+            "returnPct": -0.005379319852442677,
+            "drawdown": 0.018363562301813907,
+            "closedTrades": 6,
+            "winRate": 0.3333333333333333,
+            "netPnl": -53.79319852442292,
+            "grossFees": 74.23216872311272,
+            "rebatesCredited": 18.55804218077818,
+            "expectancy": -8.96553308740382
           },
           "baseline": {
             "returnPct": 0,
@@ -335791,19 +335791,19 @@
           }
         },
         "stress": {
-          "returnPct": -0.00671110739662272,
-          "drawdown": 0.01873356047649904,
-          "closedTrades": 5,
-          "winRate": 0.4,
-          "netPnl": -67.11107396622758,
-          "grossFees": 59.26558723444455,
+          "returnPct": -0.008222421003133059,
+          "drawdown": 0.019363014228888586,
+          "closedTrades": 6,
+          "winRate": 0.3333333333333333,
+          "netPnl": -82.22421003133415,
+          "grossFees": 74.1221352446909,
           "rebatesCredited": 0,
-          "expectancy": -13.422214793245516
+          "expectancy": -13.704035005222359
         },
         "passed": false,
         "selectionEnd": 1794938400,
         "historyStart": 1792530000,
-        "registeredAt": "2026-11-27T02:22:04.190Z",
+        "registeredAt": "2026-11-27T02:56:10.041Z",
         "reason": "No approach beat the current rules on the unseen newest 25%; current rules kept and every losing experiment recorded."
       },
       "ETH-USD": {
@@ -336234,7 +336234,7 @@
         "passed": false,
         "selectionEnd": 1794938400,
         "historyStart": 1792530000,
-        "registeredAt": "2026-11-27T02:22:04.190Z",
+        "registeredAt": "2026-11-27T02:56:10.041Z",
         "reason": "No approach beat the current rules on the unseen newest 25%; current rules kept and every losing experiment recorded."
       },
       "SOL-USD": {
@@ -336665,48 +336665,56 @@
         "passed": false,
         "selectionEnd": 1794938400,
         "historyStart": 1792530000,
-        "registeredAt": "2026-11-27T02:22:04.190Z",
+        "registeredAt": "2026-11-27T02:56:10.041Z",
         "reason": "No approach beat the current rules on the unseen newest 25%; current rules kept and every losing experiment recorded."
       },
       "XRP-USD": {
         "experiment": "rolling-v2",
         "status": "no-better-rules",
         "decision": "keep",
-        "selected": "aggressive-day-hold+regime-block",
+        "selected": "aggressive-day-hold+ml-filter",
         "changes": {
+          "mlWeights": [
+            -1.4017740191975845,
+            -0.05296512447756885,
+            -0.02381784067735968,
+            -0.11442962134381982,
+            -0.390967544179441,
+            -0.0702339979557927,
+            -0.24425300310423897
+          ],
+          "mlThreshold": 0.17654040248506261,
           "strategy": "aggressive",
           "maxHoldHours": 24,
           "stopAtrMultiplier": 2.5,
-          "rewardRisk": 1.5,
-          "patternRequired": true,
-          "regimeFilter": true
+          "rewardRisk": 1.5
         },
         "development": [
           {
-            "id": "aggressive-day-hold+regime-block",
+            "id": "aggressive-day-hold+ml-filter",
             "folds": [
               {
-                "returnPct": -0.008305025810156077,
-                "drawdown": 0.011902848236510943,
-                "closedTrades": 5,
-                "winRate": 0.2,
-                "netPnl": -83.05025810156027,
-                "grossFees": 59.54385708479559,
-                "rebatesCredited": 14.885964271198898,
-                "expectancy": -16.610051620312056
+                "returnPct": -0.014840723228590286,
+                "drawdown": 0.026732274292846872,
+                "closedTrades": 8,
+                "winRate": 0.25,
+                "netPnl": -148.40723228590127,
+                "grossFees": 104.09536941732244,
+                "rebatesCredited": 26.02384235433061,
+                "expectancy": -18.55090403573766
               },
               {
-                "returnPct": -0.035344561481729764,
-                "drawdown": 0.04021591003786216,
-                "closedTrades": 7,
-                "winRate": 0.14285714285714285,
-                "netPnl": -353.4456148172973,
-                "grossFees": 90.87942502824959,
-                "rebatesCredited": 22.719856257062396,
-                "expectancy": -50.49223068818533
+                "returnPct": -0.02655280559840885,
+                "drawdown": 0.04667273037049435,
+                "closedTrades": 10,
+                "winRate": 0.3,
+                "netPnl": -265.5280559840897,
+                "grossFees": 131.30795489835123,
+                "rebatesCredited": 32.82698872458781,
+                "expectancy": -26.55280559840897
               }
             ],
-            "score": -0.07556047151959192,
+            "score": -0.0732255359689032,
             "eligible": true
           },
           {
@@ -336723,45 +336731,18 @@
                 "expectancy": -26.300749414947855
               },
               {
-                "returnPct": -0.05362808827591944,
-                "drawdown": 0.06449599249084823,
+                "returnPct": -0.053342521829551875,
+                "drawdown": 0.06421370541990128,
                 "closedTrades": 15,
                 "winRate": 0.2,
-                "netPnl": -536.280882759192,
-                "grossFees": 197.7339032915201,
-                "rebatesCredited": 49.43347582288003,
-                "expectancy": -35.7520588506128
+                "netPnl": -533.4252182955194,
+                "grossFees": 197.77480235356595,
+                "rebatesCredited": 49.443700588391486,
+                "expectancy": -35.56168121970129
               }
             ],
-            "score": -0.11812408076676767,
+            "score": -0.11755622724945315,
             "eligible": true
-          },
-          {
-            "id": "aggressive-day-hold+regime-block+ml-filter",
-            "folds": [
-              {
-                "returnPct": 0,
-                "drawdown": 0,
-                "closedTrades": 0,
-                "winRate": 0,
-                "netPnl": 0,
-                "grossFees": 0,
-                "rebatesCredited": 0,
-                "expectancy": null
-              },
-              {
-                "returnPct": 0,
-                "drawdown": 0,
-                "closedTrades": 0,
-                "winRate": 0,
-                "netPnl": 0,
-                "grossFees": 0,
-                "rebatesCredited": 0,
-                "expectancy": null
-              }
-            ],
-            "score": 0,
-            "eligible": false
           },
           {
             "id": "current",
@@ -337059,18 +337040,45 @@
             ],
             "score": -0.014390355009321253,
             "eligible": false
+          },
+          {
+            "id": "aggressive-day-hold+regime-block",
+            "folds": [
+              {
+                "returnPct": -0.006265101352850252,
+                "drawdown": 0.008536223373285988,
+                "closedTrades": 4,
+                "winRate": 0.25,
+                "netPnl": -62.651013528501686,
+                "grossFees": 48.41585758054746,
+                "rebatesCredited": 12.103964395136865,
+                "expectancy": -15.662753382125421
+              },
+              {
+                "returnPct": -0.047631503003831496,
+                "drawdown": 0.05244080456115662,
+                "closedTrades": 8,
+                "winRate": 0.125,
+                "netPnl": -476.3150300383098,
+                "grossFees": 108.2370563097836,
+                "rebatesCredited": 27.0592640774459,
+                "expectancy": -59.53937875478873
+              }
+            ],
+            "score": -0.10007230756498811,
+            "eligible": false
           }
         ],
         "finalTest": {
           "candidate": {
-            "returnPct": -0.01462074796633151,
-            "drawdown": 0.03483294631941785,
-            "closedTrades": 9,
-            "winRate": 0.2222222222222222,
-            "netPnl": -146.2074796633122,
-            "grossFees": 117.62054610630315,
-            "rebatesCredited": 29.405136526575788,
-            "expectancy": -16.2452755181458
+            "returnPct": -0.01989205723542891,
+            "drawdown": 0.02725847353292557,
+            "closedTrades": 6,
+            "winRate": 0.16666666666666666,
+            "netPnl": -198.92057235429002,
+            "grossFees": 80.82019679693657,
+            "rebatesCredited": 20.205049199234143,
+            "expectancy": -33.153428725715
           },
           "baseline": {
             "returnPct": 0,
@@ -337084,19 +337092,19 @@
           }
         },
         "stress": {
-          "returnPct": -0.018040711796904,
-          "drawdown": 0.03778153119800311,
-          "closedTrades": 9,
-          "winRate": 0.2222222222222222,
-          "netPnl": -180.40711796903855,
-          "grossFees": 117.39570335765278,
+          "returnPct": -0.02249549027902467,
+          "drawdown": 0.02860320248787106,
+          "closedTrades": 6,
+          "winRate": 0.16666666666666666,
+          "netPnl": -224.95490279024818,
+          "grossFees": 80.70736252545987,
           "rebatesCredited": 0,
-          "expectancy": -20.045235329893174
+          "expectancy": -37.4924837983747
         },
         "passed": false,
         "selectionEnd": 1794942000,
         "historyStart": 1792533600,
-        "registeredAt": "2026-11-27T02:22:04.190Z",
+        "registeredAt": "2026-11-27T02:56:10.041Z",
         "reason": "No approach beat the current rules on the unseen newest 25%; current rules kept and every losing experiment recorded."
       },
       "ADA-USD": {
@@ -337117,54 +337125,54 @@
             "id": "aggressive-day-hold+regime-block",
             "folds": [
               {
-                "returnPct": -0.0061098193554717,
-                "drawdown": 0.014177966347560921,
+                "returnPct": -0.007076202377917616,
+                "drawdown": 0.01512119398979639,
                 "closedTrades": 7,
                 "winRate": 0.2857142857142857,
-                "netPnl": -61.09819355471407,
-                "grossFees": 93.0962318194027,
-                "rebatesCredited": 23.274057954850676,
-                "expectancy": -8.728313364959153
+                "netPnl": -70.76202377917318,
+                "grossFees": 93.06717495077491,
+                "rebatesCredited": 23.266793737693728,
+                "expectancy": -10.108860539881883
               },
               {
-                "returnPct": -0.031143555476229084,
-                "drawdown": 0.031143555476229084,
+                "returnPct": -0.031210734492797928,
+                "drawdown": 0.031210734492797928,
                 "closedTrades": 6,
                 "winRate": 0.16666666666666666,
-                "netPnl": -311.43555476229227,
-                "grossFees": 80.52768418757499,
-                "rebatesCredited": 20.131921046893748,
-                "expectancy": -51.905925793715376
+                "netPnl": -312.1073449279802,
+                "grossFees": 80.52354571762463,
+                "rebatesCredited": 20.130886429406157,
+                "expectancy": -52.017890821330035
               }
             ],
-            "score": -0.06228711095245817,
+            "score": -0.062421468985595856,
             "eligible": true
           },
           {
             "id": "aggressive-day-hold",
             "folds": [
               {
-                "returnPct": -0.02442581865217726,
-                "drawdown": 0.02900907505052888,
+                "returnPct": -0.026144555611548458,
+                "drawdown": 0.030745295795209935,
                 "closedTrades": 11,
                 "winRate": 0.36363636363636365,
-                "netPnl": -244.25818652177534,
-                "grossFees": 147.64962374872775,
-                "rebatesCredited": 36.91240593718194,
-                "expectancy": -22.20528968379776
+                "netPnl": -261.4455561154859,
+                "grossFees": 147.5789300833999,
+                "rebatesCredited": 36.89473252084998,
+                "expectancy": -23.767777828680536
               },
               {
-                "returnPct": -0.05222025413815718,
-                "drawdown": 0.06007964142754894,
+                "returnPct": -0.04839651557131492,
+                "drawdown": 0.0563021922406262,
                 "closedTrades": 15,
-                "winRate": 0.26666666666666666,
-                "netPnl": -522.2025413815684,
-                "grossFees": 198.97758034167634,
-                "rebatesCredited": 49.744395085419086,
-                "expectancy": -34.81350275877123
+                "winRate": 0.3333333333333333,
+                "netPnl": -483.96515571315143,
+                "grossFees": 203.18625524934993,
+                "rebatesCredited": 50.79656381233748,
+                "expectancy": -32.26434371421009
               }
             ],
-            "score": -0.11229989556570612,
+            "score": -0.10469870781194113,
             "eligible": true
           },
           {
@@ -337451,14 +337459,14 @@
                 "expectancy": -106.4629332919282
               },
               {
-                "returnPct": -0.0077321444721901575,
-                "drawdown": 0.0077321444721901575,
-                "closedTrades": 1,
+                "returnPct": 0,
+                "drawdown": 0,
+                "closedTrades": 0,
                 "winRate": 0,
-                "netPnl": -77.32144472190066,
-                "grossFees": 14.75637209926902,
-                "rebatesCredited": 3.689093024817255,
-                "expectancy": -77.32144472190066
+                "netPnl": 0,
+                "grossFees": 0,
+                "rebatesCredited": 0,
+                "expectancy": null
               }
             ],
             "score": -0.023727485067312412,
@@ -337478,17 +337486,17 @@
                 "expectancy": null
               },
               {
-                "returnPct": -0.03283598721402086,
-                "drawdown": 0.03384871389835784,
+                "returnPct": -0.032918321921328424,
+                "drawdown": 0.03405025058759569,
                 "closedTrades": 4,
                 "winRate": 0,
-                "netPnl": -328.3598721402101,
-                "grossFees": 58.19559953694915,
-                "rebatesCredited": 14.548899884237288,
-                "expectancy": -82.08996803505252
+                "netPnl": -329.18321921328504,
+                "grossFees": 58.19046838514569,
+                "rebatesCredited": 14.547617096286423,
+                "expectancy": -82.29580480332126
               }
             ],
-            "score": -0.0666847011123787,
+            "score": -0.06696857250892412,
             "eligible": false
           }
         ],
@@ -337527,7 +337535,7 @@
         "passed": false,
         "selectionEnd": 1794942000,
         "historyStart": 1792533600,
-        "registeredAt": "2026-11-27T02:22:04.190Z",
+        "registeredAt": "2026-11-27T02:56:10.041Z",
         "reason": "No approach beat the current rules on the unseen newest 25%; current rules kept and every losing experiment recorded."
       },
       "DOGE-USD": {
@@ -337558,44 +337566,44 @@
                 "expectancy": -19.27618884674097
               },
               {
-                "returnPct": -0.03578039589568088,
-                "drawdown": 0.03782411035777775,
-                "closedTrades": 5,
+                "returnPct": -0.04104749769466343,
+                "drawdown": 0.04104749769466343,
+                "closedTrades": 6,
                 "winRate": 0,
-                "netPnl": -357.80395895681056,
-                "grossFees": 69.16445150659787,
-                "rebatesCredited": 17.291112876649468,
-                "expectancy": -71.5607917913621
+                "netPnl": -410.4749769466347,
+                "grossFees": 83.61093621950135,
+                "rebatesCredited": 20.90273405487534,
+                "expectancy": -68.41249615777245
               }
             ],
-            "score": -0.07360450625345863,
+            "score": -0.08209499538932687,
             "eligible": true
           },
           {
             "id": "aggressive-day-hold",
             "folds": [
               {
-                "returnPct": -0.024595031022594777,
-                "drawdown": 0.024595031022594777,
-                "closedTrades": 10,
-                "winRate": 0.3,
-                "netPnl": -245.95031022594702,
-                "grossFees": 136.33651228217,
-                "rebatesCredited": 34.0841280705425,
-                "expectancy": -24.595031022594704
+                "returnPct": -0.024631228802190163,
+                "drawdown": 0.024989725191941398,
+                "closedTrades": 11,
+                "winRate": 0.2727272727272727,
+                "netPnl": -246.312288021901,
+                "grossFees": 150.95613442838896,
+                "rebatesCredited": 37.73903360709724,
+                "expectancy": -22.392026183809183
               },
               {
-                "returnPct": -0.04656293491822689,
-                "drawdown": 0.056744800378908625,
+                "returnPct": -0.04623885167905755,
+                "drawdown": 0.056424178062394824,
                 "closedTrades": 14,
                 "winRate": 0.21428571428571427,
-                "netPnl": -465.6293491822699,
-                "grossFees": 184.77993852062315,
-                "rebatesCredited": 46.19498463015579,
-                "expectancy": -33.259239227304995
+                "netPnl": -462.3885167905765,
+                "grossFees": 184.7921497746404,
+                "rebatesCredited": 46.1980374436601,
+                "expectancy": -33.02775119932689
               }
             ],
-            "score": -0.10330773529713552,
+            "score": -0.10266302974145237,
             "eligible": true
           },
           {
@@ -337882,17 +337890,17 @@
                 "expectancy": null
               },
               {
-                "returnPct": -0.006833156407808201,
-                "drawdown": 0.006833156407808201,
+                "returnPct": -0.0068267248629870665,
+                "drawdown": 0.0068267248629870665,
                 "closedTrades": 1,
                 "winRate": 0,
-                "netPnl": -68.33156407808211,
-                "grossFees": 14.78340255973653,
-                "rebatesCredited": 3.6958506399341324,
-                "expectancy": -68.33156407808211
+                "netPnl": -68.2672486298719,
+                "grossFees": 14.783595941189429,
+                "rebatesCredited": 3.695898985297357,
+                "expectancy": -68.2672486298719
               }
             ],
-            "score": -0.013666312815616402,
+            "score": -0.013653449725974133,
             "eligible": false
           },
           {
@@ -337958,7 +337966,7 @@
         "passed": false,
         "selectionEnd": 1794942000,
         "historyStart": 1792533600,
-        "registeredAt": "2026-11-27T02:22:04.190Z",
+        "registeredAt": "2026-11-27T02:56:10.041Z",
         "reason": "No approach beat the current rules on the unseen newest 25%; current rules kept and every losing experiment recorded."
       },
       "LINK-USD": {
@@ -338389,7 +338397,7 @@
         "passed": false,
         "selectionEnd": 1794942000,
         "historyStart": 1792533600,
-        "registeredAt": "2026-11-27T02:22:04.190Z",
+        "registeredAt": "2026-11-27T02:56:10.041Z",
         "reason": "No approach beat the current rules on the unseen newest 25%; current rules kept and every losing experiment recorded."
       },
       "AVAX-USD": {
@@ -338399,15 +338407,15 @@
         "selected": "aggressive-day-hold+ml-filter",
         "changes": {
           "mlWeights": [
-            -0.989483139565598,
-            -0.06697057275123543,
-            0.0005735166165668827,
-            -0.23906174783440284,
-            -0.10430306489499741,
-            -0.018718086717816832,
-            -0.14695217268427624
+            -0.9891534611788543,
+            -0.07022486552556675,
+            -0.0033126148724437828,
+            -0.24114085261111948,
+            -0.10577408253943968,
+            -0.015238107331379777,
+            -0.1478837985318253
           ],
-          "mlThreshold": 0.26434370880031105,
+          "mlThreshold": 0.2643713690548805,
           "strategy": "aggressive",
           "maxHoldHours": 24,
           "stopAtrMultiplier": 2.5,
@@ -338418,14 +338426,14 @@
             "id": "aggressive-day-hold+ml-filter",
             "folds": [
               {
-                "returnPct": -0.0021585658194795544,
-                "drawdown": 0.016690109863532233,
+                "returnPct": -0.002494679570712469,
+                "drawdown": 0.01670684905812741,
                 "closedTrades": 8,
                 "winRate": 0.375,
-                "netPnl": -21.58565819479889,
-                "grossFees": 104.177550777206,
-                "rebatesCredited": 26.0443876943015,
-                "expectancy": -2.698207274349861
+                "netPnl": -24.946795707124814,
+                "grossFees": 104.16165246485033,
+                "rebatesCredited": 26.040413116212584,
+                "expectancy": -3.1183494633906017
               },
               {
                 "returnPct": -0.006885755534207601,
@@ -338445,14 +338453,14 @@
             "id": "aggressive-day-hold",
             "folds": [
               {
-                "returnPct": -0.013771688884976357,
-                "drawdown": 0.023939122495762175,
-                "closedTrades": 11,
-                "winRate": 0.36363636363636365,
-                "netPnl": -137.71688884976092,
-                "grossFees": 148.4195715050511,
-                "rebatesCredited": 37.104892876262774,
-                "expectancy": -12.519717168160083
+                "returnPct": -0.02704908292129767,
+                "drawdown": 0.03609820602073195,
+                "closedTrades": 13,
+                "winRate": 0.3076923076923077,
+                "netPnl": -270.490829212975,
+                "grossFees": 176.83405676566503,
+                "rebatesCredited": 44.208514191416256,
+                "expectancy": -20.806986862536537
               },
               {
                 "returnPct": -0.05037399410169892,
@@ -338631,33 +338639,6 @@
             "eligible": false
           },
           {
-            "id": "rsi-reversion",
-            "folds": [
-              {
-                "returnPct": 0,
-                "drawdown": 0,
-                "closedTrades": 0,
-                "winRate": 0,
-                "netPnl": 0,
-                "grossFees": 0,
-                "rebatesCredited": 0,
-                "expectancy": null
-              },
-              {
-                "returnPct": 0,
-                "drawdown": 0,
-                "closedTrades": 0,
-                "winRate": 0,
-                "netPnl": 0,
-                "grossFees": 0,
-                "rebatesCredited": 0,
-                "expectancy": null
-              }
-            ],
-            "score": 0,
-            "eligible": false
-          },
-          {
             "id": "trendline",
             "folds": [
               {
@@ -338712,17 +338693,44 @@
             "eligible": false
           },
           {
+            "id": "rsi-reversion",
+            "folds": [
+              {
+                "returnPct": 0.0007670210210926598,
+                "drawdown": 0.008217937785532183,
+                "closedTrades": 1,
+                "winRate": 1,
+                "netPnl": 7.670210210927055,
+                "grossFees": 11.240501827030325,
+                "rebatesCredited": 2.8101254567575813,
+                "expectancy": 7.670210210927055
+              },
+              {
+                "returnPct": 0,
+                "drawdown": 0,
+                "closedTrades": 0,
+                "winRate": 0,
+                "netPnl": 0,
+                "grossFees": 0,
+                "rebatesCredited": 0,
+                "expectancy": null
+              }
+            ],
+            "score": -0.007450916764439522,
+            "eligible": false
+          },
+          {
             "id": "donchian-breakout",
             "folds": [
               {
-                "returnPct": 0.004542259944840225,
-                "drawdown": 0.008671667879915275,
+                "returnPct": 0.0045734792897954325,
+                "drawdown": 0.008726211083631506,
                 "closedTrades": 3,
                 "winRate": 0.6666666666666666,
-                "netPnl": 45.42259944840487,
-                "grossFees": 37.59139215326215,
-                "rebatesCredited": 9.397848038315537,
-                "expectancy": 15.140866482801622
+                "netPnl": 45.73479289795654,
+                "grossFees": 37.59268008903395,
+                "rebatesCredited": 9.398170022258487,
+                "expectancy": 15.244930965985512
               },
               {
                 "returnPct": -0.01921816908607325,
@@ -338742,14 +338750,14 @@
             "id": "ema-trend-pullback",
             "folds": [
               {
-                "returnPct": -0.010897995247868494,
-                "drawdown": 0.014436742286368645,
+                "returnPct": -0.010867764435409846,
+                "drawdown": 0.014491475107753832,
                 "closedTrades": 3,
                 "winRate": 0.3333333333333333,
-                "netPnl": -108.97995247868549,
-                "grossFees": 40.61639150969792,
-                "rebatesCredited": 10.15409787742448,
-                "expectancy": -36.326650826228494
+                "netPnl": -108.67764435409879,
+                "grossFees": 40.617787728857145,
+                "rebatesCredited": 10.154446932214286,
+                "expectancy": -36.22588145136626
               },
               {
                 "returnPct": -0.022644566861196654,
@@ -338769,14 +338777,14 @@
             "id": "aggressive-day-hold+regime-block",
             "folds": [
               {
-                "returnPct": -0.002342824425873914,
-                "drawdown": 0.01606758603505582,
+                "returnPct": 0.00966847408596641,
+                "drawdown": 0.011855698089314429,
                 "closedTrades": 4,
-                "winRate": 0.5,
-                "netPnl": -23.42824425874219,
-                "grossFees": 52.45277738813661,
-                "rebatesCredited": 13.113194347034153,
-                "expectancy": -5.857061064685547
+                "winRate": 0.75,
+                "netPnl": 96.6847408596643,
+                "grossFees": 49.24763095015309,
+                "rebatesCredited": 12.311907737538272,
+                "expectancy": 24.171185214916076
               },
               {
                 "returnPct": -0.04723680292515346,
@@ -338828,7 +338836,7 @@
         "passed": false,
         "selectionEnd": 1794942000,
         "historyStart": 1792533600,
-        "registeredAt": "2026-11-27T02:22:04.190Z",
+        "registeredAt": "2026-11-27T02:56:10.041Z",
         "reason": "No approach beat the current rules on the unseen newest 25%; current rules kept and every losing experiment recorded."
       }
     },
@@ -338843,6 +338851,82 @@
     "fedChallengers": []
   },
   "strategyLabHistory": [
+    {
+      "at": "2026-11-27T02:56:10.041Z",
+      "inputHash": "7bbdfbdf7f1e3488753c62c8a7bfb14851d7d968eb2df1336eea15686b991583",
+      "adopted": [],
+      "fedChallengers": [],
+      "trend": {
+        "status": "not-validated",
+        "selected": "trend-k3-top3"
+      },
+      "decisions": {
+        "BTC-USD": {
+          "selected": "aggressive-day-hold+regime-block",
+          "decision": "keep",
+          "finalTest": {
+            "candidate": -0.005379319852442677,
+            "current": 0
+          }
+        },
+        "ETH-USD": {
+          "selected": "aggressive-day-hold+regime-block",
+          "decision": "keep",
+          "finalTest": {
+            "candidate": 0.007208400681889543,
+            "current": 0
+          }
+        },
+        "SOL-USD": {
+          "selected": "aggressive-day-hold+regime-block",
+          "decision": "keep",
+          "finalTest": {
+            "candidate": -0.013805279775349845,
+            "current": 0
+          }
+        },
+        "XRP-USD": {
+          "selected": "aggressive-day-hold+ml-filter",
+          "decision": "keep",
+          "finalTest": {
+            "candidate": -0.01989205723542891,
+            "current": 0
+          }
+        },
+        "ADA-USD": {
+          "selected": "aggressive-day-hold+regime-block",
+          "decision": "keep",
+          "finalTest": {
+            "candidate": -0.014983100209477379,
+            "current": 0
+          }
+        },
+        "DOGE-USD": {
+          "selected": "aggressive-day-hold+regime-block",
+          "decision": "keep",
+          "finalTest": {
+            "candidate": -0.0074623853521525235,
+            "current": 0
+          }
+        },
+        "LINK-USD": {
+          "selected": "aggressive-day-hold+regime-block",
+          "decision": "keep",
+          "finalTest": {
+            "candidate": -0.004682597023428934,
+            "current": 0
+          }
+        },
+        "AVAX-USD": {
+          "selected": "aggressive-day-hold+ml-filter",
+          "decision": "keep",
+          "finalTest": {
+            "candidate": -0.02744562098245351,
+            "current": 0
+          }
+        }
+      }
+    },
     {
       "at": "2026-11-27T02:22:04.190Z",
       "inputHash": "367b4ed1a80bdae45d38c336a949ac625fdfcfc3f05f91097cbd24ad652a300a",

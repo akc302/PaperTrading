@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "generatedAt": "2026-11-27T02:22:18.460Z",
+  "generatedAt": "2026-11-27T02:56:27.510Z",
   "goal": 85000,
   "equity": 29419.166496950034,
   "startingEquity": 30000,
@@ -43,7 +43,7 @@
     },
     "XRP-USD": {
       "strategy": "horizontal",
-      "approach": "aggressive-day-hold+regime-block",
+      "approach": "aggressive-day-hold+ml-filter",
       "decision": "keep"
     },
     "ADA-USD": {
@@ -109,13 +109,13 @@
         }
       },
       "latestNote": {
-        "at": "2026-11-27T00:28:52.047Z",
-        "tradesReviewed": 5,
-        "losses": 5,
+        "at": "2026-11-27T02:28:59.743Z",
+        "tradesReviewed": 3,
+        "losses": 0,
         "findings": 3,
         "changes": 1,
         "adopted": false,
-        "nextIdea": "If owner-sr-swing takes another support-break loss, cut its zone from 3.5% to 2.5% or its size to riskScale 0.5."
+        "nextIdea": "Keep main on owner-sr rules; at 20 main trades apply the switch rule. Consider moving owner-sr-quick to a 24h hold if it keeps losing."
       }
     },
     "verifier": {
@@ -202,7 +202,7 @@
     "windowDays": 30,
     "label": "Estimated time to $85,000 at the trailing 30-day growth rate (not a promise)",
     "status": "insufficient-history",
-    "spanDays": 6.09882476851896,
+    "spanDays": 6.12254062499989,
     "message": "Needs at least 7 days of equity history."
   },
   "scorecard": [
@@ -285,7 +285,7 @@
     {
       "id": "hourly-legacy",
       "label": "Previous hourly rules",
-      "equity": 29523.77937856448,
+      "equity": 29594.938382371816,
       "initial": 29975.046647868254,
       "netPnl": -557.9445028841353,
       "profitFactor": 0.7213765567300084,
@@ -299,12 +299,12 @@
       "takerFills": 16,
       "openPositions": 3,
       "pause": "normal",
-      "drawdown": 0.037068194204393334
+      "drawdown": 0.034747310175414214
     },
     {
       "id": "lab-hourly",
       "label": "Lab hourly per-market rules",
-      "equity": 29086.487674073847,
+      "equity": 29167.282865063535,
       "initial": 29975.046647868254,
       "netPnl": -994.299915996384,
       "profitFactor": 0.5973164336048877,
@@ -318,7 +318,7 @@
       "takerFills": 21,
       "openPositions": 3,
       "pause": "normal",
-      "drawdown": 0.0457680226445254
+      "drawdown": 0.04311739821290583
     },
     {
       "id": "scout-daytrade",
@@ -380,21 +380,21 @@
     {
       "id": "sr-scalper",
       "label": "Support/resistance scalper v2: within 1.2% of support, 0.8R target, 4h hold (1h hold lost 17 of 18), 1/4 risk",
-      "equity": 28665.652602976013,
+      "equity": 28698.038926387715,
       "initial": 29282.647920248248,
-      "netPnl": -638.2902890419016,
-      "profitFactor": 0.005061725324097768,
+      "netPnl": -584.6089938605315,
+      "profitFactor": 0.08873772059936667,
       "maxDrawdown": 0.025037182862973597,
-      "winRate": 0.07142857142857142,
-      "avgWin": 3.2472869949862124,
+      "winRate": 0.13333333333333333,
+      "avgWin": 28.46429108817815,
       "avgLoss": -49.349044310529834,
-      "closedTrades": 14,
-      "fees": 252.61988954970388,
-      "makerFills": 22,
+      "closedTrades": 15,
+      "fees": 264.47636577832776,
+      "makerFills": 24,
       "takerFills": 6,
-      "openPositions": 1,
+      "openPositions": 0,
       "pause": "normal",
-      "drawdown": 0.02145398759301853
+      "drawdown": 0.020348430776644055
     },
     {
       "id": "owner-sr",
@@ -437,21 +437,21 @@
     {
       "id": "owner-sr-swing",
       "label": "Owner style, swing: within 3.5% of support, bigger target, 48h hold",
-      "equity": 29279.948913144384,
+      "equity": 29354.63362678312,
       "initial": 29292.32891698057,
-      "netPnl": -167.4134715741837,
-      "profitFactor": 0,
+      "netPnl": 62.3047098025514,
+      "profitFactor": 1.3721606703254055,
       "maxDrawdown": 0.01020399304707362,
-      "winRate": 0,
-      "avgWin": null,
+      "winRate": 0.5,
+      "avgWin": 229.7181813767351,
       "avgLoss": -167.4134715741837,
-      "closedTrades": 1,
-      "fees": 27.297554111784233,
-      "makerFills": 1,
+      "closedTrades": 2,
+      "fees": 45.975970591149775,
+      "makerFills": 3,
       "takerFills": 1,
-      "openPositions": 1,
+      "openPositions": 0,
       "pause": "normal",
-      "drawdown": 0.004548964761574625
+      "drawdown": 0.002009855976627617
     },
     {
       "id": "owner-sr-trend",
