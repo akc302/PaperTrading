@@ -20,6 +20,7 @@ const cfg = (c={}) => {
   const x={...DEFAULT_CONFIG,...c};
   if(!Number.isInteger(x.lookback)||x.lookback<12||x.lookback>300||!Number.isInteger(x.pivotWindow)||x.pivotWindow<1||x.pivotWindow>10) throw new Error('Invalid level window.');
   if(!positive(x.proximity)||x.proximity>0.1||!positive(x.stopBuffer)||x.stopBuffer>0.1||!positive(x.rewardRisk)||x.rewardRisk>10) throw new Error('Invalid strategy parameters.');
+  if(x.stopAtr!==undefined&&(!Number.isFinite(x.stopAtr)||x.stopAtr<0||x.stopAtr>5)) throw new Error('Invalid stopAtr.');
   if(!positive(x.riskPct)||x.riskPct>0.05||!positive(x.maxAllocation)||x.maxAllocation>1||!finite(x.feeRate)||x.feeRate<0||x.feeRate>0.05||!finite(x.slippage)||x.slippage<0||x.slippage>0.05) throw new Error('Invalid paper risk or execution settings.');
   if(x.mlWeights!=null&&(!Array.isArray(x.mlWeights)||x.mlWeights.length!==7||!x.mlWeights.every(Number.isFinite)||!Number.isFinite(x.mlThreshold)||x.mlThreshold<0||x.mlThreshold>1))throw new Error('Invalid ML entry filter.');
   if(!STRATEGIES.includes(x.strategy)||!Number.isInteger(x.trendLookback)||x.trendLookback<60||x.trendLookback>720)throw new Error('Invalid strategy or trendline window.');
@@ -190,7 +191,7 @@ function analyzeHorizontal(input,config={}){
   base.support=base.levels.filter(l=>l.price<price).at(-1)?.price??null;
   base.resistance=base.levels.find(l=>l.price>price)?.price??null;
   if(!base.support||!base.resistance){base.reason='Waiting for confirmed support below price and resistance above it.';return base;}
-  base.stop=base.support*(1-c.stopBuffer);
+  base.stop=Math.min(base.support*(1-c.stopBuffer),c.stopAtr>0&&base.atr>0?base.support-c.stopAtr*base.atr:Infinity);
   const {entry,risk}=executionAt(price,base.stop,price,c);
   // Target compensates for estimated round-trip costs before the requested reward/risk.
   // Limit entries and resting targets both fill as maker, so price those legs at the maker rate when it is known.
