@@ -1,11 +1,11 @@
 {
   "version": 1,
-  "generatedAt": "2026-11-28T00:41:54.080Z",
+  "generatedAt": "2026-11-28T01:59:52.990Z",
   "goal": 85000,
-  "equity": 29315.038372149116,
+  "equity": 29356.698538971305,
   "startingEquity": 30000,
-  "progressToGoal": -0.012453847779106979,
-  "returnPct": -0.022832054261696128,
+  "progressToGoal": -0.011696390200521736,
+  "returnPct": -0.02144338203428985,
   "drawdown": 0.028260934625866214,
   "openPositions": 1,
   "last24h": {
@@ -70,15 +70,15 @@
   "agents": {
     "trader": {
       "role": "5-minute paper trader",
-      "lastRunMinutesAgo": 1,
+      "lastRunMinutesAgo": 4,
       "healthy": true
     },
     "researcher": {
       "role": "Claude every 5h: loss analysis, backtest, rule adoption",
-      "lastRunHoursAgo": 1.2,
+      "lastRunHoursAgo": 2.5,
       "healthy": true,
       "sweep": {
-        "at": "2026-11-27T10:11:18.536Z",
+        "at": "2026-11-28T01:55:43.739Z",
         "source": "data/history 1h (1 year)",
         "days": 365,
         "rulesTested": 54,
@@ -87,8 +87,8 @@
           "coinsInUptrend": [],
           "share": 0,
           "state": "down",
-          "btc7dPct": -2.29,
-          "btc30dPct": -25.13
+          "btc7dPct": 1.77,
+          "btc30dPct": -26.33
         },
         "best": {
           "config": {
@@ -143,7 +143,7 @@
         "id": "history",
         "label": "28+ days of forward paper trading with the research team",
         "pass": false,
-        "value": "6.8 days"
+        "value": "6.9 days"
       },
       {
         "id": "sample",
@@ -185,7 +185,7 @@
         "id": "uptime",
         "label": "Trader ran in 95%+ of hours over the last 7 days",
         "pass": false,
-        "value": "77%"
+        "value": "90%"
       },
       {
         "id": "integrity",
@@ -198,19 +198,19 @@
   },
   "goalEstimate": {
     "goal": 85000,
-    "equity": 29315.038372149116,
+    "equity": 29356.698538971305,
     "windowDays": 30,
     "label": "Estimated time to $85,000 at the trailing 30-day growth rate (not a promise)",
     "status": "not-growing",
-    "spanDays": 7.029098148147265,
-    "dailyGrowth": -0.0032804830461036216,
+    "spanDays": 7.083252199074185,
+    "dailyGrowth": -0.003055587588589259,
     "message": "Trailing growth is zero or negative, so no date can be estimated."
   },
   "scorecard": [
     {
       "id": "main",
       "label": "Main: horizontal",
-      "equity": 29315.038372149116,
+      "equity": 29356.698538971305,
       "initial": 30000,
       "netPnl": -646.8593939767806,
       "profitFactor": 0.17426910356380737,
@@ -224,7 +224,7 @@
       "takerFills": 9,
       "openPositions": 1,
       "pause": "normal",
-      "drawdown": 0.023233750317280588
+      "drawdown": 0.02184564894789176
     },
     {
       "id": "trend-k2",
@@ -305,7 +305,7 @@
     {
       "id": "lab-hourly",
       "label": "Lab hourly per-market rules",
-      "equity": 28758.60411077527,
+      "equity": 28806.730576854075,
       "initial": 29975.046647868254,
       "netPnl": -1165.6842260783744,
       "profitFactor": 0.5827029565834864,
@@ -319,7 +319,7 @@
       "takerFills": 24,
       "openPositions": 2,
       "pause": "normal",
-      "drawdown": 0.05652480374696289
+      "drawdown": 0.05494593271227133
     },
     {
       "id": "scout-daytrade",
@@ -362,7 +362,7 @@
     {
       "id": "daytrader-range",
       "label": "Day trader: buy 24h range low, sell near high, up to 50% per trade",
-      "equity": 29424.21595576178,
+      "equity": 29566.91777598517,
       "initial": 29865.26287940766,
       "netPnl": -930.3686478951493,
       "profitFactor": 0.5643788194870201,
@@ -376,7 +376,7 @@
       "takerFills": 6,
       "openPositions": 2,
       "pause": "normal",
-      "drawdown": 0.01830941427273247
+      "drawdown": 0.013548402672964976
     },
     {
       "id": "sr-scalper",
@@ -400,7 +400,7 @@
     {
       "id": "owner-sr",
       "label": "Owner style: buy near support, sell at resistance (about +1.8%), all 8 coins, 24h hold, about 28% per trade",
-      "equity": 29532.20705816819,
+      "equity": 29579.219434856364,
       "initial": 29282.647920248248,
       "netPnl": 292.5564830624979,
       "profitFactor": 4.279653808705607,
@@ -414,12 +414,12 @@
       "takerFills": 2,
       "openPositions": 1,
       "pause": "normal",
-      "drawdown": 0.004302944375709328
+      "drawdown": 0.0027178923356055984
     },
     {
       "id": "owner-sr-quick",
       "label": "Owner style, quick: within 1.5% of support, about +1.2% target, 12h hold",
-      "equity": 28748.3242778101,
+      "equity": 28819.126693271628,
       "initial": 29292.32891698057,
       "netPnl": -522.2346873393662,
       "profitFactor": 0,
@@ -433,12 +433,12 @@
       "takerFills": 5,
       "openPositions": 2,
       "pause": "normal",
-      "drawdown": 0.020380412780320212
+      "drawdown": 0.017967770139367567
     },
     {
       "id": "owner-sr-swing",
       "label": "Owner style, swing: within 3.5% of support, bigger target, 48h hold",
-      "equity": 28885.67441018576,
+      "equity": 28910.94061163691,
       "initial": 29292.32891698057,
       "netPnl": -426.8685098356285,
       "profitFactor": 0.34986725203425734,
@@ -452,12 +452,12 @@
       "takerFills": 5,
       "openPositions": 1,
       "pause": "normal",
-      "drawdown": 0.02217458475707479
+      "drawdown": 0.021319284182307108
     },
     {
       "id": "owner-sr-trend",
       "label": "Owner style with market filter: only buys support when the coin is not in a downtrend",
-      "equity": 29314.192267576942,
+      "equity": 29360.857586104557,
       "initial": 29292.32891698057,
       "netPnl": 64.54327763405885,
       "profitFactor": 1.8724615045661899,
@@ -471,12 +471,12 @@
       "takerFills": 1,
       "openPositions": 1,
       "pause": "normal",
-      "drawdown": 0.004302944375709661
+      "drawdown": 0.0027178923356059315
     }
   ],
   "drawdownPause": {
     "state": "normal",
-    "drawdown": 0.023233750317280588,
+    "drawdown": 0.02184564894789176,
     "peak": 30012.337528729568,
     "sizeMultiplier": 1,
     "triggeredAt": null,
