@@ -964,6 +964,20 @@
       ],
       "adopted": false,
       "nextIdea": "Measure stop distance vs 1h ATR for every owner-sr-family stop-out; if most stops sit under 1 ATR, test an ATR-based stop on owner-sr-trend first."
+    },
+    {
+      "at": "2026-11-28T08:29:02.475Z",
+      "tradesReviewed": 4,
+      "losses": 4,
+      "findings": [
+        "Main closed BTC -$95.7 (stop, 5h) and SOL -$130.1 (stop, 14.8h); owner-sr the same (BTC -$108, SOL -$146.8). Main on owner-sr rules is now 1 win, 4 losses, about -$288.",
+        "Main stop distances below entry: ETH 0.42%, ADA 0.50%, BTC 0.85%, SOL 1.33%. Hourly ATR on these coins is about 0.6-1.2%, so the stops sat within about one hourly range; ADA stopped 18 minutes after entry. In a falling week, tight stops under support are hit by noise before any bounce."
+      ],
+      "changes": [
+        "New optional horizontal setting stopAtr: the stop sits at least stopAtr x 1h ATR below support (whichever is lower). owner-sr-trend now uses stopAtr 1 as the test; main and owner-sr unchanged for comparison. Test added."
+      ],
+      "adopted": false,
+      "nextIdea": "Compare owner-sr-trend (ATR stop) vs owner-sr (fixed 0.6%) over the next 10 trades each; if the ATR stop does better, propose it for main."
     }
   ]
 }
