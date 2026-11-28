@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "generatedAt": "2026-11-28T07:26:47.147Z",
+  "generatedAt": "2026-11-28T07:58:02.065Z",
   "goal": 85000,
   "equity": 29094.143508652236,
   "startingEquity": 30000,
@@ -70,12 +70,12 @@
   "agents": {
     "trader": {
       "role": "5-minute paper trader",
-      "lastRunMinutesAgo": 1,
+      "lastRunMinutesAgo": 3,
       "healthy": true
     },
     "researcher": {
       "role": "Claude every 5h: loss analysis, backtest, rule adoption",
-      "lastRunHoursAgo": 1.2,
+      "lastRunHoursAgo": 0,
       "healthy": true,
       "sweep": {
         "at": "2026-11-28T01:55:43.739Z",
@@ -202,8 +202,8 @@
     "windowDays": 30,
     "label": "Estimated time to $85,000 at the trailing 30-day growth rate (not a promise)",
     "status": "not-growing",
-    "spanDays": 7.310267905093453,
-    "dailyGrowth": -0.004185383401416387,
+    "spanDays": 7.33196834490807,
+    "dailyGrowth": -0.0041730217973904304,
     "message": "Trailing growth is zero or negative, so no date can be estimated."
   },
   "scorecard": [
@@ -305,7 +305,7 @@
     {
       "id": "lab-hourly",
       "label": "Lab hourly per-market rules",
-      "equity": 28605.490178176115,
+      "equity": 28644.163642452935,
       "initial": 29975.046647868254,
       "netPnl": -1233.084569706082,
       "profitFactor": 0.5689745744799736,
@@ -319,7 +319,7 @@
       "takerFills": 25,
       "openPositions": 2,
       "pause": "normal",
-      "drawdown": 0.06154796819025865
+      "drawdown": 0.06027921904799105
     },
     {
       "id": "scout-daytrade",
@@ -362,7 +362,7 @@
     {
       "id": "daytrader-range",
       "label": "Day trader: buy 24h range low, sell near high, up to 50% per trade",
-      "equity": 29171.11957245339,
+      "equity": 29219.346304414878,
       "initial": 29865.26287940766,
       "netPnl": -930.3686478951493,
       "profitFactor": 0.5643788194870201,
@@ -376,7 +376,7 @@
       "takerFills": 6,
       "openPositions": 2,
       "pause": "normal",
-      "drawdown": 0.02675355895781162
+      "drawdown": 0.02514455334086796
     },
     {
       "id": "sr-scalper",
@@ -438,7 +438,7 @@
     {
       "id": "owner-sr-swing",
       "label": "Owner style, swing: within 3.5% of support, bigger target, 48h hold",
-      "equity": 28743.90294648762,
+      "equity": 28760.747080788387,
       "initial": 29292.32891698057,
       "netPnl": -426.8685098356285,
       "profitFactor": 0.34986725203425734,
@@ -452,7 +452,7 @@
       "takerFills": 5,
       "openPositions": 1,
       "pause": "normal",
-      "drawdown": 0.026973771315493833
+      "drawdown": 0.026403570932315268
     },
     {
       "id": "owner-sr-trend",
