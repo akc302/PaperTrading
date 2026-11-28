@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "generatedAt": "2026-11-28T07:58:02.065Z",
+  "generatedAt": "2026-11-28T09:32:14.926Z",
   "goal": 85000,
   "equity": 29094.143508652236,
   "startingEquity": 30000,
@@ -70,15 +70,15 @@
   "agents": {
     "trader": {
       "role": "5-minute paper trader",
-      "lastRunMinutesAgo": 3,
+      "lastRunMinutesAgo": 2,
       "healthy": true
     },
     "researcher": {
       "role": "Claude every 5h: loss analysis, backtest, rule adoption",
-      "lastRunHoursAgo": 0,
+      "lastRunHoursAgo": 1.6,
       "healthy": true,
       "sweep": {
-        "at": "2026-11-28T01:55:43.739Z",
+        "at": "2026-11-28T09:31:19.406Z",
         "source": "data/history 1h (1 year)",
         "days": 365,
         "rulesTested": 54,
@@ -109,13 +109,13 @@
         }
       },
       "latestNote": {
-        "at": "2026-11-28T06:30:00.600Z",
-        "tradesReviewed": 8,
-        "losses": 8,
-        "findings": 3,
+        "at": "2026-11-28T08:29:02.475Z",
+        "tradesReviewed": 4,
+        "losses": 4,
+        "findings": 2,
         "changes": 1,
         "adopted": false,
-        "nextIdea": "Measure stop distance vs 1h ATR for every owner-sr-family stop-out; if most stops sit under 1 ATR, test an ATR-based stop on owner-sr-trend first."
+        "nextIdea": "Compare owner-sr-trend (ATR stop) vs owner-sr (fixed 0.6%) over the next 10 trades each; if the ATR stop does better, propose it for main."
       }
     },
     "verifier": {
@@ -143,7 +143,7 @@
         "id": "history",
         "label": "28+ days of forward paper trading with the research team",
         "pass": false,
-        "value": "7.1 days"
+        "value": "7.2 days"
       },
       {
         "id": "sample",
@@ -185,7 +185,7 @@
         "id": "uptime",
         "label": "Trader ran in 95%+ of hours over the last 7 days",
         "pass": false,
-        "value": "89%"
+        "value": "88%"
       },
       {
         "id": "integrity",
@@ -202,8 +202,8 @@
     "windowDays": 30,
     "label": "Estimated time to $85,000 at the trailing 30-day growth rate (not a promise)",
     "status": "not-growing",
-    "spanDays": 7.33196834490807,
-    "dailyGrowth": -0.0041730217973904304,
+    "spanDays": 7.397394976853221,
+    "dailyGrowth": -0.004136189732419138,
     "message": "Trailing growth is zero or negative, so no date can be estimated."
   },
   "scorecard": [
@@ -305,7 +305,7 @@
     {
       "id": "lab-hourly",
       "label": "Lab hourly per-market rules",
-      "equity": 28644.163642452935,
+      "equity": 28599.964286200062,
       "initial": 29975.046647868254,
       "netPnl": -1233.084569706082,
       "profitFactor": 0.5689745744799736,
@@ -319,7 +319,7 @@
       "takerFills": 25,
       "openPositions": 2,
       "pause": "normal",
-      "drawdown": 0.06027921904799105
+      "drawdown": 0.06172925452795763
     },
     {
       "id": "scout-daytrade",
@@ -362,7 +362,7 @@
     {
       "id": "daytrader-range",
       "label": "Day trader: buy 24h range low, sell near high, up to 50% per trade",
-      "equity": 29219.346304414878,
+      "equity": 29153.619932333015,
       "initial": 29865.26287940766,
       "netPnl": -930.3686478951493,
       "profitFactor": 0.5643788194870201,
@@ -376,7 +376,7 @@
       "takerFills": 6,
       "openPositions": 2,
       "pause": "normal",
-      "drawdown": 0.02514455334086796
+      "drawdown": 0.027337405677316906
     },
     {
       "id": "sr-scalper",
@@ -438,11 +438,11 @@
     {
       "id": "owner-sr-swing",
       "label": "Owner style, swing: within 3.5% of support, bigger target, 48h hold",
-      "equity": 28760.747080788387,
+      "equity": 28739.691912912425,
       "initial": 29292.32891698057,
       "netPnl": -426.8685098356285,
       "profitFactor": 0.34986725203425734,
-      "maxDrawdown": 0.027734038493065164,
+      "maxDrawdown": 0.027924105287457913,
       "winRate": 0.16666666666666666,
       "avgWin": 229.7181813767351,
       "avgLoss": -131.31733824247272,
@@ -452,7 +452,7 @@
       "takerFills": 5,
       "openPositions": 1,
       "pause": "normal",
-      "drawdown": 0.026403570932315268
+      "drawdown": 0.027116321411288502
     },
     {
       "id": "owner-sr-trend",

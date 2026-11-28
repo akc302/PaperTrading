@@ -1,7 +1,7 @@
 {
   "version": 1,
   "cadence": "hourly collection; daily review",
-  "lastCollectedAt": "2026-11-28T07:26:43.303Z",
+  "lastCollectedAt": "2026-11-28T09:32:07.255Z",
   "hourly": [
     {
       "periodStart": "2026-11-20T03:00:00.000Z",
@@ -5912,11 +5912,105 @@
       "observedChecks": 12,
       "largestCheckGapSeconds": 314.75,
       "evidenceComplete": true
+    },
+    {
+      "periodStart": "2026-11-28T07:00:00.000Z",
+      "periodEnd": "2026-11-28T08:00:00.000Z",
+      "closedTrades": 2,
+      "wins": 0,
+      "losses": 2,
+      "flats": 0,
+      "winRate": 0,
+      "netPnl": -225.79775329873368,
+      "grossFees": 65.30917141345455,
+      "rebatesCredited": 16.327292853363637,
+      "pendingRebates": 0,
+      "expectancy": -112.89887664936684,
+      "profitFactor": 0,
+      "maxDrawdown": 0.0032583192224115358,
+      "byMarket": {
+        "BTC-USD": {
+          "trades": 1,
+          "wins": 0,
+          "losses": 1,
+          "netPnl": -95.7210354979029,
+          "grossFees": 32.70252396625626,
+          "rebatesCredited": 8.175630991564065
+        },
+        "SOL-USD": {
+          "trades": 1,
+          "wins": 0,
+          "losses": 1,
+          "netPnl": -130.07671780083078,
+          "grossFees": 32.6066474471983,
+          "rebatesCredited": 8.151661861799575
+        }
+      },
+      "bySetup": {
+        "support-bounce": {
+          "trades": 2,
+          "wins": 0,
+          "losses": 2,
+          "netPnl": -225.79775329873368,
+          "grossFees": 65.30917141345455,
+          "rebatesCredited": 16.327292853363637
+        }
+      },
+      "byExit": {
+        "quote-stop": {
+          "trades": 2,
+          "wins": 0,
+          "losses": 2,
+          "netPnl": -225.79775329873368,
+          "grossFees": 65.30917141345455,
+          "rebatesCredited": 16.327292853363637
+        }
+      },
+      "byPattern": {
+        "not-confirmed": {
+          "trades": 2,
+          "wins": 0,
+          "losses": 2,
+          "netPnl": -225.79775329873368,
+          "grossFees": 65.30917141345455,
+          "rebatesCredited": 16.327292853363637
+        }
+      },
+      "note": "Completed simulated trade outcomes after modeled costs. Virtual snapshot rebalances excluded. Null ratios mean insufficient denominator, not an infinite edge.",
+      "tradeHeartbeat": "2026-11-28T09:30:31.606Z",
+      "observedChecks": 12,
+      "largestCheckGapSeconds": 306.29699993133545,
+      "evidenceComplete": true
+    },
+    {
+      "periodStart": "2026-11-28T08:00:00.000Z",
+      "periodEnd": "2026-11-28T09:00:00.000Z",
+      "closedTrades": 0,
+      "wins": 0,
+      "losses": 0,
+      "flats": 0,
+      "winRate": null,
+      "netPnl": 0,
+      "grossFees": 0,
+      "rebatesCredited": 0,
+      "pendingRebates": 0,
+      "expectancy": null,
+      "profitFactor": null,
+      "maxDrawdown": 0,
+      "byMarket": {},
+      "bySetup": {},
+      "byExit": {},
+      "byPattern": {},
+      "note": "Completed simulated trade outcomes after modeled costs. Virtual snapshot rebalances excluded. Null ratios mean insufficient denominator, not an infinite edge.",
+      "tradeHeartbeat": "2026-11-28T09:30:31.606Z",
+      "observedChecks": 12,
+      "largestCheckGapSeconds": 305.8680000305176,
+      "evidenceComplete": true
     }
   ],
   "allTime": {
     "periodStart": "1970-01-01T00:00:00.000Z",
-    "periodEnd": "2026-11-28T07:26:43.303Z",
+    "periodEnd": "2026-11-28T09:32:07.255Z",
     "closedTrades": 11,
     "wins": 1,
     "losses": 10,
