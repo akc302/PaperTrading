@@ -949,6 +949,21 @@
       ],
       "adopted": false,
       "nextIdea": "Unchanged."
+    },
+    {
+      "at": "2026-11-28T06:30:00.600Z",
+      "tradesReviewed": 8,
+      "losses": 8,
+      "findings": [
+        "8 closes since 04:27Z, all losses (-$589): ADA stopped out main (-$33.2), owner-sr (-$13.9) and owner-sr-trend (-$13.8) just 18 minutes after entry; SOL fell, hitting scout-daytrade (-$118.7 stop), sr-scalper (-$98.2) and owner-sr-quick (-$112.8); owner-sr-quick DOGE -$130.9; lab-hourly DOGE -$67.4.",
+        "The ADA stop-out 18 minutes after entry means the stop sat inside normal hourly noise (stopBuffer 0.6% below support).",
+        "owner-sr-quick is now 0 for 8 (about -$600), including 2 losses on the wider 1% stop. Main on owner-sr rules: 3 trades, 1 win, +$37.3."
+      ],
+      "changes": [
+        "owner-sr-quick: size cut to riskScale 0.25 (was about 28% per trade), as planned after 3 more losses."
+      ],
+      "adopted": false,
+      "nextIdea": "Measure stop distance vs 1h ATR for every owner-sr-family stop-out; if most stops sit under 1 ATR, test an ATR-based stop on owner-sr-trend first."
     }
   ]
 }
