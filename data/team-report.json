@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "generatedAt": "2026-11-28T12:07:11.019Z",
+  "generatedAt": "2026-11-28T13:21:38.142Z",
   "goal": 85000,
   "equity": 29094.143508652236,
   "startingEquity": 30000,
@@ -9,12 +9,12 @@
   "drawdown": 0.030593885571171604,
   "openPositions": 0,
   "last24h": {
-    "closedTrades": 4,
+    "closedTrades": 3,
     "wins": 0,
     "winRate": 0,
-    "netPnl": -325.0229882977993,
-    "grossFees": 111.57485166002485,
-    "rebatesCredited": 27.893712915006212
+    "netPnl": -258.99709737098465,
+    "grossFees": 78.70139445382334,
+    "rebatesCredited": 19.675348613455835
   },
   "allTime": {
     "closedTrades": 11,
@@ -70,12 +70,12 @@
   "agents": {
     "trader": {
       "role": "5-minute paper trader",
-      "lastRunMinutesAgo": 2,
+      "lastRunMinutesAgo": 1,
       "healthy": true
     },
     "researcher": {
       "role": "Claude every 5h: loss analysis, backtest, rule adoption",
-      "lastRunHoursAgo": 0,
+      "lastRunHoursAgo": 1.2,
       "healthy": true,
       "sweep": {
         "at": "2026-11-28T09:31:19.406Z",
@@ -109,13 +109,13 @@
         }
       },
       "latestNote": {
-        "at": "2026-11-28T10:28:27.502Z",
-        "tradesReviewed": 1,
-        "losses": 1,
+        "at": "2026-11-28T12:29:03.167Z",
+        "tradesReviewed": 0,
+        "losses": 0,
         "findings": 1,
         "changes": 1,
         "adopted": false,
-        "nextIdea": "Unchanged: compare owner-sr-trend (ATR stop) vs owner-sr over 10 trades each."
+        "nextIdea": "Unchanged."
       }
     },
     "verifier": {
@@ -143,7 +143,7 @@
         "id": "history",
         "label": "28+ days of forward paper trading with the research team",
         "pass": false,
-        "value": "7.3 days"
+        "value": "7.4 days"
       },
       {
         "id": "sample",
@@ -185,7 +185,7 @@
         "id": "uptime",
         "label": "Trader ran in 95%+ of hours over the last 7 days",
         "pass": false,
-        "value": "86%"
+        "value": "85%"
       },
       {
         "id": "integrity",
@@ -202,8 +202,8 @@
     "windowDays": 30,
     "label": "Estimated time to $85,000 at the trailing 30-day growth rate (not a promise)",
     "status": "not-growing",
-    "spanDays": 7.504988645833952,
-    "dailyGrowth": -0.004077013174888178,
+    "spanDays": 7.55669145833287,
+    "dailyGrowth": -0.004049174841039838,
     "message": "Trailing growth is zero or negative, so no date can be estimated."
   },
   "scorecard": [
@@ -305,7 +305,7 @@
     {
       "id": "lab-hourly",
       "label": "Lab hourly per-market rules",
-      "equity": 28561.05557278602,
+      "equity": 28504.342700869493,
       "initial": 29975.046647868254,
       "netPnl": -1233.084569706082,
       "profitFactor": 0.5689745744799736,
@@ -317,9 +317,9 @@
       "fees": 666.1780516795037,
       "makerFills": 45,
       "takerFills": 25,
-      "openPositions": 2,
+      "openPositions": 3,
       "pause": "normal",
-      "drawdown": 0.06300572142053928
+      "drawdown": 0.06471511429823174
     },
     {
       "id": "scout-daytrade",
@@ -362,7 +362,7 @@
     {
       "id": "daytrader-range",
       "label": "Day trader: buy 24h range low, sell near high, up to 50% per trade",
-      "equity": 29157.71687791183,
+      "equity": 29009.876351432842,
       "initial": 29865.26287940766,
       "netPnl": -930.3686478951493,
       "profitFactor": 0.5643788194870201,
@@ -376,7 +376,7 @@
       "takerFills": 6,
       "openPositions": 2,
       "pause": "normal",
-      "drawdown": 0.027200717824325205
+      "drawdown": 0.03213317390919035
     },
     {
       "id": "sr-scalper",
