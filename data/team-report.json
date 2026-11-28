@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "generatedAt": "2026-11-28T11:56:14.368Z",
+  "generatedAt": "2026-11-28T12:07:11.019Z",
   "goal": 85000,
   "equity": 29094.143508652236,
   "startingEquity": 30000,
@@ -70,12 +70,12 @@
   "agents": {
     "trader": {
       "role": "5-minute paper trader",
-      "lastRunMinutesAgo": 1,
+      "lastRunMinutesAgo": 2,
       "healthy": true
     },
     "researcher": {
       "role": "Claude every 5h: loss analysis, backtest, rule adoption",
-      "lastRunHoursAgo": 1.9,
+      "lastRunHoursAgo": 0,
       "healthy": true,
       "sweep": {
         "at": "2026-11-28T09:31:19.406Z",
@@ -202,8 +202,8 @@
     "windowDays": 30,
     "label": "Estimated time to $85,000 at the trailing 30-day growth rate (not a promise)",
     "status": "not-growing",
-    "spanDays": 7.497388518518871,
-    "dailyGrowth": -0.004081137611587016,
+    "spanDays": 7.504988645833952,
+    "dailyGrowth": -0.004077013174888178,
     "message": "Trailing growth is zero or negative, so no date can be estimated."
   },
   "scorecard": [
@@ -305,7 +305,7 @@
     {
       "id": "lab-hourly",
       "label": "Lab hourly per-market rules",
-      "equity": 28519.96816149271,
+      "equity": 28561.05557278602,
       "initial": 29975.046647868254,
       "netPnl": -1233.084569706082,
       "profitFactor": 0.5689745744799736,
@@ -319,7 +319,7 @@
       "takerFills": 25,
       "openPositions": 2,
       "pause": "normal",
-      "drawdown": 0.06435366422347111
+      "drawdown": 0.06300572142053928
     },
     {
       "id": "scout-daytrade",
@@ -362,7 +362,7 @@
     {
       "id": "daytrader-range",
       "label": "Day trader: buy 24h range low, sell near high, up to 50% per trade",
-      "equity": 29062.164980408983,
+      "equity": 29157.71687791183,
       "initial": 29865.26287940766,
       "netPnl": -930.3686478951493,
       "profitFactor": 0.5643788194870201,
@@ -376,7 +376,7 @@
       "takerFills": 6,
       "openPositions": 2,
       "pause": "normal",
-      "drawdown": 0.030388649776970866
+      "drawdown": 0.027200717824325205
     },
     {
       "id": "sr-scalper",
